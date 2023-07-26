@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "836127824057",
+    "project_id": "neo-pos-6b9ed",
+    "storage_bucket": "neo-pos-6b9ed.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:836127824057:android:c1b720d4feae7d7d00a368",
+        "android_client_info": {
+          "package_name": "com.example.neopos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "836127824057-ufhdpaek2c8k1vsjiln5b5ho0m8m3ci5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCl6q808ka3PrAS9EU1klYXyazJmQGZRQY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "836127824057-ufhdpaek2c8k1vsjiln5b5ho0m8m3ci5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "836127824057-fr2pch5c4to7fbikeaibkqtkb68ev3ai.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.neopos"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
