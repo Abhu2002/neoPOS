@@ -1,3 +1,7 @@
+
+
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -52,17 +56,25 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       FirebaseFirestore database=FirebaseFirestore.instance;
       database.collection("users").where("user_id",isEqualTo: "1").where("password",isEqualTo: "abc@123").get().
       then((value){
+        print("VALUEEE;;;;;; ${value.size}");
+        if(value.size != 0){
+        print("Successfully Login ");
         for(var data in value.docs ){
           print('${data.id} => ${data.data()} ');
-        }
-        print("Successfully Login ");
-      },onError: (e)=> print("Error $e"));
+          var result= data.data();
+          //onLoginSuccess!();
+        }}
+        else{
+          print("No data Found");
+      }
+      },onError: (e)=> print("Error then ka $e"));
       // if ((credential.user?.email ?? "").isNotEmpty == true &&
       //     onLoginSuccess != null) {
       //   onLoginSuccess!();
       // }
     }
-    on FirebaseAuthException catch (e) {
+     catch (e) {
+       print("Error $e");
       // if (e.code == 'user-not-found') {
       //   if (showMessage != null) showMessage!('No user found for that email.');
       // } else if (e.code == 'wrong-password') {
