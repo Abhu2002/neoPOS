@@ -59,7 +59,7 @@ class _LoginPage extends State<LoginPage> {
                           return TextField(
                             key: const Key("userIDInput"),
                             decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.person),
+                                prefixIcon: const Icon(Icons.person,color: AppColors.primaryColor),
                                 suffixIcon: state.user_id.isUserIdValid
                                     ? const Icon(Icons.done)
                                     : null,
@@ -86,7 +86,7 @@ class _LoginPage extends State<LoginPage> {
                                 suffixIcon: state.password.isPasswordValid
                                     ? const Icon(Icons.done)
                                     : null,
-                                prefixIcon: const Icon(Icons.lock),
+                                prefixIcon: const Icon(Icons.lock,color: AppColors.primaryColor),
                                 hintText: "Password",
                                 errorText:
                                     !state.password.isPasswordValid&&state.verifyData

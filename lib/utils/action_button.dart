@@ -14,7 +14,7 @@ class ActionButton extends StatelessWidget{
     return SizedBox(
       height: 45,
       width: double.infinity,
-      child: ElevatedButton(
+      child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryColor),
           onPressed: onPress,
           child: state == LoginButtonState.progress
               ? const CircularProgressIndicator(
