@@ -4,6 +4,14 @@ class AppColors {
   static const primaryColor = Color(0xffec7905);
   static const backgroundColor = Color(0xffffffff);
   static const primaryColorValue = 0xffec7905;
+  static const textColorValue = Color(0x00000000);
+  static const mainTextColor = Color(0xffec7905);
+  static const subTextColorValue = Color(0xff2A2A2A);
+  static const buttonTextColorValue = Color(0xffec7905);
+  static const tableAvailableColor = Color(0xff55CA92);
+  static const tableNotAvailableColor = Color(0xf5EC7904);
+  static const tableAvailableTextColor = Color(0xf5EC7904);
+  static const tableunAvailableTextColor = Color(0xffEBEBEB);
 
   static const primarySwatch = MaterialColor(
     AppColors.primaryColorValue,
