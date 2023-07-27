@@ -9,6 +9,7 @@ class LoginState extends Equatable {
     this.state = LoginButtonState.enable,
     this.canLogin = false,
     this.verifyData = false,
+
   });
 
   final String userId;
