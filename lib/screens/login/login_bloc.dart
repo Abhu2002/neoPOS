@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -49,6 +50,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
           email: state.email, password: state.password);
+      FirebaseFirestore database=FirebaseFirestore.instance;
       if ((credential.user?.email ?? "").isNotEmpty == true &&
           onLoginSuccess != null) {
         onLoginSuccess!();
