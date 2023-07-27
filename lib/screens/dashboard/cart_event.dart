@@ -10,14 +10,14 @@ class OnStarted extends CartEvent{
 }
 
 class NewItemAdded extends CartEvent{
-  final MovieModel item;
+  final item;
    NewItemAdded(this.item);
 
   @override
   List<Object?> get props => [item];
 }
 class ItemRemoved extends CartEvent{
- final MovieModel item;
+ final item;
   ItemRemoved(this.item);
 
   @override
