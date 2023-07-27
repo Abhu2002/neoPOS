@@ -38,6 +38,29 @@ dependencies:
   firebase_core: ^2.15.0
   cloud_firestore: ^4.8.4
 
+  # bloc
+  flutter_bloc: ^8.0.0
+  equatable: ^2.0.3
+
+  # http
+  http: ^0.13.4
+  dio: ^4.0.4
+
+  # internet checker
+  connectivity_plus: ^2.3.0
+
+  #firebase_auth
+  firebase_auth: any
+
+  #splash screen
+  flutter_native_splash: ^2.1.5
+
+  #svg
+  flutter_svg: ^1.0.3
+
+  #provider
+  provider: ^6.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
