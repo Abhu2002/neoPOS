@@ -13,15 +13,15 @@ class ProductLoading extends ProductState {
 }
 
 class ProductLoaded extends ProductState {
-  final List<MovieModel> list;
- final  List<MovieModel> cartItem;
+  final List list;
+ final  List cartItem;
 
   ProductLoaded(this.list, this.cartItem);
 
   @override
   List<Object?> get props => [list,cartItem];
 
-  ProductLoaded copyWith({List<MovieModel>? list, List<MovieModel>? cartItem}) {
+  ProductLoaded copyWith({List? list, List? cartItem}) {
     return ProductLoaded(list ?? this.list, cartItem ?? this.cartItem);
   }
 }
