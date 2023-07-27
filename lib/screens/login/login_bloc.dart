@@ -1,14 +1,8 @@
-
-
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/utils.dart';
-
 part 'login_event.dart';
 part 'login_state.dart';
 
@@ -59,7 +53,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         print("Successfully Login ");
         for(var data in value.docs ){
           print('${data.id} => ${data.data()} ');
-           result= data.data();
+           result = data.data();
           onLoginSuccess!();
         }}
         else{
@@ -67,20 +61,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           print("No data Found");
       }print ("result data....${result["user_id"]}");
       },onError: (e)=> print("Error then ka $e"));
-      // if ((credential.user?.user_id ?? "").isNotEmpty == true &&
-      //     onLoginSuccess != null) {
-      //   onLoginSuccess!();
-      // }
     }
      catch (e) {
        print("Error $e");
-      // if (e.code == 'user-not-found') {
-      //   if (showMessage != null) showMessage!('No user found for that user_id.');
-      // } else if (e.code == 'wrong-password') {
-      //   if (showMessage != null) {
-      //     showMessage!('Wrong password provided for that user.');
-      //   }
-      // }
     }
     emit(state.copyWith(
         state: LoginButtonState.enable,

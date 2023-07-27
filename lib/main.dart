@@ -41,9 +41,9 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Widget checkCurrentUser() {
+Widget? checkCurrentUser() {
   Widget? widget;
-  final user = FirebaseAuth.instance.currentUser;
+  final user = null;
   if (user == null) {
     widget = const LoginPage();
   } else {

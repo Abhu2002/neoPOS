@@ -3,12 +3,15 @@ part of 'login_bloc.dart';
 enum LoginButtonState { disable, enable, progress }
 
 class LoginState extends Equatable {
+
+
   const LoginState(
       {this.user_id = '',
       this.password = '',
       this.state = LoginButtonState.enable,
       this.canLogin = false,
-      this.verifyData = false});
+      this.verifyData = false,
+  });
 
   final String user_id;
   final String password;
