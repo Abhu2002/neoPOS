@@ -69,7 +69,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '836127824057',
     projectId: 'neo-pos-6b9ed',
     storageBucket: 'neo-pos-6b9ed.appspot.com',
-    iosClientId: '836127824057-fr2pch5c4to7fbikeaibkqtkb68ev3ai.apps.googleusercontent.com',
+    iosClientId:
+        '836127824057-fr2pch5c4to7fbikeaibkqtkb68ev3ai.apps.googleusercontent.com',
     iosBundleId: 'com.example.neopos',
   );
 }
