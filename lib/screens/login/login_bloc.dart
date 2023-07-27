@@ -47,21 +47,29 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         state: LoginButtonState.progress,
         canLogin: false));
     try {
-      final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-          email: state.email, password: state.password);
+      // final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+      //     email: state.email, password: state.password);
       FirebaseFirestore database=FirebaseFirestore.instance;
-      if ((credential.user?.email ?? "").isNotEmpty == true &&
-          onLoginSuccess != null) {
-        onLoginSuccess!();
-      }
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        if (showMessage != null) showMessage!('No user found for that email.');
-      } else if (e.code == 'wrong-password') {
-        if (showMessage != null) {
-          showMessage!('Wrong password provided for that user.');
+      database.collection("users").where("user_id",isEqualTo: "1").where("password",isEqualTo: "abc@123").get().
+      then((value){
+        for(var data in value.docs ){
+          print('${data.id} => ${data.data()} ');
         }
-      }
+        print("Successfully Login ");
+      },onError: (e)=> print("Error $e"));
+      // if ((credential.user?.email ?? "").isNotEmpty == true &&
+      //     onLoginSuccess != null) {
+      //   onLoginSuccess!();
+      // }
+    }
+    on FirebaseAuthException catch (e) {
+      // if (e.code == 'user-not-found') {
+      //   if (showMessage != null) showMessage!('No user found for that email.');
+      // } else if (e.code == 'wrong-password') {
+      //   if (showMessage != null) {
+      //     showMessage!('Wrong password provided for that user.');
+      //   }
+      // }
     }
     emit(state.copyWith(
         state: LoginButtonState.enable,
