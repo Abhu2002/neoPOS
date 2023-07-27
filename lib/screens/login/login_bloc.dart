@@ -14,7 +14,7 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(const LoginState()) {
-    on<EmailChanged>(_onEmailChanged);
+    on<UserIdChanged>(_onUserIdChanged);
     on<PasswordChanged>(_onPasswordChanged);
     on<OnLogin>(_onLogin);
   }
@@ -22,12 +22,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   VoidCallback? onLoginSuccess;
   void Function(String)? showMessage;
 
-  void _onEmailChanged(EmailChanged event, Emitter<LoginState> emit) {
-    final email = event.email;
+  void _onUserIdChanged(UserIdChanged event, Emitter<LoginState> emit) {
+    final user_id = event.user_id;
     emit(state.copyWith(
-        email: email.isNotEmpty ? email : event.email,
+        user_id: user_id.isNotEmpty ? user_id : event.user_id,
         canLogin:
-            email.isNotEmpty && state.password.isNotEmpty ? true : false));
+            user_id.isNotEmpty && state.password.isNotEmpty ? true : false));
   }
 
   void _onPasswordChanged(PasswordChanged event, Emitter<LoginState> emit) {
@@ -35,26 +35,24 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(state.copyWith(
         password: password.isNotEmpty ? password : event.password,
         canLogin:
-            password.isNotEmpty && state.email.isNotEmpty ? true : false));
+            password.isNotEmpty && state.user_id.isNotEmpty ? true : false));
   }
 
   Future<void> _onLogin(OnLogin event, Emitter<LoginState> emit) async {
-    if (!state.email.isEmailValid || !state.password.isPasswordValid) {
+    if (!state.user_id.isUserIdValid || !state.password.isPasswordValid) {
       emit(state.copyWith(
           state: LoginButtonState.enable, canLogin: false, verifyData: true));
       return;
     }
 
     emit(state.copyWith(
-        email: state.email,
+        user_id: state.user_id,
         password: state.password,
         state: LoginButtonState.progress,
         canLogin: false));
     try {var result;
-      // final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-      //     email: state.email, password: state.password);
       FirebaseFirestore database=FirebaseFirestore.instance;
-      database.collection("users").where("user_id",isEqualTo: "1").where("password",isEqualTo: "abc@123").get().
+      database.collection("users").where("user_id",isEqualTo: state.user_id).where("password",isEqualTo: state.password).get().
       then((value){
         print("VALUEEE;;;;;; ${value.size}");
         if(value.size != 0){
@@ -65,10 +63,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           onLoginSuccess!();
         }}
         else{
+          showMessage!("Wrong Credentials");
           print("No data Found");
       }print ("result data....${result["user_id"]}");
       },onError: (e)=> print("Error then ka $e"));
-      // if ((credential.user?.email ?? "").isNotEmpty == true &&
+      // if ((credential.user?.user_id ?? "").isNotEmpty == true &&
       //     onLoginSuccess != null) {
       //   onLoginSuccess!();
       // }
@@ -76,7 +75,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
      catch (e) {
        print("Error $e");
       // if (e.code == 'user-not-found') {
-      //   if (showMessage != null) showMessage!('No user found for that email.');
+      //   if (showMessage != null) showMessage!('No user found for that user_id.');
       // } else if (e.code == 'wrong-password') {
       //   if (showMessage != null) {
       //     showMessage!('Wrong password provided for that user.');
@@ -86,7 +85,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(state.copyWith(
         state: LoginButtonState.enable,
         canLogin: false,
-        email: '',
+        user_id: '',
         password: '',
         verifyData: false));
   }

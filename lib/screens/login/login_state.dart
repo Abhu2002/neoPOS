@@ -4,22 +4,22 @@ enum LoginButtonState { disable, enable, progress }
 
 class LoginState extends Equatable {
   const LoginState(
-      {this.email = '',
+      {this.user_id = '',
       this.password = '',
       this.state = LoginButtonState.enable,
       this.canLogin = false,
       this.verifyData = false});
 
-  final String email;
+  final String user_id;
   final String password;
   final LoginButtonState state;
   final bool canLogin;
   final bool verifyData;
 
   LoginState copyWith(
-      {String? email, String? password, LoginButtonState? state, bool? canLogin,bool? verifyData }) {
+      {String? user_id, String? password, LoginButtonState? state, bool? canLogin,bool? verifyData }) {
     return LoginState(
-        email: email ?? this.email,
+        user_id: user_id ?? this.user_id,
         password: password ?? this.password,
         state: state ?? this.state,
         verifyData:verifyData??this.verifyData,
@@ -27,5 +27,5 @@ class LoginState extends Equatable {
   }
 
   @override
-  List<Object?> get props => [email, password, state, canLogin,verifyData];
+  List<Object?> get props => [user_id, password, state, canLogin,verifyData];
 }

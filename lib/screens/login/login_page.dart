@@ -5,7 +5,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:neopos/utils/utils.dart';
 import '../../utils/action_button.dart';
 import '../../utils/app_colors.dart';
-import '../../utils/custom_outlined_button.dart';
 import '../dashboard/dashboard_page.dart';
 import 'login_bloc.dart';
 
@@ -58,21 +57,19 @@ class _LoginPage extends State<LoginPage> {
                       BlocBuilder<LoginBloc, LoginState>(
                         builder: (context, state) {
                           return TextField(
-                            key: const Key("emailInput"),
+                            key: const Key("userIDInput"),
                             decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.email),
-                                suffixIcon: state.email.isEmailValid
+                                prefixIcon: const Icon(Icons.person),
+                                suffixIcon: state.user_id.isUserIdValid
                                     ? const Icon(Icons.done)
                                     : null,
-                                hintText: "Email",
-                                helperText:
-                                "A complete, valid email e.g. joe@gmail.com",
+                                hintText: "UserName",
                                 errorText:
-                                    !state.email.isEmailValid&&state.verifyData
-                                    ? "Please ensure the email entered is valid"
+                                    !state.user_id.isUserIdValid&&state.verifyData
+                                    ? "Please ensure the user entered is valid"
                                     : null),
                             onChanged: (v) {
-                              context.read<LoginBloc>().add(EmailChanged(v));
+                              context.read<LoginBloc>().add(UserIdChanged(v));
                             },
                           );
                         },
@@ -91,7 +88,6 @@ class _LoginPage extends State<LoginPage> {
                                     : null,
                                 prefixIcon: const Icon(Icons.lock),
                                 hintText: "Password",
-                                helperText: "Password must be 8 more letters",
                                 errorText:
                                     !state.password.isPasswordValid&&state.verifyData
                                     ? "Please ensure the password entered is valid"
