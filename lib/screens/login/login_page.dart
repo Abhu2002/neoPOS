@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -23,102 +22,107 @@ class _LoginPage extends State<LoginPage> {
     context.read<LoginBloc>().showMessage = createSnackBar;
     return Scaffold(
       body: SafeArea(
-        child: CustomScrollView(slivers: [
-          SliverFillRemaining(
-            child:Column(
-              children: [
-                Expanded(
-                    child: Stack(
-                      children: [
-                        SvgPicture.asset("assets/login_background.svg",
-                            fit: BoxFit.fill),
-                        const Padding(
-                          padding: EdgeInsets.all(20),
-                          child: Align(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                "Welcome \nback",
-                                style: TextStyle(
-                                    color: AppColors.backgroundColor,
-                                    fontSize: 32,
-                                    fontWeight: FontWeight.w500),
-                                textAlign: TextAlign.start,
-                              )),
-                        )
-                      ],
-                    )),
-                Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
+        child: CustomScrollView(
+          slivers: [
+            SliverFillRemaining(
+              child: Column(
+                children: [
+                  Expanded(
+                      child: Stack(
                     children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      BlocBuilder<LoginBloc, LoginState>(
-                        builder: (context, state) {
-                          return TextField(
-                            key: const Key("userIDInput"),
-                            decoration: InputDecoration(
-                                prefixIcon: const Icon(Icons.person,color: AppColors.primaryColor),
-                                suffixIcon: state.user_id.isUserIdValid
-                                    ? const Icon(Icons.done)
-                                    : null,
-                                hintText: "UserName",
-                                errorText:
-                                    !state.user_id.isUserIdValid&&state.verifyData
-                                    ? "Please ensure the user entered is valid"
-                                    : null),
-                            onChanged: (v) {
-                              context.read<LoginBloc>().add(UserIdChanged(v));
-                            },
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      BlocBuilder<LoginBloc, LoginState>(
-                        builder: (context, state) {
-                          return TextField(
-                            key: const Key("passwordInput"),
-                            obscureText: true,
-                            decoration: InputDecoration(
-                                suffixIcon: state.password.isPasswordValid
-                                    ? const Icon(Icons.done)
-                                    : null,
-                                prefixIcon: const Icon(Icons.lock,color: AppColors.primaryColor),
-                                hintText: "Password",
-                                errorText:
-                                    !state.password.isPasswordValid&&state.verifyData
-                                    ? "Please ensure the password entered is valid"
-                                    : null),
-                            onChanged: (v) {
-                              context.read<LoginBloc>().add(PasswordChanged(v));
-                            },
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      BlocBuilder<LoginBloc, LoginState>(
-                        builder: (context, state) {
-                          return ActionButton(
-                            text: "Login",
-                            state: state.state,
-                            onPress: (){
-                              context.read<LoginBloc>().add(OnLogin());
-                            },
-                          );
-                        },
-                      ),
+                      SvgPicture.asset("assets/login_background.svg",
+                          fit: BoxFit.fill),
+                      const Padding(
+                        padding: EdgeInsets.all(20),
+                        child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "Welcome \nback",
+                              style: TextStyle(
+                                  color: AppColors.backgroundColor,
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w500),
+                              textAlign: TextAlign.start,
+                            )),
+                      )
                     ],
+                  )),
+                  Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Column(
+                      children: [
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        BlocBuilder<LoginBloc, LoginState>(
+                          builder: (context, state) {
+                            return TextField(
+                              key: const Key("userIDInput"),
+                              decoration: InputDecoration(
+                                  prefixIcon: const Icon(Icons.person,
+                                      color: AppColors.primaryColor),
+                                  suffixIcon: state.userId.isNotEmptyValidator
+                                      ? const Icon(Icons.done)
+                                      : null,
+                                  hintText: "UserName",
+                                  errorText: !state.userId.isNotEmptyValidator &&
+                                          state.verifyData
+                                      ? "Please ensure the user entered is valid"
+                                      : null),
+                              onChanged: (v) {
+                                context.read<LoginBloc>().add(UserIdChanged(v));
+                              },
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        BlocBuilder<LoginBloc, LoginState>(
+                          builder: (context, state) {
+                            return TextField(
+                              key: const Key("passwordInput"),
+                              obscureText: true,
+                              decoration: InputDecoration(
+                                  suffixIcon: state.password.isPasswordValid
+                                      ? const Icon(Icons.done)
+                                      : null,
+                                  prefixIcon: const Icon(Icons.lock,
+                                      color: AppColors.primaryColor),
+                                  hintText: "Password",
+                                  errorText: !state.password.isPasswordValid &&
+                                          state.verifyData
+                                      ? "Please ensure the password entered is valid"
+                                      : null),
+                              onChanged: (v) {
+                                context
+                                    .read<LoginBloc>()
+                                    .add(PasswordChanged(v));
+                              },
+                            );
+                          },
+                        ),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        BlocBuilder<LoginBloc, LoginState>(
+                          builder: (context, state) {
+                            return ActionButton(
+                              text: "Login",
+                              state: state.state,
+                              onPress: () {
+                                context.read<LoginBloc>().add(OnLogin());
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-          )
-        ],
+                ],
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -128,9 +132,7 @@ class _LoginPage extends State<LoginPage> {
       context, MaterialPageRoute(builder: (_) => const DashboardPage()));
 
   void createSnackBar(String message) {
-    final snackBar =  SnackBar(content:  Text(message));
+    final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
-
 }
-

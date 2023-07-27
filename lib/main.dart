@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
@@ -8,7 +7,8 @@ import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/login/login_page.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'firebase_options.dart';
-Future<void> main() async{
+
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -22,28 +22,28 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-        statusBarColor: AppColors.primaryColor
-    ));
+    SystemChrome.setSystemUIOverlayStyle(
+        const SystemUiOverlayStyle(statusBarColor: AppColors.primaryColor));
 
     return MultiBlocProvider(
       providers: [
-        BlocProvider(
-            create: (_) => LoginBloc()),
+        BlocProvider(create: (_) => LoginBloc()),
       ],
       child: MaterialApp(
         theme: ThemeData(
             primarySwatch: AppColors.primarySwatch,
             scaffoldBackgroundColor: AppColors.backgroundColor),
-        home: checkCurrentUser(),
+        home: isLoggedIn(),
       ),
     );
   }
 }
 
-Widget? checkCurrentUser() {
+Widget? isLoggedIn() {
   Widget? widget;
-  final user = null;
+
+  /// TODO: Initialize user to check whether already logged in or not
+  const user = null;
   if (user == null) {
     widget = const LoginPage();
   } else {

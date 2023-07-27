@@ -1,8 +1,7 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../login/login_page.dart';
+
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
@@ -11,7 +10,6 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPage extends State<DashboardPage> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,7 +24,6 @@ class _DashboardPage extends State<DashboardPage> {
                 icon: const Icon(Icons.logout))
           ],
         ),
-        body: Container()
-    );
+        body: Container());
   }
 }

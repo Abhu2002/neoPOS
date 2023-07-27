@@ -3,7 +3,9 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/utils.dart';
+
 part 'login_event.dart';
+
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -17,11 +19,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   void Function(String)? showMessage;
 
   void _onUserIdChanged(UserIdChanged event, Emitter<LoginState> emit) {
-    final user_id = event.user_id;
+    final userId = event.userId;
     emit(state.copyWith(
-        user_id: user_id.isNotEmpty ? user_id : event.user_id,
+        userId: userId.isNotEmpty ? userId : event.userId,
         canLogin:
-            user_id.isNotEmpty && state.password.isNotEmpty ? true : false));
+            userId.isNotEmpty && state.password.isNotEmpty ? true : false));
   }
 
   void _onPasswordChanged(PasswordChanged event, Emitter<LoginState> emit) {
@@ -29,46 +31,47 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(state.copyWith(
         password: password.isNotEmpty ? password : event.password,
         canLogin:
-            password.isNotEmpty && state.user_id.isNotEmpty ? true : false));
+            password.isNotEmpty && state.userId.isNotEmpty ? true : false));
   }
 
   Future<void> _onLogin(OnLogin event, Emitter<LoginState> emit) async {
-    if (!state.user_id.isUserIdValid || !state.password.isPasswordValid) {
+    if (!state.userId.isNotEmptyValidator || !state.password.isPasswordValid) {
       emit(state.copyWith(
           state: LoginButtonState.enable, canLogin: false, verifyData: true));
       return;
     }
 
     emit(state.copyWith(
-        user_id: state.user_id,
+        userId: state.userId,
         password: state.password,
         state: LoginButtonState.progress,
         canLogin: false));
-    try {var result;
-      FirebaseFirestore database=FirebaseFirestore.instance;
-      database.collection("users").where("user_id",isEqualTo: state.user_id).where("password",isEqualTo: state.password).get().
-      then((value){
-        print("VALUEEE;;;;;; ${value.size}");
-        if(value.size != 0){
-        print("Successfully Login ");
-        for(var data in value.docs ){
-          print('${data.id} => ${data.data()} ');
-           result = data.data();
-          onLoginSuccess!();
-        }}
-        else{
+    try {
+      /// TODO: Use result later
+      var result;
+      FirebaseFirestore database = FirebaseFirestore.instance;
+      database
+          .collection("users")
+          .where("userId", isEqualTo: state.userId)
+          .where("password", isEqualTo: state.password)
+          .get()
+          .then((value) {
+        if (value.size != 0) {
+          for (var data in value.docs) {
+            result = data.data();
+            onLoginSuccess!();
+          }
+        } else {
           showMessage!("Wrong Credentials");
-          print("No data Found");
-      }print ("result data....${result["user_id"]}");
-      },onError: (e)=> print("Error then ka $e"));
-    }
-     catch (e) {
-       print("Error $e");
+        }
+      }, onError: (e) {});
+    } catch (e) {
+      showMessage!("Wrong Credentials");
     }
     emit(state.copyWith(
         state: LoginButtonState.enable,
         canLogin: false,
-        user_id: '',
+        userId: '',
         password: '',
         verifyData: false));
   }
