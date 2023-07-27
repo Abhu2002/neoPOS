@@ -116,25 +116,6 @@ class _LoginPage extends State<LoginPage> {
                           );
                         },
                       ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(child: Container(height: 1,color: Colors.blueGrey)),
-                          const SizedBox(width: 15,),
-                          const Text("OR",style: TextStyle(color: Colors.blueGrey ),),
-                          const SizedBox(width: 15,),
-                          Expanded(child: Container(height: 1,color: Colors.blueGrey)),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      CustomOutlineButton(text: "Sign Up", onPress: () {}),
-                      const SizedBox(
-                        height: 10,
-                      ),
                     ],
                   ),
                 ),

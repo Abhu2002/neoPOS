@@ -50,7 +50,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         password: state.password,
         state: LoginButtonState.progress,
         canLogin: false));
-    try {
+    try {var result;
       // final credential = await FirebaseAuth.instance.signInWithEmailAndPassword(
       //     email: state.email, password: state.password);
       FirebaseFirestore database=FirebaseFirestore.instance;
@@ -61,12 +61,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         print("Successfully Login ");
         for(var data in value.docs ){
           print('${data.id} => ${data.data()} ');
-          var result= data.data();
-          //onLoginSuccess!();
+           result= data.data();
+          onLoginSuccess!();
         }}
         else{
           print("No data Found");
-      }
+      }print ("result data....${result["user_id"]}");
       },onError: (e)=> print("Error then ka $e"));
       // if ((credential.user?.email ?? "").isNotEmpty == true &&
       //     onLoginSuccess != null) {
