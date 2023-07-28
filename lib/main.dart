@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
       ],
 
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
             primarySwatch: AppColors.primarySwatch,
             scaffoldBackgroundColor: AppColors.backgroundColor),
