@@ -56,6 +56,7 @@ class _DashboardPage extends State<DashboardPage> {
         onTap: (index, sideMenuController) {
           sideMenuController.changePage(index);
         },
+
       ),
       SideMenuItem(
         icon: Icon(Icons.person),
