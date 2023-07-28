@@ -1,0 +1,21 @@
+{
+  "language": "English",
+  "@language" : {
+    "description": "The current language"
+  },
+  "welcomeBack" : "Welcome\nBack",
+  "@like" : {
+    "description": "Login greeting"
+  },
+  "username" : "Username",
+  "@username" : {
+    "description": "Username"
+  },
+  "username_error": "Please ensure the user entered is valid",
+  "password": "Password",
+  "password_helper": "Password must be 8 more letters",
+  "password_error": "Please ensure the password entered is valid",
+  "login": "Login",
+  "or": "OR",
+  "sign_up": "Sign Up"
+}
