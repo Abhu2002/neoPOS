@@ -61,6 +61,8 @@ dependencies:
   #provider
   provider: any
 
+  #sideMenu
+  side_navigation: ^1.0.4
 dev_dependencies:
   flutter_test:
     sdk: flutter
