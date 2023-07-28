@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/utils/utils.dart';
-import '../../navigation/route_paths.dart';
 import '../../utils/action_button.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/common_text.dart';
@@ -124,7 +124,7 @@ class _LoginPage extends State<LoginPage> {
     );
   }
 
-  void onSuccess() => Navigator.pushReplacementNamed(context,RoutePaths.dashboard );
+  void onSuccess() => Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => DashboardPage(),));
 
   void createSnackBar(String message) {
     final snackBar = SnackBar(content: Text(message));

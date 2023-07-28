@@ -1,6 +1,7 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:neopos/navigation/route_paths.dart';
+import 'package:neopos/screens/login/login_page.dart';
+
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -74,7 +75,7 @@ class _DashboardPage extends State<DashboardPage> {
           actions: [
             IconButton(
                 onPressed: () async {
-                  Navigator.pushReplacementNamed(context, RoutePaths.login);
+                  Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => LoginPage(),)) ;
                 },
                 icon: const Icon(Icons.logout))
           ],
