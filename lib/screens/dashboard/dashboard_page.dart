@@ -33,7 +33,6 @@ class _DashboardPage extends State<DashboardPage> {
                 child: Row(mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     SideNavigationBar(
-
                       selectedIndex: selectedIndex,
                       items: const [
                         SideNavigationBarItem(
