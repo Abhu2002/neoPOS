@@ -7,6 +7,7 @@ import '../../utils/app_colors.dart';
 import '../../utils/common_text.dart';
 import '../dashboard/dashboard_page.dart';
 import 'login_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -42,7 +43,7 @@ class _LoginPage extends State<LoginPage> {
                         child: Align(
                             alignment: Alignment.centerLeft,
                             child: Text(
-                              "Welcome \nback",
+                              AppLocalizations.of(context)!.welcomeBack,
                               style: TextStyle(
                                   color: AppColors.backgroundColor,
                                   fontSize: (screenWidth < 1000) ? 32 : 50,
@@ -68,9 +69,9 @@ class _LoginPage extends State<LoginPage> {
                                 suffixIcon: state.userId.isNotEmptyValidator
                                     ? const Icon(Icons.done) : null,
                                 prefixIcon: Icons.person,
-                                hint: "UserName",
+                                hint: AppLocalizations.of(context)!.username,
                                 errorText: (!state.userId.isNotEmptyValidator && state.verifyData)
-                                    ? "Please ensure the user entered is valid" : null,
+                                    ? AppLocalizations.of(context)!.username_error : null,
                                 onChange: (v) {
                                   context.read<LoginBloc>().add(UserIdChanged(v));
                                 },
@@ -87,9 +88,9 @@ class _LoginPage extends State<LoginPage> {
                                 suffixIcon: state.password.isPasswordValid
                                     ? const Icon(Icons.done) : null,
                                 prefixIcon: Icons.lock,
-                                hint: "Password",
+                                hint: AppLocalizations.of(context)!.password,
                                 errorText: !state.password.isPasswordValid && state.verifyData
-                                    ? "Please ensure the password entered is valid" : null,
+                                    ? AppLocalizations.of(context)!.password_error : null,
                                 onChange: (v) {
                                   context.read<LoginBloc>().add(PasswordChanged(v));
                                 },
@@ -102,7 +103,7 @@ class _LoginPage extends State<LoginPage> {
                           BlocBuilder<LoginBloc, LoginState>(
                             builder: (context, state) {
                               return ActionButton(
-                                text: "Login",
+                                text: AppLocalizations.of(context)!.login,
                                 state: state.state,
                                 onPress: () {
                                   context.read<LoginBloc>().add(OnLogin());

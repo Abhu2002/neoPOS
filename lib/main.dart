@@ -7,8 +7,11 @@ import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/login/login_page.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'firebase_options.dart';
+import 'l10n/l10n.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-Future<void> main() async {
+
+Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -34,6 +37,16 @@ class MyApp extends StatelessWidget {
             primarySwatch: AppColors.primarySwatch,
             scaffoldBackgroundColor: AppColors.backgroundColor),
         home: isLoggedIn(),
+
+        // setting up localization
+        supportedLocales: L10n.all,
+        locale: const Locale('hi'),
+        localizationsDelegates: [
+          AppLocalizations.delegate,
+          AppLocalizations.localizationsDelegates[1],
+          AppLocalizations.localizationsDelegates[2],
+          AppLocalizations.localizationsDelegates[3],
+        ],
       ),
     );
   }
