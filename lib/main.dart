@@ -37,6 +37,8 @@ class MyApp extends StatelessWidget {
             primarySwatch: AppColors.primarySwatch,
             scaffoldBackgroundColor: AppColors.backgroundColor),
         home: isLoggedIn(),
+
+        // setting up localization
         supportedLocales: L10n.all,
         locale: const Locale('hi'),
         localizationsDelegates: [
