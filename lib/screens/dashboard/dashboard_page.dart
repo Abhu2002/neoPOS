@@ -1,6 +1,7 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:neopos/screens/login/login_page.dart';
+import 'package:neopos/utils/app_colors.dart';
 
 
 class DashboardPage extends StatefulWidget {
@@ -85,7 +86,7 @@ class _DashboardPage extends State<DashboardPage> {
               SliverFillRemaining(
                 child: Row(mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    SideMenu(items: items, controller: sideMenu),
+                    SideMenu(items: items, controller: sideMenu,style: SideMenuStyle(backgroundColor: Colors.grey.shade50,selectedColor: AppColors.primarySwatch.shade50,selectedIconColor: AppColors.primarySwatch.shade400,selectedTitleTextStyle: TextStyle(color: AppColors.primarySwatch.shade400))),
                     Expanded(
                       child: PageView(
                         controller: pageController,
