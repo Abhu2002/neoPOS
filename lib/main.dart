@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/login/login_page.dart';
+import 'package:neopos/screens/table/table_operations/table_update/update_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'firebase_options.dart';
 import 'l10n/l10n.dart';
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => LoginBloc()),
+        BlocProvider(create: (_) => UpdateTableBloc())
       ],
       child: MaterialApp(
         theme: ThemeData(
