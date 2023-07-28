@@ -52,7 +52,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       FirebaseFirestore database = FirebaseFirestore.instance;
       database
           .collection("users")
-          .where("userId", isEqualTo: state.userId)
+          .where("user_id", isEqualTo: state.userId)
           .where("password", isEqualTo: state.password)
           .get()
           .then((value) {
@@ -62,7 +62,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             onLoginSuccess!();
           }
         } else {
-          showMessage!("Wrong Credentials");
+          showMessage!("Invalid Credentials");
         }
       }, onError: (e) {});
     } catch (e) {

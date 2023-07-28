@@ -64,6 +64,9 @@ dependencies:
   #localization
   flutter_localization: ^0.1.13
 
+  #sideMenu
+  side_navigation: ^1.0.4
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -88,6 +91,7 @@ flutter:
 
   # to auto-generate localization files on restart
   generate: true
+
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/

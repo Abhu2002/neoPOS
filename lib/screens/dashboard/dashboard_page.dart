@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:side_navigation/side_navigation.dart';
 
 import '../login/login_page.dart';
 
@@ -10,6 +11,7 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPage extends State<DashboardPage> {
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,6 +26,52 @@ class _DashboardPage extends State<DashboardPage> {
                 icon: const Icon(Icons.logout))
           ],
         ),
-        body: Container());
+        body: SafeArea(
+          child: CustomScrollView(
+            slivers: [
+              SliverFillRemaining(
+                child: Row(mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SideNavigationBar(
+
+                      selectedIndex: selectedIndex,
+                      items: const [
+                        SideNavigationBarItem(
+                          icon: Icons.category,
+                          label: 'Category',
+                        ),
+                        SideNavigationBarItem(
+                          icon: Icons.restaurant_menu,
+                          label: 'Products',
+                        ),
+                        SideNavigationBarItem(
+                          icon: Icons.table_chart,
+                          label: 'Tables',
+                        ),
+                        SideNavigationBarItem(
+                          icon: Icons.dashboard,
+                          label: 'Dashboard',
+                        ),
+                        SideNavigationBarItem(
+                          icon: Icons.shopping_cart,
+                          label: 'Order History',
+                        ),
+                        SideNavigationBarItem(
+                          icon: Icons.person,
+                          label: 'Users',
+                        ),
+                      ],
+                      onTap: (index) {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }
