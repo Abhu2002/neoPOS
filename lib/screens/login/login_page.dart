@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:neopos/screens/table/table_operation/create_table/create_table_page.dart';
 import 'package:neopos/utils/utils.dart';
 import '../../utils/action_button.dart';
 import '../../utils/app_colors.dart';
@@ -17,7 +18,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -67,13 +67,19 @@ class _LoginPage extends State<LoginPage> {
                               return AuthCustomTextfield(
                                 obscureText: false,
                                 suffixIcon: state.userId.isNotEmptyValidator
-                                    ? const Icon(Icons.done) : null,
+                                    ? const Icon(Icons.done)
+                                    : null,
                                 prefixIcon: Icons.person,
                                 hint: AppLocalizations.of(context)!.username,
-                                errorText: (!state.userId.isNotEmptyValidator && state.verifyData)
-                                    ? AppLocalizations.of(context)!.username_error : null,
+                                errorText: (!state.userId.isNotEmptyValidator &&
+                                        state.verifyData)
+                                    ? AppLocalizations.of(context)!
+                                        .username_error
+                                    : null,
                                 onChange: (v) {
-                                  context.read<LoginBloc>().add(UserIdChanged(v));
+                                  context
+                                      .read<LoginBloc>()
+                                      .add(UserIdChanged(v));
                                 },
                               );
                             },
@@ -86,13 +92,19 @@ class _LoginPage extends State<LoginPage> {
                               return AuthCustomTextfield(
                                 obscureText: true,
                                 suffixIcon: state.password.isPasswordValid
-                                    ? const Icon(Icons.done) : null,
+                                    ? const Icon(Icons.done)
+                                    : null,
                                 prefixIcon: Icons.lock,
                                 hint: AppLocalizations.of(context)!.password,
-                                errorText: !state.password.isPasswordValid && state.verifyData
-                                    ? AppLocalizations.of(context)!.password_error : null,
+                                errorText: !state.password.isPasswordValid &&
+                                        state.verifyData
+                                    ? AppLocalizations.of(context)!
+                                        .password_error
+                                    : null,
                                 onChange: (v) {
-                                  context.read<LoginBloc>().add(PasswordChanged(v));
+                                  context
+                                      .read<LoginBloc>()
+                                      .add(PasswordChanged(v));
                                 },
                               );
                             },
@@ -106,7 +118,11 @@ class _LoginPage extends State<LoginPage> {
                                 text: AppLocalizations.of(context)!.login,
                                 state: state.state,
                                 onPress: () {
-                                  context.read<LoginBloc>().add(OnLogin());
+                                  // context.read<LoginBloc>().add(OnLogin());
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => CreateTableForm(),
+                                  );
                                 },
                               );
                             },

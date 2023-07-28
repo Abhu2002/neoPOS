@@ -12,6 +12,10 @@ class AppColors {
   static const subTextColor = Color(0xff2A2A2A);
   static const buttonTextColor = Color(0xffec7905);
 
+// Button Colors
+  static const buttonColor = Color(0xffec7905);
+  static const unavilableButtonColor = Color(0xff828282);
+
 // Table Colors
   static const tableAvailableColor = Color(0xff55CA92);
   static const tableNotAvailableColor = Color(0xf5EC7904);
