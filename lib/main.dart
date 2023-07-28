@@ -32,6 +32,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (_) => LoginBloc()),
       ],
+
       child: MaterialApp(
         theme: ThemeData(
             primarySwatch: AppColors.primarySwatch,
