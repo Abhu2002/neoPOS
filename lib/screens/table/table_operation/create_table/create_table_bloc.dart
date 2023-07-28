@@ -17,24 +17,18 @@ class CreateTableBloc extends Bloc<CreateTableEvent, CreateTableState> {
       }
     });
     on<CreateTableFBEvent>((event, emit) async {
-      // firebase Operation
-      // print(event.tableCap);
       try {
-        // final data = TableModel(
-        //     tablename: event.tableName, tableCap: int.parse(event.tableCap));
-        // print(data);
-        Map<String, dynamic> data = {
-          "table_id": 3,
-          "table_name": event.tableName,
-          "table_capacity": int.parse(event.tableCap)
-        };
+        final data = TableModel(
+            tablename: event.tableName, tableCap: int.parse(event.tableCap));
         FirebaseFirestore db = FirebaseFirestore.instance;
-        await db.collection("table").add(data).then((documentSnapshot) =>
-            print("Added Data with ID: ${documentSnapshot.id}"));
+        await db.collection("table").add(data.toFirestore()).then(
+            (documentSnapshot) => {
+                  print("Added Data with ID: ${documentSnapshot.id}"),
+                  emit(TableCreatedState())
+                });
         await FirebaseFirestore.instance.clearPersistence();
         await FirebaseFirestore.instance.terminate();
       } catch (err) {
-        // print("1");
         print(err);
       }
     });

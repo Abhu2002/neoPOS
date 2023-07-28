@@ -22,8 +22,8 @@ class TableModel {
 
   Map<String, dynamic> toFirestore() {
     return {
-      if (tablename != null) "name": tablename,
-      if (tableCap != null) "state": tableCap,
+      if (tablename != null) "table_name": tablename,
+      if (tableCap != null) "table_capacity": tableCap,
     };
   }
 }

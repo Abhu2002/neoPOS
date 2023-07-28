@@ -81,6 +81,9 @@ class _CreateTableFormState extends State<CreateTableForm> {
         ),
         BlocBuilder<CreateTableBloc, CreateTableState>(
           builder: (context, state) {
+            if (state is TableCreatedState) {
+              Navigator.pop(context);
+            }
             return SizedBox(
                 width: double.infinity,
                 height: 45,

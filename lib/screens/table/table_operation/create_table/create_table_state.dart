@@ -19,3 +19,5 @@ class TableErrorState extends CreateTableState {
   final String errorMessage;
   TableErrorState(this.errorMessage);
 }
+
+class TableCreatedState extends CreateTableState {}
