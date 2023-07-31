@@ -65,6 +65,7 @@ class UpdateTableBloc extends Bloc<UpdateEvent, UpdateTableState> {
             : false));
   }
 
+
   Future<void> _onUpdate(OnUpdate event, Emitter<UpdateTableState> emit) async {
     if (!state.tableId.isNotEmptyValidator ||
         !state.tableName.isNotEmptyValidator ||
@@ -83,32 +84,56 @@ class UpdateTableBloc extends Bloc<UpdateEvent, UpdateTableState> {
         canUpdate: false));
     try {
       /// TODO: Use result later
-      var result;
+      // var result;
+      var id;
+      FirebaseFirestore db = FirebaseFirestore.instance;
+      db.collection("table").get().then((querySnapshot) {
+          print("Successfully completed");
+          for (var docSnapshot in querySnapshot.docs) {
+            print('${docSnapshot.id} => ${docSnapshot.data()}');
 
-      FirebaseFirestore database = FirebaseFirestore.instance;
-      database
-          .collection("table")
-          .where("table_id", isEqualTo: '1')
-          .get()
-          .then((value) {
-            var id;
-        if (value.size != 0) {
-          for (var data in value.docs) {
-            id = data.id;
-            result = data.data();
-            onUpdateSuccess!();
+            if(docSnapshot.id == "U2jiN2etD0vSw6HAh1Lh") {
+              id = docSnapshot.id;
+              break;
+            }
           }
 
-          database.collection("table").doc("$id").update({
-            "table_name": state.tableName,
-            "table_capacity": state.tableCapacity,
-          }).then(
-                  (value) => print("Document updated successfully"),
-              onError: (e) => print("Error updating document $e"));
-        } else {
-          showMessage!("No such table");
-        }
-      }, onError: (e) {});
+          db.collection("table").doc(id).update({
+                  "table_name": state.tableName,
+                  "table_capacity": state.tableCapacity,
+                }).then(
+                        (value) {
+                          // print("Document updated successfully");
+                          showMessage!("Table Updated Successfully!");
+                          onUpdateSuccess!();
+                        },
+                    onError: (e) => showMessage!("Error updating table $e"));
+      });
+
+      // FirebaseFirestore database = FirebaseFirestore.instance;
+      // database
+      //     .collection("table")
+      //     .where("id", isEqualTo: '7TfirNLKPsQwev6Rq5OJ')
+      //     .get()
+      //     .then((value) {
+      //       var id;
+      //   if (value.size != 0) {
+      //     for (var data in value.docs) {
+      //       id = data.id;
+      //       result = data.data();
+      //       onUpdateSuccess!();
+      //     }
+      //
+      //     database.collection("table").doc("$id").update({
+      //       "table_name": state.tableName,
+      //       "table_capacity": state.tableCapacity,
+      //     }).then(
+      //             (value) => print("Document updated successfully"),
+      //         onError: (e) => print("Error updating document $e"));
+      //   } else {
+      //     showMessage!("No such table");
+      //   }
+      // }, onError: (e) {});
     } catch (e) {
       showMessage!("Wrong Credentials");
     }
