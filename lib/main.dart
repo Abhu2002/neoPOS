@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/screens/category/category_operation/read_category/read_category_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/login/login_page.dart';
@@ -10,8 +11,7 @@ import 'firebase_options.dart';
 import 'l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -31,8 +31,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => LoginBloc()),
+        BlocProvider(create: (_) => ReadCategoryBloc()),
       ],
-
       child: MaterialApp(
         theme: ThemeData(
             primarySwatch: AppColors.primarySwatch,
@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
 
         // setting up localization
         supportedLocales: L10n.all,
-        locale: const Locale('hi'),
+        locale: const Locale('en'),
         localizationsDelegates: [
           AppLocalizations.delegate,
           AppLocalizations.localizationsDelegates[1],
