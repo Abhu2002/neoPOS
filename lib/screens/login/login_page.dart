@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/table/table_operations/table_update/update_page.dart';
 import 'package:neopos/utils/utils.dart';
 import '../../utils/action_button.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/common_text.dart';
-import '../dashboard/dashboard_page.dart';
 import 'login_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -107,10 +107,7 @@ class _LoginPage extends State<LoginPage> {
                                 text: AppLocalizations.of(context)!.login,
                                 state: state.state,
                                 onPress: () {
-                                  // context.read<LoginBloc>().add(OnLogin());
-                                  Navigator.of(context).push(MaterialPageRoute(builder: (context) {
-                                    return const TableUpdateAlert();
-                                  }));
+                                  context.read<LoginBloc>().add(OnLogin());
                                 },
                               );
                             },
@@ -128,8 +125,7 @@ class _LoginPage extends State<LoginPage> {
     );
   }
 
-  void onSuccess() => Navigator.pushReplacement(
-      context, MaterialPageRoute(builder: (_) => const DashboardPage()));
+  void onSuccess() => Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => DashboardPage(),));
 
   void createSnackBar(String message) {
     final snackBar = SnackBar(content: Text(message));

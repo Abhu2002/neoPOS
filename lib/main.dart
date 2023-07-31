@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => LoginBloc()),
         BlocProvider(create: (_) => UpdateTableBloc())
       ],
+
       child: MaterialApp(
         theme: ThemeData(
             primarySwatch: AppColors.primarySwatch,
