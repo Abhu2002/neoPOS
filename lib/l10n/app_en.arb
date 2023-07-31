@@ -18,7 +18,6 @@
   "login": "Login",
   "or": "OR",
   "sign_up": "Sign Up",
-  "create_table":"Create table",
-  "table_name":"Table Name",
-  "table_cap":"Table Capacity"
+  "create_category":"Create Category",
+  "category_name":"Category Name"
 }

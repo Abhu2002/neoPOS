@@ -12,4 +12,6 @@
   "create_table":"टेबल बनाएं",
   "table_name":"टेबल नाम",
   "table_cap":"टेबल क्षमता"
+   "create_category":"श्रेणी बनाएं",
+    "category_name":"श्रेणी नाम"
 }
