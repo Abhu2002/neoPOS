@@ -16,15 +16,19 @@ class CreateTableForm extends StatefulWidget {
 class _CreateTableFormState extends State<CreateTableForm> {
   TextEditingController tableName = TextEditingController();
   TextEditingController tableCap = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     BlocProvider.of<CreateTableBloc>(context).add(const InputEvent("", ""));
+    tableName.text = "";
+    tableCap.text = "";
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    context.read<CreateTableBloc>().showMessage = createSnackBar;
     return AlertDialog(
       // contentPadding: EdgeInsets.all(20),
       shape: const RoundedRectangleBorder(
@@ -38,73 +42,94 @@ class _CreateTableFormState extends State<CreateTableForm> {
             color: AppColors.mainTextColor),
       ),
       actions: [
-        BlocBuilder<CreateTableBloc, CreateTableState>(
-          builder: (context, state) {
-            return TextFormField(
-              controller: tableName,
-              decoration: const InputDecoration(
-                  hintText: "Table Name",
-                  prefixIcon: Icon(
-                    Icons.table_bar,
-                    color: AppColors.primaryColor,
-                  )),
-              onChanged: (val) {
-                BlocProvider.of<CreateTableBloc>(context)
-                    .add(InputEvent(tableName.text, tableCap.text));
-              },
-            );
-          },
+        Form(
+          key: formKey,
+          child: SizedBox(
+            width: MediaQuery.of(context).size.width / 2,
+            child: Column(
+              children: [
+                BlocBuilder<CreateTableBloc, CreateTableState>(
+                  builder: (context, state) {
+                    return TextFormField(
+                      controller: tableName,
+                      decoration: const InputDecoration(
+                          hintText: "Table Name",
+                          prefixIcon: Icon(
+                            Icons.table_bar,
+                            color: AppColors.primaryColor,
+                          )),
+                      onChanged: (val) {
+                        BlocProvider.of<CreateTableBloc>(context)
+                            .add(InputEvent(tableName.text, tableCap.text));
+                      },
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                BlocBuilder<CreateTableBloc, CreateTableState>(
+                  builder: (context, state) {
+                    return TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: tableCap,
+                      decoration: const InputDecoration(
+                          hintText: "Table Capacity",
+                          prefixIcon: Icon(
+                            Icons.group_add,
+                            color: AppColors.primaryColor,
+                          )),
+                      onChanged: (val) {
+                        BlocProvider.of<CreateTableBloc>(context)
+                            .add(InputEvent(tableName.text, tableCap.text));
+                      },
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                BlocBuilder<CreateTableBloc, CreateTableState>(
+                  builder: (context, state) {
+                    if (state is TableErrorState) {
+                      if (state.errorMessage == "Please Pop") {
+                        Navigator.pop(context);
+                      }
+                    }
+                    if (state is TableCreatedState) {
+                      Navigator.pop(context);
+                    }
+                    return SizedBox(
+                        width: double.infinity,
+                        height: 45,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: (state is TableErrorState)
+                                  ? AppColors.unavilableButtonColor
+                                  : AppColors.primaryColor),
+                          child: Text("Create Table"),
+                          onPressed: (state is TableErrorState)
+                              ? null
+                              : () {
+                                  BlocProvider.of<CreateTableBloc>(context).add(
+                                      CreateTableFBEvent(
+                                          tableName.text, tableCap.text));
+                                },
+                        ));
+                  },
+                ),
+              ],
+            ),
+          ),
         ),
-        const SizedBox(
-          height: 20,
-        ),
-        BlocBuilder<CreateTableBloc, CreateTableState>(
-          builder: (context, state) {
-            return TextFormField(
-              keyboardType: TextInputType.number,
-              controller: tableCap,
-              decoration: const InputDecoration(
-                  hintText: "Table Capacity",
-                  prefixIcon: Icon(
-                    Icons.group_add,
-                    color: AppColors.primaryColor,
-                  )),
-              onChanged: (val) {
-                BlocProvider.of<CreateTableBloc>(context)
-                    .add(InputEvent(tableName.text, tableCap.text));
-              },
-            );
-          },
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        BlocBuilder<CreateTableBloc, CreateTableState>(
-          builder: (context, state) {
-            if (state is TableCreatedState) {
-              Navigator.pop(context);
-            }
-            return SizedBox(
-                width: double.infinity,
-                height: 45,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: (state is TableErrorState)
-                          ? AppColors.unavilableButtonColor
-                          : AppColors.primaryColor),
-                  child: Text("Create Table"),
-                  onPressed: (state is TableErrorState)
-                      ? null
-                      : () {
-                          BlocProvider.of<CreateTableBloc>(context).add(
-                              CreateTableFBEvent(
-                                  tableName.text, tableCap.text));
-                        },
-                ));
-          },
-        ),
+
         // ActionButton(text: "Create Table", onPress: () {})
       ],
     );
+  }
+
+  void createSnackBar(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }
