@@ -4,6 +4,7 @@ import 'package:neopos/screens/login/login_page.dart';
 import 'package:neopos/utils/app_colors.dart';
 
 import '../category/category_operations/category_create/create_category_page.dart';
+import '../users/user_operations/user_create/create_user_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -113,7 +114,7 @@ class _DashboardPage extends State<DashboardPage> {
                             showDialog(
                               context: context,
                               builder: (context) =>
-                              const CreateCategoryForm(),
+                              const CreateUserForm(),
                             );
                           },),
                         ),
