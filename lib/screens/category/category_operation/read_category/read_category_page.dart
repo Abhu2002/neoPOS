@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/category/category_operation/read_category/read_category_bloc.dart';
-import 'package:neopos/utils/app_colors.dart';
 
 import '../create_operation/create_category_page.dart';
 
