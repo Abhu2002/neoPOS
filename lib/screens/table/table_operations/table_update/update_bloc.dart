@@ -23,7 +23,6 @@ class UpdateTableBloc extends Bloc<UpdateEvent, UpdateTableState> {
   void _onTableIdChanged(TableIdChanged event, Emitter<UpdateTableState> emit) {
     final tableId = event.tableId;
     emit(state.copyWith(
-        tableId: tableId.isNotEmpty ? tableId : event.tableId,
         canUpdate: tableId.isNotEmpty &&
             state.tableName.isNotEmpty &&
             state.tableCapacity
@@ -39,7 +38,6 @@ class UpdateTableBloc extends Bloc<UpdateEvent, UpdateTableState> {
     emit(state.copyWith(
         tableName: tableName.isNotEmpty ? tableName : event.tableName,
         canUpdate: tableName.isNotEmpty &&
-            state.tableId.isNotEmpty &&
             state.tableCapacity
                 .toString()
                 .isNotEmpty
@@ -59,7 +57,6 @@ class UpdateTableBloc extends Bloc<UpdateEvent, UpdateTableState> {
         canUpdate: tableCapacity
             .toString()
             .isNotEmpty &&
-            state.tableId.isNotEmpty &&
             state.tableName.isNotEmpty
             ? true
             : false));
@@ -67,8 +64,7 @@ class UpdateTableBloc extends Bloc<UpdateEvent, UpdateTableState> {
 
 
   Future<void> _onUpdate(OnUpdate event, Emitter<UpdateTableState> emit) async {
-    if (!state.tableId.isNotEmptyValidator ||
-        !state.tableName.isNotEmptyValidator ||
+    if (!state.tableName.isNotEmptyValidator ||
         !state.tableCapacity
             .toString()
             .isNotEmptyValidator) {
@@ -78,7 +74,6 @@ class UpdateTableBloc extends Bloc<UpdateEvent, UpdateTableState> {
     }
 
     emit(state.copyWith(
-        tableId: state.tableId,
         tableName: state.tableName,
         state: UpdateButtonState.progress,
         canUpdate: false));
@@ -138,7 +133,6 @@ class UpdateTableBloc extends Bloc<UpdateEvent, UpdateTableState> {
       showMessage!("Wrong Credentials");
     }
     emit(state.copyWith(
-        tableId: state.tableId,
         tableName: state.tableName,
         state: UpdateButtonState.progress,
         canUpdate: false));

@@ -4,7 +4,6 @@ enum UpdateButtonState { disable, enable, progress }
 
 class UpdateTableState extends Equatable {
   const UpdateTableState({
-    this.tableId = '1',
     this.tableName = '',
     this.tableCapacity = 0,
     this.state = UpdateButtonState.enable,
@@ -12,7 +11,6 @@ class UpdateTableState extends Equatable {
     this.verifyData = false,
   });
 
-  final String tableId;
   final String tableName;
   final int tableCapacity;
   final UpdateButtonState state;
@@ -20,7 +18,6 @@ class UpdateTableState extends Equatable {
   final bool verifyData;
 
   UpdateTableState copyWith({
-    String? tableId,
     String? tableName,
     int? tableCapacity,
     UpdateButtonState? state,
@@ -28,7 +25,6 @@ class UpdateTableState extends Equatable {
     bool? verifyData,
   }) {
     return UpdateTableState(
-      tableId: tableId ?? this.tableId,
       tableName: tableName ?? this.tableName,
       tableCapacity: tableCapacity ?? this.tableCapacity,
       state: state ?? this.state,
@@ -39,5 +35,5 @@ class UpdateTableState extends Equatable {
 
   @override
   List<Object?> get props =>
-      [tableId, tableName, tableCapacity, state, canUpdate, verifyData];
+      [tableName, tableCapacity, state, canUpdate, verifyData];
 }
