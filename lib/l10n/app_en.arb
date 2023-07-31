@@ -17,5 +17,7 @@
   "password_error": "Please ensure the password entered is valid",
   "login": "Login",
   "or": "OR",
-  "sign_up": "Sign Up"
+  "sign_up": "Sign Up",
+  "create_category":"Create Category",
+  "category_name":"Category Name"
 }

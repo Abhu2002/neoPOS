@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:neopos/screens/login/login_page.dart';
 import 'package:neopos/utils/app_colors.dart';
 
+import '../category/category_operations/category_create/create_category_page.dart';
+
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
@@ -107,7 +109,13 @@ class _DashboardPage extends State<DashboardPage> {
                     children: [
                       Container(
                         child: Center(
-                          child: Text('Dashboard'),
+                          child: ElevatedButton(child: Text("Create Category"),onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) =>
+                              const CreateCategoryForm(),
+                            );
+                          },),
                         ),
                       ),
                       Container(
