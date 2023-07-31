@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/category/category_operation/read_category/read_category_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 
-import '../create_operation/category_create/create_category_page.dart';
+import '../create_operation/create_category_page.dart';
 
 class CategoryRead extends StatefulWidget {
   const CategoryRead({super.key});

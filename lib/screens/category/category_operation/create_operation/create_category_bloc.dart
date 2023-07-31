@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-import '../../../model/category.dart';
+import '../../model/category.dart';
 
 // import 'package:flutter/material.dart';
 
