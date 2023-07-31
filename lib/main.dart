@@ -6,6 +6,7 @@ import 'package:neopos/screens/category/category_operation/read_category/read_ca
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/login/login_page.dart';
+import 'package:neopos/screens/table/table_operation/create_table/create_table_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'firebase_options.dart';
 import 'l10n/l10n.dart';
@@ -31,7 +32,7 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => LoginBloc()),
-        BlocProvider(create: (_) => ReadCategoryBloc()),
+        BlocProvider(create: (_) => CreateTableBloc()),
       ],
       child: MaterialApp(
         theme: ThemeData(
