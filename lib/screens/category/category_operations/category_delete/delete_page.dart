@@ -159,7 +159,7 @@ class CategoryList extends StatelessWidget {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                BlocProvider.of<CategoryDeletionBloc>(context).deleteTable(id);
+                BlocProvider.of<CategoryDeletionBloc>(context).deleteCategory(id);
               },
               child: Text('Yes'),
             ),

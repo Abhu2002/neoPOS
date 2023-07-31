@@ -3,25 +3,25 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
 
-
-class CategoryDeletionBloc extends Bloc<CategoryDeletionEvent, CategoryDeletionState> {
+class CategoryDeletionBloc
+    extends Bloc<CategoryDeletionEvent, CategoryDeletionState> {
   final CollectionReference usersCollection =
-  FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('users');
   final CollectionReference categoryCollection =
-  FirebaseFirestore.instance.collection('category');
+      FirebaseFirestore.instance.collection('category');
 
   CategoryDeletionBloc() : super(InitialCategoryDeletionState()) {
     on<CredentialsEnteredEvent>(_mapCredentialsEnteredEventToState);
     on<ConfirmTableDeletionEvent>(_mapConfirmTableDeletionEventToState);
   }
 
-  void _mapCredentialsEnteredEventToState(
-      CredentialsEnteredEvent event, Emitter<CategoryDeletionState> emit) async {
+  void _mapCredentialsEnteredEventToState(CredentialsEnteredEvent event,
+      Emitter<CategoryDeletionState> emit) async {
     String username = event.username;
     String password = event.password;
 
     QuerySnapshot querySnapshot =
-    await usersCollection.where('first_name', isEqualTo: username).get();
+        await usersCollection.where('first_name', isEqualTo: username).get();
 
     if (querySnapshot.size != 0) {
       var userData = querySnapshot.docs[0].data();
@@ -44,7 +44,7 @@ class CategoryDeletionBloc extends Bloc<CategoryDeletionEvent, CategoryDeletionS
     emit(CategoryDeleteState());
   }
 
-  void deleteTable(String categoryId) async {
+  void deleteCategory(String categoryId) async {
     await categoryCollection.doc(categoryId).delete();
     add(ConfirmTableDeletionEvent());
   }
