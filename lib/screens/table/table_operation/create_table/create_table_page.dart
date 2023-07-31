@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-// import 'package:neopos/utils/action_button.dart';
+
 import 'package:neopos/utils/app_colors.dart';
-// import 'package:neopos/utils/common_text.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'create_table_bloc.dart';
 
@@ -34,9 +34,9 @@ class _CreateTableFormState extends State<CreateTableForm> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
-      title: const Text(
-        "Create Table",
-        style: TextStyle(
+      title: Text(
+        AppLocalizations.of(context)!.create_table,
+        style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
             color: AppColors.mainTextColor),
@@ -52,9 +52,9 @@ class _CreateTableFormState extends State<CreateTableForm> {
                   builder: (context, state) {
                     return TextFormField(
                       controller: tableName,
-                      decoration: const InputDecoration(
-                          hintText: "Table Name",
-                          prefixIcon: Icon(
+                      decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!.table_name,
+                          prefixIcon: const Icon(
                             Icons.table_bar,
                             color: AppColors.primaryColor,
                           )),
@@ -73,9 +73,9 @@ class _CreateTableFormState extends State<CreateTableForm> {
                     return TextFormField(
                       keyboardType: TextInputType.number,
                       controller: tableCap,
-                      decoration: const InputDecoration(
-                          hintText: "Table Capacity",
-                          prefixIcon: Icon(
+                      decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!.table_cap,
+                          prefixIcon: const Icon(
                             Icons.group_add,
                             color: AppColors.primaryColor,
                           )),
@@ -107,7 +107,8 @@ class _CreateTableFormState extends State<CreateTableForm> {
                               backgroundColor: (state is TableErrorState)
                                   ? AppColors.unavilableButtonColor
                                   : AppColors.primaryColor),
-                          child: Text("Create Table"),
+                          child:
+                              Text(AppLocalizations.of(context)!.create_table),
                           onPressed: (state is TableErrorState)
                               ? null
                               : () {

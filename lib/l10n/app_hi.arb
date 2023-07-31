@@ -9,7 +9,7 @@
   "login": "लॉग इन करें",
   "or": "या",
   "sign_up": "साइन अप करें",
-  "create_table":"तालिका बनाएं",
-  "table_name":"तालिका नाम",
+  "create_table":"टेबल बनाएं",
+  "table_name":"टेबल नाम",
   "table_cap":"टेबल क्षमता"
 }
