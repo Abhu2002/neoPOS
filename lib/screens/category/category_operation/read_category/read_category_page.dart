@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/category/category_operation/read_category/read_category_bloc.dart';
+import 'package:neopos/utils/app_colors.dart';
+
+import '../create_operation/category_create/create_category_page.dart';
 
 class CategoryRead extends StatefulWidget {
   const CategoryRead({super.key});
@@ -21,9 +24,25 @@ class _CategoryReadState extends State<CategoryRead> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(title: const Text("Read Category")),
-        body: BlocBuilder<ReadCategoryBloc, ReadCategoryState>(
+    return Column(
+      children: [
+        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Flexible(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: ElevatedButton(
+                  onPressed: () async {
+                    await showDialog(
+                        context: context,
+                        builder: (context) => const CreateCategoryForm());
+                    BlocProvider.of<ReadCategoryBloc>(context)
+                        .add(InitialEvent());
+                  },
+                  child: const Text("Create")),
+            ),
+          ),
+        ]),
+        BlocBuilder<ReadCategoryBloc, ReadCategoryState>(
           builder: (context, state) {
             if (state is DataLoadedState) {
               print(state.all);
@@ -71,6 +90,8 @@ class _CategoryReadState extends State<CategoryRead> {
               return Text("Loadind");
             }
           },
-        ));
+        ),
+      ],
+    );
   }
 }

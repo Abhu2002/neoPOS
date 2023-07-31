@@ -119,12 +119,7 @@ class _LoginPage extends State<LoginPage> {
                                 text: AppLocalizations.of(context)!.login,
                                 state: state.state,
                                 onPress: () {
-                                  // context.read<LoginBloc>().add(OnLogin());
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) =>
-                                        const CreateTableForm(),
-                                  );
+                                  context.read<LoginBloc>().add(OnLogin());
                                 },
                               );
                             },

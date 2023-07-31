@@ -11,7 +11,6 @@ class AppColors {
   static const mainTextColor = Color(0xffec7905);
   static const subTextColor = Color(0xff2A2A2A);
   static const buttonTextColor = Color(0xffec7905);
-  static const unavilableButtonColor = Color(0xff828282);
 
 // Button Colors
   static const buttonColor = Color(0xffec7905);

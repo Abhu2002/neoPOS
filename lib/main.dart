@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/screens/category/category_operation/create_operation/category_create/create_category_bloc.dart';
+import 'package:neopos/screens/category/category_operation/read_category/read_category_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/login/login_page.dart';
@@ -31,6 +33,9 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => LoginBloc()),
+        BlocProvider(create: (_) => CreateTableBloc()),
+        BlocProvider(create: (_) => ReadCategoryBloc()),
+        BlocProvider(create: (_) => CreateCategoryBloc()),
       ],
       child: MaterialApp(
         theme: ThemeData(
