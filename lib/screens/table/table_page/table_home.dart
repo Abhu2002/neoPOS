@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:neopos/screens/table/table_page/table_bloc.dart';
+import 'package:neopos/screens/table/table_page/table_page.dart';
 import 'package:provider/provider.dart';
-import 'package:neopos/screens/table/table_operation/table_read/table_bloc.dart';
-import 'package:neopos/screens/table/table_operation/table_read/table_page.dart';
 import 'package:neopos/repository/tables_read.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

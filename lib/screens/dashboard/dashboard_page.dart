@@ -2,12 +2,8 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
-
 import '../category/category_page/read_category_page.dart';
-
-
-
-import '../table/table_operation/table_read/table_home.dart';
+import '../table/table_page/table_home.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
