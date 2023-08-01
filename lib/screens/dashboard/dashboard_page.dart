@@ -1,6 +1,6 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:neopos/screens/login/login_page.dart';
+import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -14,7 +14,6 @@ class _DashboardPage extends State<DashboardPage> {
   int selectedIndex = 0;
   final SideMenuController sideMenu = SideMenuController();
   PageController pageController = PageController();
-
   @override
   void initState() {
     // Connect SideMenuController and PageController together
@@ -26,49 +25,48 @@ class _DashboardPage extends State<DashboardPage> {
 
   List<SideMenuItem> items = [
     SideMenuItem(
-      icon: Icon(Icons.category),
+      icon: const Icon(Icons.category),
       title: 'Category',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.restaurant_menu),
+      icon: const Icon(Icons.restaurant_menu),
       title: 'Products',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.table_chart),
+      icon: const Icon(Icons.table_chart),
       title: 'Tables',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.dashboard),
+      icon: const Icon(Icons.dashboard),
       title: 'Dashboard',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.shopping_cart),
+      icon: const Icon(Icons.shopping_cart),
       title: 'Order History',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.person),
+      icon: const Icon(Icons.person),
       title: 'Users',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,11 +75,7 @@ class _DashboardPage extends State<DashboardPage> {
           actions: [
             IconButton(
                 onPressed: () async {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginPage(),
-                      ));
+                  Navigator.pushReplacementNamed(context, RoutePaths.login);
                 },
                 icon: const Icon(Icons.logout))
           ],
@@ -104,16 +98,13 @@ class _DashboardPage extends State<DashboardPage> {
                 Expanded(
                   child: PageView(
                     controller: pageController,
-                    children: [
-                      Container(
-                        child: Center(
-                          child: Text('Dashboard'),
-                        ),
+                    /// TODO: Add actual pages once done
+                    children: const [
+                      Center(
+                        child: Text('Dashboard'),
                       ),
-                      Container(
-                        child: Center(
-                          child: Text('Settings'),
-                        ),
+                      Center(
+                        child: Text('Settings'),
                       ),
                     ],
                   ),
