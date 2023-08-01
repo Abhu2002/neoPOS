@@ -1,10 +1,9 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:neopos/screens/login/login_page.dart';
+import '../../navigation/route_paths.dart';
 import 'package:neopos/screens/users/user_operations/user_update/update_user_page.dart';
 import 'package:neopos/utils/app_colors.dart';
-
-import '../category/category_operations/category_create/create_category_page.dart';
+import '../category/category_page/read_category_page.dart';
 import '../users/user_operations/user_create/create_user_page.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -30,42 +29,42 @@ class _DashboardPage extends State<DashboardPage> {
 
   List<SideMenuItem> items = [
     SideMenuItem(
-      icon: Icon(Icons.category),
+      icon: const Icon(Icons.category),
       title: 'Category',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.restaurant_menu),
+      icon: const Icon(Icons.restaurant_menu),
       title: 'Products',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.table_chart),
+      icon: const Icon(Icons.table_chart),
       title: 'Tables',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.dashboard),
+      icon: const Icon(Icons.dashboard),
       title: 'Dashboard',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.shopping_cart),
+      icon: const Icon(Icons.shopping_cart),
       title: 'Order History',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.person),
+      icon: const Icon(Icons.person),
       title: 'Users',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
@@ -81,11 +80,7 @@ class _DashboardPage extends State<DashboardPage> {
           actions: [
             IconButton(
                 onPressed: () async {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => LoginPage(),
-                      ));
+                  Navigator.pushReplacementNamed(context, RoutePaths.login);
                 },
                 icon: const Icon(Icons.logout))
           ],
@@ -108,24 +103,23 @@ class _DashboardPage extends State<DashboardPage> {
                 Expanded(
                   child: PageView(
                     controller: pageController,
-                    children: [
-                      Container(
-                        child: Center(
-                          child: ElevatedButton(
-                            child: Text("Create Category"),
-                            onPressed: () {
-                              // showDialog(
-                              //   context: context,
-                              //   builder: (context) => const CreateUserForm(),
-                              // );
-                              showUpdateUserDialog(context, "HjmBZRNkoIJMsUISkEqS", "Niranjan", "Modak", "niranjan", "123");
-                            },
+                    children: const [
+                      SingleChildScrollView(child: CategoryRead()),
+                      Center(
+                        child: Text('Settings'),
+                        Container(
+                          child: Center(
+                            child: ElevatedButton(
+                              child: Text("Create Category"),
+                              onPressed: () {
+                                // showDialog(
+                                //   context: context,
+                                //   builder: (context) => const CreateUserForm(),
+                                // );
+                                showUpdateUserDialog(context, "HjmBZRNkoIJMsUISkEqS", "Niranjan", "Modak", "niranjan", "123");
+                              },
+                            ),
                           ),
-                        ),
-                      ),
-                      Container(
-                        child: Center(
-                          child: Text('Settings'),
                         ),
                       ),
                     ],

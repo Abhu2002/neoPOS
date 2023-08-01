@@ -1,9 +1,5 @@
 part of 'create_category_bloc.dart';
 
-
-
-
-
 abstract class CreateCategoryEvent extends Equatable {
   const CreateCategoryEvent();
 
@@ -13,12 +9,18 @@ abstract class CreateCategoryEvent extends Equatable {
 
 class CreateCategoryFBEvent extends CreateCategoryEvent {
   final String categoryName;
+
   const CreateCategoryFBEvent(this.categoryName);
+
+  @override
   List<Object> get props => [categoryName];
 }
 
 class InputEvent extends CreateCategoryEvent {
   final String tableName;
+
   const InputEvent(this.tableName);
+
+  @override
   List<Object> get props => [tableName];
 }

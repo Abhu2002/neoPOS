@@ -16,7 +16,6 @@ class LoginPage extends StatefulWidget {
   State<StatefulWidget> createState() => _LoginPage();
 }
 
-
 class _LoginPage extends State<LoginPage> {
 
   @override
@@ -115,12 +114,11 @@ class _LoginPage extends State<LoginPage> {
                           ),
                           BlocBuilder<LoginBloc, LoginState>(
                             builder: (context, state) {
-                              return  ActionButton(
+                              return ActionButton(
                                 text: AppLocalizations.of(context)!.login,
                                 state: state.state,
                                 onPress: () {
                                   context.read<LoginBloc>().add(OnLogin());
-
                                 },
                               );
                             },
@@ -138,13 +136,11 @@ class _LoginPage extends State<LoginPage> {
     );
   }
 
-  void onSuccess() { Navigator.pushReplacement(
+  void onSuccess() => Navigator.pushReplacement(
       context,
       MaterialPageRoute(
         builder: (context) => DashboardPage(),
       ));
-  //context.read<LoginBloc>().close();
-  }
 
   void createSnackBar(String message) {
     final snackBar = SnackBar(content: Text(message));

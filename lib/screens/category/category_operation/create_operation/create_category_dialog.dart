@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:neopos/utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'create_category_bloc.dart';
-
 
 class CreateCategoryForm extends StatefulWidget {
   const CreateCategoryForm({super.key});
@@ -18,6 +15,8 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
   TextEditingController categoryName = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
+  // CreateCategoryBloc? categoryReadBloc;
+
   @override
   void initState() {
     BlocProvider.of<CreateCategoryBloc>(context).add(const InputEvent(""));
@@ -25,9 +24,17 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
     super.initState();
   }
 
+  // @override
+  // void dispose() {
+  //   categoryReadBloc!.close();
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
+    // categoryReadBloc = BlocProvider.of<CreateCategoryBloc>(context);
     context.read<CreateCategoryBloc>().showMessage = createSnackBar;
+
     return AlertDialog(
       // contentPadding: EdgeInsets.all(20),
       shape: const RoundedRectangleBorder(
@@ -67,8 +74,6 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                 const SizedBox(
                   height: 20,
                 ),
-
-
                 BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
                   builder: (context, state) {
                     if (state is CategoryErrorState) {
@@ -77,7 +82,10 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                       }
                     }
                     if (state is CategoryCreatedState) {
-                      Navigator.pop(context);
+                      if (state.created == true) {
+                        Navigator.pop(context);
+                        state.created = false;
+                      }
                     }
                     return SizedBox(
                         width: double.infinity,
@@ -87,14 +95,14 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                               backgroundColor: (state is CategoryErrorState)
                                   ? AppColors.unavilableButtonColor
                                   : AppColors.primaryColor),
-                          child: Text("Create Table"),
                           onPressed: (state is CategoryErrorState)
                               ? null
                               : () {
-                            BlocProvider.of<CreateCategoryBloc>(context).add(
-                                CreateCategoryFBEvent(
-                                    categoryName.text));
-                          },
+                                  BlocProvider.of<CreateCategoryBloc>(context)
+                                      .add(CreateCategoryFBEvent(
+                                          categoryName.text));
+                                },
+                          child: const Text("Create Table"),
                         ));
                   },
                 ),
