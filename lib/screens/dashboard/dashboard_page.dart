@@ -1,11 +1,13 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:neopos/screens/login/login_page.dart';
+import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
 
 import '../category/category_page/read_category_page.dart';
 
 
+
+import '../table/table_operation/table_read/table_home.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -81,11 +83,7 @@ class _DashboardPage extends State<DashboardPage> {
           actions: [
             IconButton(
                 onPressed: () async {
-                  Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginPage(),
-                      ));
+                  Navigator.pushReplacementNamed(context, RoutePaths.login);
                 },
                 icon: const Icon(Icons.logout))
           ],
@@ -113,6 +111,7 @@ class _DashboardPage extends State<DashboardPage> {
                       Center(
                         child: Text('Settings'),
                       ),
+                      HomeRead(),
                     ],
                   ),
                 )
