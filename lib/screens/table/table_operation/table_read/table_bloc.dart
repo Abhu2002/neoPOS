@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:equatable/equatable.dart';
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/repository/tables_read.dart';
 
@@ -11,8 +11,8 @@ part 'table_event.dart';
 
 part 'table_state.dart';
 
-class TablesBloc extends Bloc<TableEvent, TableState> {
-  final TablesRepository tablesRepository;
+class TableBloc extends Bloc<TableEvent, TableState> {
+  /*final TablesRepository tablesRepository;
 
   TablesBloc({required this.tablesRepository}) : super(InitialState()) {
     on<LoadReadSuccessTable>((event, emit) async {
@@ -25,5 +25,28 @@ class TablesBloc extends Bloc<TableEvent, TableState> {
         emit(TableError(e.toString()));
       }
     });
+  }*/
+
+  TableBloc() : super(TableInitial()) {
+    on<InitialEvent>((event, emit) async {
+      try {
+        emit( TableLoadingState());
+        List allcat = [];
+        FirebaseFirestore db = FirebaseFirestore.instance;
+        await db.collection("table").get().then((value) => {
+          value.docs.forEach((element) {
+            allcat.add(
+                { "tablecapacity": '${element['table_capacity']}', "tablename": element['table_name']});
+          })
+        });
+        LoadDataEvent();
+        emit(TableLoadedState(allcat));
+      } catch (err) {
+        emit(ErrorState("Some Error Occur"));
+      }
+    });
   }
 }
+
+
+

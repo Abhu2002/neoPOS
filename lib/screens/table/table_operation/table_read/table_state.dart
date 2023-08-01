@@ -1,6 +1,6 @@
 part of 'table_bloc.dart';
 
-abstract class TableState extends Equatable {
+/*abstract class TableState extends Equatable {
   const TableState();
 }
 
@@ -40,4 +40,27 @@ class TableReadLoaded extends TableState {
 
   @override
   List<Object> get props => [mytables];
+}
+*/
+
+abstract class TableState extends Equatable {
+  const TableState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class TableInitial extends TableState {}
+
+class TableLoadingState extends TableState {}
+
+class TableLoadedState extends TableState {
+  final List all;
+  const TableLoadedState(this.all);
+  List<Object> get props => [all];
+}
+
+class ErrorState extends TableState {
+  final String errormessage;
+  const ErrorState(this.errormessage);
 }
