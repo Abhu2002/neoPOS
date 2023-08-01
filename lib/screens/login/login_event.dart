@@ -7,6 +7,7 @@ abstract class LoginEvent extends Equatable {
 
 class UserIdChanged extends LoginEvent {
   final String userId;
+
   UserIdChanged(this.userId);
 
   @override
@@ -15,6 +16,7 @@ class UserIdChanged extends LoginEvent {
 
 class PasswordChanged extends LoginEvent {
   final String password;
+
   PasswordChanged(this.password);
 
   @override

@@ -1,10 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/deleteTableBloc/table_deletion_bloc.dart';
 import 'package:neopos/deleteTableBloc/table_deletion_event.dart';
-import 'package:neopos/deleteTableBloc/table_deletion_state.dart';
 
 void showCredentialsDialog(BuildContext context, String tableId) {
   TextEditingController _usernameController = TextEditingController();
@@ -92,7 +90,8 @@ void showConfirmationDialog(BuildContext context) {
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
-              BlocProvider.of<TableDeletionBloc>(context).deleteTable(0 as String);
+              BlocProvider.of<TableDeletionBloc>(context)
+                  .deleteTable(0 as String);
             },
             child: Text('Yes'),
           ),
@@ -101,8 +100,6 @@ void showConfirmationDialog(BuildContext context) {
     },
   );
 }
-
-
 
 void showSnackBar(BuildContext context, String message) {
   ScaffoldMessenger.of(context).showSnackBar(SnackBar(

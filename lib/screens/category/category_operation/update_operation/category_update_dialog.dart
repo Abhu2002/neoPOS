@@ -7,9 +7,10 @@ import 'category_update_event.dart';
 
 class UpdateCategoryForm extends StatefulWidget {
   final String id;
-  final String oldname;
+  final String oldName;
+
   const UpdateCategoryForm(
-      {super.key, required this.id, required this.oldname});
+      {super.key, required this.id, required this.oldName});
 
   @override
   State<UpdateCategoryForm> createState() => _UpdateCategoryFormState();
@@ -18,21 +19,21 @@ class UpdateCategoryForm extends StatefulWidget {
 class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
   @override
   Widget build(BuildContext context) {
-    String newName = widget.oldname;
+    String newName = widget.oldName;
     return AlertDialog(
-      title: Text('Update Category'),
+      title: const Text('Update Category'),
       content: TextField(
         onChanged: (value) => newName = value,
-        controller: TextEditingController(text: widget.oldname),
-        decoration: InputDecoration(hintText: 'New category name'),
+        controller: TextEditingController(text: widget.oldName),
+        decoration: const InputDecoration(hintText: 'New category name'),
       ),
       actions: <Widget>[
         TextButton(
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
           onPressed: () => Navigator.of(context).pop(),
         ),
         TextButton(
-          child: Text('Update'),
+          child: const Text('Update'),
           onPressed: () {
             if (newName.trim().isNotEmpty) {
               BlocProvider.of<CategoryUpdateBloc>(context).add(

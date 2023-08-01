@@ -27,28 +27,26 @@ class AuthCustomTextfield extends StatefulWidget {
 class _AuthCustomTextfieldState extends State<AuthCustomTextfield> {
   @override
   Widget build(BuildContext context) {
-    return
-        TextField(
-          onChanged: widget.onChange,
-          obscureText: widget.obscureText ?? false,
-          decoration: InputDecoration(
-            errorStyle: const TextStyle(
-                color: Color.fromRGBO(245, 98, 98, 1.0),
-                fontWeight: FontWeight.bold),
-            filled: true,
-            fillColor: Colors.white,
-            errorText: widget.errorText,
-            errorMaxLines: 2,
-            suffixIcon: widget.suffixIcon,
-            prefixIcon : Icon(widget.prefixIcon,
-               color: AppColors.primaryColor),
-            hintText: widget.hint,
-            focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: AppColors.primaryColor),
-            ),
-            hintStyle: const TextStyle(
-                fontSize: 12, color: Color.fromRGBO(214, 214, 214, 1)),
-          ),
-        );
+    return TextField(
+      onChanged: widget.onChange,
+      obscureText: widget.obscureText ?? false,
+      decoration: InputDecoration(
+        errorStyle: const TextStyle(
+            color: Color.fromRGBO(245, 98, 98, 1.0),
+            fontWeight: FontWeight.bold),
+        filled: true,
+        fillColor: Colors.white,
+        errorText: widget.errorText,
+        errorMaxLines: 2,
+        suffixIcon: widget.suffixIcon,
+        prefixIcon: Icon(widget.prefixIcon, color: AppColors.primaryColor),
+        hintText: widget.hint,
+        focusedBorder: const UnderlineInputBorder(
+          borderSide: BorderSide(color: AppColors.primaryColor),
+        ),
+        hintStyle: const TextStyle(
+            fontSize: 12, color: Color.fromRGBO(214, 214, 214, 1)),
+      ),
+    );
   }
 }

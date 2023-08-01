@@ -1,28 +1,25 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-
 import '../../model/category.dart';
 
-// import 'package:flutter/material.dart';
-
 part 'create_category_event.dart';
+
 part 'create_category_state.dart';
 
 class CreateCategoryBloc
     extends Bloc<CreateCategoryEvent, CreateCategoryState> {
   void Function(String)? showMessage;
+
   CreateCategoryBloc() : super(CreateCategoryInitial()) {
     on<InputEvent>((event, emit) async {
-      print('called input event');
       if (event.tableName != "") {
         emit(CategoryNameAvailableState());
       } else {
-        emit(CategoryErrorState("Please Enter a Name"));
+        emit(const CategoryErrorState("Please Enter a Name"));
       }
     });
     on<CreateCategoryFBEvent>((event, emit) async {
-      print('called CreateCategoryFBEvent event');
       try {
         List allname = [];
         FirebaseFirestore db = FirebaseFirestore.instance;
@@ -32,10 +29,10 @@ class CreateCategoryBloc
               })
             });
         if (allname.contains(event.categoryName)) {
-          emit(CategoryErrorState("Please Pop"));
+          emit(const CategoryErrorState("Please Pop"));
           showMessage!("Category Name Exist Please use Different Name");
         } else {
-          final data = CategoryModel(categoryname: event.categoryName);
+          final data = CategoryModel(categoryName: event.categoryName);
           await db.collection("category").add(data.toFirestore()).then(
               (documentSnapshot) => {
                     emit(CategoryCreatedState(true)),

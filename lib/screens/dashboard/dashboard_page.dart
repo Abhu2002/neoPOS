@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:neopos/screens/login/login_page.dart';
 import 'package:neopos/utils/app_colors.dart';
 
-import '../category/category_operation/read_category/read_category_page.dart';
+import '../category/category_page/read_category_page.dart';
+
+
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -107,9 +109,9 @@ class _DashboardPage extends State<DashboardPage> {
                   child: PageView(
                     controller: pageController,
                     children: [
-                      SingleChildScrollView(child: CategoryRead()),
+                      const SingleChildScrollView(child: CategoryRead()),
                       Container(
-                        child: Center(
+                        child: const Center(
                           child: Text('Settings'),
                         ),
                       ),

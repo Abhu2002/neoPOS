@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:neopos/utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'create_category_bloc.dart';
 
 class CreateCategoryForm extends StatefulWidget {
@@ -16,11 +14,11 @@ class CreateCategoryForm extends StatefulWidget {
 class _CreateCategoryFormState extends State<CreateCategoryForm> {
   TextEditingController categoryName = TextEditingController();
   final formKey = GlobalKey<FormState>();
+
   // CreateCategoryBloc? categoryReadBloc;
 
   @override
   void initState() {
-    print('cliked init called');
     BlocProvider.of<CreateCategoryBloc>(context).add(const InputEvent(""));
     categoryName.text = "";
     super.initState();
@@ -34,7 +32,6 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
 
   @override
   Widget build(BuildContext context) {
-    print('cliked build called');
     // categoryReadBloc = BlocProvider.of<CreateCategoryBloc>(context);
     context.read<CreateCategoryBloc>().showMessage = createSnackBar;
 
@@ -79,9 +76,7 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                 ),
                 BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
                   builder: (context, state) {
-                    print('Debug ----> $state');
                     if (state is CategoryErrorState) {
-                      print('cliked first state called ${state.errorMessage}');
                       if (state.errorMessage == "Please Pop") {
                         Navigator.pop(context);
                       }
@@ -91,7 +86,6 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                         Navigator.pop(context);
                         state.created = false;
                       }
-                      print('cliked second state called');
                     }
                     return SizedBox(
                         width: double.infinity,
@@ -101,15 +95,14 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                               backgroundColor: (state is CategoryErrorState)
                                   ? AppColors.unavilableButtonColor
                                   : AppColors.primaryColor),
-                          child: Text("Create Table"),
                           onPressed: (state is CategoryErrorState)
                               ? null
                               : () {
-                                  print('final create click');
                                   BlocProvider.of<CreateCategoryBloc>(context)
                                       .add(CreateCategoryFBEvent(
                                           categoryName.text));
                                 },
+                          child: const Text("Create Table"),
                         ));
                   },
                 ),
