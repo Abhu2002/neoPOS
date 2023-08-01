@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/utils/utils.dart';
-import '../../navigation/route_paths.dart';
 import '../../utils/action_button.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/common_text.dart';
@@ -17,7 +17,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -67,13 +66,19 @@ class _LoginPage extends State<LoginPage> {
                               return AuthCustomTextfield(
                                 obscureText: false,
                                 suffixIcon: state.userId.isNotEmptyValidator
-                                    ? const Icon(Icons.done) : null,
+                                    ? const Icon(Icons.done)
+                                    : null,
                                 prefixIcon: Icons.person,
                                 hint: AppLocalizations.of(context)!.username,
-                                errorText: (!state.userId.isNotEmptyValidator && state.verifyData)
-                                    ? AppLocalizations.of(context)!.username_error : null,
+                                errorText: (!state.userId.isNotEmptyValidator &&
+                                        state.verifyData)
+                                    ? AppLocalizations.of(context)!
+                                        .username_error
+                                    : null,
                                 onChange: (v) {
-                                  context.read<LoginBloc>().add(UserIdChanged(v));
+                                  context
+                                      .read<LoginBloc>()
+                                      .add(UserIdChanged(v));
                                 },
                               );
                             },
@@ -86,13 +91,19 @@ class _LoginPage extends State<LoginPage> {
                               return AuthCustomTextfield(
                                 obscureText: true,
                                 suffixIcon: state.password.isPasswordValid
-                                    ? const Icon(Icons.done) : null,
+                                    ? const Icon(Icons.done)
+                                    : null,
                                 prefixIcon: Icons.lock,
                                 hint: AppLocalizations.of(context)!.password,
-                                errorText: !state.password.isPasswordValid && state.verifyData
-                                    ? AppLocalizations.of(context)!.password_error : null,
+                                errorText: !state.password.isPasswordValid &&
+                                        state.verifyData
+                                    ? AppLocalizations.of(context)!
+                                        .password_error
+                                    : null,
                                 onChange: (v) {
-                                  context.read<LoginBloc>().add(PasswordChanged(v));
+                                  context
+                                      .read<LoginBloc>()
+                                      .add(PasswordChanged(v));
                                 },
                               );
                             },
@@ -124,7 +135,11 @@ class _LoginPage extends State<LoginPage> {
     );
   }
 
-  void onSuccess() => Navigator.pushReplacementNamed(context,RoutePaths.dashboard);
+  void onSuccess() => Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DashboardPage(),
+      ));
 
   void createSnackBar(String message) {
     final snackBar = SnackBar(content: Text(message));
