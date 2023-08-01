@@ -30,42 +30,42 @@ class _DashboardPage extends State<DashboardPage> {
 
   List<SideMenuItem> items = [
     SideMenuItem(
-      icon: Icon(Icons.category),
+      icon: const Icon(Icons.category),
       title: 'Category',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.restaurant_menu),
+      icon: const Icon(Icons.restaurant_menu),
       title: 'Products',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.table_chart),
+      icon: const Icon(Icons.table_chart),
       title: 'Tables',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.dashboard),
+      icon: const Icon(Icons.dashboard),
       title: 'Dashboard',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.shopping_cart),
+      icon: const Icon(Icons.shopping_cart),
       title: 'Order History',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
       },
     ),
     SideMenuItem(
-      icon: Icon(Icons.person),
+      icon: const Icon(Icons.person),
       title: 'Users',
       onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
@@ -84,7 +84,7 @@ class _DashboardPage extends State<DashboardPage> {
                   Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => LoginPage(),
+                        builder: (context) => const LoginPage(),
                       ));
                 },
                 icon: const Icon(Icons.logout))
@@ -108,12 +108,10 @@ class _DashboardPage extends State<DashboardPage> {
                 Expanded(
                   child: PageView(
                     controller: pageController,
-                    children: [
-                      const SingleChildScrollView(child: CategoryRead()),
-                      Container(
-                        child: const Center(
-                          child: Text('Settings'),
-                        ),
+                    children: const [
+                      SingleChildScrollView(child: CategoryRead()),
+                      Center(
+                        child: Text('Settings'),
                       ),
                     ],
                   ),

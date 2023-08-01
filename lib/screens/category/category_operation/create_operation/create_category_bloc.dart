@@ -4,7 +4,6 @@ import 'package:equatable/equatable.dart';
 import '../../model/category.dart';
 
 part 'create_category_event.dart';
-
 part 'create_category_state.dart';
 
 class CreateCategoryBloc
