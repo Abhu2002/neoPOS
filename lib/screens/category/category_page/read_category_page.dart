@@ -13,9 +13,6 @@ class CategoryRead extends StatefulWidget {
 }
 
 class _CategoryReadState extends State<CategoryRead> {
-  final List<Map<String, String>> listOfColumns = [
-    {"ID": "1", "Category": "Starter", "Operation": ""},
-  ];
 
   @override
   void initState() {
