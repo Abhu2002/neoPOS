@@ -14,6 +14,7 @@ class CreateCategoryBloc
   void Function(String)? showMessage;
   CreateCategoryBloc() : super(CreateCategoryInitial()) {
     on<InputEvent>((event, emit) async {
+      print('called input event');
       if (event.tableName != "") {
         emit(CategoryNameAvailableState());
       } else {
@@ -21,6 +22,7 @@ class CreateCategoryBloc
       }
     });
     on<CreateCategoryFBEvent>((event, emit) async {
+      print('called CreateCategoryFBEvent event');
       try {
         List allname = [];
         FirebaseFirestore db = FirebaseFirestore.instance;
@@ -36,7 +38,7 @@ class CreateCategoryBloc
           final data = CategoryModel(categoryname: event.categoryName);
           await db.collection("category").add(data.toFirestore()).then(
               (documentSnapshot) => {
-                    emit(CategoryCreatedState()),
+                    emit(CategoryCreatedState(true)),
                     showMessage!("Category Created")
                   });
           await FirebaseFirestore.instance.clearPersistence();

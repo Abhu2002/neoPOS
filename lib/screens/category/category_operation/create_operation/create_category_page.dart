@@ -6,7 +6,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'create_category_bloc.dart';
 
-
 class CreateCategoryForm extends StatefulWidget {
   const CreateCategoryForm({super.key});
 
@@ -17,17 +16,28 @@ class CreateCategoryForm extends StatefulWidget {
 class _CreateCategoryFormState extends State<CreateCategoryForm> {
   TextEditingController categoryName = TextEditingController();
   final formKey = GlobalKey<FormState>();
+  // CreateCategoryBloc? categoryReadBloc;
 
   @override
   void initState() {
+    print('cliked init called');
     BlocProvider.of<CreateCategoryBloc>(context).add(const InputEvent(""));
     categoryName.text = "";
     super.initState();
   }
 
+  // @override
+  // void dispose() {
+  //   categoryReadBloc!.close();
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
+    print('cliked build called');
+    // categoryReadBloc = BlocProvider.of<CreateCategoryBloc>(context);
     context.read<CreateCategoryBloc>().showMessage = createSnackBar;
+
     return AlertDialog(
       // contentPadding: EdgeInsets.all(20),
       shape: const RoundedRectangleBorder(
@@ -67,17 +77,21 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                 const SizedBox(
                   height: 20,
                 ),
-
-
                 BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
                   builder: (context, state) {
+                    print('Debug ----> $state');
                     if (state is CategoryErrorState) {
+                      print('cliked first state called ${state.errorMessage}');
                       if (state.errorMessage == "Please Pop") {
                         Navigator.pop(context);
                       }
                     }
                     if (state is CategoryCreatedState) {
-                      Navigator.pop(context);
+                      if (state.created == true) {
+                        Navigator.pop(context);
+                        state.created = false;
+                      }
+                      print('cliked second state called');
                     }
                     return SizedBox(
                         width: double.infinity,
@@ -91,10 +105,11 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                           onPressed: (state is CategoryErrorState)
                               ? null
                               : () {
-                            BlocProvider.of<CreateCategoryBloc>(context).add(
-                                CreateCategoryFBEvent(
-                                    categoryName.text));
-                          },
+                                  print('final create click');
+                                  BlocProvider.of<CreateCategoryBloc>(context)
+                                      .add(CreateCategoryFBEvent(
+                                          categoryName.text));
+                                },
                         ));
                   },
                 ),

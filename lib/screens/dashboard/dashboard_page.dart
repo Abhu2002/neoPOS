@@ -107,7 +107,7 @@ class _DashboardPage extends State<DashboardPage> {
                   child: PageView(
                     controller: pageController,
                     children: [
-                      const CategoryRead(),
+                      SingleChildScrollView(child: CategoryRead()),
                       Container(
                         child: Center(
                           child: Text('Settings'),

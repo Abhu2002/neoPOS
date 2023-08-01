@@ -19,6 +19,15 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
   TextEditingController _passwordController = TextEditingController();
 
   @override
+  void initState() {
+    // TODO: implement initState
+    _usernameController.text = "2";
+    _passwordController.text = "2";
+
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     print(widget.categoryID);
     return BlocConsumer<CategoryDeletionBloc, CategoryDeletionState>(
