@@ -6,7 +6,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'create_user_bloc.dart';
 
-
 class CreateUserForm extends StatefulWidget {
   const CreateUserForm({super.key});
 
@@ -19,15 +18,15 @@ class _CreateUserFormState extends State<CreateUserForm> {
   TextEditingController lastName = TextEditingController();
   TextEditingController userName = TextEditingController();
   TextEditingController password = TextEditingController();
-  String dropdownvalue="";
 
   final formKey = GlobalKey<FormState>();
-  static const List<String> list = <String>['Admin','Waiter'];
+  static const List<String> list = <String>['Admin', 'Waiter'];
   String dropdownValue = list.first;
 
   @override
   void initState() {
-    BlocProvider.of<CreateUserBloc>(context).add(const InputEvent("","","","",""));
+    BlocProvider.of<CreateUserBloc>(context)
+        .add(const InputEvent("", "", "", "", ""));
     userName.text = "";
     super.initState();
   }
@@ -41,7 +40,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
       title: Text(
-        AppLocalizations.of(context)!.create_category,
+        "Create User",
         style: const TextStyle(
             fontSize: 20,
             fontWeight: FontWeight.bold,
@@ -66,7 +65,14 @@ class _CreateUserFormState extends State<CreateUserForm> {
                           )),
                       onChanged: (val) {
                         BlocProvider.of<CreateUserBloc>(context)
-                            .add(InputEvent(firstName.text,"","","",""));
+                            .add(InputEvent(firstName.text, "", "", "", ""));
+                      },
+                      validator: (value) {
+                        String? val=value?.trim();
+                        if (val == null || val.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
                       },
                     );
                   },
@@ -86,7 +92,14 @@ class _CreateUserFormState extends State<CreateUserForm> {
                           )),
                       onChanged: (val) {
                         BlocProvider.of<CreateUserBloc>(context)
-                            .add(InputEvent(lastName.text,"","","",""));
+                            .add(InputEvent(lastName.text, "", "", "", ""));
+                      },
+                      validator: (value) {
+                        String? val=value?.trim();
+                        if (val == null || val.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
                       },
                     );
                   },
@@ -106,7 +119,14 @@ class _CreateUserFormState extends State<CreateUserForm> {
                           )),
                       onChanged: (val) {
                         BlocProvider.of<CreateUserBloc>(context)
-                            .add(InputEvent(userName.text,"","","",""));
+                            .add(InputEvent(userName.text, "", "", "", ""));
+                      },
+                      validator: (value) {
+                        String? val=value?.trim();
+                        if (val== null || val.isEmpty  ) {
+                          return 'Please enter some text';
+                        }
+                        return null;
                       },
                     );
                   },
@@ -126,7 +146,14 @@ class _CreateUserFormState extends State<CreateUserForm> {
                           )),
                       onChanged: (val) {
                         BlocProvider.of<CreateUserBloc>(context)
-                            .add(InputEvent(password.text,"","","",""));
+                            .add(InputEvent(password.text, "", "", "", ""));
+                      },
+                      validator: (value) {
+                        String? val=value?.trim();
+                        if (val == null || val.isEmpty) {
+                          return 'Please enter some text';
+                        }
+                        return null;
                       },
                     );
                   },
@@ -136,37 +163,40 @@ class _CreateUserFormState extends State<CreateUserForm> {
                 ),
                 BlocBuilder<CreateUserBloc, CreateUserState>(
                   builder: (context, state) {
-                    return DropdownButton<String>(
-                      value: dropdownValue,
-                      icon: const Icon(Icons.arrow_downward),
-                      elevation: 16,
-                      style: const TextStyle(color: Colors.deepPurple),
-                      underline: Container(
-                        height: 2,
-                        color: Colors.deepPurpleAccent,
-                      ),
-                      onChanged: (String? value) {
-                        // This is called when the user selects an item.
-                        setState(() {
-                          dropdownValue = value!;
-                          dropdownvalue=value!;
-                        });
-                        BlocProvider.of<CreateUserBloc>(context)
-                            .add(InputEvent(value!,"","","",""));
-                      },
-                      items: list.map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
+                    return Row(mainAxisAlignment: MainAxisAlignment.start,
+                      children: [Text("User Role : "),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        DropdownButton<String>(
+                          value: dropdownValue,
+                          icon: const Icon(
+                            Icons.keyboard_arrow_down,
+                          ),
+                          elevation: 16,
+                          style: const TextStyle(color: Colors.black),
+                          onChanged: (String? value) {
+                            // This is called when the user selects an item.
+                            setState(() {
+                              dropdownValue = value!;
+                            });
+                            BlocProvider.of<CreateUserBloc>(context)
+                                .add(InputEvent(value!, "", "", "", ""));
+                          },
+                          items: list.map<DropdownMenuItem<String>>((String value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
+                            );
+                          }).toList(),
+                        ),
+                      ],
                     );
                   },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-
                 BlocBuilder<CreateUserBloc, CreateUserState>(
                   builder: (context, state) {
                     if (state is UserErrorState) {
@@ -189,10 +219,16 @@ class _CreateUserFormState extends State<CreateUserForm> {
                           onPressed: (state is UserErrorState)
                               ? null
                               : () {
-                            BlocProvider.of<CreateUserBloc>(context).add(
-                                CreateUserFBEvent(
-                                    userName.text,firstName.text,lastName.text,password.text,dropdownvalue));
-                          },
+                                  if (formKey.currentState!.validate()) {
+                                    BlocProvider.of<CreateUserBloc>(context)
+                                        .add(CreateUserFBEvent(
+                                            userName.text,
+                                            firstName.text,
+                                            lastName.text,
+                                            password.text,
+                                            dropdownValue));
+                                  }
+                                },
                         ));
                   },
                 ),

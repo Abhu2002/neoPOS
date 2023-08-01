@@ -1,6 +1,7 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:neopos/screens/login/login_page.dart';
+import 'package:neopos/screens/users/user_operations/user_update/update_user_page.dart';
 import 'package:neopos/utils/app_colors.dart';
 
 import '../category/category_operations/category_create/create_category_page.dart';
@@ -110,13 +111,16 @@ class _DashboardPage extends State<DashboardPage> {
                     children: [
                       Container(
                         child: Center(
-                          child: ElevatedButton(child: Text("Create Category"),onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) =>
-                              const CreateUserForm(),
-                            );
-                          },),
+                          child: ElevatedButton(
+                            child: Text("Create Category"),
+                            onPressed: () {
+                              // showDialog(
+                              //   context: context,
+                              //   builder: (context) => const CreateUserForm(),
+                              // );
+                              showUpdateUserDialog(context, "HjmBZRNkoIJMsUISkEqS", "Niranjan", "Modak", "niranjan", "123");
+                            },
+                          ),
                         ),
                       ),
                       Container(

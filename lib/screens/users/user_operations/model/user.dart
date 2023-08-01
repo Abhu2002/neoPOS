@@ -39,6 +39,7 @@ class UserModel {
       if (password != null) "password": password,
       if (addedon!= null) "added_on": addedon,
       if (updatedon != null) "updated_on": updatedon,
+      if(userrole !=null) "user_role": userrole
     };
   }
 }

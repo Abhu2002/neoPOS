@@ -8,6 +8,12 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  @override
+  Future<void> close() async {
+    //cancel streams
+    super.close();
+  }
+
   LoginBloc() : super(const LoginState()) {
     on<UserIdChanged>(_onUserIdChanged);
     on<PasswordChanged>(_onPasswordChanged);

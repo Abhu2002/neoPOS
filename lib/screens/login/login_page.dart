@@ -16,6 +16,7 @@ class LoginPage extends StatefulWidget {
   State<StatefulWidget> createState() => _LoginPage();
 }
 
+
 class _LoginPage extends State<LoginPage> {
 
   @override
@@ -67,13 +68,19 @@ class _LoginPage extends State<LoginPage> {
                               return AuthCustomTextfield(
                                 obscureText: false,
                                 suffixIcon: state.userId.isNotEmptyValidator
-                                    ? const Icon(Icons.done) : null,
+                                    ? const Icon(Icons.done)
+                                    : null,
                                 prefixIcon: Icons.person,
                                 hint: AppLocalizations.of(context)!.username,
-                                errorText: (!state.userId.isNotEmptyValidator && state.verifyData)
-                                    ? AppLocalizations.of(context)!.username_error : null,
+                                errorText: (!state.userId.isNotEmptyValidator &&
+                                        state.verifyData)
+                                    ? AppLocalizations.of(context)!
+                                        .username_error
+                                    : null,
                                 onChange: (v) {
-                                  context.read<LoginBloc>().add(UserIdChanged(v));
+                                  context
+                                      .read<LoginBloc>()
+                                      .add(UserIdChanged(v));
                                 },
                               );
                             },
@@ -86,13 +93,19 @@ class _LoginPage extends State<LoginPage> {
                               return AuthCustomTextfield(
                                 obscureText: true,
                                 suffixIcon: state.password.isPasswordValid
-                                    ? const Icon(Icons.done) : null,
+                                    ? const Icon(Icons.done)
+                                    : null,
                                 prefixIcon: Icons.lock,
                                 hint: AppLocalizations.of(context)!.password,
-                                errorText: !state.password.isPasswordValid && state.verifyData
-                                    ? AppLocalizations.of(context)!.password_error : null,
+                                errorText: !state.password.isPasswordValid &&
+                                        state.verifyData
+                                    ? AppLocalizations.of(context)!
+                                        .password_error
+                                    : null,
                                 onChange: (v) {
-                                  context.read<LoginBloc>().add(PasswordChanged(v));
+                                  context
+                                      .read<LoginBloc>()
+                                      .add(PasswordChanged(v));
                                 },
                               );
                             },
@@ -102,11 +115,12 @@ class _LoginPage extends State<LoginPage> {
                           ),
                           BlocBuilder<LoginBloc, LoginState>(
                             builder: (context, state) {
-                              return ActionButton(
+                              return  ActionButton(
                                 text: AppLocalizations.of(context)!.login,
                                 state: state.state,
                                 onPress: () {
                                   context.read<LoginBloc>().add(OnLogin());
+
                                 },
                               );
                             },
@@ -124,7 +138,13 @@ class _LoginPage extends State<LoginPage> {
     );
   }
 
-  void onSuccess() => Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => DashboardPage(),));
+  void onSuccess() { Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DashboardPage(),
+      ));
+  //context.read<LoginBloc>().close();
+  }
 
   void createSnackBar(String message) {
     final snackBar = SnackBar(content: Text(message));
