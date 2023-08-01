@@ -4,10 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'category_update_event.dart';
 import 'category_update_state.dart';
 
-class CategoryBloc extends Bloc<CategoryEvent, CategoryState> {
+class CategoryUpdateBloc extends Bloc<CategoryEvent, CategoryState> {
   final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
 
-  CategoryBloc() : super(CategoryInitialState()) {
+  CategoryUpdateBloc() : super(CategoryInitialState()) {
     on<CategoryUpdateRequested>(_mapCategoryUpdateRequested);
   }
 

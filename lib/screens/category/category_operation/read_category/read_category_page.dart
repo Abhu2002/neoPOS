@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/category/category_operation/read_category/read_category_bloc.dart';
 
-import '../create_operation/create_category_form.dart';
-import '../delete_operation/delete_category_popup.dart';
+import '../create_operation/create_category_dialog.dart';
+import '../delete_operation/delete_category_dialog.dart';
+import '../updateCategoryBloc/category_update_dialog.dart';
 
 class CategoryRead extends StatefulWidget {
   const CategoryRead({super.key});
@@ -70,7 +71,18 @@ class _CategoryReadState extends State<CategoryRead> {
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
                                       child: ElevatedButton(
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  UpdateCategoryForm(
+                                                      id: element['Id'],
+                                                      oldname:
+                                                          element['Category']),
+                                            ).then((value) => BlocProvider.of<
+                                                    ReadCategoryBloc>(context)
+                                                .add(InitialEvent()));
+                                          },
                                           child: const Text("Update")),
                                     ),
                                     Padding(
@@ -98,7 +110,7 @@ class _CategoryReadState extends State<CategoryRead> {
                 ),
               );
             } else {
-              return Text("Loadind");
+              return Text("Loading");
             }
           },
         ),
