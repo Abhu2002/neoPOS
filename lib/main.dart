@@ -10,6 +10,9 @@ import 'firebase_options.dart';
 import 'l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import 'navigation/app_router.dart';
+import 'navigation/route_paths.dart';
+
 
 Future<void> main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +42,8 @@ class MyApp extends StatelessWidget {
             primarySwatch: AppColors.primarySwatch,
             scaffoldBackgroundColor: AppColors.backgroundColor),
         home: isLoggedIn(),
-
+        onGenerateRoute: AppRouter.generateRoute,
+        initialRoute: RoutePaths.login,
         // setting up localization
         supportedLocales: L10n.all,
         locale: const Locale('hi'),
