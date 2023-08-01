@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:neopos/screens/category/category_operation/read_category/read_category_page.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
-import 'package:neopos/screens/table/table_operation/create_table/create_table_page.dart';
-import 'package:neopos/screens/table/table_operations/table_update/update_page.dart';
 import 'package:neopos/utils/utils.dart';
 import '../../utils/action_button.dart';
 import '../../utils/app_colors.dart';

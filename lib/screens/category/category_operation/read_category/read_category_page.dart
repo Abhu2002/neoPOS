@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/category/category_operation/read_category/read_category_bloc.dart';
-import 'package:neopos/screens/category/category_operations/category_delete/delete_page.dart';
 
 import '../create_operation/create_category_page.dart';
+import '../delete_operation/delete_page.dart';
 
 class CategoryRead extends StatefulWidget {
   const CategoryRead({super.key});
