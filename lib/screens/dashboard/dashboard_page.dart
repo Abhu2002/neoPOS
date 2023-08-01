@@ -102,7 +102,9 @@ class _DashboardPage extends State<DashboardPage> {
                     controller: pageController,
                     /// TODO: Add actual pages once done
                     children: const [
+                      /// Table page
                       HomeRead(),
+                      /// Additional page for testing
                       Center(
                         child: Text('Settings'),
                       ),
