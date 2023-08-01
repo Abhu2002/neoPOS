@@ -5,13 +5,12 @@ import 'package:neopos/screens/table/table_operation/table_read/table_page.dart'
 import 'package:neopos/repository/tables_read.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-
 class HomeRead extends StatelessWidget {
   const HomeRead({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return  Builder(builder: (context) {
+    return Builder(builder: (context) {
       TablesRepository repo = Provider.of<TablesRepository>(context);
       return BlocProvider(
         create: (context) => TablesBloc(tablesRepository: repo),

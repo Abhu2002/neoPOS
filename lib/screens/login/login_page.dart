@@ -17,7 +17,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
@@ -67,13 +66,19 @@ class _LoginPage extends State<LoginPage> {
                               return AuthCustomTextfield(
                                 obscureText: false,
                                 suffixIcon: state.userId.isNotEmptyValidator
-                                    ? const Icon(Icons.done) : null,
+                                    ? const Icon(Icons.done)
+                                    : null,
                                 prefixIcon: Icons.person,
                                 hint: AppLocalizations.of(context)!.username,
-                                errorText: (!state.userId.isNotEmptyValidator && state.verifyData)
-                                    ? AppLocalizations.of(context)!.username_error : null,
+                                errorText: (!state.userId.isNotEmptyValidator &&
+                                        state.verifyData)
+                                    ? AppLocalizations.of(context)!
+                                        .username_error
+                                    : null,
                                 onChange: (v) {
-                                  context.read<LoginBloc>().add(UserIdChanged(v));
+                                  context
+                                      .read<LoginBloc>()
+                                      .add(UserIdChanged(v));
                                 },
                               );
                             },
@@ -86,13 +91,19 @@ class _LoginPage extends State<LoginPage> {
                               return AuthCustomTextfield(
                                 obscureText: true,
                                 suffixIcon: state.password.isPasswordValid
-                                    ? const Icon(Icons.done) : null,
+                                    ? const Icon(Icons.done)
+                                    : null,
                                 prefixIcon: Icons.lock,
                                 hint: AppLocalizations.of(context)!.password,
-                                errorText: !state.password.isPasswordValid && state.verifyData
-                                    ? AppLocalizations.of(context)!.password_error : null,
+                                errorText: !state.password.isPasswordValid &&
+                                        state.verifyData
+                                    ? AppLocalizations.of(context)!
+                                        .password_error
+                                    : null,
                                 onChange: (v) {
-                                  context.read<LoginBloc>().add(PasswordChanged(v));
+                                  context
+                                      .read<LoginBloc>()
+                                      .add(PasswordChanged(v));
                                 },
                               );
                             },
@@ -124,7 +135,11 @@ class _LoginPage extends State<LoginPage> {
     );
   }
 
-  void onSuccess() => Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => DashboardPage(),));
+  void onSuccess() => Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DashboardPage(),
+      ));
 
   void createSnackBar(String message) {
     final snackBar = SnackBar(content: Text(message));

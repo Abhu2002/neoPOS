@@ -12,4 +12,3 @@ class LoadTable extends TableEvent {}
 class LoadReadSuccessTable extends TableEvent {
   const LoadReadSuccessTable();
 }
-

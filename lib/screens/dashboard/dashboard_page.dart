@@ -16,6 +16,7 @@ class _DashboardPage extends State<DashboardPage> {
   int selectedIndex = 0;
   final SideMenuController sideMenu = SideMenuController();
   PageController pageController = PageController();
+
   @override
   void initState() {
     // Connect SideMenuController and PageController together
@@ -69,6 +70,7 @@ class _DashboardPage extends State<DashboardPage> {
       },
     ),
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,10 +102,12 @@ class _DashboardPage extends State<DashboardPage> {
                 Expanded(
                   child: PageView(
                     controller: pageController,
+
                     /// TODO: Add actual pages once done
                     children: const [
                       /// Table page
                       HomeRead(),
+
                       /// Additional page for testing
                       Center(
                         child: Text('Settings'),

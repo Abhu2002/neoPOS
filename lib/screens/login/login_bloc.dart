@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/utils.dart';
 
 part 'login_event.dart';
+
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
@@ -49,7 +50,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       /// TODO: Use result later
       var result;
       FirebaseFirestore database = FirebaseFirestore.instance;
-      database.collection("users").where("user_id", isEqualTo: state.userId).where("password", isEqualTo: state.password).get()
+      database
+          .collection("users")
+          .where("user_id", isEqualTo: state.userId)
+          .where("password", isEqualTo: state.password)
+          .get()
           .then((value) {
         if (value.size != 0) {
           for (var data in value.docs) {

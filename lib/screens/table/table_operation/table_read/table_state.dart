@@ -21,7 +21,9 @@ class TableAdded extends TableState {
 
 class TableError extends TableState {
   final String error;
+
   const TableError(this.error);
+
   @override
   List<Object?> get props => [error];
 }
@@ -33,6 +35,7 @@ class TableReadLoading extends TableState {
 
 class TableReadLoaded extends TableState {
   final List<TableModel> mytables;
+
   const TableReadLoaded({required this.mytables});
 
   @override

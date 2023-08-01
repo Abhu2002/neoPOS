@@ -20,6 +20,7 @@ class _TableReadState extends State<TableRead> {
   }
 
   TableItem? selectedMenu;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -51,41 +52,28 @@ class _TableReadState extends State<TableRead> {
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
                                   PopupMenuButton<TableItem>(
-                                    initialValue: selectedMenu,
-                                    icon: const Icon(Icons.more_vert_outlined,
-                                        color: Colors.black),
-                                    color: Colors.white,
-                                    itemBuilder: (context) =>
-                                        <PopupMenuEntry<TableItem>>[
-                                      const PopupMenuItem<TableItem>(
-                                          value: TableItem.tableedit,
-                                          child: Text(
-                                            "Edit",
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          )),
-                                      const PopupMenuItem<TableItem>(
-                                          value: TableItem.tabledelete,
-                                          child: Text(
-                                            "Delete",
-                                            style:
-                                                TextStyle(color: Colors.black),
-                                          ))
-                                    ],
-                                    onSelected: (TableItem item) {}
-                                  ),
-                                  // IconButton(
-                                  //   onPressed: () {
-                                  //     print("Icon pressed");
-
-                                  //     setState(() {});
-                                  //   },
-                                  //   icon: const Icon(
-                                  //     Icons.more_vert_outlined,
-                                  //     size: 25,
-                                  //     color: Color(0xFF5F6368),
-                                  //   ),
-                                  // )
+                                      initialValue: selectedMenu,
+                                      icon: const Icon(Icons.more_vert_outlined,
+                                          color: Colors.black),
+                                      color: Colors.white,
+                                      itemBuilder: (context) =>
+                                          <PopupMenuEntry<TableItem>>[
+                                            const PopupMenuItem<TableItem>(
+                                                value: TableItem.tableedit,
+                                                child: Text(
+                                                  "Edit",
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                )),
+                                            const PopupMenuItem<TableItem>(
+                                                value: TableItem.tabledelete,
+                                                child: Text(
+                                                  "Delete",
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                ))
+                                          ],
+                                      onSelected: (TableItem item) {}),
                                 ],
                               ),
                               Padding(
