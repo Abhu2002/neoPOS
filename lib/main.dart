@@ -8,7 +8,9 @@ import 'package:neopos/screens/category/category_operation/read_category/read_ca
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/login/login_page.dart';
+import 'package:neopos/updateCategoryBloc/category_update_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
+import 'deleteTableBloc/table_deletion_bloc.dart';
 import 'firebase_options.dart';
 import 'l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
