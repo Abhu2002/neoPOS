@@ -23,12 +23,10 @@ class _TableReadState extends State<TableRead> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(),
-      home: Scaffold(
+    return  Scaffold(
         appBar: AppBar(
           title:
-              const Text("Table_Read", style: TextStyle(color: Colors.black)),
+              const Text("Table", style: TextStyle(color: Colors.black)),
           backgroundColor: const Color.fromARGB(255, 193, 101, 14),
         ),
         body: BlocBuilder<TablesBloc, TableState>(builder: (context, state) {
@@ -92,7 +90,6 @@ class _TableReadState extends State<TableRead> {
             return Container();
           }
         }),
-      ),
-    );
+      );
   }
 }
