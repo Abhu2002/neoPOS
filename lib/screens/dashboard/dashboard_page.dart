@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
 
+import '../table/table_operation/table_read/table_home.dart';
+
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
@@ -100,9 +102,7 @@ class _DashboardPage extends State<DashboardPage> {
                     controller: pageController,
                     /// TODO: Add actual pages once done
                     children: const [
-                      Center(
-                        child: Text('Dashboard'),
-                      ),
+                      HomeRead(),
                       Center(
                         child: Text('Settings'),
                       ),

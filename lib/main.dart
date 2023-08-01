@@ -2,16 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/repository/tables_read.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/login/login_page.dart';
 import 'package:neopos/utils/app_colors.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'navigation/app_router.dart';
-import 'navigation/route_paths.dart';
 
 
 Future<void> main() async{
@@ -34,6 +35,8 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => LoginBloc()),
+        Provider(create: (_) => TablesRepository()),
+
       ],
 
       child: MaterialApp(
@@ -43,7 +46,6 @@ class MyApp extends StatelessWidget {
             scaffoldBackgroundColor: AppColors.backgroundColor),
         home: isLoggedIn(),
         onGenerateRoute: AppRouter.generateRoute,
-        initialRoute: RoutePaths.login,
         // setting up localization
         supportedLocales: L10n.all,
         locale: const Locale('hi'),
