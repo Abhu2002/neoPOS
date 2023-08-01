@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../category/category_page/read_category_page.dart';
-import '../table/table_page/table_home.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -107,7 +106,6 @@ class _DashboardPage extends State<DashboardPage> {
                       Center(
                         child: Text('Settings'),
                       ),
-                      HomeRead(),
                     ],
                   ),
                 )

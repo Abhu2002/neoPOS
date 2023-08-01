@@ -9,8 +9,6 @@ class CreateCategoryState extends Equatable {
 
 class CreateCategoryInitial extends CreateCategoryState {}
 
-class CategoryNameunAvailableState extends CreateCategoryState {}
-
 class CategoryNameAvailableState extends CreateCategoryState {}
 
 class CategoryLoadingState extends CreateCategoryState {}
@@ -31,9 +29,4 @@ class CategoryCreatedState extends CreateCategoryState {
 
   @override
   List<Object> get props => [created];
-}
-
-class CategoryState2 extends CreateCategoryState {
-  @override
-  List<Object> get props => [];
 }
