@@ -68,7 +68,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             .add(InputEvent(firstName.text, "", "", "", ""));
                       },
                       validator: (value) {
-                        String? val=value?.trim();
+                        String? val = value?.trim();
                         if (val == null || val.isEmpty) {
                           return 'Please enter some text';
                         }
@@ -95,7 +95,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             .add(InputEvent(lastName.text, "", "", "", ""));
                       },
                       validator: (value) {
-                        String? val=value?.trim();
+                        String? val = value?.trim();
                         if (val == null || val.isEmpty) {
                           return 'Please enter some text';
                         }
@@ -122,8 +122,8 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             .add(InputEvent(userName.text, "", "", "", ""));
                       },
                       validator: (value) {
-                        String? val=value?.trim();
-                        if (val== null || val.isEmpty  ) {
+                        String? val = value?.trim();
+                        if (val == null || val.isEmpty) {
                           return 'Please enter some text';
                         }
                         return null;
@@ -149,7 +149,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             .add(InputEvent(password.text, "", "", "", ""));
                       },
                       validator: (value) {
-                        String? val=value?.trim();
+                        String? val = value?.trim();
                         if (val == null || val.isEmpty) {
                           return 'Please enter some text';
                         }
@@ -163,8 +163,10 @@ class _CreateUserFormState extends State<CreateUserForm> {
                 ),
                 BlocBuilder<CreateUserBloc, CreateUserState>(
                   builder: (context, state) {
-                    return Row(mainAxisAlignment: MainAxisAlignment.start,
-                      children: [Text("User Role : "),
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text("User Role : "),
                         const SizedBox(
                           width: 30,
                         ),
@@ -183,7 +185,8 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             BlocProvider.of<CreateUserBloc>(context)
                                 .add(InputEvent(value!, "", "", "", ""));
                           },
-                          items: list.map<DropdownMenuItem<String>>((String value) {
+                          items: list
+                              .map<DropdownMenuItem<String>>((String value) {
                             return DropdownMenuItem<String>(
                               value: value,
                               child: Text(value),

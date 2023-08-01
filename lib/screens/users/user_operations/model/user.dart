@@ -9,15 +9,20 @@ class UserModel {
   final String? addedon;
   final String? updatedon;
 
-  UserModel( {this.firstname,
-    this.username,this.lastname, this.password, this.userrole, this.addedon, this.updatedon,
-
+  UserModel({
+    this.firstname,
+    this.username,
+    this.lastname,
+    this.password,
+    this.userrole,
+    this.addedon,
+    this.updatedon,
   });
 
   factory UserModel.fromFirestore(
-      DocumentSnapshot<Map<String, dynamic>> snapshot,
-      SnapshotOptions? options,
-      ) {
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
     final data = snapshot.data();
     return UserModel(
       firstname: data?['firstname'],
@@ -27,7 +32,6 @@ class UserModel {
       userrole: data?['userrole'],
       addedon: data?['addedon'],
       updatedon: data?['updatedon'],
-
     );
   }
 
@@ -37,9 +41,9 @@ class UserModel {
       if (firstname != null) "first_name": firstname,
       if (lastname != null) "last_name": lastname,
       if (password != null) "password": password,
-      if (addedon!= null) "added_on": addedon,
+      if (addedon != null) "added_on": addedon,
       if (updatedon != null) "updated_on": updatedon,
-      if(userrole !=null) "user_role": userrole
+      if (userrole != null) "user_role": userrole
     };
   }
 }

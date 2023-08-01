@@ -4,7 +4,7 @@ import '../../navigation/route_paths.dart';
 import 'package:neopos/screens/users/user_operations/user_update/update_user_page.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../category/category_page/read_category_page.dart';
-
+import '../users/user_operations/user_create/create_user_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -103,7 +103,7 @@ class _DashboardPage extends State<DashboardPage> {
                 Expanded(
                   child: PageView(
                     controller: pageController,
-                    children:  [
+                    children: [
                       const SingleChildScrollView(child: CategoryRead()),
                       const Center(
                         child: Text('Settings'),
@@ -111,12 +111,18 @@ class _DashboardPage extends State<DashboardPage> {
                       Center(
                         child: ElevatedButton(
                           child: Text("Create Category"),
-                          onPressed: (){
-                            // showDialog(
-                            //   context: context,
-                            //   builder: (context) => const CreateUserForm(),
-                            // );
-                            showUpdateUserDialog(context, "HjmBZRNkoIJMsUISkEqS", "Niranjan", "Modak", "niranjan", "123");
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => const CreateUserForm(),
+                            );
+                            // showUpdateUserDialog(
+                            //     context,
+                            //     "h3FqLvoiXiXQNgTtxjoj",
+                            //     "Niranjan",
+                            //     "Modak",
+                            //     "niranjan",
+                            //     "123");
                           },
                         ),
                       ),

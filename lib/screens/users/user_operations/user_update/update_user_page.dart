@@ -6,7 +6,13 @@ import 'update_user_event.dart';
 
 //pass category name and category id to update the category..
 
-void showUpdateUserDialog(BuildContext context, String docId, String oldFirstName,String oldLastName,String oldUserId,String oldPassword) {
+void showUpdateUserDialog(
+    BuildContext context,
+    String docId,
+    String oldFirstName,
+    String oldLastName,
+    String oldUserId,
+    String oldPassword) {
   String newFirstName = oldFirstName;
   String newLastName = oldLastName;
   String newUserId = oldUserId;
@@ -18,25 +24,31 @@ void showUpdateUserDialog(BuildContext context, String docId, String oldFirstNam
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(20))),
         actionsPadding: const EdgeInsets.all(20),
-        title: Text('Update User',style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppColors.mainTextColor),),
+        title: Text(
+          'Update User',
+          style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: AppColors.mainTextColor),
+        ),
         content: SizedBox(
           width: MediaQuery.of(context).size.width / 2,
-          child: Column(mainAxisSize: MainAxisSize.min,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 onChanged: (value) => newFirstName = value,
                 controller: TextEditingController(text: oldFirstName),
-                  decoration: InputDecoration(
-                      hintText: "first name",
-                      prefixIcon: const Icon(
-                        Icons.person,
-                        color: AppColors.primaryColor,
-                      )),
+                decoration: InputDecoration(
+                    hintText: "first name",
+                    prefixIcon: const Icon(
+                      Icons.person,
+                      color: AppColors.primaryColor,
+                    )),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               TextField(
                 onChanged: (value) => newLastName = value,
                 controller: TextEditingController(text: oldLastName),
@@ -47,7 +59,9 @@ void showUpdateUserDialog(BuildContext context, String docId, String oldFirstNam
                       color: AppColors.primaryColor,
                     )),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               TextField(
                 onChanged: (value) => newUserId = value,
                 controller: TextEditingController(text: oldUserId),
@@ -58,7 +72,9 @@ void showUpdateUserDialog(BuildContext context, String docId, String oldFirstNam
                       color: AppColors.primaryColor,
                     )),
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               TextField(
                 onChanged: (value) => newPassword = value,
                 controller: TextEditingController(text: oldPassword),
@@ -80,13 +96,18 @@ void showUpdateUserDialog(BuildContext context, String docId, String oldFirstNam
           TextButton(
             child: Text('Update'),
             onPressed: () {
-              if (newFirstName.trim().isNotEmpty && newLastName.trim().isNotEmpty && newUserId.trim().isNotEmpty && newPassword.trim().isNotEmpty) {
+              if (newFirstName.trim().isNotEmpty &&
+                  newLastName.trim().isNotEmpty &&
+                  newUserId.trim().isNotEmpty &&
+                  newPassword.trim().isNotEmpty) {
                 BlocProvider.of<UpdateUserBloc>(context).add(
-                  UpdateUserBlocRequested(docId, newFirstName,newLastName,newPassword,newUserId),
+                  UpdateUserBlocRequested(
+                      docId, newFirstName, newLastName, newPassword, newUserId),
                 );
               }
               Navigator.of(context).pop();
-              final snackBar = SnackBar(content: Text("User Not Updated, Data Missing"));
+              final snackBar =
+                  SnackBar(content: Text("User Not Updated, Data Missing"));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             },
           ),

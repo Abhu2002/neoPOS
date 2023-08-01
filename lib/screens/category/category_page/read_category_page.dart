@@ -13,7 +13,6 @@ class CategoryRead extends StatefulWidget {
 }
 
 class _CategoryReadState extends State<CategoryRead> {
-
   @override
   void initState() {
     BlocProvider.of<ReadCategoryBloc>(context).add(InitialEvent());
@@ -49,7 +48,7 @@ class _CategoryReadState extends State<CategoryRead> {
                 child: DataTable(
                   columns: const [
                     DataColumn(label: Text('ID')),
-                    DataColumn(label: Text('Category Name')),
+                    DataColumn(label: Flexible(child: Text('Category Name'))),
                     DataColumn(label: Text('Operation')),
                   ],
                   rows: state

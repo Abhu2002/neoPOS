@@ -20,7 +20,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'navigation/app_router.dart';
 
-Future<void> main() async{
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -45,10 +45,9 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => CategoryDeletionBloc()),
         BlocProvider(create: (_) => CategoryUpdateBloc()),
         Provider(create: (_) => TablesRepository()),
-    BlocProvider(create: (_) => CreateUserBloc()),
+        BlocProvider(create: (_) => CreateUserBloc()),
         BlocProvider(create: (_) => UpdateUserBloc())
       ],
-
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

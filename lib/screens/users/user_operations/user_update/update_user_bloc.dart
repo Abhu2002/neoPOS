@@ -19,11 +19,11 @@ class UpdateUserBloc extends Bloc<UpdateUserEvent, UpdateUserState> {
       // Update the category in Firestore
       await _fireStore.collection("users").doc(event.docId).update({
         "user_id": event.newUserId,
-        "first_name":event.newFirstName,
-        "last_name":event.newLastName,
-        "password":event.newPassword,
-        "updated_on":"${DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now())}"
-
+        "first_name": event.newFirstName,
+        "last_name": event.newLastName,
+        "password": event.newPassword,
+        "updated_on":
+            "${DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now())}"
       });
       emit(UserUpdatedState());
     } catch (e) {
