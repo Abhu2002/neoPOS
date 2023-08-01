@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
 
-import '../table/table_operation/table_read/table_home.dart';
+import '../category/category_operation/read_category/read_category_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -102,15 +102,12 @@ class _DashboardPage extends State<DashboardPage> {
                 Expanded(
                   child: PageView(
                     controller: pageController,
-
-                    /// TODO: Add actual pages once done
-                    children: const [
-                      /// Table page
-                      HomeRead(),
-
-                      /// Additional page for testing
-                      Center(
-                        child: Text('Settings'),
+                    children: [
+                      SingleChildScrollView(child: CategoryRead()),
+                      Container(
+                        child: Center(
+                          child: Text('Settings'),
+                        ),
                       ),
                     ],
                   ),
