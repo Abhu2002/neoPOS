@@ -78,7 +78,7 @@ class _TableReadState extends State<TableRead> {
                                 padding: const EdgeInsets.all(20.0),
                                 child: Text((data[i].tablename)),
                               ),
-                              Text((data[i].tablecapacity).toString()),
+                              Text("Capacity: ${(data[i].tablecapacity).toString()}"),
                             ],
                           ),
                         ),
