@@ -6,6 +6,9 @@ import 'package:neopos/repository/tables_read.dart';
 import 'package:neopos/screens/category/category_operation/create_operation/create_category_bloc.dart';
 import 'package:neopos/screens/category/category_operation/delete_operation/delete_bloc.dart';
 import 'package:neopos/screens/category/category_operation/read_category/read_category_bloc.dart';
+import 'package:neopos/screens/category/category_operation/update_operation/category_update_bloc.dart';
+import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
+import 'package:neopos/repository/tables_read.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/login/login_page.dart';
@@ -13,6 +16,7 @@ import 'package:neopos/screens/table/table_operation/table_read/table_bloc.dart'
 import 'package:neopos/updateCategoryBloc/category_update_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'deleteTableBloc/table_deletion_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'l10n/l10n.dart';
@@ -44,10 +48,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ReadCategoryBloc()),
         BlocProvider(create: (_) => CreateCategoryBloc()),
         BlocProvider(create: (_) => CategoryDeletionBloc()),
+        BlocProvider(create: (_) => CategoryUpdateBloc()),
+        Provider(create: (_) => TablesRepository()),
         BlocProvider(create: (_) => TableBloc()),
 
       ],
-
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(

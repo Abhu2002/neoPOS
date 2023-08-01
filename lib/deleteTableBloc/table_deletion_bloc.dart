@@ -5,9 +5,9 @@ import 'table_deletion_state.dart';
 
 class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
   final CollectionReference usersCollection =
-  FirebaseFirestore.instance.collection('users');
+      FirebaseFirestore.instance.collection('users');
   final CollectionReference tablesCollection =
-  FirebaseFirestore.instance.collection('table');
+      FirebaseFirestore.instance.collection('table');
 
   TableDeletionBloc() : super(InitialTableDeletionState()) {
     on<CredentialsEnteredEvent>(_mapCredentialsEnteredEventToState);
@@ -20,7 +20,7 @@ class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
     String password = event.password;
 
     QuerySnapshot querySnapshot =
-    await usersCollection.where('first_name', isEqualTo: username).get();
+        await usersCollection.where('first_name', isEqualTo: username).get();
 
     if (querySnapshot.size != 0) {
       var userData = querySnapshot.docs[0].data();

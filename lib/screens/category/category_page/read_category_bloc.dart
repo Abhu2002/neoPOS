@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
 part 'read_category_event.dart';
+
 part 'read_category_state.dart';
 
 class ReadCategoryBloc extends Bloc<ReadCategoryEvent, ReadCategoryState> {
@@ -21,7 +22,7 @@ class ReadCategoryBloc extends Bloc<ReadCategoryEvent, ReadCategoryState> {
         LoadDataEvent();
         emit(DataLoadedState(allcat));
       } catch (err) {
-        emit(ErrorState("Some Error Occur"));
+        emit(const ErrorState("Some Error Occur"));
       }
     });
   }

@@ -2,9 +2,8 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
-
-import '../category/category_operation/read_category/read_category_page.dart';
 import '../table/table_operation/table_read/table_page.dart';
+import '../category/category_page/read_category_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -103,13 +102,11 @@ class _DashboardPage extends State<DashboardPage> {
                 Expanded(
                   child: PageView(
                     controller: pageController,
-                    children: [
+                    children:  [
                       SingleChildScrollView(child: CategoryRead()),
                       SingleChildScrollView(child: TableRead()),
-                      Container(
-                        child: Center(
-                          child: Text('Settings'),
-                        ),
+                      Center(
+                        child: Text('Settings'),
                       ),
                     ],
                   ),

@@ -3,13 +3,16 @@ import 'package:flutter/foundation.dart';
 import 'package:neopos/models/table_model.dart';
 
 class TablesRepository {
-  final _firecloud = FirebaseFirestore.instance.collection("table");  //directly reading collection from table
+  final _firecloud = FirebaseFirestore.instance
+      .collection("table"); //directly reading collection from table
 
-  Future<List<TableModel>> get() async {  //it read each collection from table and retrieving json object
+  Future<List<TableModel>> get() async {
+    //it read each collection from table and retrieving json object
     List<TableModel> tablemodellist = [];
     try {
       final conn = await _firecloud.get();
-      conn.docs.forEach((element) { // each document is iterated
+      conn.docs.forEach((element) {
+        // each document is iterated
         return tablemodellist.add(TableModel.fromJson(element.data()));
       });
       return tablemodellist;
@@ -22,5 +25,4 @@ class TablesRepository {
       throw Exception(e.toString());
     }
   }
-
 }

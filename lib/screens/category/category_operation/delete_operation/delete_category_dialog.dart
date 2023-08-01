@@ -1,35 +1,31 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'delete_bloc.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
 
 class DeleteCategoryPopup extends StatefulWidget {
-  final categoryID;
-  const DeleteCategoryPopup({super.key, this.categoryID});
+  final String categoryID;
+
+  const DeleteCategoryPopup({super.key, required this.categoryID});
 
   @override
   State<DeleteCategoryPopup> createState() => _DeleteCategoryPopupState();
 }
 
 class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
-  TextEditingController _usernameController = TextEditingController();
-  TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _usernameController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
 
   @override
   void initState() {
-    // TODO: implement initState
-    _usernameController.text = "2";
-    _passwordController.text = "2";
-
+    _usernameController.text = "";
+    _passwordController.text = "";
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    print(widget.categoryID);
     return BlocConsumer<CategoryDeletionBloc, CategoryDeletionState>(
       listener: (context, state) {
         if (state is ErrorState) {
@@ -42,19 +38,19 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
       },
       builder: (context, state) {
         return AlertDialog(
-          title: Text('Enter Credentials'),
+          title: const Text('Enter Credentials'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: _usernameController,
-                decoration: InputDecoration(hintText: 'Username'),
+                decoration: const InputDecoration(hintText: 'Username'),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: InputDecoration(hintText: 'Password'),
+                decoration: const InputDecoration(hintText: 'Password'),
               ),
             ],
           ),
@@ -63,7 +59,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
@@ -75,7 +71,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
                   ),
                 );
               },
-              child: Text('Submit'),
+              child: const Text('Submit'),
             ),
           ],
         );
@@ -88,14 +84,14 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error'),
+          title: const Text('Error'),
           content: Text(error),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -108,14 +104,14 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Delete Category'),
-          content: Text('Are you sure you want to delete this table?'),
+          title: const Text('Delete Category'),
+          content: const Text('Are you sure you want to delete this Category?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('No'),
+              child: const Text('No'),
             ),
             TextButton(
               onPressed: () async {
@@ -124,7 +120,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
-              child: Text('Yes'),
+              child: const Text('Yes'),
             ),
           ],
         );

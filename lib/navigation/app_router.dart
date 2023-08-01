@@ -6,20 +6,20 @@ import '../screens/login/login_page.dart';
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
-    // -------------- sub Routes ----------------
-    // -------------- Dasboard Route ------------
+      // -------------- sub Routes ----------------
+      // -------------- Dasboard Route ------------
       case RoutePaths.dashboard:
         return MaterialPageRoute(
           builder: (context) => const DashboardPage(),
           settings: const RouteSettings(name: RoutePaths.dashboard),
         );
-    // -------------- Login Route ---------------
+      // -------------- Login Route ---------------
       case RoutePaths.login:
         return MaterialPageRoute(
           builder: (context) => const LoginPage(),
           settings: const RouteSettings(name: RoutePaths.login),
         );
-    // -------------- Default Route -------------
+      // -------------- Default Route -------------
       default:
         return MaterialPageRoute(
           builder: (context) => Container(),

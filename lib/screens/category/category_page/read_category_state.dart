@@ -13,11 +13,15 @@ class DataLoadingState extends ReadCategoryState {}
 
 class DataLoadedState extends ReadCategoryState {
   final List all;
+
   const DataLoadedState(this.all);
+
+  @override
   List<Object> get props => [all];
 }
 
 class ErrorState extends ReadCategoryState {
-  final String errormessage;
-  const ErrorState(this.errormessage);
+  final String errorMessage;
+
+  const ErrorState(this.errorMessage);
 }
