@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/category/category_operation/read_category/read_category_bloc.dart';
 
-import '../create_operation/create_category_page.dart';
-import '../delete_operation/delete_page.dart';
+import '../create_operation/create_category_form.dart';
+import '../delete_operation/delete_category_popup.dart';
 
 class CategoryRead extends StatefulWidget {
   const CategoryRead({super.key});
@@ -34,11 +34,11 @@ class _CategoryReadState extends State<CategoryRead> {
                   onPressed: () {
                     print('clicked button');
                     showDialog(
-                        context: context,
-                        builder: (context) => const CreateCategoryForm());
-                    // .then((value) =>
-                    //     BlocProvider.of<ReadCategoryBloc>(context)
-                    //         .add(InitialEvent()));
+                            context: context,
+                            builder: (context) => const CreateCategoryForm())
+                        .then((value) =>
+                            BlocProvider.of<ReadCategoryBloc>(context)
+                                .add(InitialEvent()));
                   },
                   child: const Text("Create")),
             ),
