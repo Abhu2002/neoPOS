@@ -2,6 +2,8 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import '../../navigation/route_paths.dart';
 
+import 'package:neopos/screens/login/login_page.dart';
+import 'package:neopos/utils/app_colors.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -23,16 +25,17 @@ class _DashboardPage extends State<DashboardPage> {
     super.initState();
   }
   List<SideMenuItem> items = [
-  SideMenuItem(
-        icon: Icon(Icons.category),
-        title: 'Category',
-    onTap: (index, sideMenuController) {
-      sideMenuController.changePage(index);
-    },
-      ),
-      SideMenuItem(
-        icon: Icon(Icons.restaurant_menu),
-        title: 'Products',onTap: (index, sideMenuController) {
+    SideMenuItem(
+      icon: Icon(Icons.category),
+      title: 'Category',
+      onTap: (index, sideMenuController) {
+        sideMenuController.changePage(index);
+      },
+    ),
+    SideMenuItem(
+      icon: Icon(Icons.restaurant_menu),
+      title: 'Products',
+      onTap: (index, sideMenuController) {
         sideMenuController.changePage(index);
 
       },
@@ -58,7 +61,7 @@ class _DashboardPage extends State<DashboardPage> {
           sideMenuController.changePage(index);
         },
 
-      ),
+    ),
       SideMenuItem(
         icon: Icon(Icons.person),
         title: 'Users',
@@ -75,38 +78,49 @@ class _DashboardPage extends State<DashboardPage> {
           actions: [
             IconButton(
                 onPressed: () async {
-                  Navigator.pushReplacementNamed(context,RoutePaths.login) ;
+                  Navigator.pushReplacementNamed(
+                      context,
+                      RoutePaths.login);
                 },
                 icon: const Icon(Icons.logout))
           ],
         ),
         body: SafeArea(
-          child: CustomScrollView(
-            slivers: [
-              SliverFillRemaining(
-                child: Row(mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    SideMenu(items: items, controller: sideMenu),
-                    Expanded(
-                      child: PageView(
-                        controller: pageController,
-                        children: [
-                          Container(
-                            child: Center(
-                              child: Text('Dashboard'),
-                            ),
-                          ),
-                          Container(
-                            child: Center(
-                              child: Text('Settings'),
-                            ),
-                          ),
-                  ],
-                ),
-              )
-            ],
-           ),
-        )])));
+            child: CustomScrollView(slivers: [
+          SliverFillRemaining(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                SideMenu(
+                    items: items,
+                    controller: sideMenu,
+                    style: SideMenuStyle(
+                        backgroundColor: Colors.grey.shade50,
+                        selectedColor: AppColors.primarySwatch.shade50,
+                        selectedIconColor: AppColors.primarySwatch.shade400,
+                        selectedTitleTextStyle: TextStyle(
+                            color: AppColors.primarySwatch.shade400))),
+                Expanded(
+                  child: PageView(
+                    controller: pageController,
+                    children: [
+                      Container(
+                        child: Center(
+                          child: Text('Dashboard'),
+                        ),
+                      ),
+                      Container(
+                        child: Center(
+                          child: Text('Settings'),
+                        ),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
+          )
+        ])));
   }
 }
 
