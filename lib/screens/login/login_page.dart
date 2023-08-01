@@ -120,12 +120,7 @@ class _LoginPage extends State<LoginPage> {
                                 text: AppLocalizations.of(context)!.login,
                                 state: state.state,
                                 onPress: () {
-                                  // context.read<LoginBloc>().add(OnLogin());
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) {
-                                      return TableUpdateAlert();
-                                    },
-                                  ));
+                                  context.read<LoginBloc>().add(OnLogin());
                                 },
                               );
                             },

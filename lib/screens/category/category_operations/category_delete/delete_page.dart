@@ -7,79 +7,32 @@ import 'delete_bloc.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
 
-class CategoryDeletionScreen extends StatelessWidget {
+class DeleteCategoryPopup extends StatefulWidget {
+  final categoryID;
+  const DeleteCategoryPopup({super.key, this.categoryID});
+
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Category Deletion'),
-      ),
-      body: CategoryList(),
-    );
-  }
+  State<DeleteCategoryPopup> createState() => _DeleteCategoryPopupState();
 }
 
-class CategoryList extends StatelessWidget {
+class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
+  TextEditingController _usernameController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
 
-  var id;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body:  BlocConsumer<CategoryDeletionBloc, CategoryDeletionState>(
-        listener: (context, state) {
-          if (state is ErrorState) {
-            showErrorDialog(context, state.error);
-          } else if (state is ConfirmationState) {
-            showConfirmationDialog(context);
-          } else if (state is CategoryDeleteState) {
-            showSnackBar(context, 'Category deleted successfully.');
-          }
-        },
-        builder: (context, state) {
-          return StreamBuilder<QuerySnapshot>(
-            stream: FirebaseFirestore.instance.collection('category').snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return const Center(child: CircularProgressIndicator());
-              }
-
-              List<Widget> tableWidgets = [];
-              snapshot.data?.docs.forEach((doc) {
-                String categoryId = doc.id;
-                String categoryName = doc['category_name'].toString();
-
-                tableWidgets.add(
-                  Card(
-                    elevation: 3,
-                    color: Colors.orange.shade50,
-                    child: ListTile(
-                      title: Text('Category Id: $categoryId'),
-                      subtitle: Text('Category Name: $categoryName'),
-                      onTap: () {
-                        showCredentialsDialog(context, categoryId);
-                      },
-                    ),
-                  ),
-                );
-              });
-
-              return ListView(
-                children: tableWidgets,
-              );
-            },
-          );
-        },
-      ),
-    );
-  }
-
-  void showCredentialsDialog(BuildContext context, String tableId) {
-    TextEditingController _usernameController = TextEditingController();
-    TextEditingController _passwordController = TextEditingController();
-    id = tableId;
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
+    print(widget.categoryID);
+    return BlocConsumer<CategoryDeletionBloc, CategoryDeletionState>(
+      listener: (context, state) {
+        if (state is ErrorState) {
+          showErrorDialog(context, state.error);
+        } else if (state is ConfirmationState) {
+          showConfirmationDialog(context);
+        } else if (state is CategoryDeleteState) {
+          showSnackBar(context, 'Category deleted successfully.');
+        }
+      },
+      builder: (context, state) {
         return AlertDialog(
           title: Text('Enter Credentials'),
           content: Column(
@@ -106,7 +59,7 @@ class CategoryList extends StatelessWidget {
             ),
             TextButton(
               onPressed: () {
-                Navigator.of(context).pop();
+                // Navigator.of(context).pop();
                 BlocProvider.of<CategoryDeletionBloc>(context).add(
                   CredentialsEnteredEvent(
                     _usernameController.text,
@@ -157,9 +110,11 @@ class CategoryList extends StatelessWidget {
               child: Text('No'),
             ),
             TextButton(
-              onPressed: () {
+              onPressed: () async {
+                BlocProvider.of<CategoryDeletionBloc>(context)
+                    .deleteCategory(widget.categoryID);
                 Navigator.of(context).pop();
-                BlocProvider.of<CategoryDeletionBloc>(context).deleteCategory(id);
+                Navigator.of(context).pop();
               },
               child: Text('Yes'),
             ),
@@ -168,8 +123,6 @@ class CategoryList extends StatelessWidget {
       },
     );
   }
-
-
 
   void showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

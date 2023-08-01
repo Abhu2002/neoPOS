@@ -21,7 +21,7 @@ class CategoryDeletionBloc
     String password = event.password;
 
     QuerySnapshot querySnapshot =
-        await usersCollection.where('first_name', isEqualTo: username).get();
+        await usersCollection.where('user_id', isEqualTo: username).get();
 
     if (querySnapshot.size != 0) {
       var userData = querySnapshot.docs[0].data();

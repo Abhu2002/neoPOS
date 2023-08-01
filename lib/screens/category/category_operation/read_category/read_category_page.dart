@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/category/category_operation/read_category/read_category_bloc.dart';
+import 'package:neopos/screens/category/category_operations/category_delete/delete_page.dart';
 
 import '../create_operation/create_category_page.dart';
 
@@ -30,12 +31,13 @@ class _CategoryReadState extends State<CategoryRead> {
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton(
-                  onPressed: () async {
-                    await showDialog(
-                        context: context,
-                        builder: (context) => const CreateCategoryForm());
-                    BlocProvider.of<ReadCategoryBloc>(context)
-                        .add(InitialEvent());
+                  onPressed: () {
+                    showDialog(
+                            context: context,
+                            builder: (context) => const CreateCategoryForm())
+                        .then((value) =>
+                            BlocProvider.of<ReadCategoryBloc>(context)
+                                .add(InitialEvent()));
                   },
                   child: const Text("Create")),
             ),
@@ -73,7 +75,17 @@ class _CategoryReadState extends State<CategoryRead> {
                                       Padding(
                                         padding: const EdgeInsets.all(10.0),
                                         child: ElevatedButton(
-                                            onPressed: () {},
+                                            onPressed: () {
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    DeleteCategoryPopup(
+                                                  categoryID: element["Id"]!,
+                                                ),
+                                              ).then((value) => BlocProvider.of<
+                                                      ReadCategoryBloc>(context)
+                                                  .add(InitialEvent()));
+                                            },
                                             child: const Text("Delete")),
                                       )
                                     ],

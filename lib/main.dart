@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/category/category_operation/create_operation/create_category_bloc.dart';
 import 'package:neopos/screens/category/category_operation/read_category/read_category_bloc.dart';
+import 'package:neopos/screens/category/category_operations/category_delete/delete_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/login/login_page.dart';
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => CreateTableBloc()),
         BlocProvider(create: (_) => ReadCategoryBloc()),
         BlocProvider(create: (_) => CreateCategoryBloc()),
-        BlocProvider(create: (_) => UpdateTableBloc())
+        BlocProvider(create: (_) => UpdateTableBloc()),
+        BlocProvider(create: (_) => CategoryDeletionBloc()),
       ],
       child: MaterialApp(
         theme: ThemeData(
