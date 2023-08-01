@@ -105,7 +105,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Delete Category'),
-          content: const Text('Are you sure you want to delete this table?'),
+          content: const Text('Are you sure you want to delete this Category?'),
           actions: [
             TextButton(
               onPressed: () {
