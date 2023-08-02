@@ -46,8 +46,8 @@ class UserDeletionBloc extends Bloc<UserDeletionEvent, UserDeletionState> {
   }
 
   //delete user based on doc id.
-  void deleteUser(String categoryId) async {
-    await usersCollection.doc(categoryId).delete();
+  void deleteUser(String docId) async {
+    await usersCollection.doc(docId).delete();
     add(ConfirmUserDeletionEvent());
   }
 }

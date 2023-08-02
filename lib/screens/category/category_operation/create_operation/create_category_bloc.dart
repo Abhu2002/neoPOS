@@ -12,7 +12,7 @@ class CreateCategoryBloc
 
   CreateCategoryBloc() : super(CreateCategoryInitial()) {
     on<InputEvent>((event, emit) async {
-      if (event.tableName != "") {
+      if (event.categoryName != "") {
         emit(CategoryNameAvailableState());
       } else {
         emit(const CategoryErrorState("Please Enter a Name"));

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/users/user_page/read_user_bloc.dart';
 
 import '../user_operations/user_create/create_user_page.dart';
+import '../user_operations/user_delete/delete_user_page.dart';
 import '../user_operations/user_update/update_user_page.dart';
 
 
@@ -50,6 +51,8 @@ class _UserReadState extends State<UserRead> {
                 child: DataTable(
                   columns: const [
                     DataColumn(label: Flexible(child: Text('User Name'))),
+                    DataColumn(label: Flexible(child: Text('Added On'))),
+                    DataColumn(label: Flexible(child: Text('Updated On'))),
                     DataColumn(label: Text('Operations')),
                   ],
                   rows: state
@@ -58,6 +61,8 @@ class _UserReadState extends State<UserRead> {
                         ((element) => DataRow(
                               cells: <DataCell>[ //Extracting from Map element the value
                                 DataCell(Text(element["user_id"]!)),
+                                DataCell(Text(element["added_on"]!)),
+                                DataCell(Text(element["updated_on"]!)),
                                 DataCell(Row(
                                   children: [
                                     Padding(
@@ -84,15 +89,15 @@ class _UserReadState extends State<UserRead> {
                                       padding: const EdgeInsets.all(10.0),
                                       child: ElevatedButton(
                                           onPressed: () {
-                                            // showDialog(
-                                            //   context: context,
-                                            //   builder: (context) =>
-                                            //       DeleteUserPopup(
-                                            //     categoryID: element["Id"]!,
-                                            //   ),
-                                            // ).then((value) => BlocProvider.of<
-                                            //         ReadCategoryBloc>(context)
-                                            //     .add(InitialEvent()));
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) =>
+                                                  DeleteUserPopup(
+                                                docID: element["Id"]!,
+                                              ),
+                                            ).then((value) => BlocProvider.of<
+                                                    ReadUserBloc>(context)
+                                                .add(InitialEvent()));
                                           },
                                           child: const Text("Delete")),
                                     )

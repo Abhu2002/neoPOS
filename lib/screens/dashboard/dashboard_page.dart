@@ -102,7 +102,7 @@ class _DashboardPage extends State<DashboardPage> {
                         selectedTitleTextStyle: TextStyle(
                             color: AppColors.primarySwatch.shade400))),
                 Expanded(
-                  child: PageView(
+                  child: PageView(physics: NeverScrollableScrollPhysics(),
                     controller: pageController,
                     children: [
                       const SingleChildScrollView(child: CategoryRead()),
@@ -126,6 +126,13 @@ class _DashboardPage extends State<DashboardPage> {
                             //     "123");
                           },
                         ),
+                      ),
+                    ///TODO
+                      const Center(
+                        child: Text('Dashboard'),
+                      ),
+                      const Center(
+                        child: Text('Order History'),
                       ),
                       const SingleChildScrollView(child: UserRead()),
                     ],

@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../utils/app_colors.dart';
 import 'delete_user_bloc.dart';
 import 'delete_user_event.dart';
 import 'delete_user_state.dart';
 
 class DeleteUserPopup extends StatefulWidget {
-  final String userID;
+  final String docID;
 
-  const DeleteUserPopup({super.key, required this.userID});
+  const DeleteUserPopup({super.key, required this.docID});
 
   @override
   State<DeleteUserPopup> createState() => _DeleteUserPopupState();
@@ -38,30 +39,49 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
       },
       builder: (context, state) {
         return AlertDialog(
-          title: const Text('Enter Credentials'),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+          actionsPadding: const EdgeInsets.all(20),
+          title: const Text(
+            'Enter Credentials',
+            style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: AppColors.mainTextColor),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: _usernameController,
-                decoration: const InputDecoration(hintText: 'Username'),
+                decoration: InputDecoration(
+                    hintText: "Username",
+                    prefixIcon: const Icon(
+                      Icons.person,
+                      color: AppColors.primaryColor,
+                    )),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(hintText: 'Password'),
+                decoration: InputDecoration(
+                    hintText: "Password",
+                    prefixIcon: const Icon(
+                      Icons.lock,
+                      color: AppColors.primaryColor,
+                    )),
               ),
             ],
           ),
           actions: [
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
               child: const Text('Cancel'),
             ),
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 // Navigator.of(context).pop();
                 BlocProvider.of<UserDeletionBloc>(context).add(
@@ -84,7 +104,16 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Error'),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+          actionsPadding: const EdgeInsets.all(20),
+          title: const Text(
+            'Error',
+            style: const TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: AppColors.mainTextColor),
+          ),
           content: Text(error),
           actions: [
             TextButton(
@@ -104,8 +133,18 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Delete Category'),
-          content: const Text('Are you sure you want to delete this Category?'),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+          actionsPadding: const EdgeInsets.all(20),
+          title: const Text('Delete User',
+              style: const TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.mainTextColor)),
+          content: const Text(
+            'Are you sure you want to delete this User?',
+
+          ),
           actions: [
             TextButton(
               onPressed: () {
@@ -115,8 +154,8 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
             ),
             TextButton(
               onPressed: () async {
-                BlocProvider.of<UserDeletionBloc>(context)
-                    .deleteUser(widget.userID);   //passing doc id to bloc for user deletion
+                BlocProvider.of<UserDeletionBloc>(context).deleteUser(
+                    widget.docID); //passing doc id to bloc for user deletion
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },

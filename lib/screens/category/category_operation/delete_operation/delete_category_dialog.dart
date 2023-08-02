@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../../utils/app_colors.dart';
 import 'delete_bloc.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
@@ -38,30 +39,46 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
       },
       builder: (context, state) {
         return AlertDialog(
-          title: const Text('Enter Credentials'),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+          actionsPadding: const EdgeInsets.all(20),
+          title: const Text('Enter Credentials',style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: AppColors.mainTextColor)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: _usernameController,
-                decoration: const InputDecoration(hintText: 'Username'),
+                  decoration: InputDecoration(
+                      hintText: "Username",
+                      prefixIcon: const Icon(
+                        Icons.person,
+                        color: AppColors.primaryColor,
+                      )),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(hintText: 'Password'),
+                decoration: InputDecoration(
+                    hintText: "Password",
+                    prefixIcon: const Icon(
+                      Icons.person,
+                      color: AppColors.primaryColor,
+                    )),
               ),
             ],
           ),
           actions: [
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
               child: const Text('Cancel'),
             ),
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 // Navigator.of(context).pop();
                 BlocProvider.of<CategoryDeletionBloc>(context).add(
@@ -84,7 +101,13 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Error'),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+          actionsPadding: const EdgeInsets.all(20),
+          title: const Text('Error',style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: AppColors.mainTextColor)),
           content: Text(error),
           actions: [
             TextButton(
@@ -104,7 +127,13 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Delete Category'),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+          actionsPadding: const EdgeInsets.all(20),
+          title: const Text('Delete Category',style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: AppColors.mainTextColor)),
           content: const Text('Are you sure you want to delete this Category?'),
           actions: [
             TextButton(

@@ -102,7 +102,7 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                                       .add(CreateCategoryFBEvent(
                                           categoryName.text));
                                 },
-                          child: const Text("Create Table"),
+                          child: const Text("Create Category"),
                         ));
                   },
                 ),

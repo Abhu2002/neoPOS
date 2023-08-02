@@ -15,8 +15,15 @@ class ReadUserBloc extends Bloc<ReadUserEvent, ReadUserState> {
         FirebaseFirestore db = FirebaseFirestore.instance;
         await db.collection("users").get().then((value) => {
               value.docs.forEach((element) {
-                allcat.add(
-                    {"Id": element.id, "user_id": element['user_id'],"first_name": element['first_name'],"last_name": element['last_name'],"password": element['password']});
+                allcat.add({
+                  "Id": element.id,
+                  "user_id": element['user_id'],
+                  "first_name": element['first_name'],
+                  "last_name": element['last_name'],
+                  "password": element['password'],
+                  "added_on": element['added_on'],
+                  "updated_on": element['updated_on']
+                });
               })
             });
         LoadDataEvent();
