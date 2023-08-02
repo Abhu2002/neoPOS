@@ -27,6 +27,7 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
     return AlertDialog(
       title: const Text('Update Table'),
       content: Column(
+        mainAxisSize:  MainAxisSize.min,
         children: [
           TextField(
             onChanged: (value) => newName = value,
