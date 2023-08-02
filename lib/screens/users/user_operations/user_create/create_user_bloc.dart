@@ -2,9 +2,9 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
-import '../model/user.dart';
+import '../../model/user.dart';
 
-// import 'package:flutter/material.dart';
+
 
 part 'create_user_event.dart';
 

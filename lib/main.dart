@@ -12,6 +12,7 @@ import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/login/login_page.dart';
 import 'package:neopos/screens/users/user_operations/user_create/create_user_bloc.dart';
 import 'package:neopos/screens/users/user_operations/user_update/update_user_bloc.dart';
+import 'package:neopos/screens/users/user_page/read_user_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'package:provider/provider.dart';
 import 'firebase_options.dart';
@@ -46,7 +47,8 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => CategoryUpdateBloc()),
         Provider(create: (_) => TablesRepository()),
         BlocProvider(create: (_) => CreateUserBloc()),
-        BlocProvider(create: (_) => UpdateUserBloc())
+        BlocProvider(create: (_) => UpdateUserBloc()),
+        BlocProvider(create: (_) => ReadUserBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

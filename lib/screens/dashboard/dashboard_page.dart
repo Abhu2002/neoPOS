@@ -5,6 +5,7 @@ import 'package:neopos/screens/users/user_operations/user_update/update_user_pag
 import 'package:neopos/utils/app_colors.dart';
 import '../category/category_page/read_category_page.dart';
 import '../users/user_operations/user_create/create_user_page.dart';
+import '../users/user_page/read_user_page.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -126,6 +127,7 @@ class _DashboardPage extends State<DashboardPage> {
                           },
                         ),
                       ),
+                      const SingleChildScrollView(child: UserRead()),
                     ],
                   ),
                 )
