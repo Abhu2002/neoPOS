@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neopos/screens/table/table_operation/table_read/table_bloc.dart';
-import 'package:neopos/models/table_model.dart';
+import 'package:neopos/screens/table/table_page/table_bloc.dart';
+import '../table_operation/create_operation/create_table_page.dart';
 
-enum TableItem { tabledelete, tableedit }
+import '../table_operation/delete_operation/delete_table_dialog.dart';
+import '../table_operation/update_operation/table_update_dialog.dart';
+
+enum TableItem { tableDelete, tableEdit } //enum for popup
 
 class TableRead extends StatefulWidget {
   const TableRead({super.key});
@@ -18,15 +21,15 @@ class _TableReadState extends State<TableRead> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<TableBloc>(context).add(InitialEvent());
+    BlocProvider.of<TableBloc>(context).add(
+        InitialEvent()); //creates connection and fetch all the map from firebase and add in the list
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<TableBloc, TableState>(builder: (context, state) {
-      if (state is TableLoadedState) {
+      if (state is TableReadLoadedState) {
         List data = state.all;
-        print(data);
         return Column(
           children: [
             Row(mainAxisAlignment: MainAxisAlignment.start, children: [
@@ -35,13 +38,11 @@ class _TableReadState extends State<TableRead> {
                   padding: const EdgeInsets.all(20.0),
                   child: ElevatedButton(
                       onPressed: () {
-                        print('clicked button');
-                        /*showDialog(
-                            context: context,
-                            builder: (context) => const CreateCategoryForm())
-                        .then((value) =>
-                            BlocProvider.of<ReadCategoryBloc>(context)
-                                .add(InitialEvent()));*/
+                        showDialog(
+                                context: context,
+                                builder: (context) => const CreateTableForm())
+                            .then((value) => BlocProvider.of<TableBloc>(context)
+                                .add(InitialEvent()));
                       },
                       child: const Text("Create")),
                 ),
@@ -74,21 +75,49 @@ class _TableReadState extends State<TableRead> {
                                         itemBuilder: (context) =>
                                             <PopupMenuEntry<TableItem>>[
                                               const PopupMenuItem<TableItem>(
-                                                  value: TableItem.tableedit,
+                                                  value: TableItem.tableEdit,
                                                   child: Text(
                                                     "Edit",
                                                     style: TextStyle(
                                                         color: Colors.black),
                                                   )),
                                               const PopupMenuItem<TableItem>(
-                                                  value: TableItem.tabledelete,
+                                                  value: TableItem.tableDelete,
                                                   child: Text(
                                                     "Delete",
                                                     style: TextStyle(
                                                         color: Colors.black),
                                                   ))
                                             ],
-                                        onSelected: (TableItem item) {}),
+                                        onSelected: (TableItem item) {
+                                          switch (item.name) {
+                                            case "tableDelete":
+                                              showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    DeleteTablePopup(
+                                                  docID: data[i]["docID"],
+                                                ),
+                                              ).then((value) =>
+                                                  BlocProvider.of<TableBloc>(
+                                                          context)
+                                                      .add(InitialEvent()));
+                                            case "tableEdit":
+                                              showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      UpdateTableForm(
+                                                        docID: data[i]["docID"],
+                                                        tableName: data[i]
+                                                            ["tablename"],
+                                                        tableCapacity: data[i]
+                                                            ["tablecapacity"],
+                                                      )).then((value) =>
+                                                  BlocProvider.of<TableBloc>(
+                                                          context)
+                                                      .add(InitialEvent()));
+                                          }
+                                        }),
                                   ],
                                 ),
                                 Padding(
@@ -105,7 +134,7 @@ class _TableReadState extends State<TableRead> {
             ),
           ],
         );
-      } else if (state is TableLoadingState) {
+      } else if (state is TableReadLoadingState) {
         return const Center(child: CircularProgressIndicator());
       } else {
         return Container(
