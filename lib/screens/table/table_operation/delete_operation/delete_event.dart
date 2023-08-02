@@ -1,10 +1,10 @@
-abstract class CategoryDeletionEvent {}
+abstract class TableDeletionEvent {}
 
-class CredentialsEnteredEvent extends CategoryDeletionEvent {
+class CredentialsEnteredEvent extends TableDeletionEvent {
   final String username;
   final String password;
 
   CredentialsEnteredEvent(this.username, this.password);
 }
 
-class ConfirmTableDeletionEvent extends CategoryDeletionEvent {}
+class ConfirmTableDeletionEvent extends TableDeletionEvent {}

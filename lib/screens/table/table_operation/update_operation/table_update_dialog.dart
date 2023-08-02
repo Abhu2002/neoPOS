@@ -1,31 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'category_update_bloc.dart';
-import 'category_update_event.dart';
+import 'update_bloc.dart';
+import 'update_event.dart';
 
-//pass category name and category id to update the category..
+//pass table name and table id to update the table..
 
-class UpdateCategoryForm extends StatefulWidget {
-  final String id;
-  final String oldName;
-
-  const UpdateCategoryForm(
-      {super.key, required this.id, required this.oldName});
+class UpdateTableForm extends StatefulWidget {
+  final String docID;
+  final String tableName;
+  final String tableCapacity;
+  const UpdateTableForm(
+      {super.key,
+      required this.docID,
+      required this.tableName,
+      required this.tableCapacity});
 
   @override
-  State<UpdateCategoryForm> createState() => _UpdateCategoryFormState();
+  State<UpdateTableForm> createState() => _UpdateTableFormState();
 }
 
-class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
+class _UpdateTableFormState extends State<UpdateTableForm> {
   @override
   Widget build(BuildContext context) {
-    String newName = widget.oldName;
+    String newName = widget.tableName;
+    String newCapacity = widget.tableCapacity;
     return AlertDialog(
-      title: const Text('Update Category'),
-      content: TextField(
-        onChanged: (value) => newName = value,
-        controller: TextEditingController(text: widget.oldName),
-        decoration: const InputDecoration(hintText: 'New category name'),
+      title: const Text('Update Table'),
+      content: Column(
+        children: [
+          TextField(
+            onChanged: (value) => newName = value,
+            controller: TextEditingController(text: widget.tableName),
+            decoration: const InputDecoration(hintText: 'New table name'),
+          ),
+          TextField(
+            onChanged: (value) => newCapacity = value,
+            controller: TextEditingController(text: widget.tableCapacity),
+            decoration: const InputDecoration(hintText: 'New Table Capacity '),
+          )
+        ],
       ),
       actions: <Widget>[
         TextButton(
@@ -36,8 +49,8 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
           child: const Text('Update'),
           onPressed: () {
             if (newName.trim().isNotEmpty) {
-              BlocProvider.of<CategoryUpdateBloc>(context).add(
-                CategoryUpdateRequested(widget.id, newName),
+              BlocProvider.of<TableUpdateBloc>(context).add(
+                TableUpdateRequested(widget.docID, newName, newCapacity),
               );
             }
             Navigator.of(context).pop();

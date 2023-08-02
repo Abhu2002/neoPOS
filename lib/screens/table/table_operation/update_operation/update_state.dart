@@ -1,13 +1,13 @@
-abstract class CategoryState {}
+abstract class TableState {}
 
-class CategoryInitialState extends CategoryState {}
+class TableInitialState extends TableState {}
 
-class CategoryUpdatingState extends CategoryState {}
+class TableUpdatingState extends TableState {}
 
-class CategoryUpdatedState extends CategoryState {}
+class TableUpdatedState extends TableState {}
 
-class CategoryErrorState extends CategoryState {
+class TableErrorState extends TableState {
   final String error;
 
-  CategoryErrorState(this.error);
+  TableErrorState(this.error);
 }

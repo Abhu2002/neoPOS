@@ -1,8 +1,9 @@
-abstract class CategoryEvent {}
+abstract class TableEvent {}
 
-class CategoryUpdateRequested extends CategoryEvent {
-  final String categoryId;
+class TableUpdateRequested extends TableEvent {
+  final String tableId;
   final String newName;
+  final String newCapacity;
 
-  CategoryUpdateRequested(this.categoryId, this.newName);
+  TableUpdateRequested(this.tableId, this.newName, this.newCapacity);
 }

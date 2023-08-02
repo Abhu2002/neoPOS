@@ -4,16 +4,16 @@ import 'delete_bloc.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
 
-class DeleteCategoryPopup extends StatefulWidget {
-  final String categoryID;
+class DeleteTablePopup extends StatefulWidget {
+  final String docID;
 
-  const DeleteCategoryPopup({super.key, required this.categoryID});
+  const DeleteTablePopup({super.key, required this.docID});
 
   @override
-  State<DeleteCategoryPopup> createState() => _DeleteCategoryPopupState();
+  State<DeleteTablePopup> createState() => _DeleteTablePopupState();
 }
 
-class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
+class _DeleteTablePopupState extends State<DeleteTablePopup> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -26,14 +26,14 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CategoryDeletionBloc, CategoryDeletionState>(
+    return BlocConsumer<TableDeletionBloc, TableDeletionState>(
       listener: (context, state) {
         if (state is ErrorState) {
           showErrorDialog(context, state.error);
         } else if (state is ConfirmationState) {
           showConfirmationDialog(context);
-        } else if (state is CategoryDeleteState) {
-          showSnackBar(context, 'Category deleted successfully.');
+        } else if (state is TableDeleteState) {
+          showSnackBar(context, 'Table deleted successfully.');
         }
       },
       builder: (context, state) {
@@ -64,7 +64,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
             TextButton(
               onPressed: () {
                 // Navigator.of(context).pop();
-                BlocProvider.of<CategoryDeletionBloc>(context).add(
+                BlocProvider.of<TableDeletionBloc>(context).add(
                   CredentialsEnteredEvent(
                     _usernameController.text,
                     _passwordController.text,
@@ -104,8 +104,8 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Delete Category'),
-          content: const Text('Are you sure you want to delete this Category?'),
+          title: const Text('Delete Table'),
+          content: const Text('Are you sure you want to delete this Table?'),
           actions: [
             TextButton(
               onPressed: () {
@@ -115,8 +115,8 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
             ),
             TextButton(
               onPressed: () async {
-                BlocProvider.of<CategoryDeletionBloc>(context)
-                    .deleteCategory(widget.categoryID);
+                BlocProvider.of<TableDeletionBloc>(context)
+                    .deleteTable(widget.docID);
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },

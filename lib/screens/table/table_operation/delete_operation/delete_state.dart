@@ -1,13 +1,13 @@
-abstract class CategoryDeletionState {}
+abstract class TableDeletionState {}
 
-class InitialCategoryDeletionState extends CategoryDeletionState {}
+class InitialTableDeletionState extends TableDeletionState {}
 
-class ErrorState extends CategoryDeletionState {
+class ErrorState extends TableDeletionState {
   final String error;
 
   ErrorState(this.error);
 }
 
-class ConfirmationState extends CategoryDeletionState {}
+class ConfirmationState extends TableDeletionState {}
 
-class CategoryDeleteState extends CategoryDeletionState {}
+class TableDeleteState extends TableDeletionState {}

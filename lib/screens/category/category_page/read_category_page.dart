@@ -13,7 +13,6 @@ class CategoryRead extends StatefulWidget {
 }
 
 class _CategoryReadState extends State<CategoryRead> {
-
   @override
   void initState() {
     BlocProvider.of<ReadCategoryBloc>(context).add(InitialEvent());
