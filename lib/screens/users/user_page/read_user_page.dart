@@ -4,9 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/users/user_page/read_user_bloc.dart';
 
 import '../../../utils/app_colors.dart';
-import '../user_operations/user_create/create_user_page.dart';
-import '../user_operations/user_delete/delete_user_page.dart';
-import '../user_operations/user_update/update_user_page.dart';
+import '../user_operations/user_create/create_user_dialog.dart';
+import '../user_operations/user_delete/delete_user_dialog.dart';
+import '../user_operations/user_update/update_user_dialog.dart';
 
 class UserRead extends StatefulWidget {
   const UserRead({super.key});
@@ -91,7 +91,7 @@ class _UserReadState extends State<UserRead> {
                                                         context)
                                                     .add(InitialEvent()));
                                           },
-                                          child: const Text("Update")),
+                                          child:const Icon(Icons.edit)),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
@@ -108,7 +108,7 @@ class _UserReadState extends State<UserRead> {
                                                         context)
                                                     .add(InitialEvent()));
                                           },
-                                          child: const Text("Delete")),
+                                          child:const Icon(Icons.delete)),
                                     )
                                   ],
                                 )),

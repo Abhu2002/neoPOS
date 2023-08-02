@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:neopos/utils/app_colors.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import '../../../../utils/popup_cancel_button.dart';
 import 'create_user_bloc.dart';
 
 class CreateUserForm extends StatefulWidget {
@@ -39,13 +37,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
-      title: Text(
-        "Create User",
-        style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppColors.mainTextColor),
-      ),
+      title: const PopUpRow(title:"Create User"),
       actions: [
         Form(
           key: formKey,

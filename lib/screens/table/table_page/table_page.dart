@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/table/table_page/table_bloc.dart';
-import '../table_operation/create_operation/create_table_page.dart';
+import '../table_operation/create_operation/create_table_dialog.dart';
 
 import '../table_operation/delete_operation/delete_table_dialog.dart';
 import '../table_operation/update_operation/table_update_dialog.dart';
@@ -76,18 +76,10 @@ class _TableReadState extends State<TableRead> {
                                             <PopupMenuEntry<TableItem>>[
                                               const PopupMenuItem<TableItem>(
                                                   value: TableItem.tableEdit,
-                                                  child: Text(
-                                                    "Edit",
-                                                    style: TextStyle(
-                                                        color: Colors.black),
-                                                  )),
+                                                  child: Icon(Icons.edit)),
                                               const PopupMenuItem<TableItem>(
                                                   value: TableItem.tableDelete,
-                                                  child: Text(
-                                                    "Delete",
-                                                    style: TextStyle(
-                                                        color: Colors.black),
-                                                  ))
+                                                  child: Icon(Icons.delete))
                                             ],
                                         onSelected: (TableItem item) {
                                           switch (item.name) {

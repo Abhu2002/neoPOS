@@ -1,11 +1,10 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import '../../navigation/route_paths.dart';
-import 'package:neopos/screens/users/user_operations/user_update/update_user_page.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../table/table_page/table_page.dart';
 import '../category/category_page/read_category_page.dart';
-import '../users/user_operations/user_create/create_user_page.dart';
+import '../users/user_operations/user_create/create_user_dialog.dart';
 import '../users/user_page/read_user_page.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -96,7 +95,7 @@ class _DashboardPage extends State<DashboardPage> {
                 SideMenu(
                     items: items,
                     controller: sideMenu,
-                    style: SideMenuStyle(
+                    style: SideMenuStyle(openSideMenuWidth:180,
                         backgroundColor: Colors.grey.shade50,
                         selectedColor: AppColors.primarySwatch.shade50,
                         selectedIconColor: AppColors.primarySwatch.shade400,
@@ -108,7 +107,7 @@ class _DashboardPage extends State<DashboardPage> {
                     controller: pageController,
                     children: [
                       const SingleChildScrollView(child: CategoryRead()),
-                      const SingleChildScrollView(child: TableRead()),
+                      ///TODO Product page Pending
                       Center(
                         child: ElevatedButton(
                           child: Text("Create Category"),
@@ -127,8 +126,8 @@ class _DashboardPage extends State<DashboardPage> {
                           },
                         ),
                       ),
-
-                      ///TODO
+                      const SingleChildScrollView(child: TableRead()),
+                      ///TODO DashBoard and History page pending
                       const Center(
                         child: Text('Dashboard'),
                       ),

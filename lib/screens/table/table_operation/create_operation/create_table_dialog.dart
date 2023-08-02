@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:neopos/utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:neopos/utils/popup_cancel_button.dart';
 
 import 'create_table_bloc.dart';
 
@@ -33,13 +34,7 @@ class _CreateTableFormState extends State<CreateTableForm> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
-      title: Text(
-        AppLocalizations.of(context)!.create_table,
-        style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppColors.mainTextColor),
-      ),
+      title: PopUpRow(title: AppLocalizations.of(context)!.create_table,),
       actions: [
         SizedBox(
           width: MediaQuery.of(context).size.width / 2,

@@ -48,7 +48,6 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => CreateCategoryBloc()),
         BlocProvider(create: (_) => CategoryDeletionBloc()),
         BlocProvider(create: (_) => CategoryUpdateBloc()),
-        Provider(create: (_) => TablesRepository()),
         BlocProvider(create: (_) => CreateUserBloc()),
         BlocProvider(create: (_) => UpdateUserBloc()),
         BlocProvider(create: (_) => ReadUserBloc()),

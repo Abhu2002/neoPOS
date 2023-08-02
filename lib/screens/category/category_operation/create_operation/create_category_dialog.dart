@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:neopos/utils/popup_cancel_button.dart';
 import 'create_category_bloc.dart';
 
 class CreateCategoryForm extends StatefulWidget {
@@ -24,12 +25,6 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
     super.initState();
   }
 
-  // @override
-  // void dispose() {
-  //   categoryReadBloc!.close();
-  //   super.dispose();
-  // }
-
   @override
   Widget build(BuildContext context) {
     // categoryReadBloc = BlocProvider.of<CreateCategoryBloc>(context);
@@ -40,18 +35,12 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
-      title: Text(
-        AppLocalizations.of(context)!.create_category,
-        style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppColors.mainTextColor),
-      ),
+      title: PopUpRow(title: AppLocalizations.of(context)!.create_category),
       actions: [
         Form(
           key: formKey,
           child: SizedBox(
-            width: MediaQuery.of(context).size.width / 2,
+            width: MediaQuery.of(context).size.width / 3,
             child: Column(
               children: [
                 BlocBuilder<CreateCategoryBloc, CreateCategoryState>(

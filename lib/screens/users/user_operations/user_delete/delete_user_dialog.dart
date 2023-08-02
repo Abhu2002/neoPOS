@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/utils/popup_cancel_button.dart';
 import '../../../../utils/app_colors.dart';
 import 'delete_user_bloc.dart';
 import 'delete_user_event.dart';
@@ -42,13 +43,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const Text(
-            'Enter Credentials',
-            style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppColors.mainTextColor),
-          ),
+          title: const PopUpRow(title: 'Enter Credentials'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

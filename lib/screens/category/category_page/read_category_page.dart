@@ -85,7 +85,7 @@ class _CategoryReadState extends State<CategoryRead> {
                                                     ReadCategoryBloc>(context)
                                                 .add(InitialEvent()));
                                           },
-                                          child: const Text("Update")),
+                                          child:const Icon(Icons.edit)),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
@@ -101,7 +101,7 @@ class _CategoryReadState extends State<CategoryRead> {
                                                     ReadCategoryBloc>(context)
                                                 .add(InitialEvent()));
                                           },
-                                          child: const Text("Delete")),
+                                          child: const Icon(Icons.delete)),
                                     )
                                   ],
                                 )),

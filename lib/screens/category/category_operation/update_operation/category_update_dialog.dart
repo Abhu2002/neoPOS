@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/utils/popup_cancel_button.dart';
 import '../../../../utils/app_colors.dart';
 import 'category_update_bloc.dart';
 import 'category_update_event.dart';
@@ -25,19 +26,13 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
-      title: const Text(
-        'Update Category',
-        style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppColors.mainTextColor),
-      ),
+      title: const PopUpRow(title:'Update Category'),
       content: TextField(
         onChanged: (value) => newName = value,
         controller: TextEditingController(text: widget.oldName),
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
             hintText: "New Category name",
-            prefixIcon: const Icon(
+            prefixIcon: Icon(
               Icons.category,
               color: AppColors.primaryColor,
             )),

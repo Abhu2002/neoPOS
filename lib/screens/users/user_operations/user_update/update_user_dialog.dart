@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/utils/popup_cancel_button.dart';
 import '../../../../utils/app_colors.dart';
 import 'update_user_bloc.dart';
 import 'update_user_event.dart';
@@ -34,13 +35,7 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
-      title: Text(
-        'Update User',
-        style: const TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            color: AppColors.mainTextColor),
-      ),
+      title: PopUpRow(title: 'Update User'),
       content: SizedBox(
         width: MediaQuery.of(context).size.width / 2,
         child: Column(
