@@ -1,0 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+class TableModel {
+  final String? tableName;
+  final int? tableCap;
+
+  TableModel({
+    this.tableName,
+    this.tableCap,
+  });
+
+  factory TableModel.fromFirestore(
+    DocumentSnapshot<Map<String, dynamic>> snapshot,
+    SnapshotOptions? options,
+  ) {
+    final data = snapshot.data();
+    return TableModel(
+      tableName: data?['tablename'],
+      tableCap: data?['tableCap'],
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      if (tableName != null) "table_name": tableName,
+      if (tableCap != null) "table_capacity": tableCap,
+    };
+  }
+}

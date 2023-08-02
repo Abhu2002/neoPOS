@@ -1,0 +1,55 @@
+import 'package:bloc/bloc.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
+import 'package:neopos/screens/table/table_model/table.dart';
+
+part 'create_table_event.dart';
+part 'create_table_state.dart';
+
+class CreateTableBloc extends Bloc<CreateTableEvent, CreateTableState> {
+  void Function(String)? showMessage;
+  CreateTableBloc() : super(CreateTableInitial()) {
+    on<InputEvent>((event, emit) async {
+      if (event.tableName != "") {
+        if (event.tableCap != "") {
+          if (int.tryParse(event.tableCap) == null) {
+            emit(const TableErrorState("Please Enter Number"));
+          } else {
+            emit(TableNameAvailableState());
+          }
+        } else {
+          emit(const TableErrorState("Please Enter a Capacity"));
+        }
+      } else {
+        emit(const TableErrorState("Please Enter a Name"));
+      }
+    });
+    on<CreateTableFBEvent>((event, emit) async {
+      try {
+        List allName = [];
+        FirebaseFirestore db = FirebaseFirestore.instance;
+        await db.collection("table").get().then((value) => {
+              value.docs.forEach((element) {
+                allName.add(element['table_name']);
+              })
+            });
+        if (allName.contains(event.tableName)) {
+          emit(const TableErrorState("Please Pop"));
+          showMessage!("Table Name Exist Please use Different Name");
+        } else {
+          final data = TableModel(
+              tableName: event.tableName, tableCap: int.parse(event.tableCap));
+          await db.collection("table").add(data.toFirestore()).then(
+              (documentSnapshot) => {
+                    emit(TableCreatedState(true)),
+                    showMessage!("Table Created")
+                  });
+          await FirebaseFirestore.instance.clearPersistence();
+          await FirebaseFirestore.instance.terminate();
+        }
+      } catch (err) {
+        // print(err);
+      }
+    });
+  }
+}
