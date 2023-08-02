@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/utils/popup_cancel_button.dart';
 import 'update_bloc.dart';
 import 'update_event.dart';
 
@@ -25,7 +26,7 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
     String newName = widget.tableName;
     String newCapacity = widget.tableCapacity;
     return AlertDialog(
-      title: const Text('Update Table'),
+      title: const PopUpRow(title: 'Update Table'),
       content: Column(
         mainAxisSize:  MainAxisSize.min,
         children: [

@@ -2,26 +2,28 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-part 'read_category_event.dart';
+part 'read_user_event.dart';
 
-part 'read_category_state.dart';
+part 'read_user_state.dart';
 
-class ReadCategoryBloc extends Bloc<ReadCategoryEvent, ReadCategoryState> {
-  ReadCategoryBloc() : super(ReadCategoryInitial()) {
+class ReadUserBloc extends Bloc<ReadUserEvent, ReadUserState> {
+  ReadUserBloc() : super(ReadUserInitial()) {
     on<InitialEvent>((event, emit) async {
       try {
-        int sr = 1;
         emit(DataLoadingState());
         List allcat = [];
         FirebaseFirestore db = FirebaseFirestore.instance;
-        await db.collection("category").get().then((value) => {
+        await db.collection("users").get().then((value) => {
               value.docs.forEach((element) {
                 allcat.add({
                   "Id": element.id,
-                  "Category": element['category_name'],
-                  "sr": sr.toString()
+                  "user_id": element['user_id'],
+                  "first_name": element['first_name'],
+                  "last_name": element['last_name'],
+                  "password": element['password'],
+                  "added_on": element['added_on'],
+                  "updated_on": element['updated_on']
                 });
-                sr = sr + 1;
               })
             });
         LoadDataEvent();

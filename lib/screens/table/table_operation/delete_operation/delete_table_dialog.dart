@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/utils/popup_cancel_button.dart';
 import 'delete_bloc.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
@@ -38,7 +39,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
       },
       builder: (context, state) {
         return AlertDialog(
-          title: const Text('Enter Credentials'),
+          title: const PopUpRow(title: 'Enter Credentials'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -84,7 +85,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Error'),
+          title: const PopUpRow(title:"Error"),
           content: Text(error),
           actions: [
             TextButton(
@@ -104,7 +105,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Delete Table'),
+          title: const PopUpRow(title:"Delete Table"),
           content: const Text('Are you sure you want to delete this Table?'),
           actions: [
             TextButton(
