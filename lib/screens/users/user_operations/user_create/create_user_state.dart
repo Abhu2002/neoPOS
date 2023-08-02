@@ -9,11 +9,11 @@ class CreateUserState extends Equatable {
 
 class CreateUserInitial extends CreateUserState {}
 
-class UserNameunAvailableState extends CreateUserState {}
+
 
 class UserNameAvailableState extends CreateUserState {}
 
-class UserLoadingState extends CreateUserState {}
+
 
 class UserErrorState extends CreateUserState {
   final String errorMessage;

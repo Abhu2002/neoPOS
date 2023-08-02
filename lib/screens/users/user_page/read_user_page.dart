@@ -71,7 +71,7 @@ class _UserReadState extends State<UserRead> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
-                                      child: ElevatedButton(
+                                      child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent,elevation: 0),
                                           onPressed: () {
                                             showDialog(
                                               context: context,
@@ -91,11 +91,11 @@ class _UserReadState extends State<UserRead> {
                                                         context)
                                                     .add(InitialEvent()));
                                           },
-                                          child:const Icon(Icons.edit)),
+                                          child:const Icon(Icons.edit,color: AppColors.mainTextColor,)),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
-                                      child: ElevatedButton(
+                                      child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent,elevation: 0),
                                           onPressed: () {
                                             showDialog(
                                               context: context,
@@ -108,7 +108,7 @@ class _UserReadState extends State<UserRead> {
                                                         context)
                                                     .add(InitialEvent()));
                                           },
-                                          child:const Icon(Icons.delete)),
+                                          child:const Icon(Icons.delete,color: AppColors.mainTextColor,)),
                                     )
                                   ],
                                 )),

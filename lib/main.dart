@@ -43,15 +43,19 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
+        ///Bloc for Login
         BlocProvider(create: (_) => LoginBloc()),
+        ///Bloc for Category CRUD
         BlocProvider(create: (_) => ReadCategoryBloc()),
         BlocProvider(create: (_) => CreateCategoryBloc()),
         BlocProvider(create: (_) => CategoryDeletionBloc()),
         BlocProvider(create: (_) => CategoryUpdateBloc()),
+        ///Bloc for User CRUD
         BlocProvider(create: (_) => CreateUserBloc()),
         BlocProvider(create: (_) => UpdateUserBloc()),
         BlocProvider(create: (_) => ReadUserBloc()),
         BlocProvider(create: (_) => UserDeletionBloc()),
+        ///Bloc for Table CRUD
         BlocProvider(create: (_) => TableBloc()),
         BlocProvider(create: (_) => TableDeletionBloc()),
         BlocProvider(create: (_) => CreateTableBloc()),

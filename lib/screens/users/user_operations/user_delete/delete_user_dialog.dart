@@ -102,13 +102,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const Text(
-            'Error',
-            style: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppColors.mainTextColor),
-          ),
+          title: const PopUpRow(title:"Error"),
           content: Text(error),
           actions: [
             TextButton(
@@ -131,11 +125,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const Text('Delete User',
-              style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.mainTextColor)),
+          title: const PopUpRow(title:"Delete User"),
           content: const Text(
             'Are you sure you want to delete this User?',
           ),

@@ -85,7 +85,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Error'),
+          title: const PopUpRow(title:"Error"),
           content: Text(error),
           actions: [
             TextButton(
@@ -105,7 +105,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Delete Table'),
+          title: const PopUpRow(title:"Delete Table"),
           content: const Text('Are you sure you want to delete this Table?'),
           actions: [
             TextButton(
