@@ -134,14 +134,8 @@ class _TableReadState extends State<TableRead> {
             ),
           ],
         );
-      } else if (state is TableReadLoadingState) {
-        return const Center(child: CircularProgressIndicator());
       } else {
-        return Container(
-          color: Colors.red,
-          width: 200,
-          height: 200,
-        );
+        return const Center(child: CircularProgressIndicator());
       }
     });
   }
