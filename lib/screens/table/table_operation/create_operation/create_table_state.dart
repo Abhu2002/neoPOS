@@ -11,7 +11,7 @@ class CreateTableInitial extends CreateTableState {}
 
 class TableNameAvailableState extends CreateTableState {}
 
-class TableLoadingState extends CreateTableState {}
+
 
 class TableErrorState extends CreateTableState {
   final String errorMessage;

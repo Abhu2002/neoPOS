@@ -135,7 +135,10 @@ class _TableReadState extends State<TableRead> {
           ],
         );
       } else {
-        return const Center(child: CircularProgressIndicator());
+        return const SizedBox(
+          height: 200,
+            width: 200,
+            child: Center(child: CircularProgressIndicator()));
       }
     });
   }
