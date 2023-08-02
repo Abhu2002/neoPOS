@@ -1,14 +1,15 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get_it/get_it.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
 
 class CategoryDeletionBloc
     extends Bloc<CategoryDeletionEvent, CategoryDeletionState> {
   final CollectionReference usersCollection =
-      FirebaseFirestore.instance.collection('users');
+      GetIt.I.get<FirebaseFirestore>().collection('users');
   final CollectionReference categoryCollection =
-      FirebaseFirestore.instance.collection('category');
+      GetIt.I.get<FirebaseFirestore>().collection('category');
 
   CategoryDeletionBloc() : super(InitialCategoryDeletionState()) {
     on<CredentialsEnteredEvent>(_mapCredentialsEnteredEventToState);

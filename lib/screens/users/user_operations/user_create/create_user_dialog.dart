@@ -37,7 +37,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
-      title: const PopUpRow(title:"Create User"),
+      title: const PopUpRow(title: "Create User"),
       actions: [
         Form(
           key: formKey,
@@ -49,9 +49,9 @@ class _CreateUserFormState extends State<CreateUserForm> {
                   builder: (context, state) {
                     return TextFormField(
                       controller: firstName,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: "first name",
-                          prefixIcon: const Icon(
+                          prefixIcon: Icon(
                             Icons.person,
                             color: AppColors.primaryColor,
                           )),
@@ -76,9 +76,9 @@ class _CreateUserFormState extends State<CreateUserForm> {
                   builder: (context, state) {
                     return TextFormField(
                       controller: lastName,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: "Last Name",
-                          prefixIcon: const Icon(
+                          prefixIcon: Icon(
                             Icons.person,
                             color: AppColors.primaryColor,
                           )),
@@ -103,9 +103,9 @@ class _CreateUserFormState extends State<CreateUserForm> {
                   builder: (context, state) {
                     return TextFormField(
                       controller: userName,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: "User Name",
-                          prefixIcon: const Icon(
+                          prefixIcon: Icon(
                             Icons.person,
                             color: AppColors.primaryColor,
                           )),
@@ -130,9 +130,9 @@ class _CreateUserFormState extends State<CreateUserForm> {
                   builder: (context, state) {
                     return TextFormField(
                       controller: password,
-                      decoration: InputDecoration(
+                      decoration: const InputDecoration(
                           hintText: "Password",
-                          prefixIcon: const Icon(
+                          prefixIcon: Icon(
                             Icons.lock,
                             color: AppColors.primaryColor,
                           )),
@@ -158,7 +158,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text("User Role : "),
+                        const Text("User Role : "),
                         const SizedBox(
                           width: 30,
                         ),
@@ -210,7 +210,6 @@ class _CreateUserFormState extends State<CreateUserForm> {
                               backgroundColor: (state is UserErrorState)
                                   ? AppColors.unavilableButtonColor
                                   : AppColors.primaryColor),
-                          child: Text("Create User"),
                           onPressed: (state is UserErrorState)
                               ? null
                               : () {
@@ -224,6 +223,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                                             dropdownValue));
                                   }
                                 },
+                          child: const Text("Create User"),
                         ));
                   },
                 ),
@@ -231,8 +231,6 @@ class _CreateUserFormState extends State<CreateUserForm> {
             ),
           ),
         ),
-
-        // ActionButton(text: "Create Table", onPress: () {})
       ],
     );
   }

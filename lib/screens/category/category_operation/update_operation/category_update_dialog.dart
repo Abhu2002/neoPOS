@@ -26,7 +26,7 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
-      title: const PopUpRow(title:'Update Category'),
+      title: const PopUpRow(title: 'Update Category'),
       content: TextField(
         onChanged: (value) => newName = value,
         controller: TextEditingController(text: widget.oldName),

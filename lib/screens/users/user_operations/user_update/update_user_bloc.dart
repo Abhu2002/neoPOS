@@ -4,9 +4,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:neopos/screens/users/user_operations/user_update/update_user_event.dart';
 import 'package:neopos/screens/users/user_operations/user_update/update_user_state.dart';
 import 'package:intl/intl.dart';
+import 'package:get_it/get_it.dart';
 
 class UpdateUserBloc extends Bloc<UpdateUserEvent, UpdateUserState> {
-  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+  final FirebaseFirestore _fireStore = GetIt.I.get<FirebaseFirestore>();
 
   UpdateUserBloc() : super(UpdateUserInitialState()) {
     on<UpdateUserBlocRequested>(_mapUpdateUserBlocRequested);
@@ -23,7 +24,7 @@ class UpdateUserBloc extends Bloc<UpdateUserEvent, UpdateUserState> {
         "last_name": event.newLastName,
         "password": event.newPassword,
         "updated_on":
-            "${DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now())}"
+            DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now())
       });
       emit(UserUpdatedState());
     } catch (e) {

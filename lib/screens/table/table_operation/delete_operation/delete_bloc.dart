@@ -1,13 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get_it/get_it.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
 
 class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
   final CollectionReference usersCollection =
-      FirebaseFirestore.instance.collection('users');
+      GetIt.I.get<FirebaseFirestore>().collection('users');
   final CollectionReference tableCollection =
-      FirebaseFirestore.instance.collection('table');
+      GetIt.I.get<FirebaseFirestore>().collection('table');
 
   TableDeletionBloc() : super(InitialTableDeletionState()) {
     on<CredentialsEnteredEvent>(_mapCredentialsEnteredEventToState);

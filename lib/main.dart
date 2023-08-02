@@ -18,13 +18,14 @@ import 'package:neopos/screens/table/table_operation/delete_operation/delete_blo
 import 'package:neopos/screens/table/table_operation/update_operation/update_bloc.dart';
 import 'package:neopos/screens/table/table_page/table_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
+import 'di/firebase_di.dart';
 import 'firebase_options.dart';
 import 'l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'navigation/app_router.dart';
 
 Future<void> main() async {
+  setupSingletons();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -45,16 +46,19 @@ class MyApp extends StatelessWidget {
       providers: [
         ///Bloc for Login
         BlocProvider(create: (_) => LoginBloc()),
+
         ///Bloc for Category CRUD
         BlocProvider(create: (_) => ReadCategoryBloc()),
         BlocProvider(create: (_) => CreateCategoryBloc()),
         BlocProvider(create: (_) => CategoryDeletionBloc()),
         BlocProvider(create: (_) => CategoryUpdateBloc()),
+
         ///Bloc for User CRUD
         BlocProvider(create: (_) => CreateUserBloc()),
         BlocProvider(create: (_) => UpdateUserBloc()),
         BlocProvider(create: (_) => ReadUserBloc()),
         BlocProvider(create: (_) => UserDeletionBloc()),
+
         ///Bloc for Table CRUD
         BlocProvider(create: (_) => TableBloc()),
         BlocProvider(create: (_) => TableDeletionBloc()),
