@@ -4,8 +4,6 @@ import 'package:equatable/equatable.dart';
 import 'package:intl/intl.dart';
 import '../../model/user.dart';
 
-
-
 part 'create_user_event.dart';
 
 part 'create_user_state.dart';

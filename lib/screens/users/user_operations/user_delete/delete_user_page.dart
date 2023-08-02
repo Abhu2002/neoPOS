@@ -143,7 +143,6 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
                   color: AppColors.mainTextColor)),
           content: const Text(
             'Are you sure you want to delete this User?',
-
           ),
           actions: [
             TextButton(

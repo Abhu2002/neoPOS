@@ -25,10 +25,13 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
-      title: const Text('Update Category', style: const TextStyle(
-          fontSize: 20,
-          fontWeight: FontWeight.bold,
-          color: AppColors.mainTextColor),),
+      title: const Text(
+        'Update Category',
+        style: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: AppColors.mainTextColor),
+      ),
       content: TextField(
         onChanged: (value) => newName = value,
         controller: TextEditingController(text: widget.oldName),

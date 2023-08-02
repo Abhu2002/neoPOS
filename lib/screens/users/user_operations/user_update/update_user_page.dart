@@ -11,14 +11,19 @@ class UpdateUserForm extends StatefulWidget {
   final String oldLastName;
   final String oldUserId;
   final String oldPassword;
-  const UpdateUserForm({super.key, required this.docId, required this.oldFirstName, required this.oldLastName, required this.oldUserId, required this.oldPassword});
+  const UpdateUserForm(
+      {super.key,
+      required this.docId,
+      required this.oldFirstName,
+      required this.oldLastName,
+      required this.oldUserId,
+      required this.oldPassword});
 
   @override
   State<UpdateUserForm> createState() => _UpdateUserFormState();
 }
 
 class _UpdateUserFormState extends State<UpdateUserForm> {
-
   @override
   Widget build(BuildContext context) {
     String newFirstName = widget.oldFirstName;
@@ -106,19 +111,18 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
                 newUserId.trim().isNotEmpty &&
                 newPassword.trim().isNotEmpty) {
               BlocProvider.of<UpdateUserBloc>(context).add(
-                UpdateUserBlocRequested(
-                    widget.docId, newFirstName, newLastName, newPassword, newUserId),
+                UpdateUserBlocRequested(widget.docId, newFirstName, newLastName,
+                    newPassword, newUserId),
               );
               Navigator.of(context).pop();
-              final snackBar =
-              SnackBar(content: Text("User Updated"));
+              final snackBar = SnackBar(content: Text("User Updated"));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
-
+            } else {
+              Navigator.of(context).pop();
+              final snackBar =
+                  SnackBar(content: Text("User Not Updated, Data Missing"));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
-            else{Navigator.of(context).pop();
-            final snackBar =
-            SnackBar(content: Text("User Not Updated, Data Missing"));
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);}
           },
         ),
       ],

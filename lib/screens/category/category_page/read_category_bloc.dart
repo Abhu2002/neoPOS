@@ -10,13 +10,18 @@ class ReadCategoryBloc extends Bloc<ReadCategoryEvent, ReadCategoryState> {
   ReadCategoryBloc() : super(ReadCategoryInitial()) {
     on<InitialEvent>((event, emit) async {
       try {
+        int sr = 1;
         emit(DataLoadingState());
         List allcat = [];
         FirebaseFirestore db = FirebaseFirestore.instance;
         await db.collection("category").get().then((value) => {
               value.docs.forEach((element) {
-                allcat.add(
-                    {"Id": element.id, "Category": element['category_name']});
+                allcat.add({
+                  "Id": element.id,
+                  "Category": element['category_name'],
+                  "sr": sr.toString()
+                });
+                sr = sr + 1;
               })
             });
         LoadDataEvent();

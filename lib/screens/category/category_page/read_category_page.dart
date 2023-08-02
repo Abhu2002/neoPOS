@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
+import 'package:neopos/utils/app_colors.dart';
 import '../category_operation/create_operation/create_category_dialog.dart';
 import '../category_operation/delete_operation/delete_category_dialog.dart';
 import '../category_operation/update_operation/category_update_dialog.dart';
@@ -46,8 +47,16 @@ class _CategoryReadState extends State<CategoryRead> {
               return SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: DataTable(
+                  showBottomBorder: true,
+
+                  headingTextStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.mainTextColor),
+                  // Use the default value.
+
                   columns: const [
-                    DataColumn(label: Text('ID')),
+                    DataColumn(label: Text("SR")),
                     DataColumn(label: Flexible(child: Text('Category Name'))),
                     DataColumn(label: Text('Operation')),
                   ],
@@ -56,8 +65,8 @@ class _CategoryReadState extends State<CategoryRead> {
                       .map(
                         ((element) => DataRow(
                               cells: <DataCell>[
-                                DataCell(Text(element[
-                                    "Id"]!)), //Extracting from Map element the value
+                                //Extracting from Map element the value
+                                DataCell(Text(element["sr"])),
                                 DataCell(Text(element["Category"]!)),
                                 DataCell(Row(
                                   children: [

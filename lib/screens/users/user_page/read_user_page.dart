@@ -3,10 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:neopos/screens/users/user_page/read_user_bloc.dart';
 
+import '../../../utils/app_colors.dart';
 import '../user_operations/user_create/create_user_page.dart';
 import '../user_operations/user_delete/delete_user_page.dart';
 import '../user_operations/user_update/update_user_page.dart';
-
 
 class UserRead extends StatefulWidget {
   const UserRead({super.key});
@@ -35,9 +35,8 @@ class _UserReadState extends State<UserRead> {
                     showDialog(
                             context: context,
                             builder: (context) => const CreateUserForm())
-                        .then((value) =>
-                            BlocProvider.of<ReadUserBloc>(context)
-                                .add(InitialEvent()));
+                        .then((value) => BlocProvider.of<ReadUserBloc>(context)
+                            .add(InitialEvent()));
                   },
                   child: const Text("Create")),
             ),
@@ -49,6 +48,10 @@ class _UserReadState extends State<UserRead> {
               return SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: DataTable(
+                  headingTextStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.mainTextColor),
                   columns: const [
                     DataColumn(label: Flexible(child: Text('User Name'))),
                     DataColumn(label: Flexible(child: Text('Added On'))),
@@ -59,7 +62,8 @@ class _UserReadState extends State<UserRead> {
                       .all // Loops through dataColumnText, each iteration assigning the value to element
                       .map(
                         ((element) => DataRow(
-                              cells: <DataCell>[ //Extracting from Map element the value
+                              cells: <DataCell>[
+                                //Extracting from Map element the value
                                 DataCell(Text(element["user_id"]!)),
                                 DataCell(Text(element["added_on"]!)),
                                 DataCell(Text(element["updated_on"]!)),
@@ -73,15 +77,19 @@ class _UserReadState extends State<UserRead> {
                                               context: context,
                                               builder: (context) =>
                                                   UpdateUserForm(
-                                                      docId: element['Id'],
-                                                      oldFirstName:element['first_name'],
-                                                    oldLastName:element['last_name'],
-                                                    oldPassword:element['password'],
-                                                    oldUserId:element['user_id'],
-                                                          ),
-                                            ).then((value) => BlocProvider.of<
-                                                    ReadUserBloc>(context)
-                                                .add(InitialEvent()));
+                                                docId: element['Id'],
+                                                oldFirstName:
+                                                    element['first_name'],
+                                                oldLastName:
+                                                    element['last_name'],
+                                                oldPassword:
+                                                    element['password'],
+                                                oldUserId: element['user_id'],
+                                              ),
+                                            ).then((value) =>
+                                                BlocProvider.of<ReadUserBloc>(
+                                                        context)
+                                                    .add(InitialEvent()));
                                           },
                                           child: const Text("Update")),
                                     ),
@@ -95,9 +103,10 @@ class _UserReadState extends State<UserRead> {
                                                   DeleteUserPopup(
                                                 docID: element["Id"]!,
                                               ),
-                                            ).then((value) => BlocProvider.of<
-                                                    ReadUserBloc>(context)
-                                                .add(InitialEvent()));
+                                            ).then((value) =>
+                                                BlocProvider.of<ReadUserBloc>(
+                                                        context)
+                                                    .add(InitialEvent()));
                                           },
                                           child: const Text("Delete")),
                                     )
