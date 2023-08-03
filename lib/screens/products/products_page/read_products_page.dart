@@ -36,7 +36,7 @@ class _ProductsReadState extends State<ProductsRead> {
       "product_image": "assets/chicken-crispy.png",
       "product_name": "Chicken crispy",
       "product_price": 300,
-      "product_type": "Non-veg"
+      "product_type": "veg"
     },
     {
       "product_availability": true,
@@ -85,7 +85,6 @@ class _ProductsReadState extends State<ProductsRead> {
   Widget build(BuildContext context) {
     return Column(children: [
       Row(
-        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Flexible(
             child: Padding(
@@ -96,89 +95,72 @@ class _ProductsReadState extends State<ProductsRead> {
           ),
         ],
       ),
-      Padding(
-        padding: const EdgeInsets.all(10.0),
-        child: SizedBox(
-          height: MediaQuery.of(context).size.height,
-          child: GridView.builder(
-              itemCount: 10,
-              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                maxCrossAxisExtent: 300,
-                crossAxisSpacing: 20.0,
-                mainAxisSpacing: 20.0,
-                mainAxisExtent: 450,
-              ),
-              itemBuilder: (context, i) {
-                return Container(
-                  // color: Colors.orange.shade50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: AppColors.primaryColor),
-                  child: Column(children: [
-                    Stack(
-                      children: [
-                        Image.network(
-                            "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80"),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            PopupMenuButton(
-                              initialValue: "",
-                              icon: const Icon(Icons.menu,
-                                  color: AppColors.primaryColor),
-                              color: Colors.white,
-                              itemBuilder: (context) => <PopupMenuEntry>[
-                                const PopupMenuItem(
-                                    value: "",
-                                    child: Text(
-                                      "Edit",
-                                      style: TextStyle(color: Colors.black),
-                                    )),
-                                const PopupMenuItem(
-                                    value: "",
-                                    child: Text(
-                                      "Delete",
-                                      style: TextStyle(color: Colors.black),
-                                    ))
-                              ],
+      DataTable(
+        showBottomBorder: true,
+        headingRowHeight: 60,
+        headingTextStyle: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+            color: AppColors.mainTextColor),
+        // Use the default value.
+
+        columns: const [
+          DataColumn(label: Text("Date")),
+          DataColumn(label: Text("Image")),
+          DataColumn(label: Flexible(child: Text('Product Name'))),
+          DataColumn(label: Text("Type")),
+          DataColumn(label: Text("Category")),
+          DataColumn(label: Flexible(child: Text('Price'))),
+          DataColumn(label: Text('More Details')),
+        ],
+        rows:
+            data // Loops through dataColumnText, each iteration assigning the value to element
+                .map(
+                  ((element) => DataRow(
+                        cells: <DataCell>[
+                          //Extracting from Map element the value
+                          DataCell(Text("1 Aug")),
+                          DataCell(Container(
+                              child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+                              width: 55,
                             ),
-                          ],
-                        )
-                      ],
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Text(
-                          "Chicken crispy",
-                          style: TextStyle(fontSize: 20, color: Colors.white),
-                        ),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Text(
-                          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-                          style: TextStyle(fontSize: 15, color: Colors.white70),
-                        ),
-                      ),
-                    ),
-                    const Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Align(
-                          alignment: Alignment.bottomLeft,
-                          child: Text(
-                            "Rs 300",
-                            style: TextStyle(color: Colors.white, fontSize: 20),
+                          ))),
+                          DataCell(Text(element["product_name"]!)),
+                          DataCell(Container(
+                            height: 10,
+                            width: 10,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: (element['product_type']) == "Non-veg"
+                                    ? Colors.red
+                                    : Colors.green),
                           )),
-                    ),
-                  ]),
-                );
-              }),
-        ),
+                          DataCell(Text(element["product_category"]!)),
+                          DataCell(Text("${element["product_price"]!}")),
+
+                          DataCell(Row(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.transparent,
+                                        elevation: 0),
+                                    onPressed: () {},
+                                    child: const Icon(
+                                      Icons.info_outline,
+                                      color: AppColors.mainTextColor,
+                                    )),
+                              ),
+                            ],
+                          )),
+                        ],
+                      )),
+                )
+                .toList(),
       ),
     ]);
   }

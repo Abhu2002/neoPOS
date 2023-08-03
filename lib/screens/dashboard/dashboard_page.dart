@@ -108,31 +108,9 @@ class _DashboardPage extends State<DashboardPage> {
                     physics: NeverScrollableScrollPhysics(),
                     controller: pageController,
                     children: [
-                      SingleChildScrollView(child: CategoryRead()),
                       SingleChildScrollView(child: ProductsRead()),
+                      SingleChildScrollView(child: CategoryRead()),
                       SingleChildScrollView(child: TableRead()),
-                      const SingleChildScrollView(child: CategoryRead()),
-
-                      ///TODO Product page Pending
-                      Center(
-                        child: ElevatedButton(
-                          child: Text("Create Category"),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => const CreateUserForm(),
-                            );
-                            // showUpdateUserDialog(
-                            //     context,
-                            //     "h3FqLvoiXiXQNgTtxjoj",
-                            //     "Niranjan",
-                            //     "Modak",
-                            //     "niranjan",
-                            //     "123");
-                          },
-                        ),
-                      ),
-                      const SingleChildScrollView(child: TableRead()),
 
                       ///TODO DashBoard and History page pending
                       const Center(
