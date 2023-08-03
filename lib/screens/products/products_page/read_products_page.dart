@@ -55,8 +55,7 @@ class _ProductsReadState extends State<ProductsRead> {
                     DataColumn(label: Text("Type")),
                     DataColumn(label: Text("Category")),
                     DataColumn(label: Flexible(child: Text('Price'))),
-                    DataColumn(
-                        label: Flexible(child: Text('Product Available'))),
+                    DataColumn(label: Flexible(child: Text('Available'))),
                     DataColumn(label: Flexible(child: Text('More Details'))),
                   ],
                   rows: state
@@ -88,8 +87,18 @@ class _ProductsReadState extends State<ProductsRead> {
                                 )),
                                 DataCell(Text(element["product_category"]!)),
                                 DataCell(Text("${element["product_price"]!}")),
-                                DataCell(Text(
-                                    "${element["product_availability"]!}")),
+                                DataCell(
+                                    (element["product_availability"] == true)
+                                        ? Icon(
+                                            Icons.check_circle,
+                                            color: Colors.green,
+                                          )
+                                        : Icon(
+                                            Icons.cancel_rounded,
+                                            color: Colors.red,
+                                          )
+                                    // Text("${element["product_availability"]!}")
+                                    ),
 
                                 DataCell(Row(
                                   children: [
