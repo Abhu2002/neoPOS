@@ -1,7 +1,11 @@
+import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
+
+import '../../../utils/popup_cancel_button.dart';
 
 class ProductsRead extends StatefulWidget {
   const ProductsRead({super.key});
@@ -161,7 +165,36 @@ class _ProductsReadState extends State<ProductsRead> {
                                         style: ElevatedButton.styleFrom(
                                             backgroundColor: Colors.transparent,
                                             elevation: 0),
-                                        onPressed: () {},
+                                        onPressed: () async {
+                                          // BlocProvider.of<ReadProductsBloc>(context).add(ButtonClickEvent(SideMenuDisplayMode.compact));
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                               return AlertDialog(
+                                                    // contentPadding: EdgeInsets.all(20),
+                                                    shape: const RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    20))),
+                                                    actionsPadding:
+                                                        const EdgeInsets.all(
+                                                            20),
+                                                    title: PopUpRow(
+                                                        title:
+                                                            "Product Details"),
+                                                    actions: [
+                                                      SizedBox(
+                                                          child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        children: [
+                                                            Image.network(src)
+                                                        ],
+                                                      ))
+                                                    ]);
+                                              });
+                                        },
                                         child: const Icon(
                                           Icons.info_outline,
                                           color: AppColors.mainTextColor,
@@ -180,7 +213,7 @@ class _ProductsReadState extends State<ProductsRead> {
           } else if (state is ReadErrorState) {
             return Text(state.errorMessage);
           }
-          return Text("");
+          return Text("y7gybubu");
         },
       ),
     ]);

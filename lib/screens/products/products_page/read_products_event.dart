@@ -10,3 +10,10 @@ abstract class ReadProductsEvent extends Equatable {
 class ReadLoadedDataEvent extends ReadProductsEvent {}
 
 class ReadInitialEvent extends ReadProductsEvent {}
+
+class ButtonClickEvent extends ReadProductsEvent {
+  SideMenuDisplayMode mode;
+  ButtonClickEvent(this.mode);
+  @override
+  List<Object> get props => [mode];
+}

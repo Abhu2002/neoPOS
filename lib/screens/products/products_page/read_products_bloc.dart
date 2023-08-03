@@ -1,13 +1,21 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
+import 'package:neopos/screens/dashboard/dashboard_page.dart';
+import 'package:neopos/utils/common_text.dart';
 
 part 'read_products_event.dart';
 part 'read_products_state.dart';
 
 class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
   ReadProductsBloc() : super(ReadProductsInitial()) {
+    on<ButtonClickEvent>((event,emit){
+      print(event.mode);
+      ConstantVar.mode = event.mode;
+      emit(ButtonState(ConstantVar.mode));
+    });
     on<ReadInitialEvent>((event, emit) async {
       try {
         emit(ReadDataLoadingState());

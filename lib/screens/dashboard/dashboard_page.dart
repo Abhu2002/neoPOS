@@ -1,8 +1,11 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/products/products_page/read_products_page.dart';
+import 'package:neopos/utils/common_text.dart';
 import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
+import '../products/products_page/read_products_bloc.dart';
 import '../table/table_page/table_page.dart';
 import '../category/category_page/read_category_page.dart';
 import '../users/user_page/read_user_page.dart';
@@ -15,7 +18,6 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPage extends State<DashboardPage> {
-  int selectedIndex = 0;
   final SideMenuController sideMenu = SideMenuController();
   PageController pageController = PageController();
 
@@ -88,46 +90,69 @@ class _DashboardPage extends State<DashboardPage> {
         ),
         body: SafeArea(
             child: CustomScrollView(slivers: [
-          SliverFillRemaining(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                SideMenu(
-                    items: items,
-                    controller: sideMenu,
-                    style: SideMenuStyle(
-                        openSideMenuWidth: 180,
-                        backgroundColor: Colors.grey.shade50,
-                        selectedColor: AppColors.primarySwatch.shade50,
-                        selectedIconColor: AppColors.primarySwatch.shade400,
-                        selectedTitleTextStyle: TextStyle(
-                            color: AppColors.primarySwatch.shade400))),
-                Expanded(
-                  child: PageView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    controller: pageController,
-                    children: const [
-                      SingleChildScrollView(child: CategoryRead()),
-                      SingleChildScrollView(child: ProductsRead()),
+              SliverFillRemaining(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    BlocBuilder<ReadProductsBloc, ReadProductsState>(
+                        builder: (context, state) {
+                          if (state is ButtonState) {
+                            return SideMenu(
+                                items: items,
+                                controller: sideMenu,
+                                style: SideMenuStyle(
+                                    openSideMenuWidth: 180,
+                                    displayMode: state.mod,
+                                    backgroundColor: Colors.grey.shade50,
+                                    selectedColor: AppColors.primarySwatch
+                                        .shade50,
+                                    selectedIconColor: AppColors.primarySwatch
+                                        .shade400,
+                                    selectedTitleTextStyle: TextStyle(
+                                        color: AppColors.primarySwatch
+                                            .shade400)));
+                          }
+                          return SideMenu(
+                              items: items,
+                              controller: sideMenu,
+                              style: SideMenuStyle(
+                                  openSideMenuWidth: 180,
+                                  displayMode: ConstantVar.mode,
+                                  backgroundColor: Colors.grey.shade50,
+                                  selectedColor: AppColors.primarySwatch
+                                      .shade50,
+                                  selectedIconColor: AppColors.primarySwatch
+                                      .shade400,
+                                  selectedTitleTextStyle: TextStyle(
+                                      color: AppColors.primarySwatch
+                                          .shade400)));
+                        }),
+                    Expanded(
+                      child: PageView(
+                        physics: const NeverScrollableScrollPhysics(),
+                        controller: pageController,
+                        children: const [
+                          SingleChildScrollView(child: CategoryRead()),
+                          SingleChildScrollView(child: ProductsRead()),
 
-                      ///TODO Product page Pending
-                      Center(
-                        child: Text('Dashboard'),
+                          ///TODO Product page Pending
+                          Center(
+                            child: Text('Dashboard'),
+                          ),
+                          SingleChildScrollView(child: TableRead()),
+
+                          ///TODO DashBoard and History page pending
+
+                          Center(
+                            child: Text('Order History'),
+                          ),
+                          SingleChildScrollView(child: UserRead()),
+                        ],
                       ),
-                      SingleChildScrollView(child: TableRead()),
-
-                      ///TODO DashBoard and History page pending
-
-                      Center(
-                        child: Text('Order History'),
-                      ),
-                      SingleChildScrollView(child: UserRead()),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )
-        ])));
+                    )
+                  ],
+                ),
+              )
+            ])));
   }
 }
