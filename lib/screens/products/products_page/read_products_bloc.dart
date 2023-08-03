@@ -32,12 +32,15 @@ class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
                   "product_name": element['product_name'],
                   "product_price": element['product_price'],
                   "product_type": element['product_type'],
+                  "date_added": (element['date_added'] ?? 'Aug 1'),
+                  "date_updated": (element['date_updated'] ?? 'Aug 1'),
                 });
               })
             });
         ReadLoadedDataEvent();
         emit(ReadDataLoadedState(allCat));
       } catch (err) {
+        print(err);
         emit(ReadErrorState("Error Occur :-$err"));
       }
     });
