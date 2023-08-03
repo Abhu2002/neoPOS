@@ -1,5 +1,6 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
+import 'package:neopos/screens/products/products_page/read_products_page.dart';
 import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../table/table_page/table_page.dart';
@@ -105,6 +106,9 @@ class _DashboardPage extends State<DashboardPage> {
                   child: PageView(
                     physics: NeverScrollableScrollPhysics(),
                     controller: pageController,
+                    children: const [
+                      SingleChildScrollView(child: CategoryRead()),
+                      SingleChildScrollView(child: ProductsRead()),
                     children: [
                       const SingleChildScrollView(child: CategoryRead()),
                       ///TODO Product page Pending
