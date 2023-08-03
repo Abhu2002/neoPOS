@@ -17,10 +17,10 @@ class CreateCategoryFBEvent extends CreateCategoryEvent {
 }
 
 class InputEvent extends CreateCategoryEvent {
-  final String tableName;
+  final String categoryName;
 
-  const InputEvent(this.tableName);
+  const InputEvent(this.categoryName);
 
   @override
-  List<Object> get props => [tableName];
+  List<Object> get props => [categoryName];
 }

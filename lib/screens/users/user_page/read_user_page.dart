@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
-import 'package:neopos/utils/app_colors.dart';
-import '../category_operation/create_operation/create_category_dialog.dart';
-import '../category_operation/delete_operation/delete_category_dialog.dart';
-import '../category_operation/update_operation/category_update_dialog.dart';
+import 'package:neopos/screens/users/user_page/read_user_bloc.dart';
+import '../../../utils/app_colors.dart';
+import '../user_operations/user_create/create_user_dialog.dart';
+import '../user_operations/user_delete/delete_user_dialog.dart';
+import '../user_operations/user_update/update_user_dialog.dart';
 
-class CategoryRead extends StatefulWidget {
-  const CategoryRead({super.key});
+class UserRead extends StatefulWidget {
+  const UserRead({super.key});
 
   @override
-  State<CategoryRead> createState() => _CategoryReadState();
+  State<UserRead> createState() => _UserReadState();
 }
 
-class _CategoryReadState extends State<CategoryRead> {
+class _UserReadState extends State<UserRead> {
   @override
   void initState() {
-    BlocProvider.of<ReadCategoryBloc>(context).add(InitialEvent());
+    BlocProvider.of<ReadUserBloc>(context).add(InitialEvent());
     super.initState();
   }
 
@@ -32,30 +32,29 @@ class _CategoryReadState extends State<CategoryRead> {
                   onPressed: () {
                     showDialog(
                             context: context,
-                            builder: (context) => const CreateCategoryForm())
-                        .then((value) =>
-                            BlocProvider.of<ReadCategoryBloc>(context)
-                                .add(InitialEvent()));
+                            builder: (context) => const CreateUserForm())
+                        .then((value) => BlocProvider.of<ReadUserBloc>(context)
+                            .add(InitialEvent()));
                   },
                   child: const Text("Create")),
             ),
           ),
         ]),
-        BlocBuilder<ReadCategoryBloc, ReadCategoryState>(
+        BlocBuilder<ReadUserBloc, ReadUserState>(
           builder: (context, state) {
             if (state is DataLoadedState) {
               return SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: DataTable(
-                  showBottomBorder: true,
                   headingTextStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: AppColors.mainTextColor),
                   columns: const [
-                    DataColumn(label: Text("SR")),
-                    DataColumn(label: Flexible(child: Text('Category Name'))),
-                    DataColumn(label: Text('Operation')),
+                    DataColumn(label: Flexible(child: Text('User Name'))),
+                    DataColumn(label: Flexible(child: Text('Added On'))),
+                    DataColumn(label: Flexible(child: Text('Updated On'))),
+                    DataColumn(label: Text('Operations')),
                   ],
                   rows: state
                       .all // Loops through dataColumnText, each iteration assigning the value to element
@@ -63,8 +62,9 @@ class _CategoryReadState extends State<CategoryRead> {
                         ((element) => DataRow(
                               cells: <DataCell>[
                                 //Extracting from Map element the value
-                                DataCell(Text(element["sr"])),
-                                DataCell(Text(element["Category"]!)),
+                                DataCell(Text(element["user_id"]!)),
+                                DataCell(Text(element["added_on"]!)),
+                                DataCell(Text(element["updated_on"]!)),
                                 DataCell(Row(
                                   children: [
                                     Padding(
@@ -78,13 +78,20 @@ class _CategoryReadState extends State<CategoryRead> {
                                             showDialog(
                                               context: context,
                                               builder: (context) =>
-                                                  UpdateCategoryForm(
-                                                      id: element['Id'],
-                                                      oldName:
-                                                          element['Category']),
-                                            ).then((value) => BlocProvider.of<
-                                                    ReadCategoryBloc>(context)
-                                                .add(InitialEvent()));
+                                                  UpdateUserForm(
+                                                docId: element['Id'],
+                                                oldFirstName:
+                                                    element['first_name'],
+                                                oldLastName:
+                                                    element['last_name'],
+                                                oldPassword:
+                                                    element['password'],
+                                                oldUserId: element['user_id'],
+                                              ),
+                                            ).then((value) =>
+                                                BlocProvider.of<ReadUserBloc>(
+                                                        context)
+                                                    .add(InitialEvent()));
                                           },
                                           child: const Icon(
                                             Icons.edit,
@@ -102,15 +109,18 @@ class _CategoryReadState extends State<CategoryRead> {
                                             showDialog(
                                               context: context,
                                               builder: (context) =>
-                                                  DeleteCategoryPopup(
-                                                categoryID: element["Id"]!,
+                                                  DeleteUserPopup(
+                                                docID: element["Id"]!,
                                               ),
-                                            ).then((value) => BlocProvider.of<
-                                                    ReadCategoryBloc>(context)
-                                                .add(InitialEvent()));
+                                            ).then((value) =>
+                                                BlocProvider.of<ReadUserBloc>(
+                                                        context)
+                                                    .add(InitialEvent()));
                                           },
-                                          child: const Icon(Icons.delete,
-                                              color: AppColors.mainTextColor)),
+                                          child: const Icon(
+                                            Icons.delete,
+                                            color: AppColors.mainTextColor,
+                                          )),
                                     )
                                   ],
                                 )),

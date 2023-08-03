@@ -6,19 +6,26 @@ import 'package:neopos/screens/category/category_operation/create_operation/crea
 import 'package:neopos/screens/category/category_operation/delete_operation/delete_bloc.dart';
 import 'package:neopos/screens/category/category_operation/update_operation/category_update_bloc.dart';
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
-import 'package:neopos/repository/tables_read.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/login/login_page.dart';
+import 'package:neopos/screens/users/user_operations/user_create/create_user_bloc.dart';
+import 'package:neopos/screens/users/user_operations/user_delete/delete_user_bloc.dart';
+import 'package:neopos/screens/users/user_operations/user_update/update_user_bloc.dart';
+import 'package:neopos/screens/users/user_page/read_user_bloc.dart';
+import 'package:neopos/screens/table/table_operation/create_operation/create_table_bloc.dart';
+import 'package:neopos/screens/table/table_operation/delete_operation/delete_bloc.dart';
+import 'package:neopos/screens/table/table_operation/update_operation/update_bloc.dart';
+import 'package:neopos/screens/table/table_page/table_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
-import 'package:provider/provider.dart';
+import 'di/firebase_di.dart';
 import 'firebase_options.dart';
 import 'l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 import 'navigation/app_router.dart';
 
 Future<void> main() async {
+  setupSingletons();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -37,12 +44,26 @@ class MyApp extends StatelessWidget {
 
     return MultiBlocProvider(
       providers: [
+        ///Bloc for Login
         BlocProvider(create: (_) => LoginBloc()),
+
+        ///Bloc for Category CRUD
         BlocProvider(create: (_) => ReadCategoryBloc()),
         BlocProvider(create: (_) => CreateCategoryBloc()),
         BlocProvider(create: (_) => CategoryDeletionBloc()),
         BlocProvider(create: (_) => CategoryUpdateBloc()),
-        Provider(create: (_) => TablesRepository()),
+
+        ///Bloc for User CRUD
+        BlocProvider(create: (_) => CreateUserBloc()),
+        BlocProvider(create: (_) => UpdateUserBloc()),
+        BlocProvider(create: (_) => ReadUserBloc()),
+        BlocProvider(create: (_) => UserDeletionBloc()),
+
+        ///Bloc for Table CRUD
+        BlocProvider(create: (_) => TableBloc()),
+        BlocProvider(create: (_) => TableDeletionBloc()),
+        BlocProvider(create: (_) => CreateTableBloc()),
+        BlocProvider(create: (_) => TableUpdateBloc())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import '../../../../utils/app_colors.dart';
-import 'delete_bloc.dart';
-import 'delete_event.dart';
-import 'delete_state.dart';
+import 'delete_user_bloc.dart';
+import 'delete_user_event.dart';
+import 'delete_user_state.dart';
 
-class DeleteCategoryPopup extends StatefulWidget {
-  final String categoryID;
+class DeleteUserPopup extends StatefulWidget {
+  final String docID;
 
-  const DeleteCategoryPopup({super.key, required this.categoryID});
+  const DeleteUserPopup({super.key, required this.docID});
 
   @override
-  State<DeleteCategoryPopup> createState() => _DeleteCategoryPopupState();
+  State<DeleteUserPopup> createState() => _DeleteUserPopupState();
 }
 
-class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
+class _DeleteUserPopupState extends State<DeleteUserPopup> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -28,14 +28,14 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CategoryDeletionBloc, CategoryDeletionState>(
+    return BlocConsumer<UserDeletionBloc, UserDeletionState>(
       listener: (context, state) {
         if (state is ErrorState) {
           showErrorDialog(context, state.error);
         } else if (state is ConfirmationState) {
           showConfirmationDialog(context);
-        } else if (state is CategoryDeleteState) {
-          showSnackBar(context, 'Category deleted successfully.');
+        } else if (state is UserDeleteState) {
+          showUserSnackBar(context, 'User deleted successfully.');
         }
       },
       builder: (context, state) {
@@ -43,7 +43,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const PopUpRow(title: "Enter Credentials"),
+          title: const PopUpRow(title: 'Enter Credentials'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -63,7 +63,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
                 decoration: const InputDecoration(
                     hintText: "Password",
                     prefixIcon: Icon(
-                      Icons.person,
+                      Icons.lock,
                       color: AppColors.primaryColor,
                     )),
               ),
@@ -79,8 +79,8 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
             ElevatedButton(
               onPressed: () {
                 // Navigator.of(context).pop();
-                BlocProvider.of<CategoryDeletionBloc>(context).add(
-                  CredentialsEnteredEvent(
+                BlocProvider.of<UserDeletionBloc>(context).add(
+                  UserCredentialsEnteredEvent(
                     _usernameController.text,
                     _passwordController.text,
                   ),
@@ -125,8 +125,10 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const PopUpRow(title: "Delete Category"),
-          content: const Text('Are you sure you want to delete this Category?'),
+          title: const PopUpRow(title: "Delete User"),
+          content: const Text(
+            'Are you sure you want to delete this User?',
+          ),
           actions: [
             TextButton(
               onPressed: () {
@@ -136,8 +138,8 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
             ),
             TextButton(
               onPressed: () async {
-                BlocProvider.of<CategoryDeletionBloc>(context)
-                    .deleteCategory(widget.categoryID);
+                BlocProvider.of<UserDeletionBloc>(context).deleteUser(
+                    widget.docID); //passing doc id to bloc for user deletion
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
@@ -149,7 +151,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
     );
   }
 
-  void showSnackBar(BuildContext context, String message) {
+  void showUserSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message),
     ));

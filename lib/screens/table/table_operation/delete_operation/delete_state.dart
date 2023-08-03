@@ -10,4 +10,4 @@ class ErrorState extends TableDeletionState {
 
 class ConfirmationState extends TableDeletionState {}
 
-class TableDeletedState extends TableDeletionState {}
+class TableDeleteState extends TableDeletionState {}
