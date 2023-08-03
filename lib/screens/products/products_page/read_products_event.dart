@@ -6,3 +6,7 @@ abstract class ReadProductsEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class ReadLoadedDataEvent extends ReadProductsEvent {}
+
+class ReadInitialEvent extends ReadProductsEvent {}
