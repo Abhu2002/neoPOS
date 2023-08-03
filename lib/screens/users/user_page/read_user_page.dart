@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:neopos/screens/users/user_page/read_user_bloc.dart';
-
 import '../../../utils/app_colors.dart';
 import '../user_operations/user_create/create_user_dialog.dart';
 import '../user_operations/user_delete/delete_user_dialog.dart';
@@ -71,7 +69,11 @@ class _UserReadState extends State<UserRead> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
-                                      child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent,elevation: 0),
+                                      child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0),
                                           onPressed: () {
                                             showDialog(
                                               context: context,
@@ -91,11 +93,18 @@ class _UserReadState extends State<UserRead> {
                                                         context)
                                                     .add(InitialEvent()));
                                           },
-                                          child:const Icon(Icons.edit,color: AppColors.mainTextColor,)),
+                                          child: const Icon(
+                                            Icons.edit,
+                                            color: AppColors.mainTextColor,
+                                          )),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
-                                      child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent,elevation: 0),
+                                      child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0),
                                           onPressed: () {
                                             showDialog(
                                               context: context,
@@ -108,7 +117,10 @@ class _UserReadState extends State<UserRead> {
                                                         context)
                                                     .add(InitialEvent()));
                                           },
-                                          child:const Icon(Icons.delete,color: AppColors.mainTextColor,)),
+                                          child: const Icon(
+                                            Icons.delete,
+                                            color: AppColors.mainTextColor,
+                                          )),
                                     )
                                   ],
                                 )),

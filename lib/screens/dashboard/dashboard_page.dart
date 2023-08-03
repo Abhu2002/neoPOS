@@ -4,7 +4,6 @@ import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../table/table_page/table_page.dart';
 import '../category/category_page/read_category_page.dart';
-import '../users/user_operations/user_create/create_user_dialog.dart';
 import '../users/user_page/read_user_page.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -95,7 +94,8 @@ class _DashboardPage extends State<DashboardPage> {
                 SideMenu(
                     items: items,
                     controller: sideMenu,
-                    style: SideMenuStyle(openSideMenuWidth:180,
+                    style: SideMenuStyle(
+                        openSideMenuWidth: 180,
                         backgroundColor: Colors.grey.shade50,
                         selectedColor: AppColors.primarySwatch.shade50,
                         selectedIconColor: AppColors.primarySwatch.shade400,
@@ -103,38 +103,25 @@ class _DashboardPage extends State<DashboardPage> {
                             color: AppColors.primarySwatch.shade400))),
                 Expanded(
                   child: PageView(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     controller: pageController,
-                    children: [
-                      const SingleChildScrollView(child: CategoryRead()),
+                    children: const [
+                      SingleChildScrollView(child: CategoryRead()),
+
                       ///TODO Product page Pending
                       Center(
-                        child: ElevatedButton(
-                          child: Text("Create Category"),
-                          onPressed: () {
-                            showDialog(
-                              context: context,
-                              builder: (context) => const CreateUserForm(),
-                            );
-                            // showUpdateUserDialog(
-                            //     context,
-                            //     "h3FqLvoiXiXQNgTtxjoj",
-                            //     "Niranjan",
-                            //     "Modak",
-                            //     "niranjan",
-                            //     "123");
-                          },
-                        ),
-                      ),
-                      const SingleChildScrollView(child: TableRead()),
-                      ///TODO DashBoard and History page pending
-                      const Center(
                         child: Text('Dashboard'),
                       ),
-                      const Center(
+                      SingleChildScrollView(child: TableRead()),
+
+                      ///TODO DashBoard and History page pending
+                      Center(
+                        child: Text('Dashboard'),
+                      ),
+                      Center(
                         child: Text('Order History'),
                       ),
-                      const SingleChildScrollView(child: UserRead()),
+                      SingleChildScrollView(child: UserRead()),
                     ],
                   ),
                 )

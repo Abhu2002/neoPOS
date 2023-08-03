@@ -3,9 +3,10 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'update_event.dart';
 import 'update_state.dart';
+import 'package:get_it/get_it.dart';
 
 class TableUpdateBloc extends Bloc<TableEvent, TableState> {
-  final FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+  final FirebaseFirestore _fireStore = GetIt.I.get<FirebaseFirestore>();
 
   TableUpdateBloc() : super(TableInitialState()) {
     on<TableUpdateRequested>(_mapTableUpdateRequested);

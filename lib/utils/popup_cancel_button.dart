@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'app_colors.dart';
+
 class PopUpRow extends StatefulWidget {
   final String title;
   const PopUpRow({super.key, required this.title});
@@ -13,20 +14,22 @@ class _PopUpRowState extends State<PopUpRow> {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 40,
-      child: Row(
-          children: [
-            Text(
-              widget.title,
-              style: const TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.mainTextColor),
-            ),
-            const Spacer(),
-            IconButton(onPressed:() => Navigator.pop(context), icon: const Icon(Icons.cancel,color: AppColors.primaryColor,))
-          ]),
+      child: Row(children: [
+        Text(
+          widget.title,
+          style: const TextStyle(
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+              color: AppColors.mainTextColor),
+        ),
+        const Spacer(),
+        IconButton(
+            onPressed: () => Navigator.pop(context),
+            icon: const Icon(
+              Icons.cancel,
+              color: AppColors.primaryColor,
+            ))
+      ]),
     );
   }
 }
-
-

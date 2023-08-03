@@ -48,13 +48,10 @@ class _CategoryReadState extends State<CategoryRead> {
                 width: MediaQuery.of(context).size.width,
                 child: DataTable(
                   showBottomBorder: true,
-
-                  headingTextStyle: TextStyle(
+                  headingTextStyle: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: AppColors.mainTextColor),
-                  // Use the default value.
-
                   columns: const [
                     DataColumn(label: Text("SR")),
                     DataColumn(label: Flexible(child: Text('Category Name'))),
@@ -72,7 +69,11 @@ class _CategoryReadState extends State<CategoryRead> {
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
-                                      child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent,elevation: 0),
+                                      child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0),
                                           onPressed: () {
                                             showDialog(
                                               context: context,
@@ -85,11 +86,18 @@ class _CategoryReadState extends State<CategoryRead> {
                                                     ReadCategoryBloc>(context)
                                                 .add(InitialEvent()));
                                           },
-                                          child:const Icon(Icons.edit,color: AppColors.mainTextColor,)),
+                                          child: const Icon(
+                                            Icons.edit,
+                                            color: AppColors.mainTextColor,
+                                          )),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
-                                      child: ElevatedButton(style: ElevatedButton.styleFrom(backgroundColor: Colors.transparent,elevation: 0),
+                                      child: ElevatedButton(
+                                          style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              elevation: 0),
                                           onPressed: () {
                                             showDialog(
                                               context: context,
@@ -101,7 +109,8 @@ class _CategoryReadState extends State<CategoryRead> {
                                                     ReadCategoryBloc>(context)
                                                 .add(InitialEvent()));
                                           },
-                                          child: const Icon(Icons.delete,color: AppColors.mainTextColor)),
+                                          child: const Icon(Icons.delete,
+                                              color: AppColors.mainTextColor)),
                                     )
                                   ],
                                 )),

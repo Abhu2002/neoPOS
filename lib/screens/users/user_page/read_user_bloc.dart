@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
-
+import 'package:get_it/get_it.dart';
 part 'read_user_event.dart';
 
 part 'read_user_state.dart';
@@ -12,7 +12,7 @@ class ReadUserBloc extends Bloc<ReadUserEvent, ReadUserState> {
       try {
         emit(DataLoadingState());
         List allcat = [];
-        FirebaseFirestore db = FirebaseFirestore.instance;
+        FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("users").get().then((value) => {
               value.docs.forEach((element) {
                 allcat.add({

@@ -35,7 +35,7 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
-      title: PopUpRow(title: 'Update User'),
+      title: const PopUpRow(title: 'Update User'),
       content: SizedBox(
         width: MediaQuery.of(context).size.width / 2,
         child: Column(
@@ -44,48 +44,48 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
             TextField(
               onChanged: (value) => newFirstName = value,
               controller: TextEditingController(text: widget.oldFirstName),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   hintText: "first name",
-                  prefixIcon: const Icon(
+                  prefixIcon: Icon(
                     Icons.person,
                     color: AppColors.primaryColor,
                   )),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextField(
               onChanged: (value) => newLastName = value,
               controller: TextEditingController(text: widget.oldLastName),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   hintText: "first name",
-                  prefixIcon: const Icon(
+                  prefixIcon: Icon(
                     Icons.person,
                     color: AppColors.primaryColor,
                   )),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextField(
               onChanged: (value) => newUserId = value,
               controller: TextEditingController(text: widget.oldUserId),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   hintText: "first name",
-                  prefixIcon: const Icon(
+                  prefixIcon: Icon(
                     Icons.person,
                     color: AppColors.primaryColor,
                   )),
             ),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             TextField(
               onChanged: (value) => newPassword = value,
               controller: TextEditingController(text: widget.oldPassword),
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   hintText: "first name",
-                  prefixIcon: const Icon(
+                  prefixIcon: Icon(
                     Icons.lock,
                     color: AppColors.primaryColor,
                   )),
@@ -95,11 +95,11 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
       ),
       actions: <Widget>[
         TextButton(
-          child: Text('Cancel'),
+          child: const Text('Cancel'),
           onPressed: () => Navigator.of(context).pop(),
         ),
         TextButton(
-          child: Text('Update'),
+          child: const Text('Update'),
           onPressed: () {
             if (newFirstName.trim().isNotEmpty &&
                 newLastName.trim().isNotEmpty &&
@@ -110,12 +110,11 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
                     newPassword, newUserId),
               );
               Navigator.of(context).pop();
-              final snackBar = SnackBar(content: Text("User Updated"));
+              final snackBar =   SnackBar(content: const Text("User Updated"));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else {
               Navigator.of(context).pop();
-              final snackBar =
-                  SnackBar(content: Text("User Not Updated, Data Missing"));
+              final snackBar = SnackBar(content: const Text("User Not Updated, Data Missing"));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           },
