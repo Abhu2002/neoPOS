@@ -9,14 +9,15 @@ abstract class CreateUserEvent extends Equatable {
 
 class CreateUserFBEvent extends CreateUserEvent {
   final String userName;
-  final String firstname;
-  final String lastname;
+  final String firstName;
+  final String lastName;
   final String password;
-  final String userrole;
+  final String userRole;
 
-  const CreateUserFBEvent(this.userName, this.firstname, this.lastname,
-      this.password, this.userrole);
-  List<Object> get props => [userName, firstname, lastname, password, userrole];
+  const CreateUserFBEvent(this.userName, this.firstName, this.lastName,
+      this.password, this.userRole);
+  @override
+  List<Object> get props => [userName, firstName, lastName, password, userRole];
 }
 
 class InputEvent extends CreateUserEvent {
@@ -27,5 +28,6 @@ class InputEvent extends CreateUserEvent {
   final String userRole;
   const InputEvent(this.userName, this.firstName, this.lastName, this.password,
       this.userRole);
+  @override
   List<Object> get props => [firstName, lastName, userName, password, userRole];
 }

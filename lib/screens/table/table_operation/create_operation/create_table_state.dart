@@ -11,8 +11,6 @@ class CreateTableInitial extends CreateTableState {}
 
 class TableNameAvailableState extends CreateTableState {}
 
-
-
 class TableErrorState extends CreateTableState {
   final String errorMessage;
   const TableErrorState(this.errorMessage);

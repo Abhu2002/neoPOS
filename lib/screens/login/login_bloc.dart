@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 import 'package:neopos/utils/utils.dart';
 
 part 'login_event.dart';
@@ -9,8 +10,6 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
-
-
   LoginBloc() : super(const LoginState()) {
     on<UserIdChanged>(_onUserIdChanged);
     on<PasswordChanged>(_onPasswordChanged);
@@ -51,7 +50,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     try {
       /// TODO: Use result later
       var result;
-      FirebaseFirestore database = FirebaseFirestore.instance;
+      FirebaseFirestore database = GetIt.I.get<FirebaseFirestore>();
       database
           .collection("users")
           .where("user_id", isEqualTo: state.userId)

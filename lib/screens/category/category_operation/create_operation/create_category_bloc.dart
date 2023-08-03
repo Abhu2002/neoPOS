@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
+import 'package:get_it/get_it.dart';
 import '../../model/category.dart';
 
 part 'create_category_event.dart';
@@ -20,14 +21,14 @@ class CreateCategoryBloc
     });
     on<CreateCategoryFBEvent>((event, emit) async {
       try {
-        List allname = [];
-        FirebaseFirestore db = FirebaseFirestore.instance;
+        List allName = [];
+        FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("category").get().then((value) => {
               value.docs.forEach((element) {
-                allname.add(element['category_name']);
+                allName.add(element['category_name']);
               })
             });
-        if (allname.contains(event.categoryName)) {
+        if (allName.contains(event.categoryName)) {
           emit(const CategoryErrorState("Please Pop"));
           showMessage!("Category Name Exist Please use Different Name");
         } else {
@@ -37,8 +38,8 @@ class CreateCategoryBloc
                     emit(CategoryCreatedState(true)),
                     showMessage!("Category Created")
                   });
-          await FirebaseFirestore.instance.clearPersistence();
-          await FirebaseFirestore.instance.terminate();
+          await GetIt.I.get<FirebaseFirestore>().clearPersistence();
+          await GetIt.I.get<FirebaseFirestore>().terminate();
         }
       } catch (err) {
         // print(err);

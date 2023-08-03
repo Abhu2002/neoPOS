@@ -43,15 +43,15 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: PopUpRow(title: "Enter Credentials"),
+          title: const PopUpRow(title: "Enter Credentials"),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: _usernameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     hintText: "Username",
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       Icons.person,
                       color: AppColors.primaryColor,
                     )),
@@ -60,9 +60,9 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
               TextField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     hintText: "Password",
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       Icons.person,
                       color: AppColors.primaryColor,
                     )),
@@ -102,7 +102,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const PopUpRow(title:"Error"),
+          title: const PopUpRow(title: "Error"),
           content: Text(error),
           actions: [
             TextButton(
@@ -125,7 +125,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const PopUpRow(title:"Delete Category"),
+          title: const PopUpRow(title: "Delete Category"),
           content: const Text('Are you sure you want to delete this Category?'),
           actions: [
             TextButton(

@@ -5,7 +5,6 @@ import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../table/table_page/table_page.dart';
 import '../category/category_page/read_category_page.dart';
-import '../users/user_operations/user_create/create_user_dialog.dart';
 import '../users/user_page/read_user_page.dart';
 
 class DashboardPage extends StatefulWidget {
@@ -105,21 +104,25 @@ class _DashboardPage extends State<DashboardPage> {
                             color: AppColors.primarySwatch.shade400))),
                 Expanded(
                   child: PageView(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     controller: pageController,
-                    children: [
-                      SingleChildScrollView(child: ProductsRead()),
+                    children: const [
                       SingleChildScrollView(child: CategoryRead()),
+
+                      ///TODO Product page Pending
+                      Center(
+                        child: Text('Dashboard'),
+                      ),
                       SingleChildScrollView(child: TableRead()),
 
                       ///TODO DashBoard and History page pending
-                      const Center(
+                      Center(
                         child: Text('Dashboard'),
                       ),
-                      const Center(
+                      Center(
                         child: Text('Order History'),
                       ),
-                      const SingleChildScrollView(child: UserRead()),
+                      SingleChildScrollView(child: UserRead()),
                     ],
                   ),
                 )

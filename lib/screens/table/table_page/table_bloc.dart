@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:get_it/get_it.dart';
 part 'table_event.dart';
 
 part 'table_state.dart';
@@ -14,7 +14,7 @@ class TableBloc extends Bloc<TableEvent, TableState> {
         emit(
             TableReadLoadingState()); //Creating connection with firebase and fetching table
         List allCat = [];
-        FirebaseFirestore db = FirebaseFirestore.instance;
+        FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("table").get().then((value) => {
               value.docs.forEach((element) {
                 allCat.add({

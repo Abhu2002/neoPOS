@@ -49,9 +49,9 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
             children: [
               TextField(
                 controller: _usernameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     hintText: "Username",
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       Icons.person,
                       color: AppColors.primaryColor,
                     )),
@@ -60,9 +60,9 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
               TextField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     hintText: "Password",
-                    prefixIcon: const Icon(
+                    prefixIcon: Icon(
                       Icons.lock,
                       color: AppColors.primaryColor,
                     )),
@@ -102,7 +102,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const PopUpRow(title:"Error"),
+          title: const PopUpRow(title: "Error"),
           content: Text(error),
           actions: [
             TextButton(
@@ -125,7 +125,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const PopUpRow(title:"Delete User"),
+          title: const PopUpRow(title: "Delete User"),
           content: const Text(
             'Are you sure you want to delete this User?',
           ),
