@@ -5,8 +5,6 @@ import 'package:neopos/screens/products/products_page/moreinfo_dialog.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 
-import '../../../utils/popup_cancel_button.dart';
-
 class ProductsRead extends StatefulWidget {
   const ProductsRead({super.key});
 
@@ -69,16 +67,15 @@ class _ProductsReadState extends State<ProductsRead> {
                         ((element) => DataRow(
                               cells: <DataCell>[
                                 //Extracting from Map element the value
-                                DataCell(Text("1 Aug")),
-                                DataCell(Container(
-                                    child: ClipRRect(
+                                const DataCell(Text("1 Aug")),
+                                DataCell(ClipRRect(
                                   borderRadius: BorderRadius.circular(10),
                                   child: Image.network(
                                     element['product_image'],
                                     width: 60,
                                     fit: BoxFit.fill,
                                   ),
-                                ))),
+                                )),
                                 DataCell(Text(element["product_name"]!)),
                                 DataCell(Container(
                                   height: 10,
@@ -109,19 +106,21 @@ class _ProductsReadState extends State<ProductsRead> {
                                                 context: context,
                                                 builder: (context) {
                                                   return MoreInfoPopup(
-                                                      image: element[
-                                                          'product_image'],
-                                                      productName: element[
-                                                          "product_name"]!,
-                                                      productDescription: element[
-                                                          "product_description"]!,
-                                                      productType: element[
-                                                          'product_type'],
-                                                      productAvailibility: element[
-                                                          'product_availability'],
-                                                      productPrice: element[
-                                                          "product_price"],productCategory:  element[
-                                                  'product_category'],);
+                                                    image: element[
+                                                        'product_image'],
+                                                    productName: element[
+                                                        "product_name"]!,
+                                                    productDescription: element[
+                                                        "product_description"]!,
+                                                    productType:
+                                                        element['product_type'],
+                                                    productAvailibility: element[
+                                                        'product_availability'],
+                                                    productPrice: element[
+                                                        "product_price"],
+                                                    productCategory: element[
+                                                        'product_category'],
+                                                  );
                                                 },
                                                 followerAnchor:
                                                     Alignment.centerRight,
@@ -137,8 +136,10 @@ class _ProductsReadState extends State<ProductsRead> {
                                                         Widget child) {
                                                   return SlideTransition(
                                                     position: Tween(
-                                                            begin: Offset(1, 0),
-                                                            end: Offset(0, 0))
+                                                            begin: const Offset(
+                                                                1, 0),
+                                                            end: const Offset(
+                                                                0, 0))
                                                         .animate(animation),
                                                     child: FadeTransition(
                                                       opacity: CurvedAnimation(
@@ -164,11 +165,11 @@ class _ProductsReadState extends State<ProductsRead> {
                 ),
               );
             } else if (state is ReadDataLoadingState) {
-              return Text("Loading");
+              return const Text("Loading");
             } else if (state is ReadErrorState) {
               return Text(state.errorMessage);
             }
-            return Text("");
+            return const Text("");
           },
         ),
       ),
