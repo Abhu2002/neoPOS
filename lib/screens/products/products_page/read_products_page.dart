@@ -1,5 +1,7 @@
+import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/screens/products/products_page/moreinfo_dialog.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 
