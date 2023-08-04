@@ -1,4 +1,4 @@
-import 'package:aligned_dialog/aligned_dialog.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/products/products_page/moreinfo_dialog.dart';
@@ -23,7 +23,6 @@ class _ProductsReadState extends State<ProductsRead> {
   Widget build(BuildContext context) {
     return Column(children: [
       Row(
-        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Flexible(
             child: Padding(
@@ -74,6 +73,22 @@ class _ProductsReadState extends State<ProductsRead> {
                                         color: AppColors.primaryColor),
                                   ))),
                               const SizedBox(width: 20),
+      SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: BlocBuilder<ReadProductsBloc, ReadProductsState>(
+          builder: (context, state) {
+            if (state is ReadDataLoadedState) {
+              return SizedBox(
+                width: MediaQuery.sizeOf(context).width,
+                child: DataTable(
+                  showBottomBorder: true,
+                  headingRowHeight: 60,
+                  // columnSpacing: 2,
+                  headingTextStyle: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.mainTextColor),
+                  // Use the default value.
 
                               Container(
                                   width: 100,
@@ -133,147 +148,92 @@ class _ProductsReadState extends State<ProductsRead> {
                         );
                       }
 
-                      return InkWell(
-                        child: Container(
-                          width: 100,
-                          height: 100,
-                          child: Row(children: [
-                            Container(
-                              width: 80,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Center(child: Text("1 Aug")),
+                      return Container(
+                        width: 100,
+                        height: 100,
+                        child: Row(children: [
+                          Container(
+                            width: 80,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(child: Text("1 Aug")),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Container(
+                            width: 100,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.network(
+                                "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+                                width: 50,
+                                fit: BoxFit.fill,
                               ),
                             ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Container(
-                              width: 100,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(20),
-                                child: Image.network(
-                                  "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
-                                  width: 50,
-                                  fit: BoxFit.fill,
+                          ),
+                          const SizedBox(
+                            width: 80,
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data['product_name'],
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      color: AppColors.primaryColor,
+                                      fontWeight: FontWeight.bold),
                                 ),
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 80,
-                            ),
-                            Expanded(
-                              flex: 2,
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    data['product_name'],
-                                    style: const TextStyle(
-                                        fontSize: 15,
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.bold),
+                                Text(
+                                  data['product_description'].length > 50
+                                      ? data['product_description']
+                                              .substring(0, 50) +
+                                          '...'
+                                      : data['product_description'],
+                                  style: const TextStyle(
+                                    fontSize: 10,
                                   ),
-                                  Text(
-                                    data['product_description'].length > 50
-                                        ? data['product_description']
-                                                .substring(0, 50) +
-                                            '...'
-                                        : data['product_description'],
-                                    style: const TextStyle(
-                                      fontSize: 10,
-                                    ),
-                                  )
-                                ],
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 40,
+                          ),
+                          Container(
+                            height: 20,
+                            width:
+                                (data['product_type'] == "Non-veg") ? 60 : 30,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: (data['product_type']) == "Non-veg"
+                                    ? Colors.red
+                                    : Colors.green),
+                            child: Center(
+                              child: Text(
+                                (data['product_type'] == "Non-veg")
+                                    ? "Non-Veg"
+                                    : "Veg",
+                                style: const TextStyle(color: Colors.white),
                               ),
                             ),
-                            const SizedBox(
-                              width: 40,
-                            ),
-                            Container(
-                              height: 20,
-                              width:
-                                  (data['product_type'] == "Non-veg") ? 60 : 30,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: (data['product_type']) == "Non-veg"
-                                      ? Colors.red
-                                      : Colors.green),
+                          ),
+                          SizedBox(
+                            width:
+                                (data['product_type'] == "Non-veg") ? 30 : 60,
+                          ),
+                          Expanded(
                               child: Center(
-                                child: Text(
-                                  (data['product_type'] == "Non-veg")
-                                      ? "Non-Veg"
-                                      : "Veg",
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              width:
-                                  (data['product_type'] == "Non-veg") ? 30 : 60,
-                            ),
-                            Expanded(
-                                child: Center(
-                                    child: Text(data["product_category"]!))),
-                            Expanded(
-                                child: Center(
-                                    child:
-                                        Text("Rs ${data["product_price"]!}"))),
-                          ]),
-                        ),
-                        onTap: () {
-                          print("tappp");
-                          showGeneralDialog(
-                            context: context,
-                            pageBuilder:
-                                (context, animation, secondaryAnimation) {
-                              return MoreInfoPopup(
-                                image: "",
-                                productName: "data[product_name]",
-                                productDescription: "sdfvdsf",
-                                productType: "",
-                                productAvailibility: true,
-                                productPrice: 200,
-                                productCategory: "data[product_category]",
-                              );
-                            },
-                          );
-                          // showAlignedDialog(
-                          //   context: context,
-                          //   builder: (context) {
-                          //     return MoreInfoPopup(
-                          //       image: "",
-                          //       productName: "data[product_name]",
-                          //       productDescription: "sdfvdsf",
-                          //       productType: "",
-                          //       productAvailibility: true,
-                          //       productPrice: 200,
-                          //       productCategory: "data[product_category]",
-                          //     );
-                          //   },
-                          //  followerAnchor: Alignment.centerRight,
-                          // targetAnchor: Alignment.centerRight,
-                          // isGlobal: true,
-                          // transitionsBuilder: (BuildContext context,
-                          //     Animation<double> animation,
-                          //     Animation<double> secondaryAnimation,
-                          //     Widget child) {
-                          //   return SlideTransition(
-                          //     position: Tween(
-                          //             begin: const Offset(1, 0),
-                          //             end: const Offset(0, 0))
-                          //         .animate(animation),
-                          //     child: FadeTransition(
-                          //       opacity: CurvedAnimation(
-                          //         parent: animation,
-                          //         curve: Curves.easeOut,
-                          //       ),
-                          //       child: child,
-                          //     ),
-                          //   );}
-                          // );
-                        },
+                                  child: Text(data["product_category"]!))),
+                          Expanded(
+                              child: Center(
+                                  child: Text("Rs ${data["product_price"]!}"))),
+                        ]),
                       );
                     },
                   ),
