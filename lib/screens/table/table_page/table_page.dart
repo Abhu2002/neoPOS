@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/table/table_page/table_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
-import '../table_operation/create_operation/create_table_page.dart';
 
+import '../table_operation/create_operation/create_table_dialog.dart';
 import '../table_operation/delete_operation/delete_table_dialog.dart';
 import '../table_operation/update_operation/table_update_dialog.dart';
 
@@ -66,29 +66,6 @@ class _TableReadState extends State<TableRead> {
                         },
                         child: const Text("Create")),
                   ),
-                  itemBuilder: (context, i) => Card(
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    PopupMenuButton<TableItem>(
-                                        initialValue: selectedMenu,
-                                        icon: const Icon(
-                                            Icons.more_vert_outlined,
-                                            color: Colors.black),
-                                        color: Colors.white,
-                                        itemBuilder: (context) =>
-                                            <PopupMenuEntry<TableItem>>[
-                                              const PopupMenuItem<TableItem>(
-                                                  value: TableItem.tableEdit,
-                                                  child: Icon(Icons.edit)),
-                                              const PopupMenuItem<TableItem>(
-                                                  value: TableItem.tableDelete,
-                                                  child: Icon(Icons.delete))
                 ),
               ]),
               if (width > 500)

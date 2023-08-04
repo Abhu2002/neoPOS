@@ -9,6 +9,7 @@ import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/login/login_page.dart';
+import 'package:neopos/screens/products/products_operation/delete_operation/delete_bloc.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 import 'package:neopos/screens/users/user_operations/user_create/create_user_bloc.dart';
 import 'package:neopos/screens/users/user_operations/user_delete/delete_user_bloc.dart';
@@ -69,9 +70,8 @@ class MyApp extends StatelessWidget {
 
         //Bloc for Product CRUD
         BlocProvider(create: (_) => ReadProductsBloc()),
-
-        ///Bloc for Product CRUD
         BlocProvider(create: (_) => CreateProductBloc()),
+        BlocProvider(create: (_) => ProductDeletionBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

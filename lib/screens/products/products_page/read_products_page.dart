@@ -255,6 +255,7 @@ class _ProductsReadState extends State<ProductsRead> {
                                     alignment: Alignment.centerRight,
                                     child: MoreInfoPopup(
                                       image: data['product_image'],
+                                      id: data['Id'],
                                       productName: data["product_name"]!,
                                       productDescription:
                                           data["product_description"]!,

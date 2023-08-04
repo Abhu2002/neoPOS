@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 
 import '../../../utils/app_colors.dart';
+import '../products_operation/delete_operation/delete_category_dialog.dart';
 
 class MoreInfoPopup extends StatefulWidget {
   const MoreInfoPopup(
       {super.key,
       required this.image,
+      required this.id,
       required this.productName,
       required this.productDescription,
       required this.productType,
@@ -14,6 +18,7 @@ class MoreInfoPopup extends StatefulWidget {
       required this.productCategory});
 
   final String image;
+  final String id;
   final String productName;
   final String productDescription;
   final String productCategory;
@@ -215,7 +220,17 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                     child: const Text("Edit Product"),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return DeleteProductPopup(productID: widget.id);
+                          }).then((value) => {
+                            Navigator.pop(context),
+                            BlocProvider.of<ReadProductsBloc>(context)
+                                .add(ReadInitialEvent())
+                          });
+                    },
                     child: const Text("Delete Product"),
                   ),
                 ],
