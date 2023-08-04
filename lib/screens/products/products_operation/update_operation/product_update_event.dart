@@ -1,4 +1,3 @@
-
 import 'package:image_picker/image_picker.dart';
 
 abstract class ProductEvent {}
@@ -11,17 +10,17 @@ class UpdateProductEvent extends ProductEvent {
   final double productPrice;
   final String productType;
   final String productUpdatedTime;
-  final XFile imageFile;
+  final String oldImage;
+  final XFile? imageFile;
 
-  UpdateProductEvent({
-    required this.productId,
-    required this.productName,
-    required this.productDescription,
-    this.productCategory,
-    required this.productType,
-    required this.productPrice,
-    required this.productUpdatedTime,
-    required this.imageFile,
-  });
+  UpdateProductEvent(
+      {required this.productId,
+      required this.productName,
+      required this.productDescription,
+      this.productCategory,
+      required this.productType,
+      required this.productPrice,
+      required this.productUpdatedTime,
+      required this.imageFile,
+      required this.oldImage});
 }
-

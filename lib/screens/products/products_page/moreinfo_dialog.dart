@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 
 import '../../../utils/app_colors.dart';
 import '../products_operation/delete_operation/delete_category_dialog.dart';
+import '../products_operation/update_operation/product_update_dialog.dart';
 
 class MoreInfoPopup extends StatefulWidget {
   const MoreInfoPopup(
@@ -83,8 +85,10 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                   padding: const EdgeInsets.only(top: 40, bottom: 20),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Image.network(widget.image,
-                          width: 300, fit: BoxFit.fill)),
+                      child: CachedNetworkImage(
+                          imageUrl: widget.image,
+                          width: 300,
+                          fit: BoxFit.fill)),
                 ),
               ),
               Padding(
@@ -216,7 +220,27 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return UpdateProductDialog(
+                            image: widget.image,
+                            id: widget.id,
+                            productName: widget.productName,
+                            productDescription: widget.productDescription,
+                            productType: widget.productType,
+                            productAvailibility: widget.productAvailibility,
+                            productPrice: widget.productPrice,
+                            productCategory: widget.productCategory,
+                          );
+                        },
+                      ).then((value) {
+                        Navigator.of(context).pop();
+                        BlocProvider.of<ReadProductsBloc>(context)
+                            .add(ReadInitialEvent());
+                      });
+                    },
                     child: const Text("Edit Product"),
                   ),
                   ElevatedButton(

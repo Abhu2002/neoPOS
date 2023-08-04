@@ -8,9 +8,25 @@ import 'package:neopos/screens/products/products_operation/update_operation/prod
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_event.dart';
 
 class UpdateProductDialog extends StatefulWidget {
-  final String productId;
+  final String image;
+  final String id;
+  final String productName;
+  final String productDescription;
+  final String productCategory;
+  final String productType;
+  final bool productAvailibility;
+  final int productPrice;
 
-  UpdateProductDialog({required this.productId});
+  UpdateProductDialog(
+      {super.key,
+      required this.image,
+      required this.id,
+      required this.productName,
+      required this.productDescription,
+      required this.productType,
+      required this.productAvailibility,
+      required this.productPrice,
+      required this.productCategory});
 
   @override
   _UpdateProductDialogState createState() => _UpdateProductDialogState();
@@ -22,6 +38,17 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
   final _productDescriptionController = TextEditingController();
   final _productTypeController = TextEditingController();
   XFile? imageFile;
+
+  @override
+  void initState() {
+    _productNameController.text = widget.productName;
+    _productPriceController.text = "${widget.productPrice}";
+    _productDescriptionController.text = widget.productDescription;
+    _productTypeController.text = widget.productType;
+
+    // TODO: implement initState
+    super.initState();
+  }
 
   Widget _buildProductImage() {
     if (imageFile != null) {
@@ -110,16 +137,17 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
     String productName = _productNameController.text.trim();
     double productPrice = double.tryParse(_productPriceController.text) ?? 0.0;
 
-    if (productName.isNotEmpty && productPrice > 0.0 && imageFile != null) {
+    if (productName.isNotEmpty && productPrice > 0.0) {
       productBloc.add(UpdateProductEvent(
-          productId: widget.productId,
+          productId: widget.id,
           productName: productName,
           productDescription: _productDescriptionController.text.trim(),
           productPrice: productPrice,
           productType: _productTypeController.text.trim(),
-          productUpdatedTime: DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
-          imageFile: imageFile!,
-          ));
+          productUpdatedTime:
+              DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
+          imageFile: imageFile,
+          oldImage: widget.image));
 
       Navigator.of(context).pop();
     }

@@ -9,7 +9,7 @@ import 'package:neopos/screens/products/products_operation/update_operation/prod
 class UpdateProductBloc extends Bloc<ProductEvent, ProductState> {
   // Collection reference to the products table..
   final CollectionReference productsCollection =
-  FirebaseFirestore.instance.collection('products');
+      FirebaseFirestore.instance.collection('products');
 
   // firebase storage instance..
   final FirebaseStorage storage = FirebaseStorage.instance;
@@ -20,11 +20,16 @@ class UpdateProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   // Event for updating products in Firebase FireStore products table..
-  Future<void> _mapUpdateProductEventToState(UpdateProductEvent event,
-      Emitter<ProductState> emit) async {
+  Future<void> _mapUpdateProductEventToState(
+      UpdateProductEvent event, Emitter<ProductState> emit) async {
     try {
+      String imagePath;
+      if (event.imageFile != null) {
+        imagePath = await _uploadProductImage(event.imageFile!);
+      } else {
+        imagePath = event.oldImage;
+      }
       // getting image download url..
-      String imagePath = await _uploadProductImage(event.imageFile);
 
       await _updateProduct(
         event.productId,
@@ -46,10 +51,7 @@ class UpdateProductBloc extends Bloc<ProductEvent, ProductState> {
     try {
       Uint8List imageData = await XFile(imageFile.path).readAsBytes();
 
-      String fileName = DateTime
-          .now()
-          .millisecondsSinceEpoch
-          .toString();
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
       Reference ref = storage.ref().child('product_images/$fileName.jpeg');
       TaskSnapshot snapshot = await ref.putData(imageData);
       String imageUrl = await snapshot.ref.getDownloadURL();
@@ -60,18 +62,21 @@ class UpdateProductBloc extends Bloc<ProductEvent, ProductState> {
   }
 
   // updating product in firebase fireStore..
-  Future<void> _updateProduct(String productId,
+  Future<void> _updateProduct(
+      String productId,
       String productName,
       double productPrice,
-      String productDescription, String productUpdatedTime, String productType,
+      String productDescription,
+      String productUpdatedTime,
+      String productType,
       String imagePath) {
     return productsCollection.doc(productId).update({
       'product_name': productName,
       'product_price': productPrice,
       'product_image': imagePath,
-      'product_description' : productDescription,
-      'product_type' : productType,
-      'date_updated' : productUpdatedTime
+      'product_description': productDescription,
+      'product_type': productType,
+      'date_updated': productUpdatedTime
     });
   }
 }

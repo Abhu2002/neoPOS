@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/products/products_page/moreinfo_dialog.dart';
@@ -22,25 +23,33 @@ class _ProductsReadState extends State<ProductsRead> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Row(
-        children: [
-          Flexible(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: ElevatedButton(
-                  onPressed: () {
-                    showDialog(
-                            context: context,
-                            builder: (context) => const CreateProductForm())
-                        .then((value) =>
-                            BlocProvider.of<ReadProductsBloc>(context)
-                                .add(ReadInitialEvent()));
-                  },
-                  child: const Text("Create")),
-            ),
+      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+        const Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Text("Product Page",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        ),
+        Flexible(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    elevation: 10,
+                    minimumSize: const Size(88, 36),
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(10)))),
+                onPressed: () {
+                  showDialog(
+                          context: context,
+                          builder: (context) => const CreateProductForm())
+                      .then((value) =>
+                          BlocProvider.of<ReadProductsBloc>(context)
+                              .add(ReadInitialEvent()));
+                },
+                child: const Text("Create")),
           ),
-        ],
-      ),
+        ),
+      ]),
       BlocBuilder<ReadProductsBloc, ReadProductsState>(
         builder: ((context, state) {
           if (state is ReadDataLoadedState) {
@@ -158,8 +167,8 @@ class _ProductsReadState extends State<ProductsRead> {
                               width: 100,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
-                                child: Image.network(
-                                  "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+                                child: CachedNetworkImage(
+                                  imageUrl: data['product_image'],
                                   width: 50,
                                   fit: BoxFit.fill,
                                 ),
