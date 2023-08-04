@@ -30,8 +30,11 @@ class _ProductsReadState extends State<ProductsRead> {
               child: ElevatedButton(
                   onPressed: () {
                     showDialog(
-                        context: context,
-                        builder: (context) => const CreateProductForm());
+                            context: context,
+                            builder: (context) => const CreateProductForm())
+                        .then((value) =>
+                            BlocProvider.of<ReadProductsBloc>(context)
+                                .add(ReadInitialEvent()));
                   },
                   child: const Text("Create")),
             ),

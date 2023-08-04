@@ -77,7 +77,6 @@ dependencies:
   #GetIt
   get_it: ^7.6.0
 
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
