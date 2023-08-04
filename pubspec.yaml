@@ -68,8 +68,16 @@ dependencies:
   side_navigation: ^1.0.4
   easy_sidemenu: ^0.5.0
 
+  #image-picker
+  image_picker: ^1.0.1
+
+  #firebase storage
+  firebase_crashlytics: ^3.3.4
+  firebase_storage: ^11.2.5
+
   #GetIt
   get_it: ^7.6.0
+
 
 dev_dependencies:
   flutter_test:

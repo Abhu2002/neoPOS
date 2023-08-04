@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/screens/products/products_operation/create_operation/create_product_dialog.dart';
 
 class ProductsRead extends StatelessWidget {
   const ProductsRead({super.key});
@@ -15,7 +15,9 @@ class ProductsRead extends StatelessWidget {
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton(
                   onPressed: () {
-
+                    showDialog(
+                        context: context,
+                        builder: (context) => const CreateProductForm());
                   },
                   child: const Text("Create")),
             ),

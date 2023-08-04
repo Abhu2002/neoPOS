@@ -17,6 +17,7 @@ import 'package:neopos/screens/table/table_operation/create_operation/create_tab
 import 'package:neopos/screens/table/table_operation/delete_operation/delete_bloc.dart';
 import 'package:neopos/screens/table/table_operation/update_operation/update_bloc.dart';
 import 'package:neopos/screens/table/table_page/table_bloc.dart';
+import 'package:neopos/screens/products/products_operation/create_operation/create_product_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'di/firebase_di.dart';
 import 'firebase_options.dart';
@@ -63,7 +64,10 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => TableBloc()),
         BlocProvider(create: (_) => TableDeletionBloc()),
         BlocProvider(create: (_) => CreateTableBloc()),
-        BlocProvider(create: (_) => TableUpdateBloc())
+        BlocProvider(create: (_) => TableUpdateBloc()),
+
+        ///Bloc for Product CRUD
+        BlocProvider(create: (_) => CreateProductBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
