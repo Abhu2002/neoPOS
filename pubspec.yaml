@@ -67,7 +67,7 @@ dependencies:
   #sideMenu
   side_navigation: ^1.0.4
   easy_sidemenu: ^0.5.0
-  aligned_dialog: ^0.0.7
+
   #GetIt
   get_it: ^7.6.0
 
