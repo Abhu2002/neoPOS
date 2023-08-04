@@ -11,11 +11,6 @@ part 'read_products_state.dart';
 
 class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
   ReadProductsBloc() : super(ReadProductsInitial()) {
-    on<ButtonClickEvent>((event,emit){
-      print(event.mode);
-      ConstantVar.mode = event.mode;
-      emit(ButtonState(ConstantVar.mode));
-    });
     on<ReadInitialEvent>((event, emit) async {
       try {
         emit(ReadDataLoadingState());
