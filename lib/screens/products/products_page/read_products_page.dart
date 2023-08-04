@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/products/products_page/moreinfo_dialog.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
+import 'package:neopos/screens/products/products_operation/create_operation/create_product_dialog.dart';
 
 class ProductsRead extends StatefulWidget {
   const ProductsRead({super.key});
@@ -26,8 +27,13 @@ class _ProductsReadState extends State<ProductsRead> {
           Flexible(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
-              child:
-                  ElevatedButton(onPressed: () {}, child: const Text("Create")),
+              child: ElevatedButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        builder: (context) => const CreateProductForm());
+                  },
+                  child: const Text("Create")),
             ),
           ),
         ],

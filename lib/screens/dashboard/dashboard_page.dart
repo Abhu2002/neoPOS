@@ -127,12 +127,9 @@ class _DashboardPage extends State<DashboardPage> {
                     controller: pageController,
                     children: const [
                       SingleChildScrollView(child: CategoryRead()),
+
                       SingleChildScrollView(child: ProductsRead()),
 
-                      ///TODO Product page Pending
-                      Center(
-                        child: Text('Dashboard'),
-                      ),
                       SingleChildScrollView(child: TableRead()),
 
                       ///TODO DashBoard and History page pending
