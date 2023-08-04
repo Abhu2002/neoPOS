@@ -21,6 +21,7 @@ class _ProductsReadState extends State<ProductsRead> {
   Widget build(BuildContext context) {
     return Column(children: [
       Row(
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Flexible(
             child: Padding(
@@ -31,107 +32,200 @@ class _ProductsReadState extends State<ProductsRead> {
           ),
         ],
       ),
-      SingleChildScrollView(
-        scrollDirection: Axis.horizontal,
-        child: BlocBuilder<ReadProductsBloc, ReadProductsState>(
-          builder: (context, state) {
-            if (state is ReadDataLoadedState) {
-              return SizedBox(
-                // width: MediaQuery.sizeOf(context).width,
-                child: DataTable(
-                  showBottomBorder: true,
-                  headingRowHeight: 60,
-                  // columnSpacing: 2,
-                  headingTextStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.mainTextColor),
-                  // Use the default value.
+      BlocBuilder<ReadProductsBloc, ReadProductsState>(
+        builder: ((context, state) {
+          if (state is ReadDataLoadedState) {
+            return Column(
+              children: [
+                Container(
+                  width: MediaQuery.sizeOf(context).width,
+                  height: MediaQuery.sizeOf(context).height - 174,
+                  child: ListView.separated(
+                    separatorBuilder: (context, index) {
+                      return Container(
+                        width: MediaQuery.sizeOf(context).width,
+                        height: 2,
+                        color: Colors.grey.shade200,
+                      );
+                    },
+                    itemCount: state.allProducts.length,
+                    itemBuilder: (context, index) {
+                      var data = state.allProducts[index];
+                      if (index == 0) {
+                        // return the header
+                        return Container(
+                          width: MediaQuery.sizeOf(context).width,
+                          height: 50,
+                          decoration:
+                              BoxDecoration(color: Colors.grey.shade300),
+                          child: Row(
+                            children: [
+                              // SizedBox(width: 10),
+                              Container(
+                                  width: 80,
+                                  child: const Center(
+                                      child: Text(
+                                    "Date",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: AppColors.primaryColor),
+                                  ))),
+                              const SizedBox(width: 20),
 
-                  columns: const [
-                    DataColumn(label: Text("Date")),
-                    DataColumn(label: Text("Image")),
-                    DataColumn(label: Flexible(child: Text('Product Name'))),
-                    DataColumn(label: Text("Type")),
-                    DataColumn(label: Text("Category")),
-                    DataColumn(label: Flexible(child: Text('Price'))),
-                    DataColumn(label: Flexible(child: Text('Available'))),
-                    DataColumn(label: Flexible(child: Text('More Details'))),
-                  ],
-                  rows: state
-                      .allProducts // Loops through dataColumnText, each iteration assigning the value to element
-                      .map(
-                        ((element) => DataRow(
-                              cells: <DataCell>[
-                                //Extracting from Map element the value
-                                DataCell(Text("1 Aug")),
-                                DataCell(Container(
-                                    child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.network(
-                                    element['product_image'],
-                                    width: 60,
-                                    fit: BoxFit.fill,
+                              Container(
+                                  width: 100,
+                                  child: const Center(
+                                      child: Text(
+                                    "Image",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: AppColors.primaryColor),
+                                  ))),
+                              const SizedBox(
+                                width: 80,
+                              ),
+                              const Expanded(
+                                  flex: 2,
+                                  child: Text(
+                                    "Product Name",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: AppColors.primaryColor),
+                                  )),
+                              const SizedBox(
+                                width: 40,
+                              ),
+                              Container(
+                                  width: 60,
+                                  child: const Center(
+                                      child: Text(
+                                    "Type",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: AppColors.primaryColor),
+                                  ))),
+                              const SizedBox(
+                                width: 60,
+                              ),
+                              const Expanded(
+                                  child: Center(
+                                      child: Text(
+                                "Category",
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    color: AppColors.primaryColor),
+                              ))),
+                              const Expanded(
+                                  child: Center(
+                                child: Text(
+                                  "Price",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      color: AppColors.primaryColor),
+                                ),
+                              )),
+                              // Text("More"),
+                            ],
+                          ),
+                        );
+                      }
+
+                      return Container(
+                        width: 100,
+                        height: 100,
+                        child: Row(children: [
+                          Container(
+                            width: 80,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(child: Text("1 Aug")),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          Container(
+                            width: 100,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(20),
+                              child: Image.network(
+                                "https://images.unsplash.com/photo-1575936123452-b67c3203c357?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aW1hZ2V8ZW58MHx8MHx8fDA%3D&w=1000&q=80",
+                                width: 50,
+                                fit: BoxFit.fill,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 80,
+                          ),
+                          Expanded(
+                            flex: 2,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  data['product_name'],
+                                  style: const TextStyle(
+                                      fontSize: 15,
+                                      color: AppColors.primaryColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                Text(
+                                  data['product_description'].length > 50
+                                      ? data['product_description']
+                                              .substring(0, 50) +
+                                          '...'
+                                      : data['product_description'],
+                                  style: const TextStyle(
+                                    fontSize: 10,
                                   ),
-                                ))),
-                                DataCell(Text(element["product_name"]!)),
-                                DataCell(Container(
-                                  height: 10,
-                                  width: 10,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color:
-                                          (element['product_type']) == "Non-veg"
-                                              ? Colors.red
-                                              : Colors.green),
-                                )),
-                                DataCell(Text(element["product_category"]!)),
-                                DataCell(Text("${element["product_price"]!}")),
-                                DataCell(
-                                    (element["product_availability"] == true)
-                                        ? Icon(
-                                            Icons.check_circle,
-                                            color: Colors.green,
-                                          )
-                                        : Icon(
-                                            Icons.cancel_rounded,
-                                            color: Colors.red,
-                                          )
-                                    // Text("${element["product_availability"]!}")
-                                    ),
-
-                                DataCell(Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(10.0),
-                                      child: ElevatedButton(
-                                          style: ElevatedButton.styleFrom(
-                                              backgroundColor:
-                                                  Colors.transparent,
-                                              elevation: 0),
-                                          onPressed: () {},
-                                          child: const Icon(
-                                            Icons.info_outline,
-                                            color: AppColors.mainTextColor,
-                                          )),
-                                    ),
-                                  ],
-                                )),
+                                )
                               ],
-                            )),
-                      )
-                      .toList(),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 40,
+                          ),
+                          Container(
+                            height: 20,
+                            width:
+                                (data['product_type'] == "Non-veg") ? 60 : 30,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(5),
+                                color: (data['product_type']) == "Non-veg"
+                                    ? Colors.red
+                                    : Colors.green),
+                            child: Center(
+                              child: Text(
+                                (data['product_type'] == "Non-veg")
+                                    ? "Non-Veg"
+                                    : "Veg",
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width:
+                                (data['product_type'] == "Non-veg") ? 30 : 60,
+                          ),
+                          Expanded(
+                              child: Center(
+                                  child: Text(data["product_category"]!))),
+                          Expanded(
+                              child: Center(
+                                  child: Text("Rs ${data["product_price"]!}"))),
+                        ]),
+                      );
+                    },
+                  ),
                 ),
-              );
-            } else if (state is ReadDataLoadingState) {
-              return Text("Loading");
-            } else if (state is ReadErrorState) {
-              return Text(state.errorMessage);
-            }
-            return Text("");
-          },
-        ),
-      ),
+              ],
+            );
+          }
+          return Text("Loading");
+        }),
+      )
     ]);
   }
 }
