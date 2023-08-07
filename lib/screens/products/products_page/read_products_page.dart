@@ -170,7 +170,8 @@ class _ProductsReadState extends State<ProductsRead> {
                                 child: CachedNetworkImage(
                                   imageUrl: data['product_image'],
                                   width: 50,
-                                  fit: BoxFit.fill,
+                                  height: 100,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
