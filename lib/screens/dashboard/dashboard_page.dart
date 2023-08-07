@@ -1,11 +1,9 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neopos/screens/products/products_page/read_products_page.dart';
 import 'package:neopos/utils/common_text.dart';
 import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
-import '../products/products_page/read_products_bloc.dart';
+
 import '../table/table_page/table_page.dart';
 import '../category/category_page/read_category_page.dart';
 import '../users/user_page/read_user_page.dart';
@@ -94,22 +92,8 @@ class _DashboardPage extends State<DashboardPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                BlocBuilder<ReadProductsBloc, ReadProductsState>(
-                    builder: (context, state) {
-                  if (state is ButtonState) {
-                    return SideMenu(
-                        items: items,
-                        controller: sideMenu,
-                        style: SideMenuStyle(
-                            openSideMenuWidth: 180,
-                            displayMode: state.mod,
-                            backgroundColor: Colors.grey.shade50,
-                            selectedColor: AppColors.primarySwatch.shade50,
-                            selectedIconColor: AppColors.primarySwatch.shade400,
-                            selectedTitleTextStyle: TextStyle(
-                                color: AppColors.primarySwatch.shade400)));
-                  }
-                  return SideMenu(
+
+                   SideMenu(
                       items: items,
                       controller: sideMenu,
                       style: SideMenuStyle(
@@ -119,8 +103,8 @@ class _DashboardPage extends State<DashboardPage> {
                           selectedColor: AppColors.primarySwatch.shade50,
                           selectedIconColor: AppColors.primarySwatch.shade400,
                           selectedTitleTextStyle: TextStyle(
-                              color: AppColors.primarySwatch.shade400)));
-                }),
+                              color: AppColors.primarySwatch.shade400))),
+
                 Expanded(
                   child: PageView(
                     physics: const NeverScrollableScrollPhysics(),
@@ -128,7 +112,9 @@ class _DashboardPage extends State<DashboardPage> {
                     children: const [
                       SingleChildScrollView(child: CategoryRead()),
 
-                      SingleChildScrollView(child: ProductsRead()),
+                      Center(
+                        child: Text('Order History'),
+                      ),
 
                       SingleChildScrollView(child: TableRead()),
 
