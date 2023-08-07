@@ -5,6 +5,7 @@ import '../../../../utils/app_colors.dart';
 import 'delete_user_bloc.dart';
 import 'delete_user_event.dart';
 import 'delete_user_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeleteUserPopup extends StatefulWidget {
   final String docID;
@@ -35,7 +36,8 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
         } else if (state is ConfirmationState) {
           showConfirmationDialog(context);
         } else if (state is UserDeleteState) {
-          showUserSnackBar(context, 'User deleted successfully.');
+          showUserSnackBar(
+              context, AppLocalizations.of(context)!.user_deleted_msg);
         }
       },
       builder: (context, state) {
@@ -43,15 +45,16 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const PopUpRow(title: 'Enter Credentials'),
+          title:
+              PopUpRow(title: AppLocalizations.of(context)!.enter_credentials),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: _usernameController,
-                decoration: const InputDecoration(
-                    hintText: "Username",
-                    prefixIcon: Icon(
+                decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.user_name_hinttext,
+                    prefixIcon: const Icon(
                       Icons.person,
                       color: AppColors.primaryColor,
                     )),
@@ -60,9 +63,9 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
               TextField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                    hintText: "Password",
-                    prefixIcon: Icon(
+                decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.password_hinttext,
+                    prefixIcon: const Icon(
                       Icons.lock,
                       color: AppColors.primaryColor,
                     )),
@@ -74,7 +77,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel_button),
             ),
             ElevatedButton(
               onPressed: () {
@@ -86,7 +89,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
                   ),
                 );
               },
-              child: const Text('Submit'),
+              child: Text(AppLocalizations.of(context)!.submit_button),
             ),
           ],
         );
@@ -102,14 +105,14 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const PopUpRow(title: "Error"),
+          title: PopUpRow(title: AppLocalizations.of(context)!.error_text),
           content: Text(error),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('OK'),
+              child: Text(AppLocalizations.of(context)!.ok_button),
             ),
           ],
         );
@@ -125,16 +128,15 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const PopUpRow(title: "Delete User"),
-          content: const Text(
-            'Are you sure you want to delete this User?',
-          ),
+          title:
+              PopUpRow(title: AppLocalizations.of(context)!.user_deleted_title),
+          content: Text(AppLocalizations.of(context)!.delete_confirm_msg_user),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('No'),
+              child: Text(AppLocalizations.of(context)!.no_title),
             ),
             TextButton(
               onPressed: () async {
@@ -143,7 +145,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
-              child: const Text('Yes'),
+              child: Text(AppLocalizations.of(context)!.yes_title),
             ),
           ],
         );

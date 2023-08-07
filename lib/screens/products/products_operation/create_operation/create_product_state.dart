@@ -7,10 +7,9 @@ class CreateProductState extends Equatable {
   List<Object> get props => [];
 }
 
-
 class CreateProductInitial extends CreateProductState {}
 
-class CategoryLoadingState extends CreateProductState{}
+class CategoryLoadingState extends CreateProductState {}
 
 class CategoryLoadedState extends CreateProductState {
   final List<dynamic> categories;

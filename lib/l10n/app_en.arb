@@ -1,4 +1,4 @@
-{
+        {
   "language": "English",
   "@language" : {
     "description": "The current language"
@@ -91,11 +91,18 @@
    "error_text":"Error",
    "create_user_title":"Create User",
    "first_name_hinttext":"first name",
+   "user_id_hinttext":"Enter user id",
    "create_user_validation_msg":"Please enter some text",
    "last_name_hinttext":"Last Name",
    "user_name_hinttext":"User Name",
    "password_title":"Password",
    "user_role_text":"User Role :",
    "admin":"Admin",
-   "waiter":"Waiter"
+   "waiter":"Waiter",
+   "user_deleted_msg": "User deleted successfully.",
+   "user_deleted_title":"Delete User",
+   "delete_confirm_msg_user": "Are you sure you want to delete this User?",
+   "user_update_title":"Update User",
+   "user_update_msg":"User Updated",
+   "user_update_error_msg":"User Not Updated, Data Missing"
 }

@@ -82,11 +82,18 @@
      "error_text":"गलती",
      "create_user_title":"उपयोगकर्ता बनाइये",
      "first_name_hinttext":"पहला नाम",
+     "user_id_hinttext":"उपयोगकर्ता आईडी दर्ज करें",
      "create_user_validation_msg":"कृपया कुछ पाठ दर्ज करें" ,
      "last_name_hinttext":"उपनाम",
      "user_name_hinttext":"उपयोगकर्ता नाम",
      "password_title":"पासवर्ड" ,
      "user_role_text":"उपयोगकर्ता भूमिका",
      "admin":"व्यवस्थापक",
-     "waiter":"परिचारक"
+     "waiter":"परिचारक",
+     "user_deleted_msg": "उपयोगकर्ता सफलतापूर्वक हटा दिया गया.",
+     "user_deleted_title":"उपभोक्ता मिटायें",
+     "delete_confirm_msg_user": "क्या आप वाकई इस उपयोगकर्ता को हटाना चाहते हैं?",
+     "user_update_title":"उपयोगकर्ता को अद्यतन करें",
+     "user_update_msg":"उपयोगकर्ता अपडेट किया गया",
+     "user_update_error_msg":"उपयोगकर्ता अद्यतन नहीं है, डेटा गायब है"
 }
