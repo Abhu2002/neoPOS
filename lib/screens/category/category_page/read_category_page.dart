@@ -4,6 +4,7 @@ import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../category_operation/create_operation/create_category_dialog.dart';
 // import '../../product/product_operation/delete_operation/delete_category_dialog.dart';
+//import '../../product/product_operation/delete_operation/delete_category_dialog.dart';
 import '../category_operation/delete_operation/delete_category_dialog.dart';
 import '../category_operation/update_operation/category_update_dialog.dart';
 
