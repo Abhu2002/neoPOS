@@ -6,6 +6,12 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_bloc.dart';
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_event.dart';
+import 'package:neopos/screens/products/products_operation/update_operation/product_update_state.dart';
+import 'package:neopos/utils/popup_cancel_button.dart';
+
+import '../../../../utils/app_colors.dart';
+
+var categoryVal = "Select Category";
 
 class UpdateProductDialog extends StatefulWidget {
   final String image;
@@ -33,20 +39,26 @@ class UpdateProductDialog extends StatefulWidget {
 }
 
 class _UpdateProductDialogState extends State<UpdateProductDialog> {
+  List<dynamic> _productCategories = [];
   final _productNameController = TextEditingController();
   final _productPriceController = TextEditingController();
   final _productDescriptionController = TextEditingController();
   final _productTypeController = TextEditingController();
   XFile? imageFile;
+  String _selectedProductType = "";
 
   @override
   void initState() {
+    BlocProvider.of<UpdateProductBloc>(context).add(InitialCategoryEvent());
     _productNameController.text = widget.productName;
     _productPriceController.text = "${widget.productPrice}";
     _productDescriptionController.text = widget.productDescription;
     _productTypeController.text = widget.productType;
-
-    // TODO: implement initState
+    if (widget.productType == "veg") {
+      _selectedProductType = "veg";
+    } else {
+      _selectedProductType = "nonVeg";
+    }
     super.initState();
   }
 
@@ -68,55 +80,140 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Update Product'),
-      content: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.5,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: _productNameController,
-              decoration: InputDecoration(labelText: 'Product Name'),
-            ),
-            TextField(
-              controller: _productPriceController,
-              decoration: InputDecoration(labelText: 'Product Price'),
-            ),
-            TextField(
-              controller: _productDescriptionController,
-              keyboardType: TextInputType.multiline,
-              minLines: 1,
-              maxLines: 2,
-              decoration: InputDecoration(labelText: 'Product Description'),
-            ),
-            TextField(
-              controller: _productTypeController,
-              decoration: InputDecoration(labelText: 'Product Type'),
-            ),
-            SizedBox(height: 16),
-            _buildProductImage(),
-            SizedBox(height: 6),
-            ElevatedButton(
-              onPressed: _pickImage,
-              child: Text('Select Image'),
-            ),
-          ],
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(20),
+        ),
+      ),
+      actionsPadding: const EdgeInsets.all(20),
+      title: const PopUpRow(title: "Update"),
+      content: SingleChildScrollView(
+        child: SizedBox(
+          width: MediaQuery.of(context).size.width * 0.5,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: _productNameController,
+                decoration: const InputDecoration(
+                    labelText: 'Product Name',
+                    prefixIcon: Icon(
+                      Icons.restaurant_menu,
+                      color: AppColors.primaryColor,
+                    )),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: _productPriceController,
+                decoration: const InputDecoration(
+                    labelText: 'Product Price',
+                    prefixIcon: Icon(
+                      Icons.price_change,
+                      color: AppColors.primaryColor,
+                    )),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              TextField(
+                controller: _productDescriptionController,
+                keyboardType: TextInputType.multiline,
+                minLines: 1,
+                maxLines: 2,
+                decoration: const InputDecoration(
+                    labelText: 'Product Description',
+                    prefixIcon: Icon(
+                      Icons.description,
+                      color: AppColors.primaryColor,
+                    )),
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  const Text(
+                    "Product type",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                  ),
+                  const SizedBox(
+                    width: 30,
+                  ),
+                  Radio(
+                    value: 'veg',
+                    groupValue: _selectedProductType,
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedProductType = value as String;
+                      });
+                    },
+                  ),
+                  const Text('Veg'),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Radio(
+                    value: 'nonVeg',
+                    groupValue: _selectedProductType,
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedProductType = value as String;
+                      });
+                    },
+                  ),
+                  const Text('Non Veg'),
+                ],
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  const Text(
+                    "Product category",
+                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                  ),
+                  const SizedBox(
+                    width: 20,
+                  ),
+                  BlocBuilder<UpdateProductBloc, ProductState>(
+                    builder: (context, state) {
+                      if (state is LoadedCategoryState) {
+                        _productCategories = state.categories;
+                        categoryVal = widget.productCategory;
+                      }
+                      return CustomDropDown(
+                        categories: _productCategories,
+                        dropdownvalue: categoryVal,
+                      );
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              _buildProductImage(),
+              const SizedBox(height: 10),
+              ElevatedButton(
+                onPressed: _pickImage,
+                child: const Text('Select Image'),
+              ),
+            ],
+          ),
         ),
       ),
       actions: [
         SizedBox(
-          child: TextButton(
+          height: 40,
+          width: double.infinity,
+          child: ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pop();
+              _updateProduct(context);
             },
-            child: Text('Cancel'),
+            child: const Text('UPDATE'),
           ),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            _updateProduct(context);
-          },
-          child: Text('OK'),
         ),
       ],
     );
@@ -143,7 +240,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
           productName: productName,
           productDescription: _productDescriptionController.text.trim(),
           productPrice: productPrice,
-          productType: _productTypeController.text.trim(),
+          productType: _selectedProductType,
           productUpdatedTime:
               DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
           imageFile: imageFile,
@@ -151,5 +248,45 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
 
       Navigator.of(context).pop();
     }
+  }
+
+  void createSnackBar(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+}
+
+class CustomDropDown extends StatefulWidget {
+  final List categories;
+  String? dropdownvalue;
+
+  CustomDropDown({required this.categories, super.key, this.dropdownvalue});
+
+  @override
+  State<CustomDropDown> createState() => _CustomDropDownState();
+}
+
+class _CustomDropDownState extends State<CustomDropDown> {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<UpdateProductBloc, ProductState>(
+      builder: (BuildContext context, state) {
+        return DropdownButton(
+          alignment: Alignment.centerLeft,
+          value: state.category ?? widget.dropdownvalue,
+          items: widget.categories.map((category) {
+            return DropdownMenuItem(
+              value: category,
+              child: Text(category),
+            );
+          }).toList(),
+          onChanged: (newValue) {
+            BlocProvider.of<UpdateProductBloc>(context)
+                .add(CategoryChangedEvent(newValue.toString()));
+            categoryVal = newValue.toString();
+          },
+        );
+      },
+    );
   }
 }
