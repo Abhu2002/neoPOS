@@ -22,5 +22,19 @@
   "category_name":"Category Name",
     "create_table":"Create table",
   "table_name":"Table Name",
-  "table_cap":"Table Capacity"
+  "table_cap":"Table Capacity",
+  "create_product": "Create Product",
+  "enter_product_name": "Enter Product Name",
+  "product_name": "Product Name",
+  "product_description": "Product Description",
+  "enter_product_description": "Enter Product Description",
+  "product_type": "Product Type",
+  "veg": "Veg",
+  "non_veg": "Non-Veg",
+  "select_category": "Select Category",
+  "select_image": "Select Image",
+  "product_price": "Product Price",
+  "enter_product_price": "Enter Product Price",
+  "product_available": "Product Available"
+
 }

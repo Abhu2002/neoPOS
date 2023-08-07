@@ -7,12 +7,14 @@ abstract class CreateProductEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class InitialEvent extends CreateProductEvent {}
+
 class CreateProductFBEvent extends CreateProductEvent {
   final String productName;
   final String productType;
   final String productDescription;
   final String productCategory;
-  final String productImage;
+  final XFile productImage;
   final int productPrice;
   final bool productAvailability;
 
@@ -45,6 +47,8 @@ class InputEvent extends CreateProductEvent {
   @override
   List<Object> get props => [productName];
 }
+
+class CategoryLoadingEvent extends CreateProductEvent {}
 
 class CategoryLoadedEvent extends CreateProductEvent {
   final List<String> categories;

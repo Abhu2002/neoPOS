@@ -1,11 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 
 import '../../../utils/app_colors.dart';
+import '../products_operation/delete_operation/delete_category_dialog.dart';
+import '../products_operation/update_operation/product_update_dialog.dart';
 
 class MoreInfoPopup extends StatefulWidget {
   const MoreInfoPopup(
       {super.key,
       required this.image,
+      required this.id,
       required this.productName,
       required this.productDescription,
       required this.productType,
@@ -14,6 +20,7 @@ class MoreInfoPopup extends StatefulWidget {
       required this.productCategory});
 
   final String image;
+  final String id;
   final String productName;
   final String productDescription;
   final String productCategory;
@@ -28,14 +35,13 @@ class MoreInfoPopup extends StatefulWidget {
 class _MoreInfoPopupState extends State<MoreInfoPopup> {
   @override
   Widget build(BuildContext context) {
-    return Material(borderRadius: BorderRadius.only(
-        topLeft: Radius.circular(20),
-        bottomLeft: Radius.circular(20)),
+    return Material(
+      borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
       child: Container(
           decoration: const BoxDecoration(
             borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(20),
-                bottomLeft: Radius.circular(20)),
+                topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
             color: Colors.white,
             gradient: LinearGradient(
               begin: Alignment.topCenter,
@@ -79,8 +85,10 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                   padding: const EdgeInsets.only(top: 40, bottom: 20),
                   child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
-                      child: Image.network(widget.image,
-                          width: 300, fit: BoxFit.fill)),
+                      child: CachedNetworkImage(
+                          imageUrl: widget.image,
+                          width: 300,
+                          fit: BoxFit.fill)),
                 ),
               ),
               Padding(
@@ -178,7 +186,8 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                             color: AppColors.mainTextColor, fontSize: 18),
                       ),
                     ),
-                    Icon(size: 30,
+                    Icon(
+                      size: 30,
                       (widget.productAvailibility) == true
                           ? Icons.check
                           : Icons.cancel,
@@ -211,11 +220,41 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return UpdateProductDialog(
+                            image: widget.image,
+                            id: widget.id,
+                            productName: widget.productName,
+                            productDescription: widget.productDescription,
+                            productType: widget.productType,
+                            productAvailibility: widget.productAvailibility,
+                            productPrice: widget.productPrice,
+                            productCategory: widget.productCategory,
+                          );
+                        },
+                      ).then((value) {
+                        Navigator.of(context).pop();
+                        BlocProvider.of<ReadProductsBloc>(context)
+                            .add(ReadInitialEvent());
+                      });
+                    },
                     child: const Text("Edit Product"),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (context) {
+                            return DeleteProductPopup(productID: widget.id);
+                          }).then((value) => {
+                            Navigator.pop(context),
+                            BlocProvider.of<ReadProductsBloc>(context)
+                                .add(ReadInitialEvent())
+                          });
+                    },
                     child: const Text("Delete Product"),
                   ),
                 ],
