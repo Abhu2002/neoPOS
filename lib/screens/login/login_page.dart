@@ -41,7 +41,7 @@ class _LoginPage extends State<LoginPage> {
                   child: Column(
                     children: [
                       Expanded(
-                        flex:1,
+                        flex: 1,
                         child: SvgPicture.asset(
                           "assets/login_background.svg",
                           fit: BoxFit.fill,
@@ -49,7 +49,7 @@ class _LoginPage extends State<LoginPage> {
                         ),
                       ),
                       Expanded(
-                        flex:2,
+                        flex: 2,
                         child: SingleChildScrollView(
                           child: Center(
                             child: Padding(
@@ -62,7 +62,8 @@ class _LoginPage extends State<LoginPage> {
                                       AppLocalizations.of(context)!.welcomeBack,
                                       style: TextStyle(
                                           color: AppColors.primaryColor,
-                                          fontSize: (screenWidth < 1000) ? 32 : 50,
+                                          fontSize:
+                                              (screenWidth < 1000) ? 32 : 50,
                                           fontWeight: FontWeight.w500),
                                       textAlign: TextAlign.start,
                                     ),
@@ -73,20 +74,24 @@ class _LoginPage extends State<LoginPage> {
                                   BlocBuilder<LoginBloc, LoginState>(
                                     builder: (context, state) {
                                       return SizedBox(
-                                        width: MediaQuery.sizeOf(context).width / 4,
+                                        width:
+                                            MediaQuery.sizeOf(context).width /
+                                                4,
                                         child: AuthCustomTextfield(
                                           obscureText: false,
-                                          suffixIcon: state.userId.isNotEmptyValidator
-                                              ? const Icon(Icons.done)
-                                              : null,
-                                          prefixIcon: Icons.person,
-                                          hint: AppLocalizations.of(context)!.username,
-                                          errorText:
-                                              (!state.userId.isNotEmptyValidator &&
-                                                      state.verifyData)
-                                                  ? AppLocalizations.of(context)!
-                                                      .username_error
+                                          suffixIcon:
+                                              state.userId.isNotEmptyValidator
+                                                  ? const Icon(Icons.done)
                                                   : null,
+                                          prefixIcon: Icons.person,
+                                          hint: AppLocalizations.of(context)!
+                                              .username,
+                                          errorText: (!state.userId
+                                                      .isNotEmptyValidator &&
+                                                  state.verifyData)
+                                              ? AppLocalizations.of(context)!
+                                                  .username_error
+                                              : null,
                                           onChange: (v) {
                                             context
                                                 .read<LoginBloc>()
@@ -102,15 +107,20 @@ class _LoginPage extends State<LoginPage> {
                                   BlocBuilder<LoginBloc, LoginState>(
                                     builder: (context, state) {
                                       return SizedBox(
-                                        width: MediaQuery.sizeOf(context).width / 4,
+                                        width:
+                                            MediaQuery.sizeOf(context).width /
+                                                4,
                                         child: AuthCustomTextfield(
                                           obscureText: true,
-                                          suffixIcon: state.password.isPasswordValid
-                                              ? const Icon(Icons.done)
-                                              : null,
+                                          suffixIcon:
+                                              state.password.isPasswordValid
+                                                  ? const Icon(Icons.done)
+                                                  : null,
                                           prefixIcon: Icons.lock,
-                                          hint: AppLocalizations.of(context)!.password,
-                                          errorText: !state.password.isPasswordValid &&
+                                          hint: AppLocalizations.of(context)!
+                                              .password,
+                                          errorText: !state.password
+                                                      .isPasswordValid &&
                                                   state.verifyData
                                               ? AppLocalizations.of(context)!
                                                   .password_error
@@ -130,12 +140,17 @@ class _LoginPage extends State<LoginPage> {
                                   BlocBuilder<LoginBloc, LoginState>(
                                     builder: (context, state) {
                                       return SizedBox(
-                                        width: MediaQuery.sizeOf(context).width / 8,
+                                        width:
+                                            MediaQuery.sizeOf(context).width /
+                                                8,
                                         child: ActionButton(
-                                          text: AppLocalizations.of(context)!.login,
+                                          text: AppLocalizations.of(context)!
+                                              .login,
                                           state: state.state,
                                           onPress: () {
-                                            context.read<LoginBloc>().add(OnLogin());
+                                            context
+                                                .read<LoginBloc>()
+                                                .add(OnLogin());
                                           },
                                         ),
                                       );

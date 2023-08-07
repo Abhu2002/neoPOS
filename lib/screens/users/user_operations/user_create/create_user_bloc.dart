@@ -38,8 +38,7 @@ class CreateUserBloc extends Bloc<CreateUserEvent, CreateUserState> {
               lastname: event.lastName,
               password: event.password,
               userrole: event.userRole,
-              addedon:
-                  DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
+              addedon: DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
               updatedon:
                   DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()));
           await db.collection("users").add(data.toFirestore()).then(

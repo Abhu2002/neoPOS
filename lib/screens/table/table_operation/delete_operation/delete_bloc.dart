@@ -10,7 +10,7 @@ class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
   final CollectionReference tableCollection =
       GetIt.I.get<FirebaseFirestore>().collection('table');
   final CollectionReference liveTableCollection =
-  GetIt.I.get<FirebaseFirestore>().collection('live_table');
+      GetIt.I.get<FirebaseFirestore>().collection('live_table');
 
   TableDeletionBloc() : super(InitialTableDeletionState()) {
     on<CredentialsEnteredEvent>(_mapCredentialsEnteredEventToState);
@@ -47,26 +47,28 @@ class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
   }
 
   void deleteTable(String docID) async {
-     var liveDocID;
-     var livename;
-     try {
-       var doc = await tableCollection.doc(docID).get();
-       var data = doc.data()as Map<String, dynamic>;
-       livename = data['table_name'];
-       print(livename);
-     } catch (e) {
-       print("Error getting document: $e");
-     }
-     //liveDocID = await liveTableCollection.where(['table_name'] ,isEqualTo: livename).get();
+    var liveDocID;
+    var livename;
+    try {
+      var doc = await tableCollection.doc(docID).get();
+      var data = doc.data() as Map<String, dynamic>;
+      livename = data['table_name'];
+      print(livename);
+    } catch (e) {
+      print("Error getting document: $e");
+    }
+    //liveDocID = await liveTableCollection.where(['table_name'] ,isEqualTo: livename).get();
     //await liveTableCollection.doc(liveDocID).delete();
 
-     var livedata=await liveTableCollection.where("table_name",isEqualTo: livename).get();
-     for (var docSnapshot in livedata.docs) {
-        liveDocID = docSnapshot.id;
-     }
-     print(liveDocID);
-     await tableCollection.doc(docID).delete();
-     await liveTableCollection.doc(liveDocID).delete();
+    var livedata = await liveTableCollection
+        .where("table_name", isEqualTo: livename)
+        .get();
+    for (var docSnapshot in livedata.docs) {
+      liveDocID = docSnapshot.id;
+    }
+    print(liveDocID);
+    await tableCollection.doc(docID).delete();
+    await liveTableCollection.doc(liveDocID).delete();
     add(ConfirmTableDeletionEvent());
   }
 }

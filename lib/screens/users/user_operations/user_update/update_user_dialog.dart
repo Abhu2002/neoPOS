@@ -110,11 +110,12 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
                     newPassword, newUserId),
               );
               Navigator.of(context).pop();
-              final snackBar =   SnackBar(content: const Text("User Updated"));
+              final snackBar = SnackBar(content: const Text("User Updated"));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else {
               Navigator.of(context).pop();
-              final snackBar = SnackBar(content: const Text("User Not Updated, Data Missing"));
+              final snackBar = SnackBar(
+                  content: const Text("User Not Updated, Data Missing"));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           },
