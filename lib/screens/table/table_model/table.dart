@@ -27,3 +27,30 @@ class TableModel {
     };
   }
 }
+class LiveTableModel {
+  final String? tableName;
+
+
+  LiveTableModel({
+    this.tableName,
+
+  });
+
+  factory LiveTableModel.fromFirestore(
+      DocumentSnapshot<Map<String, dynamic>> snapshot,
+      SnapshotOptions? options,
+      ) {
+    final data = snapshot.data();
+    return LiveTableModel(
+      tableName: data?['tablename'],
+
+    );
+  }
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      if (tableName != null) "table_name": tableName,
+
+    };
+  }
+}
