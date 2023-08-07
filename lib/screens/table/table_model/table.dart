@@ -27,13 +27,13 @@ class TableModel {
     };
   }
 }
+
 class LiveTableModel {
   final String? tableName;
 
 
   LiveTableModel({
     this.tableName,
-
   });
 
   factory LiveTableModel.fromFirestore(
