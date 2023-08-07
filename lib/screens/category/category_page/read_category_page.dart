@@ -57,7 +57,7 @@ class _CategoryReadState extends State<CategoryRead> {
                   columns: const [
                     DataColumn(label: Text("SR")),
                     DataColumn(label: Flexible(child: Text('Category Name'))),
-                    DataColumn(label: Text('Operation')),
+                    DataColumn(label: Center(child: Text(''))),
                   ],
                   rows: state
                       .all // Loops through dataColumnText, each iteration assigning the value to element
