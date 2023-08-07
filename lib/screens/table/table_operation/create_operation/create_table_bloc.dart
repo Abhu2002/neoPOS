@@ -40,11 +40,16 @@ class CreateTableBloc extends Bloc<CreateTableEvent, CreateTableState> {
         } else {
           final data = TableModel(
               tableName: event.tableName, tableCap: int.parse(event.tableCap));
+          final livedata= LiveTableModel(tableName: event.tableName);
           await db.collection("table").add(data.toFirestore()).then(
               (documentSnapshot) => {
                     emit(TableCreatedState(true)),
                     showMessage!("Table Created")
                   });
+          await db.collection("live_table").add(livedata.toFirestore()).then(
+                  (documentSnapshot) => {
+                showMessage!("Live Table Created")
+              });
           await GetIt.I.get<FirebaseFirestore>().clearPersistence();
           await GetIt.I.get<FirebaseFirestore>().terminate();
         }
