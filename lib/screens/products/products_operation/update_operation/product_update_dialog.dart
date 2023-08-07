@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_bloc.dart';
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_event.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UpdateProductDialog extends StatefulWidget {
   final String image;
@@ -68,7 +69,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text('Update Product'),
+      title: Text(AppLocalizations.of(context)!.update_product_title),
       content: SizedBox(
         width: MediaQuery.of(context).size.width * 0.5,
         child: Column(
@@ -76,22 +77,27 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
           children: [
             TextField(
               controller: _productNameController,
-              decoration: InputDecoration(labelText: 'Product Name'),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.product_name_title),
             ),
             TextField(
               controller: _productPriceController,
-              decoration: InputDecoration(labelText: 'Product Price'),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.product_price_text),
             ),
             TextField(
               controller: _productDescriptionController,
               keyboardType: TextInputType.multiline,
               minLines: 1,
               maxLines: 2,
-              decoration: InputDecoration(labelText: 'Product Description'),
+              decoration: InputDecoration(
+                  labelText:
+                      AppLocalizations.of(context)!.product_description_title),
             ),
             TextField(
               controller: _productTypeController,
-              decoration: InputDecoration(labelText: 'Product Type'),
+              decoration: InputDecoration(
+                  labelText: AppLocalizations.of(context)!.product_type_title),
             ),
             SizedBox(height: 16),
             _buildProductImage(),
@@ -109,14 +115,14 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('Cancel'),
+            child: Text(AppLocalizations.of(context)!.cancel_button),
           ),
         ),
         ElevatedButton(
           onPressed: () {
             _updateProduct(context);
           },
-          child: Text('OK'),
+          child: Text(AppLocalizations.of(context)!.ok_button),
         ),
       ],
     );

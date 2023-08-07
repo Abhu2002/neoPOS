@@ -5,6 +5,7 @@ import '../../../../utils/app_colors.dart';
 import 'delete_bloc.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeleteCategoryPopup extends StatefulWidget {
   final String categoryID;
@@ -43,15 +44,16 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const PopUpRow(title: "Enter Credentials"),
+          title:
+              PopUpRow(title: AppLocalizations.of(context)!.enter_credentials),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: _usernameController,
-                decoration: const InputDecoration(
-                    hintText: "Username",
-                    prefixIcon: Icon(
+                decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.username_hinttext,
+                    prefixIcon: const Icon(
                       Icons.person,
                       color: AppColors.primaryColor,
                     )),
@@ -60,9 +62,9 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
               TextField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(
-                    hintText: "Password",
-                    prefixIcon: Icon(
+                decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.password_hinttext,
+                    prefixIcon: const Icon(
                       Icons.person,
                       color: AppColors.primaryColor,
                     )),
@@ -74,7 +76,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel_button),
             ),
             ElevatedButton(
               onPressed: () {
@@ -86,7 +88,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
                   ),
                 );
               },
-              child: const Text('Submit'),
+              child: Text(AppLocalizations.of(context)!.submit_button),
             ),
           ],
         );
@@ -125,14 +127,16 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const PopUpRow(title: "Delete Category"),
-          content: const Text('Are you sure you want to delete this Category?'),
+          title: PopUpRow(
+              title: AppLocalizations.of(context)!.delete_category_title),
+          content:
+              Text(AppLocalizations.of(context)!.delete_confirm_msg_category),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('No'),
+              child: Text(AppLocalizations.of(context)!.no_title),
             ),
             TextButton(
               onPressed: () async {
@@ -141,7 +145,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
-              child: const Text('Yes'),
+              child: Text(AppLocalizations.of(context)!.yes_title),
             ),
           ],
         );

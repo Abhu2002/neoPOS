@@ -7,6 +7,7 @@ import '../category_operation/create_operation/create_category_dialog.dart';
 //import '../../product/product_operation/delete_operation/delete_category_dialog.dart';
 import '../category_operation/delete_operation/delete_category_dialog.dart';
 import '../category_operation/update_operation/category_update_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoryRead extends StatefulWidget {
   const CategoryRead({super.key});
@@ -39,7 +40,7 @@ class _CategoryReadState extends State<CategoryRead> {
                             BlocProvider.of<ReadCategoryBloc>(context)
                                 .add(InitialEvent()));
                   },
-                  child: const Text("Create")),
+                  child: Text(AppLocalizations.of(context)!.create_button)),
             ),
           ),
         ]),
@@ -54,10 +55,13 @@ class _CategoryReadState extends State<CategoryRead> {
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: AppColors.mainTextColor),
-                  columns: const [
-                    DataColumn(label: Text("SR")),
-                    DataColumn(label: Flexible(child: Text('Category Name'))),
-                    DataColumn(label: Center(child: Text(''))),
+                  columns: [
+                    DataColumn(label: Text(AppLocalizations.of(context)!.sr)),
+                    DataColumn(
+                        label: Flexible(
+                            child: Text(AppLocalizations.of(context)!
+                                .category_name_title))),
+                    const DataColumn(label: Center(child: Text(' '))),
                   ],
                   rows: state
                       .all // Loops through dataColumnText, each iteration assigning the value to element

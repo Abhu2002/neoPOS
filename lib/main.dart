@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
         onGenerateRoute: AppRouter.generateRoute,
         // setting up localization
         supportedLocales: L10n.all,
-        locale: const Locale('en'),
+        locale: const Locale('hi'),
         localizationsDelegates: [
           AppLocalizations.delegate,
           AppLocalizations.localizationsDelegates[1],
