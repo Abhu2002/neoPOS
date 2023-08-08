@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
+import 'package:neopos/utils/utils.dart';
 import '../../../../utils/app_colors.dart';
 import 'delete_bloc.dart';
 import 'delete_event.dart';
@@ -19,7 +20,7 @@ class DeleteCategoryPopup extends StatefulWidget {
 class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  final formKey = GlobalKey<FormState>();
   @override
   void initState() {
     _usernameController.text = "";
@@ -46,30 +47,39 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
           actionsPadding: const EdgeInsets.all(20),
           title:
               PopUpRow(title: AppLocalizations.of(context)!.enter_credentials),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _usernameController,
-                decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.username_hinttext,
-                    prefixIcon: const Icon(
-                      Icons.person,
-                      color: AppColors.primaryColor,
-                    )),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.password_hinttext,
-                    prefixIcon: const Icon(
-                      Icons.person,
-                      color: AppColors.primaryColor,
-                    )),
-              ),
-            ],
+          content: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: _usernameController,
+                  validator: (val) {
+                    if (!val!.isValidUsername) return "Enter a Valid Username";
+                  },
+                  decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.username_hinttext,
+                      prefixIcon: const Icon(
+                        Icons.person,
+                        color: AppColors.primaryColor,
+                      )),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _passwordController,
+                  validator: (val) {
+                    if (!val!.isValidPassword) return "Enter a Valid Password";
+                  },
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.password_hinttext,
+                      prefixIcon: const Icon(
+                        Icons.person,
+                        color: AppColors.primaryColor,
+                      )),
+                ),
+              ],
+            ),
           ),
           actions: [
             ElevatedButton(
@@ -80,13 +90,15 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
             ),
             ElevatedButton(
               onPressed: () {
-                // Navigator.of(context).pop();
-                BlocProvider.of<CategoryDeletionBloc>(context).add(
-                  CredentialsEnteredEvent(
-                    _usernameController.text,
-                    _passwordController.text,
-                  ),
-                );
+                if (formKey.currentState!.validate()) {
+                  // Navigator.of(context).pop();
+                  BlocProvider.of<CategoryDeletionBloc>(context).add(
+                    CredentialsEnteredEvent(
+                      _usernameController.text,
+                      _passwordController.text,
+                    ),
+                  );
+                }
               },
               child: Text(AppLocalizations.of(context)!.submit_button),
             ),

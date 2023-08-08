@@ -4,6 +4,8 @@ import 'package:neopos/utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import 'create_category_bloc.dart';
+import 'dart:core';
+import 'package:neopos/utils/utils.dart';
 
 class CreateCategoryForm extends StatefulWidget {
   const CreateCategoryForm({super.key});
@@ -47,6 +49,11 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                   builder: (context, state) {
                     return TextFormField(
                       controller: categoryName,
+                      keyboardType: TextInputType.text,
+                      validator: (val) {
+                        if (!val.isValidName)
+                          return 'Enter valid Category Name';
+                      },
                       decoration: InputDecoration(
                           hintText: AppLocalizations.of(context)!.category_name,
                           prefixIcon: const Icon(
@@ -87,9 +94,11 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                           onPressed: (state is CategoryErrorState)
                               ? null
                               : () {
-                                  BlocProvider.of<CreateCategoryBloc>(context)
-                                      .add(CreateCategoryFBEvent(
-                                          categoryName.text));
+                                  if (formKey.currentState!.validate()) {
+                                    BlocProvider.of<CreateCategoryBloc>(context)
+                                        .add(CreateCategoryFBEvent(
+                                            categoryName.text));
+                                  }
                                 },
                           child: Text(AppLocalizations.of(context)!
                               .create_category_button),

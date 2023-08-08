@@ -90,12 +90,12 @@ class _LoginPage extends State<LoginPage> {
                             builder: (context, state) {
                               return AuthCustomTextfield(
                                 obscureText: true,
-                                suffixIcon: state.password.isPasswordValid
+                                suffixIcon: state.password.isValidPassword
                                     ? const Icon(Icons.done)
                                     : null,
                                 prefixIcon: Icons.lock,
                                 hint: AppLocalizations.of(context)!.password,
-                                errorText: !state.password.isPasswordValid &&
+                                errorText: !state.password.isValidPassword &&
                                         state.verifyData
                                     ? AppLocalizations.of(context)!
                                         .password_error

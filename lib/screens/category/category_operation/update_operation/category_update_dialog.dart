@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
+import 'package:neopos/utils/utils.dart';
 import '../../../../utils/app_colors.dart';
 import 'category_update_bloc.dart';
 import 'category_update_event.dart';
@@ -19,6 +20,7 @@ class UpdateCategoryForm extends StatefulWidget {
 }
 
 class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     String newName = widget.oldName;
@@ -28,15 +30,22 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
       actionsPadding: const EdgeInsets.all(20),
       title:
           PopUpRow(title: AppLocalizations.of(context)!.update_category_title),
-      content: TextField(
-        onChanged: (value) => newName = value,
-        controller: TextEditingController(text: widget.oldName),
-        decoration: InputDecoration(
-            hintText: AppLocalizations.of(context)!.new_category_name_hinttext,
-            prefixIcon: const Icon(
-              Icons.category,
-              color: AppColors.primaryColor,
-            )),
+      content: Form(
+        key: formKey,
+        child: TextFormField(
+          onChanged: (value) => newName = value,
+          validator: (val) {
+            if (!val.isUpdateName) return "Enter a Valid Catgeory Name";
+          },
+          controller: TextEditingController(text: widget.oldName),
+          decoration: InputDecoration(
+              hintText:
+                  AppLocalizations.of(context)!.new_category_name_hinttext,
+              prefixIcon: const Icon(
+                Icons.category,
+                color: AppColors.primaryColor,
+              )),
+        ),
       ),
       actions: <Widget>[
         TextButton(
@@ -46,12 +55,13 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
         TextButton(
           child: Text(AppLocalizations.of(context)!.update_button),
           onPressed: () {
-            if (newName.trim().isNotEmpty) {
+            print(formKey.currentState!.validate());
+            if (formKey.currentState!.validate()) {
               BlocProvider.of<CategoryUpdateBloc>(context).add(
                 CategoryUpdateRequested(widget.id, newName),
               );
             }
-            Navigator.of(context).pop();
+            //Navigator.of(context).pop();
           },
         ),
       ],
