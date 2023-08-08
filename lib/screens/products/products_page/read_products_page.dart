@@ -57,7 +57,7 @@ class _ProductsReadState extends State<ProductsRead> {
               children: [
                 Container(
                   width: MediaQuery.sizeOf(context).width,
-                  height: MediaQuery.sizeOf(context).height - 174,
+                  height: MediaQuery.sizeOf(context).height - 144,
                   child: ListView.separated(
                     //shrinkWrap: true,
                     separatorBuilder: (context, index) {
@@ -284,7 +284,10 @@ class _ProductsReadState extends State<ProductsRead> {
               ],
             );
           }
-          return Text("Loading");
+          return const SizedBox(
+              height: 200,
+              width: 200,
+              child: Center(child: CircularProgressIndicator()));
         }),
       )
     ]);
