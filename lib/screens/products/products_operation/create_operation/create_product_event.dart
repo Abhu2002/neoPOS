@@ -61,10 +61,7 @@ class CategoryLoadedEvent extends CreateProductEvent {
   List<Object> get props => [categories];
 }
 
-<<<<<<< HEAD
 
-=======
->>>>>>> d60c21c7784ebe8f8b158225c6e052f331df7caf
 class CategoryChangedEvent extends CreateProductEvent {
   final String category;
 
@@ -74,11 +71,7 @@ class CategoryChangedEvent extends CreateProductEvent {
   List<Object> get props => [category];
 }
 
-<<<<<<< HEAD
 class ProductTypeEvent extends CreateProductEvent{
-=======
-class ProductTypeEvent extends CreateProductEvent {
->>>>>>> d60c21c7784ebe8f8b158225c6e052f331df7caf
   final ProductType type;
   const ProductTypeEvent(this.type);
 
@@ -100,8 +93,4 @@ class ImageChangedEvent extends CreateProductEvent {
 
   @override
   List<Object> get props => [imageFile];
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> d60c21c7784ebe8f8b158225c6e052f331df7caf

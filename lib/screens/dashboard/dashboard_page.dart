@@ -119,9 +119,7 @@ class _DashboardPage extends State<DashboardPage> {
                       Center(
                         child: Text('Dashboard'),
                       ),
-                      Center(
-                        child: Text('DashBoard Page'),
-                      ),
+
                       Center(
                         child: Text('Order History'),
                       ),

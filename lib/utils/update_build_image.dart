@@ -15,7 +15,7 @@ class BuildUpdateImage extends StatefulWidget {
 class _BuildImageState extends State<BuildUpdateImage> {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UpdateProductBloc, ProductState>(
+    return BlocBuilder<UpdateProductBloc, UpdateProductState>(
         builder: (context, state) {
       if (state.imageFile != null) {
         // Display image from the device gallery
