@@ -23,8 +23,7 @@ class UpdateUserBloc extends Bloc<UpdateUserEvent, UpdateUserState> {
         "first_name": event.newFirstName,
         "last_name": event.newLastName,
         "password": event.newPassword,
-        "updated_on":
-            DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now())
+        "updated_on": DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now())
       });
       emit(UserUpdatedState());
     } catch (e) {

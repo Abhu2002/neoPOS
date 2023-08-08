@@ -89,7 +89,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
         return AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          title: const Text('Error'),
+          title:const PopUpRow(title: "Error"),
           content: Text(error),
           actions: [
             TextButton(
