@@ -10,6 +10,8 @@ import 'package:neopos/screens/products/products_operation/update_operation/prod
 import 'package:neopos/utils/popup_cancel_button.dart';
 
 import '../../../../utils/app_colors.dart';
+import '../../../../utils/update_build_image.dart';
+import '../create_operation/create_product_dialog.dart';
 
 var categoryVal = "Select Category";
 
@@ -46,6 +48,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
   final _productTypeController = TextEditingController();
   XFile? imageFile;
   String _selectedProductType = "";
+  late ProductType? type;
 
   @override
   void initState() {
@@ -55,30 +58,17 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
     _productDescriptionController.text = widget.productDescription;
     _productTypeController.text = widget.productType;
     if (widget.productType == "veg") {
-      _selectedProductType = "veg";
+      type = ProductType.veg;
     } else {
-      _selectedProductType = "nonVeg";
+      type = ProductType.nonVeg;
     }
     super.initState();
   }
 
-  Widget _buildProductImage() {
-    if (imageFile != null) {
-      // Display image from the device gallery
-      if (kIsWeb) {
-        // For Flutter web, use Image.network
-        return Image.network(imageFile!.path, height: 100, width: 100);
-      } else {
-        // For mobile platforms, use Image.file
-        return Image.file(File('imageFile'));
-      }
-    } else {
-      return const Text('No image selected');
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
+
     return AlertDialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -132,40 +122,49 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
               const SizedBox(
                 height: 20,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Text(
-                    "Product type",
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-                  ),
-                  const SizedBox(
-                    width: 30,
-                  ),
-                  Radio(
-                    value: 'veg',
-                    groupValue: _selectedProductType,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedProductType = value as String;
-                      });
-                    },
-                  ),
-                  const Text('Veg'),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  Radio(
-                    value: 'nonVeg',
-                    groupValue: _selectedProductType,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedProductType = value as String;
-                      });
-                    },
-                  ),
-                  const Text('Non Veg'),
-                ],
+              BlocBuilder<UpdateProductBloc, ProductState>(
+                buildWhen: (previous, current) {
+                  if(current is ProductTypeUpdateState) {
+                    type = current.type;
+                  }
+                  return current is ProductTypeUpdateState;
+                },
+                builder: (context, state) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Product type",
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 17),
+                      ),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      Radio<ProductType>(
+                        value: ProductType.veg,
+                        groupValue: state.type ?? type,
+                        onChanged: (ProductType? value) {
+                          BlocProvider.of<UpdateProductBloc>(context)
+                              .add(ProductTypeUpdateEvent(value!));
+                        },
+                      ),
+                      const Text('Veg'),
+                      const SizedBox(
+                        width: 5,
+                      ),
+                      Radio<ProductType>(
+                        value: ProductType.nonVeg,
+                        groupValue: state.type ?? type,
+                        onChanged: (ProductType? value) {
+                          BlocProvider.of<UpdateProductBloc>(context)
+                              .add(ProductTypeUpdateEvent(value!));
+                        },
+                      ),
+                      const Text('Non Veg'),
+                    ],
+                  );
+                },
               ),
               const SizedBox(
                 height: 20,
@@ -194,11 +193,31 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                 ],
               ),
               const SizedBox(height: 20),
-              _buildProductImage(),
-              const SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: _pickImage,
-                child: const Text('Select Image'),
+              BlocBuilder<UpdateProductBloc, ProductState>(
+                builder: (BuildContext context, state) {
+                  return Column(
+                    children: [
+                      const BuildUpdateImage(),
+                      const SizedBox(height: 10),
+                      ElevatedButton(
+                        onPressed: () async {
+                          final picker = ImagePicker();
+                          final pickedFile = await picker.pickImage(
+                              source: ImageSource.gallery);
+                          if (pickedFile != null) {
+                            if (!context.mounted) return;
+                            BlocProvider.of<UpdateProductBloc>(context)
+                                .add(
+                              ImageChangedUpdateEvent(pickedFile),
+                            );
+                            imageFile = state.imageFile;
+                          }
+                      },
+                        child: const Text('Select Image'),
+                      ),
+                    ],
+                  );
+                },
               ),
             ],
           ),
@@ -219,16 +238,6 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
     );
   }
 
-  void _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        imageFile = pickedFile;
-      });
-    }
-  }
-
   void _updateProduct(BuildContext context) {
     final productBloc = BlocProvider.of<UpdateProductBloc>(context);
     String productName = _productNameController.text.trim();
@@ -240,7 +249,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
           productName: productName,
           productDescription: _productDescriptionController.text.trim(),
           productPrice: productPrice,
-          productType: _selectedProductType,
+          productType: type!.name,
           productUpdatedTime:
               DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
           imageFile: imageFile,

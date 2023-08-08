@@ -1,5 +1,7 @@
 import 'package:image_picker/image_picker.dart';
 
+import '../create_operation/create_product_dialog.dart';
+
 abstract class ProductEvent {}
 
 class InitialCategoryEvent extends ProductEvent {}
@@ -39,4 +41,16 @@ class LoadedCategoryEvent extends ProductEvent {
   final List<String> categories;
 
   LoadedCategoryEvent(this.categories);
+}
+
+
+class ProductTypeUpdateEvent extends ProductEvent{
+  final ProductType type;
+  ProductTypeUpdateEvent(this.type);
+}
+
+class ImageChangedUpdateEvent extends ProductEvent {
+  final XFile imageFile;
+  ImageChangedUpdateEvent(this.imageFile);
+
 }
