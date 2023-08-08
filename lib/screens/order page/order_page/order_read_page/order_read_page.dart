@@ -95,7 +95,7 @@ class _OrderPageReadState extends State<OrderPageRead> {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const OrderContentPage(),
+                                          const OrderMenuPage(),
                                     ));
                               },
                             ),

@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
-class OrderContentPage extends StatefulWidget {
-  const OrderContentPage({super.key});
+class OrderMenuPage extends StatefulWidget {
+  const OrderMenuPage({Key? key}) : super(key: key);
 
   @override
-  State<OrderContentPage> createState() => _OrderContentPageState();
+  State<OrderMenuPage> createState() => _OrderMenuPageState();
 }
 
-class _OrderContentPageState extends State<OrderContentPage> {
+class _OrderMenuPageState extends State<OrderMenuPage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Orderpagfe")),
-      body: Center(child: Text("Order Page ")),
+    return Row(
+      children: [Expanded(child: Container()), Expanded(child: Container())],
     );
   }
 }
