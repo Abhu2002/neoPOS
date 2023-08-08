@@ -9,7 +9,7 @@ class CreateUserState extends Equatable {
 
 class CreateUserInitial extends CreateUserState {}
 
-class UserNameAvailableState extends CreateUserState {}
+class UserNameNotAvailableState extends CreateUserState {}
 
 class UserErrorState extends CreateUserState {
   final String errorMessage;
@@ -18,4 +18,9 @@ class UserErrorState extends CreateUserState {
   List<Object> get props => [errorMessage];
 }
 
-class UserCreatedState extends CreateUserState {}
+class UserCreatedState extends CreateUserState {
+  bool created;
+  UserCreatedState(this.created);
+  @override
+  List<Object> get props => [created];
+}

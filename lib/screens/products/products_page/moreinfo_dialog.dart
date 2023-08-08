@@ -238,7 +238,7 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                       ).then((value) {
                         Navigator.of(context).pop();
                         BlocProvider.of<ReadProductsBloc>(context)
-                            .add(ReadInitialEvent());
+                            .add(ReadInitialEvent(false));
                       });
                     },
                     child: const Text("Edit Product"),
@@ -251,8 +251,9 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                             return DeleteProductPopup(productID: widget.id);
                           }).then((value) => {
                             Navigator.pop(context),
-                            BlocProvider.of<ReadProductsBloc>(context)
-                                .add(ReadInitialEvent())
+                            BlocProvider.of<ReadProductsBloc>(
+                              context,
+                            ).add(ReadInitialEvent(false))
                           });
                     },
                     child: const Text("Delete Product"),

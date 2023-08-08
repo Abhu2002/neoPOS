@@ -9,4 +9,8 @@ abstract class ReadUserEvent extends Equatable {
 
 class LoadDataEvent extends ReadUserEvent {}
 
-class InitialEvent extends ReadUserEvent {}
+// ignore: must_be_immutable
+class InitialEvent extends ReadUserEvent {
+  bool isfirst;
+  InitialEvent(this.isfirst);
+}

@@ -11,7 +11,12 @@ class ReadCategoryBloc extends Bloc<ReadCategoryEvent, ReadCategoryState> {
     on<InitialEvent>((event, emit) async {
       try {
         int sr = 1;
-        emit(DataLoadingState());
+        if (event.isfirst) {
+          emit(DataLoadingState());
+        } else {
+          emit(DataLoadingState());
+          await Future.delayed(Duration(seconds: 1));
+        }
         List allCat = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("category").get().then((value) => {

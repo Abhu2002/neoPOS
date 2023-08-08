@@ -135,6 +135,9 @@ class _DashboardPage extends State<DashboardPage> {
                       ///TODO DashBoard and History page pending
 
                       Center(
+                        child: Text('DashBoard Page'),
+                      ),
+                      Center(
                         child: Text('Order History'),
                       ),
                       SingleChildScrollView(child: UserRead()),

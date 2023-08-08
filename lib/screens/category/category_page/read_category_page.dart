@@ -18,7 +18,7 @@ class CategoryRead extends StatefulWidget {
 class _CategoryReadState extends State<CategoryRead> {
   @override
   void initState() {
-    BlocProvider.of<ReadCategoryBloc>(context).add(InitialEvent());
+    BlocProvider.of<ReadCategoryBloc>(context).add(InitialEvent(true));
     super.initState();
   }
 
@@ -26,18 +26,28 @@ class _CategoryReadState extends State<CategoryRead> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          const Padding(
+            padding: EdgeInsets.all(20.0),
+            child: Text("Category Page",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          ),
           Flexible(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      elevation: 10,
+                      minimumSize: const Size(88, 36),
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)))),
                   onPressed: () {
                     showDialog(
                             context: context,
                             builder: (context) => const CreateCategoryForm())
                         .then((value) =>
                             BlocProvider.of<ReadCategoryBloc>(context)
-                                .add(InitialEvent()));
+                                .add(InitialEvent(false)));
                   },
                   child: const Text("Create")),
             ),
@@ -86,7 +96,7 @@ class _CategoryReadState extends State<CategoryRead> {
                                                           element['Category']),
                                             ).then((value) => BlocProvider.of<
                                                     ReadCategoryBloc>(context)
-                                                .add(InitialEvent()));
+                                                .add(InitialEvent(false)));
                                           },
                                           child: const Icon(
                                             Icons.edit,
@@ -109,7 +119,7 @@ class _CategoryReadState extends State<CategoryRead> {
                                               ),
                                             ).then((value) => BlocProvider.of<
                                                     ReadCategoryBloc>(context)
-                                                .add(InitialEvent()));
+                                                .add(InitialEvent(false)));
                                           },
                                           child: const Icon(Icons.delete,
                                               color: AppColors.mainTextColor)),
@@ -123,7 +133,10 @@ class _CategoryReadState extends State<CategoryRead> {
                 ),
               );
             } else {
-              return const Text("Loading");
+              return const SizedBox(
+                  height: 200,
+                  width: 200,
+                  child: Center(child: CircularProgressIndicator()));
             }
           },
         ),

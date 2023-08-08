@@ -22,8 +22,8 @@ class _TableReadState extends State<TableRead> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<TableBloc>(context).add(
-        InitialEvent()); //creates connection and fetch all the map from firebase and add in the list
+    BlocProvider.of<TableBloc>(context).add(InitialEvent(
+        true)); //creates connection and fetch all the map from firebase and add in the list
   }
 
   @override
@@ -34,8 +34,6 @@ class _TableReadState extends State<TableRead> {
         var pressAttention = true;
 
         return LayoutBuilder(builder: (ctx, constraints) {
-          // print(constraints.minWidth);
-          print(constraints.maxWidth);
           final width = constraints.maxWidth;
           return Column(
             children: [
@@ -60,7 +58,7 @@ class _TableReadState extends State<TableRead> {
                                 context: context,
                                 builder: (context) => const CreateTableForm())
                             .then((value) => BlocProvider.of<TableBloc>(context)
-                                .add(InitialEvent()));
+                                .add(InitialEvent(false)));
                       },
                       child: const Text("Create")),
                 ),
@@ -142,11 +140,12 @@ class _TableReadState extends State<TableRead> {
                                                             docID: data[i]
                                                                 ["docID"],
                                                           ),
-                                                        ).then((value) => BlocProvider
-                                                                .of<TableBloc>(
+                                                        ).then((value) =>
+                                                            BlocProvider.of<
+                                                                        TableBloc>(
                                                                     context)
-                                                            .add(
-                                                                InitialEvent()));
+                                                                .add(InitialEvent(
+                                                                    false)));
                                                       case "tableEdit":
                                                         showDialog(
                                                             context: context,
@@ -164,8 +163,8 @@ class _TableReadState extends State<TableRead> {
                                                             BlocProvider.of<
                                                                         TableBloc>(
                                                                     context)
-                                                                .add(
-                                                                    InitialEvent()));
+                                                                .add(InitialEvent(
+                                                                    false)));
                                                     }
                                                   }),
                                             ],
@@ -266,10 +265,12 @@ class _TableReadState extends State<TableRead> {
                                                           docID: data[i]
                                                               ["docID"],
                                                         ),
-                                                      ).then((value) => BlocProvider
-                                                              .of<TableBloc>(
+                                                      ).then((value) =>
+                                                          BlocProvider.of<
+                                                                      TableBloc>(
                                                                   context)
-                                                          .add(InitialEvent()));
+                                                              .add(InitialEvent(
+                                                                  false)));
                                                     case "tableEdit":
                                                       showDialog(
                                                           context: context,
@@ -287,8 +288,8 @@ class _TableReadState extends State<TableRead> {
                                                           BlocProvider.of<
                                                                       TableBloc>(
                                                                   context)
-                                                              .add(
-                                                                  InitialEvent()));
+                                                              .add(InitialEvent(
+                                                                  false)));
                                                   }
                                                 }),
                                           ],
@@ -388,10 +389,12 @@ class _TableReadState extends State<TableRead> {
                                                           docID: data[i]
                                                               ["docID"],
                                                         ),
-                                                      ).then((value) => BlocProvider
-                                                              .of<TableBloc>(
+                                                      ).then((value) =>
+                                                          BlocProvider.of<
+                                                                      TableBloc>(
                                                                   context)
-                                                          .add(InitialEvent()));
+                                                              .add(InitialEvent(
+                                                                  false)));
                                                     case "tableEdit":
                                                       showDialog(
                                                           context: context,
@@ -409,8 +412,8 @@ class _TableReadState extends State<TableRead> {
                                                           BlocProvider.of<
                                                                       TableBloc>(
                                                                   context)
-                                                              .add(
-                                                                  InitialEvent()));
+                                                              .add(InitialEvent(
+                                                                  false)));
                                                   }
                                                 }),
                                           ],
