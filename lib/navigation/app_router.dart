@@ -2,11 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:neopos/navigation/route_paths.dart';
 import '../screens/dashboard/dashboard_page.dart';
 import '../screens/login/login_page.dart';
+import '../screens/splashScreen/splashscreen_page.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       // -------------- sub Routes ----------------
+    // -------------- splashscreen Route ------------
+      case RoutePaths.splashscreen:
+        return MaterialPageRoute(
+          builder: (context) => const SplashScreen(),
+          settings: const RouteSettings(name: RoutePaths.splashscreen),
+        );
       // -------------- Dasboard Route ------------
       case RoutePaths.dashboard:
         return MaterialPageRoute(

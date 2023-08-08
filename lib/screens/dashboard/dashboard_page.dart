@@ -1,8 +1,5 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neopos/screens/products/products_page/read_products_page.dart';
-import 'package:neopos/utils/common_text.dart';
 import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../order page/order_page/order_read_page/order_read_page.dart';
@@ -102,33 +99,17 @@ class _DashboardPage extends State<DashboardPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                BlocBuilder<ReadProductsBloc, ReadProductsState>(
-                    builder: (context, state) {
-                  if (state is ButtonState) {
-                    return SideMenu(
-                        items: items,
-                        controller: sideMenu,
-                        style: SideMenuStyle(
-                            openSideMenuWidth: 180,
-                            displayMode: state.mod,
-                            backgroundColor: Colors.grey.shade50,
-                            selectedColor: AppColors.primarySwatch.shade50,
-                            selectedIconColor: AppColors.primarySwatch.shade400,
-                            selectedTitleTextStyle: TextStyle(
-                                color: AppColors.primarySwatch.shade400)));
-                  }
-                  return SideMenu(
-                      items: items,
-                      controller: sideMenu,
-                      style: SideMenuStyle(
-                          openSideMenuWidth: 180,
-                          displayMode: ConstantVar.mode,
-                          backgroundColor: Colors.grey.shade50,
-                          selectedColor: AppColors.primarySwatch.shade50,
-                          selectedIconColor: AppColors.primarySwatch.shade400,
-                          selectedTitleTextStyle: TextStyle(
-                              color: AppColors.primarySwatch.shade400)));
-                }),
+                SideMenu(
+                    items: items,
+                    controller: sideMenu,
+                    style: SideMenuStyle(
+                        openSideMenuWidth: 180,
+                        displayMode: SideMenuDisplayMode.auto,
+                        backgroundColor: Colors.grey.shade50,
+                        selectedColor: AppColors.primarySwatch.shade50,
+                        selectedIconColor: AppColors.primarySwatch.shade400,
+                        selectedTitleTextStyle: TextStyle(
+                            color: AppColors.primarySwatch.shade400))),
                 Expanded(
                   child: PageView(
                     physics: const NeverScrollableScrollPhysics(),
@@ -137,13 +118,18 @@ class _DashboardPage extends State<DashboardPage> {
                       SingleChildScrollView(child: CategoryRead()),
 
                       ProductsRead(),
+                      Center(
+                        child: Text('Products'),
+                      ),
 
                       SingleChildScrollView(child: TableRead()),
 
                       SingleChildScrollView(child: OrderPageRead()),
 
                       ///TODO DashBoard and History page pending
-
+                      Center(
+                        child: Text('Dashboard'),
+                      ),
                       Center(
                         child: Text('DashBoard Page'),
                       ),
