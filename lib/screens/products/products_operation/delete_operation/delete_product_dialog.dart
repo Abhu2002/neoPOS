@@ -1,21 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neopos/utils/popup_cancel_button.dart';
 import 'delete_bloc.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-class DeleteTablePopup extends StatefulWidget {
-  final String docID;
+class DeleteProductPopup extends StatefulWidget {
+  final String productID;
 
-  const DeleteTablePopup({super.key, required this.docID});
+  const DeleteProductPopup({super.key, required this.productID});
 
   @override
-  State<DeleteTablePopup> createState() => _DeleteTablePopupState();
+  State<DeleteProductPopup> createState() => _DeleteProductPopupState();
 }
 
-class _DeleteTablePopupState extends State<DeleteTablePopup> {
+class _DeleteProductPopupState extends State<DeleteProductPopup> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -28,36 +26,31 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<TableDeletionBloc, TableDeletionState>(
+    return BlocConsumer<ProductDeletionBloc, ProductDeletionState>(
       listener: (context, state) {
         if (state is ErrorState) {
           showErrorDialog(context, state.error);
         } else if (state is ConfirmationState) {
           showConfirmationDialog(context);
-        } else if (state is TableDeleteState) {
-          showSnackBar(context, 'Table deleted successfully.');
+        } else if (state is ProductDeleteState) {
+          showSnackBar(context, 'Product deleted successfully.');
         }
       },
       builder: (context, state) {
         return AlertDialog(
-          title:
-              PopUpRow(title: AppLocalizations.of(context)!.enter_credentials),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          title: const Text('Enter Credentials'),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: _usernameController,
-                decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.username_hinttext),
+                decoration: const InputDecoration(hintText: 'Username'),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.password_hinttext),
+                decoration: const InputDecoration(hintText: 'Password'),
               ),
             ],
           ),
@@ -66,19 +59,19 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(AppLocalizations.of(context)!.cancel_button),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
                 // Navigator.of(context).pop();
-                BlocProvider.of<TableDeletionBloc>(context).add(
+                BlocProvider.of<ProductDeletionBloc>(context).add(
                   CredentialsEnteredEvent(
                     _usernameController.text,
                     _passwordController.text,
                   ),
                 );
               },
-              child: Text(AppLocalizations.of(context)!.submit_button),
+              child: const Text('Submit'),
             ),
           ],
         );
@@ -91,16 +84,14 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          title: PopUpRow(title: AppLocalizations.of(context)!.error_text),
+          title: const Text('Error'),
           content: Text(error),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(AppLocalizations.of(context)!.submit_button),
+              child: const Text('OK'),
             ),
           ],
         );
@@ -113,24 +104,23 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title:
-              PopUpRow(title: AppLocalizations.of(context)!.update_table_title),
-          content: Text(AppLocalizations.of(context)!.delete_confirm_msg_table),
+          title: const Text('Delete Product'),
+          content: const Text('Are you sure you want to delete this Product?'),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(AppLocalizations.of(context)!.no_title),
+              child: const Text('No'),
             ),
             TextButton(
               onPressed: () async {
-                BlocProvider.of<TableDeletionBloc>(context)
-                    .deleteTable(widget.docID);
+                BlocProvider.of<ProductDeletionBloc>(context)
+                    .deleteProduct(widget.productID);
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
-              child: Text(AppLocalizations.of(context)!.yes_title),
+              child: const Text('Yes'),
             ),
           ],
         );

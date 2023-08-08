@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import '../../navigation/route_paths.dart';
-import '../login/login_page.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -18,8 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     Timer(const Duration(milliseconds: 2000), () {
       // set your desired delay time here
-      Navigator.pushReplacementNamed(
-          context, RoutePaths.login);
+      Navigator.pushReplacementNamed(context, RoutePaths.login);
     });
   }
 

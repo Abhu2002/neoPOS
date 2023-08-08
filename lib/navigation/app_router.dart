@@ -8,7 +8,7 @@ class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
       // -------------- sub Routes ----------------
-    // -------------- splashscreen Route ------------
+      // -------------- splashscreen Route ------------
       case RoutePaths.splashscreen:
         return MaterialPageRoute(
           builder: (context) => const SplashScreen(),

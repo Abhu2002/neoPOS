@@ -113,14 +113,14 @@ class _LoginPage extends State<LoginPage> {
                                         child: AuthCustomTextfield(
                                           obscureText: true,
                                           suffixIcon:
-                                              state.password.isPasswordValid
+                                              state.password.isValidPassword
                                                   ? const Icon(Icons.done)
                                                   : null,
                                           prefixIcon: Icons.lock,
                                           hint: AppLocalizations.of(context)!
                                               .password,
                                           errorText: !state.password
-                                                      .isPasswordValid &&
+                                                      .isValidPassword &&
                                                   state.verifyData
                                               ? AppLocalizations.of(context)!
                                                   .password_error
