@@ -5,7 +5,7 @@ import 'delete_bloc.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class DeleteTablePopup extends StatefulWidget {
   final String docID;
@@ -94,7 +94,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
         return AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          title: Text(AppLocalizations.of(context)!.error_text),
+          title:PopUpRow(title:AppLocalizations.of(context)!.error_text),
           content: Text(error),
           actions: [
             TextButton(
