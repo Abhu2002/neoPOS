@@ -31,10 +31,7 @@ class _TableReadState extends State<TableRead> {
       if (state is TableReadLoadedState) {
         List data = state.all;
         return LayoutBuilder(builder: (ctx, constraints) {
-<<<<<<< HEAD
           final width = constraints.maxWidth;
-=======
->>>>>>> 0cb057571fea466f8481c9a467e1db7f2bc7d4a6
           return Column(
             children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -63,379 +60,123 @@ class _TableReadState extends State<TableRead> {
                       child: const Text("Create")),
                 ),
               ]),
-<<<<<<< HEAD
-              if (width > 500)
-                SingleChildScrollView(
+              SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height - 320,
-                      child: GridView.builder(
-                          itemCount: data.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                            maxCrossAxisExtent: 210,
-                            crossAxisSpacing: 20.0,
-                            mainAxisSpacing: 20.0,
-                          ),
-                          itemBuilder: (context, i) => InkWell(
-                                onTap: () {},
-                                child: Card(
-                                  shape: RoundedRectangleBorder(
-                                    side: BorderSide(
-                                      /// Todo set the press attention value once's live table check-in starts
-                                      color: pressAttention
-                                          ? AppColors.tableAvailableColor
-                                          : AppColors
-                                              .tableNotAvailableColor /* AppColors.mainTextColor*/,
-                                      width: 10,
-                                    ),
-                                    borderRadius: BorderRadius.circular(20.0),
-                                  ),
-                                  child: Center(
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Column(
+                padding: const EdgeInsets.all(20.0),
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: GridView.builder(
+                      itemCount: data.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 210,
+                        crossAxisSpacing: 20.0,
+                        mainAxisSpacing: 20.0,
+                      ),
+                      itemBuilder: (context, i) => InkWell(
+                            onTap: () {},
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                  color: AppColors.tableAvailableColor,
+                                  width: 10,
+                                ),
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              child: Center(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
                                         children: [
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.end,
-                                            children: [
-                                              PopupMenuButton<TableItem>(
-                                                  initialValue: selectedMenu,
-                                                  icon: const Icon(
-                                                      Icons.more_vert_outlined,
-                                                      color: Colors.black),
-                                                  color: Colors.white,
-                                                  itemBuilder: (context) =>
-                                                      <PopupMenuEntry<
-                                                          TableItem>>[
-                                                        const PopupMenuItem<
-                                                                TableItem>(
-                                                            value: TableItem
-                                                                .tableEdit,
-                                                            child: Text(
-                                                              "Edit",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black),
-                                                            )),
-                                                        const PopupMenuItem<
-                                                                TableItem>(
-                                                            value: TableItem
-                                                                .tableDelete,
-                                                            child: Text(
-                                                              "Delete",
-                                                              style: TextStyle(
-                                                                  color: Colors
-                                                                      .black),
-                                                            ))
-                                                      ],
-                                                  onSelected: (TableItem item) {
-                                                    switch (item.name) {
-                                                      case "tableDelete":
-                                                        showDialog(
-                                                          context: context,
-                                                          builder: (context) =>
-                                                              DeleteTablePopup(
-                                                            docID: data[i]
-                                                                ["docID"],
-                                                          ),
-                                                        ).then((value) =>
-                                                            BlocProvider.of<
-                                                                        TableBloc>(
-                                                                    context)
-                                                                .add(InitialEvent(
-                                                                    false)));
-                                                      case "tableEdit":
-                                                        showDialog(
-                                                            context: context,
-                                                            builder: (context) =>
-                                                                UpdateTableForm(
-                                                                  docID: data[i]
-                                                                      ["docID"],
-                                                                  tableName: data[
-                                                                          i][
-                                                                      "tablename"],
-                                                                  tableCapacity:
-                                                                      data[i][
-                                                                          "tablecapacity"],
-                                                                )).then((value) =>
-                                                            BlocProvider.of<
-                                                                        TableBloc>(
-                                                                    context)
-                                                                .add(InitialEvent(
-                                                                    false)));
-                                                    }
-                                                  }),
-                                            ],
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(20.0),
-                                            child: Text(
-                                              (data[i]["tablename"]),
-                                              style: const TextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                          Text(
-                                              "Capacity: ${(data[i]["tablecapacity"]).toString()}"),
+                                          PopupMenuButton<TableItem>(
+                                              initialValue: selectedMenu,
+                                              icon: const Icon(
+                                                  Icons.more_vert_outlined,
+                                                  color: Colors.black),
+                                              color: Colors.white,
+                                              itemBuilder: (context) =>
+                                                  <PopupMenuEntry<TableItem>>[
+                                                    const PopupMenuItem<
+                                                            TableItem>(
+                                                        value:
+                                                            TableItem.tableEdit,
+                                                        child: Text(
+                                                          "Edit",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black),
+                                                        )),
+                                                    const PopupMenuItem<
+                                                            TableItem>(
+                                                        value: TableItem
+                                                            .tableDelete,
+                                                        child: Text(
+                                                          "Delete",
+                                                          style: TextStyle(
+                                                              color:
+                                                                  Colors.black),
+                                                        ))
+                                                  ],
+                                              onSelected: (TableItem item) {
+                                                switch (item.name) {
+                                                  case "tableDelete":
+                                                    showDialog(
+                                                      context: context,
+                                                      builder: (context) =>
+                                                          DeleteTablePopup(
+                                                        docID: data[i]["docID"],
+                                                      ),
+                                                    ).then((value) =>
+                                                        BlocProvider.of<
+                                                                    TableBloc>(
+                                                                context)
+                                                            .add(InitialEvent(
+                                                                false)));
+                                                  case "tableEdit":
+                                                    showDialog(
+                                                        context: context,
+                                                        builder: (context) =>
+                                                            UpdateTableForm(
+                                                              docID: data[i]
+                                                                  ["docID"],
+                                                              tableName: data[i]
+                                                                  ["tablename"],
+                                                              tableCapacity: data[
+                                                                      i][
+                                                                  "tablecapacity"],
+                                                            )).then((value) =>
+                                                        BlocProvider.of<
+                                                                    TableBloc>(
+                                                                context)
+                                                            .add(InitialEvent(
+                                                                false)));
+                                                }
+                                              }),
                                         ],
                                       ),
-                                    ),
-                                  ),
-                                ),
-                              )),
-                    ),
-                  ),
-                )
-              else if ((width > 350) && (width < 500))
-                SingleChildScrollView(
-                    child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height - 520,
-                    child: GridView.builder(
-                        itemCount: data.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 210,
-                          crossAxisSpacing: 20.0,
-                          mainAxisSpacing: 20.0,
-                        ),
-                        itemBuilder: (context, i) => InkWell(
-                              onTap: () {},
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  side: BorderSide(
-                                    /// Todo set the press attention value once's live table check-in starts
-                                    color: pressAttention
-                                        ? AppColors.tableAvailableColor
-                                        : AppColors
-                                            .tableNotAvailableColor /* AppColors.mainTextColor*/,
-                                    width: 10,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            PopupMenuButton<TableItem>(
-                                                initialValue: selectedMenu,
-                                                icon: const Icon(
-                                                    Icons.more_vert_outlined,
-                                                    color: Colors.black),
-                                                color: Colors.white,
-                                                itemBuilder: (context) =>
-                                                    <PopupMenuEntry<TableItem>>[
-                                                      const PopupMenuItem<
-                                                              TableItem>(
-                                                          value: TableItem
-                                                              .tableEdit,
-                                                          child: Text(
-                                                            "Edit",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .black),
-                                                          )),
-                                                      const PopupMenuItem<
-                                                              TableItem>(
-                                                          value: TableItem
-                                                              .tableDelete,
-                                                          child: Text(
-                                                            "Delete",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .black),
-                                                          ))
-                                                    ],
-                                                onSelected: (TableItem item) {
-                                                  switch (item.name) {
-                                                    case "tableDelete":
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) =>
-                                                            DeleteTablePopup(
-                                                          docID: data[i]
-                                                              ["docID"],
-                                                        ),
-                                                      ).then((value) =>
-                                                          BlocProvider.of<
-                                                                      TableBloc>(
-                                                                  context)
-                                                              .add(InitialEvent(
-                                                                  false)));
-                                                    case "tableEdit":
-                                                      showDialog(
-                                                          context: context,
-                                                          builder: (context) =>
-                                                              UpdateTableForm(
-                                                                docID: data[i]
-                                                                    ["docID"],
-                                                                tableName: data[
-                                                                        i][
-                                                                    "tablename"],
-                                                                tableCapacity:
-                                                                    data[i][
-                                                                        "tablecapacity"],
-                                                              )).then((value) =>
-                                                          BlocProvider.of<
-                                                                      TableBloc>(
-                                                                  context)
-                                                              .add(InitialEvent(
-                                                                  false)));
-                                                  }
-                                                }),
-                                          ],
+                                      Padding(
+                                        padding: const EdgeInsets.all(5.0),
+                                        child: Text(
+                                          (data[i]["tablename"]),
+                                          style: const TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold),
                                         ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(20.0),
-                                          child: Text(
-                                            (data[i]["tablename"]),
-                                            style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        Text(
-                                            "Capacity: ${(data[i]["tablecapacity"]).toString()}"),
-                                      ],
-                                    ),
+                                      ),
+                                      Text(
+                                          "Capacity: ${(data[i]["tablecapacity"]).toString()}"),
+                                    ],
                                   ),
                                 ),
                               ),
-                            )),
-                  ),
-                ))
-              else
-=======
->>>>>>> 0cb057571fea466f8481c9a467e1db7f2bc7d4a6
-                SingleChildScrollView(
-                    child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height ,
-                    child: GridView.builder(
-                        itemCount: data.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 210,
-                          crossAxisSpacing: 20.0,
-                          mainAxisSpacing: 20.0,
-                        ),
-                        itemBuilder: (context, i) => InkWell(
-                              onTap: () {},
-                              child: Card(
-                                shape: RoundedRectangleBorder(
-                                  side: const BorderSide(
-                                    color: AppColors.tableAvailableColor,
-                                    width: 10,
-                                  ),
-                                  borderRadius: BorderRadius.circular(20.0),
-                                ),
-                                child: Center(
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: [
-                                            PopupMenuButton<TableItem>(
-                                                initialValue: selectedMenu,
-                                                icon: const Icon(
-                                                    Icons.more_vert_outlined,
-                                                    color: Colors.black),
-                                                color: Colors.white,
-                                                itemBuilder: (context) =>
-                                                    <PopupMenuEntry<TableItem>>[
-                                                      const PopupMenuItem<
-                                                              TableItem>(
-                                                          value: TableItem
-                                                              .tableEdit,
-                                                          child: Text(
-                                                            "Edit",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .black),
-                                                          )),
-                                                      const PopupMenuItem<
-                                                              TableItem>(
-                                                          value: TableItem
-                                                              .tableDelete,
-                                                          child: Text(
-                                                            "Delete",
-                                                            style: TextStyle(
-                                                                color: Colors
-                                                                    .black),
-                                                          ))
-                                                    ],
-                                                onSelected: (TableItem item) {
-                                                  switch (item.name) {
-                                                    case "tableDelete":
-                                                      showDialog(
-                                                        context: context,
-                                                        builder: (context) =>
-                                                            DeleteTablePopup(
-                                                          docID: data[i]
-                                                              ["docID"],
-                                                        ),
-                                                      ).then((value) =>
-                                                          BlocProvider.of<
-                                                                      TableBloc>(
-                                                                  context)
-                                                              .add(InitialEvent(
-                                                                  false)));
-                                                    case "tableEdit":
-                                                      showDialog(
-                                                          context: context,
-                                                          builder: (context) =>
-                                                              UpdateTableForm(
-                                                                docID: data[i]
-                                                                    ["docID"],
-                                                                tableName: data[
-                                                                        i][
-                                                                    "tablename"],
-                                                                tableCapacity:
-                                                                    data[i][
-                                                                        "tablecapacity"],
-                                                              )).then((value) =>
-                                                          BlocProvider.of<
-                                                                      TableBloc>(
-                                                                  context)
-                                                              .add(InitialEvent(
-                                                                  false)));
-                                                  }
-                                                }),
-                                          ],
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: Text(
-                                            (data[i]["tablename"]),
-                                            style: const TextStyle(
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                        ),
-                                        Text(
-                                            "Capacity: ${(data[i]["tablecapacity"]).toString()}"),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )),
-                  ),
-                )),
+                            ),
+                          )),
+                ),
+              )),
             ],
           );
         });

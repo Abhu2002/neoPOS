@@ -87,7 +87,8 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                       borderRadius: BorderRadius.circular(20),
                       child: CachedNetworkImage(
                           imageUrl: widget.image,
-                          width: 300,
+                          width: 250,
+                          height: 200,
                           fit: BoxFit.fill)),
                 ),
               ),
@@ -158,15 +159,15 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                     // Text(element["product_type"]!,style: TextStyle(fontSize: 18))
                     Container(
                       height: 20,
-                      width: (widget.productType == "Non-veg") ? 60 : 30,
+                      width: (widget.productType == "nonVeg") ? 60 : 30,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: (widget.productType) == "Non-veg"
+                          color: (widget.productType) == "nonVeg"
                               ? Colors.red
                               : Colors.green),
                       child: Center(
                         child: Text(
-                          (widget.productType == "Non-veg") ? "Non-Veg" : "Veg",
+                          (widget.productType == "nonVeg") ? "Non-Veg" : "Veg",
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),
@@ -251,9 +252,8 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                             return DeleteProductPopup(productID: widget.id);
                           }).then((value) => {
                             Navigator.pop(context),
-                            BlocProvider.of<ReadProductsBloc>(
-                              context,
-                            ).add(ReadInitialEvent(false))
+                            BlocProvider.of<ReadProductsBloc>(context)
+                                .add(ReadInitialEvent(false))
                           });
                     },
                     child: const Text("Delete Product"),

@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:neopos/screens/products/products_operation/create_operation/create_product_dialog.dart';
 import '../../model/product.dart';
 
 part 'create_product_event.dart';
@@ -20,7 +21,10 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
     try {
       Uint8List imageData = await XFile(imageFile.path).readAsBytes();
 
-      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
+      String fileName = DateTime
+          .now()
+          .millisecondsSinceEpoch
+          .toString();
       Reference ref = storage.ref().child('product_images/$fileName.jpeg');
       TaskSnapshot snapshot = await ref.putData(imageData);
       String imageUrl = await snapshot.ref.getDownloadURL();
@@ -32,33 +36,37 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
 
   CreateProductBloc() : super(CreateProductInitial()) {
     on<InitialEvent>((event, emit) async {
-      try {
+      try  {
         List allcat = [];
         FirebaseFirestore db = FirebaseFirestore.instance;
         await db.collection("category").get().then((value) => {
-              value.docs.forEach((element) {
-                allcat.add(element['category_name']);
-              })
-            });
+          value.docs.forEach((element) {
+            allcat.add(element['category_name']);
+          })
+        });
         emit(CategoryLoadedState(allcat));
       } catch (err) {
         emit(ProductErrorState(err.toString()));
       }
     });
-    // on<CategoryLoadingEvent>((event, emit) async {
-    //   try {
-    //     List allcat = [];
-    //     FirebaseFirestore db = FirebaseFirestore.instance;
-    //     await db.collection("category").get().then((value) => {
-    //       value.docs.forEach((element) {
-    //         allcat.add(element['category_name']);
-    //       })
-    //     });
-    //     emit(CategoryLoadedState(allcat));
-    //   } catch (err) {
-    //     emit(const ProductErrorState("Some Error Occurred While Loading Categories"));
-    //   }
-    // });
+    on<ProductPriceCheckEvent>((event, emit) {
+      num? enteredPrice = num.tryParse(event.price);
+      if(enteredPrice == null) {
+        emit(ProductErrorState("Enter a numbered price"));
+      }
+      else {
+        emit(ProductPriceValidated());
+      }
+    });
+    on<ProductTypeEvent>((event, emit){
+      emit(ProductTypeState(event.type));
+    });
+    on<CategoryChangedEvent>((event, emit) {
+      emit(CategoryChangedState(event.category));
+    });
+    on<ImageChangedEvent>((event, emit) {
+      emit(ImageChangedState(event.imageFile));
+    });
     on<InputEvent>((event, emit) async {
       if (event.productName != "") {
         emit(ProductNameAvailableState());
@@ -66,7 +74,11 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
         emit(const ProductErrorState("Please Enter a Name"));
       }
     });
+    on<ProductCreatingEvent>((event, emit) {
+      emit(ProductCreatingState());
+    });
     on<CreateProductFBEvent>((event, emit) async {
+
       try {
         List allname = [];
         FirebaseFirestore db = FirebaseFirestore.instance;
@@ -78,7 +90,11 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
         if (allname.contains(event.productName)) {
           emit(const ProductErrorState("Product name already exist"));
           showMessage!("Product name already exist. Please use different name");
-        } else {
+        } else if(num.tryParse(event.productPrice.toString()) == null){
+          // emit(const ProductErrorState("Product price should be numeric value"));
+          showMessage!("Product price should be numeric value");
+        }
+        else {
           String imagePath = await uploadProductImage(event.productImage);
 
           final data = ProductModel(
@@ -90,13 +106,10 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
             productPrice: event.productPrice,
             productAvailability: event.productAvailability,
             dateAdded: DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
-            dateUpdated:
-                DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
+            dateUpdated: DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
           );
-          await db
-              .collection("products")
-              .add(data.toFirestore())
-              .then((documentSnapshot) => {
+          await db.collection("products").add(data.toFirestore()).then(
+              (documentSnapshot) => {
                     emit(ProductCreatedState(true)),
                     showMessage!("Product Created"),
                   });
@@ -106,5 +119,6 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
         throw Exception("Error creating product $err");
       }
     });
+
   }
 }
