@@ -19,11 +19,6 @@ class _CreateUserFormState extends State<CreateUserForm> {
   TextEditingController password = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
-  /*static List<String> list = <String>[
-    AppLocalizations.of(context)!.admin,
-    AppLocalizations.of(context)!.waiter
-  ];*/
-  //String dropdownValue = list.first;
 
   @override
   void initState() {
