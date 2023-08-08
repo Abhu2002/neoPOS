@@ -8,6 +8,10 @@ import 'package:neopos/screens/category/category_operation/update_operation/cate
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
+import 'package:neopos/screens/products/products_operation/create_operation/create_product_bloc.dart';
+import 'package:neopos/screens/products/products_operation/delete_operation/delete_bloc.dart';
+import 'package:neopos/screens/products/products_operation/update_operation/product_update_bloc.dart';
+import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 import 'package:neopos/screens/splashScreen/splashscreen_page.dart';
 import 'package:neopos/screens/users/user_operations/user_create/create_user_bloc.dart';
 import 'package:neopos/screens/users/user_operations/user_delete/delete_user_bloc.dart';
@@ -64,6 +68,12 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => TableDeletionBloc()),
         BlocProvider(create: (_) => CreateTableBloc()),
         BlocProvider(create: (_) => TableUpdateBloc()),
+
+        ///Bloc for Product CRUD
+        BlocProvider(create: (_) => ReadProductsBloc()),
+        BlocProvider(create: (_) => CreateProductBloc()),
+        BlocProvider(create: (_) => ProductDeletionBloc()),
+        BlocProvider(create: (_) => UpdateProductBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

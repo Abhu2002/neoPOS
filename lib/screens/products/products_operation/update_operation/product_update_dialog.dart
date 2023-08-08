@@ -13,7 +13,6 @@ import '../create_operation/create_product_dialog.dart';
 
 var categoryVal = "Select Category";
 
-
 class UpdateProductDialog extends StatefulWidget {
   final String image;
   final String id;
@@ -63,10 +62,8 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
     super.initState();
   }
 
-
   @override
   Widget build(BuildContext context) {
-
     return AlertDialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -74,7 +71,8 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
         ),
       ),
       actionsPadding: const EdgeInsets.all(20),
-      title: const PopUpRow(title: "Update"),
+      title:
+          PopUpRow(title: AppLocalizations.of(context)!.update_product_title),
       content: SingleChildScrollView(
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.5,
@@ -83,9 +81,9 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
             children: [
               TextField(
                 controller: _productNameController,
-                decoration: const InputDecoration(
-                    labelText: 'Product Name',
-                    prefixIcon: Icon(
+                decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.product_name_title,
+                    prefixIcon: const Icon(
                       Icons.restaurant_menu,
                       color: AppColors.primaryColor,
                     )),
@@ -95,8 +93,8 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
               ),
               TextField(
                 controller: _productPriceController,
-                decoration: const InputDecoration(
-                    labelText: 'Product Price',
+                decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.product_price_text,
                     prefixIcon: Icon(
                       Icons.price_change,
                       color: AppColors.primaryColor,
@@ -110,8 +108,9 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                 keyboardType: TextInputType.multiline,
                 minLines: 1,
                 maxLines: 2,
-                decoration: const InputDecoration(
-                    labelText: 'Product Description',
+                decoration: InputDecoration(
+                    labelText:
+                        AppLocalizations.of(context)!.product_description_title,
                     prefixIcon: Icon(
                       Icons.description,
                       color: AppColors.primaryColor,
@@ -122,7 +121,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
               ),
               BlocBuilder<UpdateProductBloc, ProductState>(
                 buildWhen: (previous, current) {
-                  if(current is ProductTypeUpdateState) {
+                  if (current is ProductTypeUpdateState) {
                     type = current.type;
                   }
                   return current is ProductTypeUpdateState;
@@ -131,8 +130,8 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      const Text(
-                        "Product type",
+                      Text(
+                        AppLocalizations.of(context)!.product_type_title,
                         style: TextStyle(
                             fontWeight: FontWeight.bold, fontSize: 17),
                       ),
@@ -147,7 +146,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                               .add(ProductTypeUpdateEvent(value!));
                         },
                       ),
-                      const Text('Veg'),
+                      Text(AppLocalizations.of(context)!.veg_text),
                       const SizedBox(
                         width: 5,
                       ),
@@ -159,7 +158,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                               .add(ProductTypeUpdateEvent(value!));
                         },
                       ),
-                      const Text('Non Veg'),
+                      Text(AppLocalizations.of(context)!.non_veg_text),
                     ],
                   );
                 },
@@ -169,8 +168,8 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
               ),
               Row(
                 children: [
-                  const Text(
-                    "Product category",
+                  Text(
+                    AppLocalizations.of(context)!.product_category_title,
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                   ),
                   const SizedBox(
@@ -204,14 +203,13 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                               source: ImageSource.gallery);
                           if (pickedFile != null) {
                             if (!context.mounted) return;
-                            BlocProvider.of<UpdateProductBloc>(context)
-                                .add(
+                            BlocProvider.of<UpdateProductBloc>(context).add(
                               ImageChangedUpdateEvent(pickedFile),
                             );
                             imageFile = state.imageFile;
                           }
-                      },
-                        child: const Text('Select Image'),
+                        },
+                        child: Text(AppLocalizations.of(context)!.select_image),
                       ),
                     ],
                   );
@@ -229,7 +227,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
             onPressed: () {
               _updateProduct(context);
             },
-            child: const Text('UPDATE'),
+            child: Text(AppLocalizations.of(context)!.update_button),
           ),
         ),
       ],

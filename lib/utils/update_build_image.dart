@@ -17,19 +17,19 @@ class _BuildImageState extends State<BuildUpdateImage> {
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProductBloc, ProductState>(
         builder: (context, state) {
-          if (state.imageFile != null) {
-            // Display image from the device gallery
-            if (kIsWeb) {
-              // For Flutter web, use Image.network
-              return Image.network(state.imageFile!.path, height: 100, width: 100);
-            } else {
-              // For mobile platforms, use Image.file
+      if (state.imageFile != null) {
+        // Display image from the device gallery
+        if (kIsWeb) {
+          // For Flutter web, use Image.network
+          return Image.network(state.imageFile!.path, height: 100, width: 100);
+        } else {
+          // For mobile platforms, use Image.file
 
-              return const Text('No image selected');
-            }
-          } else {
-            return const Text('No image selected');
-          }
-        });
+          return const Text('No image selected');
+        }
+      } else {
+        return const Text('No image selected');
+      }
+    });
   }
 }

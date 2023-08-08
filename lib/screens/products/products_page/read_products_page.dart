@@ -225,8 +225,7 @@ class _ProductsReadState extends State<ProductsRead> {
                                   (data['product_type'] == "nonVeg")
                                       ? AppLocalizations.of(context)!
                                           .non_veg_text
-                                      : AppLocalizations.of(context)!
-                                          .non_veg_text,
+                                      : AppLocalizations.of(context)!.veg_text,
                                   style: const TextStyle(color: Colors.white),
                                 ),
                               ),

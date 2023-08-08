@@ -35,7 +35,7 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
         child: TextFormField(
           onChanged: (value) => newName = value,
           validator: (val) {
-            if (!val.isUpdateName) return "Enter a Valid Catgeory Name";
+            if (!val.isNotEmptyValidator) return "Enter a Valid Catgeory Name";
           },
           controller: TextEditingController(text: widget.oldName),
           decoration: InputDecoration(
@@ -60,8 +60,8 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
               BlocProvider.of<CategoryUpdateBloc>(context).add(
                 CategoryUpdateRequested(widget.id, newName),
               );
+              Navigator.of(context).pop();
             }
-            //Navigator.of(context).pop();
           },
         ),
       ],

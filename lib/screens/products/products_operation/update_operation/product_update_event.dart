@@ -43,8 +43,7 @@ class LoadedCategoryEvent extends ProductEvent {
   LoadedCategoryEvent(this.categories);
 }
 
-
-class ProductTypeUpdateEvent extends ProductEvent{
+class ProductTypeUpdateEvent extends ProductEvent {
   final ProductType type;
   ProductTypeUpdateEvent(this.type);
 }
@@ -52,5 +51,4 @@ class ProductTypeUpdateEvent extends ProductEvent{
 class ImageChangedUpdateEvent extends ProductEvent {
   final XFile imageFile;
   ImageChangedUpdateEvent(this.imageFile);
-
 }

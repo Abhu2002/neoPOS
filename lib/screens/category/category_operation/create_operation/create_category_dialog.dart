@@ -51,7 +51,7 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                       controller: categoryName,
                       keyboardType: TextInputType.text,
                       validator: (val) {
-                        if (!val.isValidName)
+                        if (!val.isNotEmptyValidator)
                           return 'Enter valid Category Name';
                       },
                       decoration: InputDecoration(

@@ -37,7 +37,7 @@ class CategoryChangedState extends ProductState {
   CategoryChangedState(this.category);
 }
 
-class ProductTypeUpdateState extends ProductState{
+class ProductTypeUpdateState extends ProductState {
   final ProductType type;
 
   ProductTypeUpdateState(this.type);

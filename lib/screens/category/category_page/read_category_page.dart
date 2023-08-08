@@ -27,11 +27,22 @@ class _CategoryReadState extends State<CategoryRead> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(AppLocalizations.of(context)!.category_title,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          ),
           Flexible(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      elevation: 10,
+                      minimumSize: const Size(88, 36),
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)))),
                   onPressed: () {
                     showDialog(
                             context: context,

@@ -61,7 +61,6 @@ class CategoryLoadedEvent extends CreateProductEvent {
   List<Object> get props => [categories];
 }
 
-
 class CategoryChangedEvent extends CreateProductEvent {
   final String category;
 
@@ -71,7 +70,7 @@ class CategoryChangedEvent extends CreateProductEvent {
   List<Object> get props => [category];
 }
 
-class ProductTypeEvent extends CreateProductEvent{
+class ProductTypeEvent extends CreateProductEvent {
   final ProductType type;
   const ProductTypeEvent(this.type);
 

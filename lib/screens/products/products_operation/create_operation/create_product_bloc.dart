@@ -48,14 +48,13 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
     });
     on<ProductPriceCheckEvent>((event, emit) {
       num? enteredPrice = num.tryParse(event.price);
-      if(enteredPrice == null) {
+      if (enteredPrice == null) {
         emit(ProductErrorState("Enter a numbered price"));
-      }
-      else {
+      } else {
         emit(ProductPriceValidated());
       }
     });
-    on<ProductTypeEvent>((event, emit){
+    on<ProductTypeEvent>((event, emit) {
       emit(ProductTypeState(event.type));
     });
     on<CategoryChangedEvent>((event, emit) {
@@ -86,11 +85,10 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
         if (allname.contains(event.productName)) {
           emit(const ProductErrorState("Product name already exist"));
           showMessage!("Product name already exist. Please use different name");
-        } else if(num.tryParse(event.productPrice.toString()) == null){
+        } else if (num.tryParse(event.productPrice.toString()) == null) {
           // emit(const ProductErrorState("Product price should be numeric value"));
           showMessage!("Product price should be numeric value");
-        }
-        else {
+        } else {
           String imagePath = await uploadProductImage(event.productImage);
 
           final data = ProductModel(
