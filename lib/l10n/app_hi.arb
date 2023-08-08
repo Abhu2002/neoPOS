@@ -1,6 +1,6 @@
 {
   "language": "हिंदी",
-  "welcomeBack": "वापसी पर\nस्वागत है",
+  "welcomeBack": "वापसी पर स्वागत है",
   "username" : "उपयोगकर्ता नाम",
   "username_error": "कृपया सुनिश्चित करें कि दर्ज किया गया उपयोगकर्ता वैध है",
   "password": "पासवर्ड",
@@ -13,5 +13,18 @@
   "table_name":"टेबल नाम",
   "table_cap":"टेबल क्षमता",
   "create_category":"श्रेणी बनाएं",
-  "category_name":"श्रेणी नाम"
+  "category_name":"श्रेणी नाम",
+  "create_product": "प्रोडक्ट बनाएं",
+  "enter_product_name": "प्रोडक्ट का नाम दर्ज करें",
+  "product_name": "प्रोडक्ट का नाम",
+  "product_description": "प्रोडक्ट का वर्णन",
+  "enter_product_description": "प्रोडक्ट विवरण दर्ज करें",
+  "product_type": "प्रोडक्ट का प्रकार",
+  "veg": "शाकाहारी",
+  "non_veg": "मांसाहारी",
+  "select_category": "एक श्रेणी चुनें",
+  "select_image": "एक चित्र चुनें",
+  "product_price": "प्रोडक्ट की कीमत",
+  "enter_product_price": "प्रोडक्ट की कीमत दर्ज करें",
+  "product_available": "प्रोडक्ट उपलब्धता"
 }

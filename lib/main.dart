@@ -8,7 +8,7 @@ import 'package:neopos/screens/category/category_operation/update_operation/cate
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
-import 'package:neopos/screens/login/login_page.dart';
+import 'package:neopos/screens/splashScreen/splashscreen_page.dart';
 import 'package:neopos/screens/users/user_operations/user_create/create_user_bloc.dart';
 import 'package:neopos/screens/users/user_operations/user_delete/delete_user_bloc.dart';
 import 'package:neopos/screens/users/user_operations/user_update/update_user_bloc.dart';
@@ -63,7 +63,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => TableBloc()),
         BlocProvider(create: (_) => TableDeletionBloc()),
         BlocProvider(create: (_) => CreateTableBloc()),
-        BlocProvider(create: (_) => TableUpdateBloc())
+        BlocProvider(create: (_) => TableUpdateBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -92,7 +92,7 @@ Widget? isLoggedIn() {
   /// TODO: Initialize user to check whether already logged in or not
   const user = null;
   if (user == null) {
-    widget = const LoginPage();
+    widget = const SplashScreen();
   } else {
     widget = const DashboardPage();
   }

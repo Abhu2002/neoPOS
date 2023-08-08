@@ -14,7 +14,6 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPage extends State<DashboardPage> {
-  int selectedIndex = 0;
   final SideMenuController sideMenu = SideMenuController();
   PageController pageController = PageController();
 
@@ -96,6 +95,7 @@ class _DashboardPage extends State<DashboardPage> {
                     controller: sideMenu,
                     style: SideMenuStyle(
                         openSideMenuWidth: 180,
+                        displayMode: SideMenuDisplayMode.auto,
                         backgroundColor: Colors.grey.shade50,
                         selectedColor: AppColors.primarySwatch.shade50,
                         selectedIconColor: AppColors.primarySwatch.shade400,
@@ -108,10 +108,10 @@ class _DashboardPage extends State<DashboardPage> {
                     children: const [
                       SingleChildScrollView(child: CategoryRead()),
 
-                      ///TODO Product page Pending
                       Center(
-                        child: Text('Dashboard'),
+                        child: Text('Products'),
                       ),
+
                       SingleChildScrollView(child: TableRead()),
 
                       ///TODO DashBoard and History page pending

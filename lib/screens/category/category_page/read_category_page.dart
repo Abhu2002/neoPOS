@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../category_operation/create_operation/create_category_dialog.dart';
+// import '../../product/product_operation/delete_operation/delete_category_dialog.dart';
+//import '../../product/product_operation/delete_operation/delete_category_dialog.dart';
 import '../category_operation/delete_operation/delete_category_dialog.dart';
 import '../category_operation/update_operation/category_update_dialog.dart';
 
@@ -55,7 +57,7 @@ class _CategoryReadState extends State<CategoryRead> {
                   columns: const [
                     DataColumn(label: Text("SR")),
                     DataColumn(label: Flexible(child: Text('Category Name'))),
-                    DataColumn(label: Text('Operation')),
+                    DataColumn(label: Center(child: Text(''))),
                   ],
                   rows: state
                       .all // Loops through dataColumnText, each iteration assigning the value to element

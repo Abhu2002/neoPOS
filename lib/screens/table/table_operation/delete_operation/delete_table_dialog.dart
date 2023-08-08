@@ -40,6 +40,8 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
       builder: (context, state) {
         return AlertDialog(
           title: const PopUpRow(title: 'Enter Credentials'),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -85,7 +87,9 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const PopUpRow(title: "Error"),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+          title:const PopUpRow(title: "Error"),
           content: Text(error),
           actions: [
             TextButton(
