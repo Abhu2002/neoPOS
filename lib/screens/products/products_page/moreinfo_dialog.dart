@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 
 import '../../../utils/app_colors.dart';
-import '../products_operation/delete_operation/delete_category_dialog.dart';
+import '../products_operation/delete_operation/delete_product_dialog.dart';
 import '../products_operation/update_operation/product_update_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 

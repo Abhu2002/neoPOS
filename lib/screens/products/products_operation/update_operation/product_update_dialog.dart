@@ -1,5 +1,3 @@
-import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -8,13 +6,13 @@ import 'package:neopos/screens/products/products_operation/update_operation/prod
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_event.dart';
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_state.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../utils/app_colors.dart';
 import '../../../../utils/update_build_image.dart';
 import '../create_operation/create_product_dialog.dart';
 
 var categoryVal = "Select Category";
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 
 class UpdateProductDialog extends StatefulWidget {
   final String image;
@@ -48,7 +46,6 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
   final _productDescriptionController = TextEditingController();
   final _productTypeController = TextEditingController();
   XFile? imageFile;
-  String _selectedProductType = "";
   late ProductType? type;
 
   @override
