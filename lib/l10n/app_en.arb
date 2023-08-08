@@ -3,7 +3,7 @@
   "@language" : {
     "description": "The current language"
   },
-  "welcomeBack" : "Welcome\nBack",
+  "welcomeBack" : "Welcome Back",
   "@like" : {
     "description": "Login greeting"
   },

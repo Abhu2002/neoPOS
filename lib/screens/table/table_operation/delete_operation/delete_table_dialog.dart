@@ -94,7 +94,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
         return AlertDialog(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          title: Text(AppLocalizations.of(context)!.error_text),
+          title: PopUpRow(AppLocalizations.of(context)!.error_text),
           content: Text(error),
           actions: [
             TextButton(
