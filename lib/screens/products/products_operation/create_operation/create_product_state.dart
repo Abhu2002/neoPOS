@@ -5,8 +5,13 @@ class CreateProductState extends Equatable {
 
   @override
   List<Object> get props => [];
-}
 
+  get category => null;
+
+  XFile? get imageFile => null;
+
+  get type => null;
+}
 
 class CreateProductInitial extends CreateProductState {}
 
@@ -21,7 +26,34 @@ class CategoryLoadedState extends CreateProductState {
   List<Object> get props => [categories];
 }
 
+class CategoryChangedState extends CreateProductState {
+  final String category;
+
+  const CategoryChangedState(this.category);
+
+  @override
+  List<Object> get props => [category];
+}
+
+class ImageChangedState extends CreateProductState {
+  final XFile imageFile;
+
+  const ImageChangedState(this.imageFile);
+
+  @override
+  List<Object> get props => [imageFile];
+}
+
+
 class ProductNameAvailableState extends CreateProductState {}
+
+class ProductTypeState extends CreateProductState{
+  final ProductType type;
+  const ProductTypeState(this.type);
+
+  @override
+  List<Object> get props => [type];
+}
 
 class ProductErrorState extends CreateProductState {
   final String errorMessage;
@@ -31,6 +63,9 @@ class ProductErrorState extends CreateProductState {
   @override
   List<Object> get props => [errorMessage];
 }
+
+class ProductPriceValidated extends CreateProductState {}
+class ProductCreatingState extends CreateProductState {}
 
 class ProductCreatedState extends CreateProductState {
   bool created;

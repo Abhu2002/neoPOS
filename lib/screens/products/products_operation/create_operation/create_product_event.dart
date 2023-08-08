@@ -9,6 +9,8 @@ abstract class CreateProductEvent extends Equatable {
 
 class InitialEvent extends CreateProductEvent {}
 
+class ProductCreatingEvent extends CreateProductEvent {}
+
 class CreateProductFBEvent extends CreateProductEvent {
   final String productName;
   final String productType;
@@ -57,4 +59,38 @@ class CategoryLoadedEvent extends CreateProductEvent {
 
   @override
   List<Object> get props => [categories];
+}
+
+
+class CategoryChangedEvent extends CreateProductEvent {
+  final String category;
+
+  const CategoryChangedEvent(this.category);
+
+  @override
+  List<Object> get props => [category];
+}
+
+class ProductTypeEvent extends CreateProductEvent{
+  final ProductType type;
+  const ProductTypeEvent(this.type);
+
+  @override
+  List<Object> get props => [type];
+}
+
+class ProductPriceCheckEvent extends CreateProductEvent {
+  final String price;
+  const ProductPriceCheckEvent(this.price);
+
+  @override
+  List<Object> get props => [price];
+}
+
+class ImageChangedEvent extends CreateProductEvent {
+  final XFile imageFile;
+  const ImageChangedEvent(this.imageFile);
+
+  @override
+  List<Object> get props => [imageFile];
 }
