@@ -29,65 +29,73 @@ class _OrderPageReadState extends State<OrderPageRead> {
         var pressAttention = true;
 
         return LayoutBuilder(builder: (ctx, constraints) {
-          return Column(
-            children: [
-              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                const Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Text("Order Page",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-                ),
-              ]),
-              SingleChildScrollView(
-                  child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: SizedBox(
-                  height: MediaQuery.of(context).size.height,
-                  child: GridView.builder(
-                      itemCount: data.length,
-                      gridDelegate:
-                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                        maxCrossAxisExtent: 210,
-                        crossAxisSpacing: 20.0,
-                        mainAxisSpacing: 20.0,
+          return InkWell(
+            child: Column(
+              children: [
+                const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.all(20.0),
+                        child: Text("Order Page",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
                       ),
-                      itemBuilder: (context, i) => InkWell(
-                            onTap: () {},
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                side: const BorderSide(
-                                  color: AppColors.tableAvailableColor,
-                                  width: 10,
+                    ]),
+                SingleChildScrollView(
+                    child: Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: SizedBox(
+                    height: MediaQuery.of(context).size.height,
+                    child: GridView.builder(
+                        itemCount: data.length,
+                        gridDelegate:
+                            const SliverGridDelegateWithMaxCrossAxisExtent(
+                          maxCrossAxisExtent: 210,
+                          crossAxisSpacing: 20.0,
+                          mainAxisSpacing: 20.0,
+                        ),
+                        itemBuilder: (context, i) => InkWell(
+                              onTap: () {},
+                              child: Card(
+                                shape: RoundedRectangleBorder(
+                                  side: const BorderSide(
+                                    color: AppColors.tableAvailableColor,
+                                    width: 10,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20.0),
                                 ),
-                                borderRadius: BorderRadius.circular(20.0),
-                              ),
-                              child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Text(
-                                          (data[i]["tablename"]),
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
+                                child: Center(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(5.0),
+                                          child: Text(
+                                            (data[i]["tablename"]),
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold),
+                                          ),
                                         ),
-                                      ),
-                                      Text(
-                                          "Capacity: ${(data[i]["tablecapacity"]).toString()}"),
-                                    ],
+                                        Text(
+                                            "Capacity: ${(data[i]["tablecapacity"]).toString()}"),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                            ),
-                          )),
-                ),
-              )),
-            ],
+                            )),
+                  ),
+                )),
+              ],
+            ),
+            onTap: () {
+              // Order Page will Get Navigate from here
+            },
           );
         });
       } else {
