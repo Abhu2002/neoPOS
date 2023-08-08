@@ -128,7 +128,7 @@ class _DashboardPage extends State<DashboardPage> {
                     children: const [
                       SingleChildScrollView(child: CategoryRead()),
 
-                      SingleChildScrollView(child: ProductsRead()),
+                      ProductsRead(),
 
                       SingleChildScrollView(child: TableRead()),
 

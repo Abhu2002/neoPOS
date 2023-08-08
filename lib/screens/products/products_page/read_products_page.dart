@@ -62,7 +62,7 @@ class _ProductsReadState extends State<ProductsRead> {
                   padding: const EdgeInsets.all(10.0),
                   child: Container(
                     width: MediaQuery.sizeOf(context).width,
-                    height: MediaQuery.sizeOf(context).height,
+                    height: MediaQuery.sizeOf(context).height - 144,
                     child: ListView.separated(
                       //shrinkWrap: true,
                       separatorBuilder: (context, index) {
