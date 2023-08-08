@@ -3,10 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../category_operation/create_operation/create_category_dialog.dart';
-// import '../../product/product_operation/delete_operation/delete_category_dialog.dart';
-//import '../../product/product_operation/delete_operation/delete_category_dialog.dart';
+// import '../../product/product_operation/delete_operation/delete_product_dialog.dart';
+//import '../../product/product_operation/delete_operation/delete_product_dialog.dart';
 import '../category_operation/delete_operation/delete_category_dialog.dart';
 import '../category_operation/update_operation/category_update_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoryRead extends StatefulWidget {
   const CategoryRead({super.key});
@@ -27,10 +28,11 @@ class _CategoryReadState extends State<CategoryRead> {
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text("Category Page",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(AppLocalizations.of(context)!.category_title,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ),
           Flexible(
             child: Padding(
@@ -49,7 +51,7 @@ class _CategoryReadState extends State<CategoryRead> {
                             BlocProvider.of<ReadCategoryBloc>(context)
                                 .add(InitialEvent(false)));
                   },
-                  child: const Text("Create")),
+                  child: Text(AppLocalizations.of(context)!.create_button)),
             ),
           ),
         ]),
@@ -64,10 +66,13 @@ class _CategoryReadState extends State<CategoryRead> {
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: AppColors.mainTextColor),
-                  columns: const [
-                    DataColumn(label: Text("SR")),
-                    DataColumn(label: Flexible(child: Text('Category Name'))),
-                    DataColumn(label: Center(child: Text(''))),
+                  columns: [
+                    DataColumn(label: Text(AppLocalizations.of(context)!.sr)),
+                    DataColumn(
+                        label: Flexible(
+                            child: Text(AppLocalizations.of(context)!
+                                .category_name_title))),
+                    const DataColumn(label: Center(child: Text(' '))),
                   ],
                   rows: state
                       .all // Loops through dataColumnText, each iteration assigning the value to element

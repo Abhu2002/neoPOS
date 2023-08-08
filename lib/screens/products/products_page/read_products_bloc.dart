@@ -10,12 +10,6 @@ part 'read_products_state.dart';
 class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
   ReadProductsBloc() : super(ReadProductsInitial()) {
     on<ReadInitialEvent>((event, emit) async {
-      if (event.isfirst) {
-        emit(ReadDataLoadingState());
-      } else {
-        emit(ReadDataLoadingState());
-        await Future.delayed(Duration(seconds: 1));
-      }
       try {
         emit(ReadDataLoadingState());
         List allCat = [];

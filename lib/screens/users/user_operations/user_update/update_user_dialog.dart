@@ -4,6 +4,7 @@ import 'package:neopos/utils/popup_cancel_button.dart';
 import '../../../../utils/app_colors.dart';
 import 'update_user_bloc.dart';
 import 'update_user_event.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 //pass category name and category id to update the category..
 class UpdateUserForm extends StatefulWidget {
@@ -35,7 +36,7 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
-      title: const PopUpRow(title: 'Update User'),
+      title: PopUpRow(title: AppLocalizations.of(context)!.user_update_title),
       content: SizedBox(
         width: MediaQuery.of(context).size.width / 2,
         child: Column(
@@ -44,9 +45,9 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
             TextField(
               onChanged: (value) => newFirstName = value,
               controller: TextEditingController(text: widget.oldFirstName),
-              decoration: const InputDecoration(
-                  hintText: "first name",
-                  prefixIcon: Icon(
+              decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.first_name_hinttext,
+                  prefixIcon: const Icon(
                     Icons.person,
                     color: AppColors.primaryColor,
                   )),
@@ -57,9 +58,9 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
             TextField(
               onChanged: (value) => newLastName = value,
               controller: TextEditingController(text: widget.oldLastName),
-              decoration: const InputDecoration(
-                  hintText: "first name",
-                  prefixIcon: Icon(
+              decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.last_name_hinttext,
+                  prefixIcon: const Icon(
                     Icons.person,
                     color: AppColors.primaryColor,
                   )),
@@ -70,9 +71,9 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
             TextField(
               onChanged: (value) => newUserId = value,
               controller: TextEditingController(text: widget.oldUserId),
-              decoration: const InputDecoration(
-                  hintText: "first name",
-                  prefixIcon: Icon(
+              decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.user_id_hinttext,
+                  prefixIcon: const Icon(
                     Icons.person,
                     color: AppColors.primaryColor,
                   )),
@@ -84,22 +85,21 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
               onChanged: (value) => newPassword = value,
               controller: TextEditingController(text: widget.oldPassword),
               decoration: const InputDecoration(
-                  hintText: "first name",
                   prefixIcon: Icon(
-                    Icons.lock,
-                    color: AppColors.primaryColor,
-                  )),
+                Icons.lock,
+                color: AppColors.primaryColor,
+              )),
             ),
           ],
         ),
       ),
       actions: <Widget>[
         TextButton(
-          child: const Text('Cancel'),
+          child: Text(AppLocalizations.of(context)!.cancel_button),
           onPressed: () => Navigator.of(context).pop(),
         ),
         TextButton(
-          child: const Text('Update'),
+          child: Text(AppLocalizations.of(context)!.update_button),
           onPressed: () {
             if (newFirstName.trim().isNotEmpty &&
                 newLastName.trim().isNotEmpty &&
@@ -110,12 +110,14 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
                     newPassword, newUserId),
               );
               Navigator.of(context).pop();
-              final snackBar = SnackBar(content: const Text("User Updated"));
+              final snackBar = SnackBar(
+                  content: Text(AppLocalizations.of(context)!.user_update_msg));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else {
               Navigator.of(context).pop();
               final snackBar = SnackBar(
-                  content: const Text("User Not Updated, Data Missing"));
+                  content: Text(
+                      AppLocalizations.of(context)!.user_update_error_msg));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             }
           },

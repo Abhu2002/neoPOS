@@ -1,8 +1,11 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import 'update_bloc.dart';
 import 'update_event.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 //pass table name and table id to update the table..
 
@@ -26,29 +29,33 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
     String newName = widget.tableName;
     String newCapacity = widget.tableCapacity;
     return AlertDialog(
-      title: const PopUpRow(title: 'Update Table'),
+      title: PopUpRow(title: AppLocalizations.of(context)!.update_table_title),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
             onChanged: (value) => newName = value,
             controller: TextEditingController(text: widget.tableName),
-            decoration: const InputDecoration(hintText: 'New table name'),
+            decoration: InputDecoration(
+                hintText:
+                    AppLocalizations.of(context)!.new_category_name_hinttext),
           ),
           TextField(
             onChanged: (value) => newCapacity = value,
             controller: TextEditingController(text: widget.tableCapacity),
-            decoration: const InputDecoration(hintText: 'New Table Capacity '),
+            decoration: InputDecoration(
+                hintText:
+                    AppLocalizations.of(context)!.new_table_capacity_hinttext),
           )
         ],
       ),
       actions: <Widget>[
         TextButton(
-          child: const Text('Cancel'),
+          child: Text(AppLocalizations.of(context)!.cancel_button),
           onPressed: () => Navigator.of(context).pop(),
         ),
         TextButton(
-          child: const Text('Update'),
+          child: Text(AppLocalizations.of(context)!.update_button),
           onPressed: () {
             if (newName.trim().isNotEmpty) {
               BlocProvider.of<TableUpdateBloc>(context).add(

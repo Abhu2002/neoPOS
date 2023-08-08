@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => CreateTableBloc()),
         BlocProvider(create: (_) => TableUpdateBloc()),
 
-        // //Bloc for Product CRUD
+        ///Bloc for Product CRUD
         BlocProvider(create: (_) => ReadProductsBloc()),
         BlocProvider(create: (_) => CreateProductBloc()),
         BlocProvider(create: (_) => ProductDeletionBloc()),

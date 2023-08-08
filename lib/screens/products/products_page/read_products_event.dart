@@ -9,7 +9,4 @@ abstract class ReadProductsEvent extends Equatable {
 
 class ReadLoadedDataEvent extends ReadProductsEvent {}
 
-class ReadInitialEvent extends ReadProductsEvent {
-  bool isfirst;
-  ReadInitialEvent(this.isfirst);
-}
+class ReadInitialEvent extends ReadProductsEvent {}
