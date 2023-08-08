@@ -5,6 +5,8 @@ import 'package:neopos/screens/products/products_page/moreinfo_dialog.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'package:neopos/screens/products/products_operation/create_operation/create_product_dialog.dart';
+import 'package:intl/intl.dart'; // for date format
+import 'package:intl/date_symbol_data_local.dart'; //
 
 class ProductsRead extends StatefulWidget {
   const ProductsRead({super.key});
@@ -61,7 +63,7 @@ class _ProductsReadState extends State<ProductsRead> {
                   padding: const EdgeInsets.all(10.0),
                   child: Container(
                     width: MediaQuery.sizeOf(context).width,
-                    height: MediaQuery.sizeOf(context).height - 174,
+                    height: MediaQuery.sizeOf(context).height,
                     child: ListView.separated(
                       //shrinkWrap: true,
                       separatorBuilder: (context, index) {
@@ -161,7 +163,9 @@ class _ProductsReadState extends State<ProductsRead> {
                                 width: 80,
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: Center(child: Text("1 Aug")),
+                                  child: Center(
+                                      child: Text(DateFormat.MMMd().format(
+                                          DateTime.parse(data['date_added'])))),
                                 ),
                               ),
                               const SizedBox(
