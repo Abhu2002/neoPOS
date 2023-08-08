@@ -5,8 +5,7 @@ import 'package:neopos/screens/products/products_page/moreinfo_dialog.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'package:neopos/screens/products/products_operation/create_operation/create_product_dialog.dart';
-import 'package:intl/intl.dart'; // for date format
-import 'package:intl/date_symbol_data_local.dart'; //
+import 'package:intl/intl.dart';
 
 class ProductsRead extends StatefulWidget {
   const ProductsRead({super.key});
