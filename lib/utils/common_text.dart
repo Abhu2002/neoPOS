@@ -51,6 +51,7 @@ class _AuthCustomTextfieldState extends State<AuthCustomTextfield> {
     );
   }
 }
-class ConstantVar{
-static SideMenuDisplayMode mode= SideMenuDisplayMode.auto;
+
+class ConstantVar {
+  static SideMenuDisplayMode mode = SideMenuDisplayMode.auto;
 }

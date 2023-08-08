@@ -9,6 +9,7 @@ import '../products/products_page/read_products_bloc.dart';
 import '../table/table_page/table_page.dart';
 import '../category/category_page/read_category_page.dart';
 import '../users/user_page/read_user_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
@@ -30,56 +31,56 @@ class _DashboardPage extends State<DashboardPage> {
     super.initState();
   }
 
-  List<SideMenuItem> items = [
-    SideMenuItem(
-      icon: const Icon(Icons.category),
-      title: 'Category',
-      onTap: (index, sideMenuController) {
-        sideMenuController.changePage(index);
-      },
-    ),
-    SideMenuItem(
-      icon: const Icon(Icons.restaurant_menu),
-      title: 'Products',
-      onTap: (index, sideMenuController) {
-        sideMenuController.changePage(index);
-      },
-    ),
-    SideMenuItem(
-      icon: const Icon(Icons.table_chart),
-      title: 'Tables',
-      onTap: (index, sideMenuController) {
-        sideMenuController.changePage(index);
-      },
-    ),
-    SideMenuItem(
-      icon: const Icon(Icons.dashboard),
-      title: 'Dashboard',
-      onTap: (index, sideMenuController) {
-        sideMenuController.changePage(index);
-      },
-    ),
-    SideMenuItem(
-      icon: const Icon(Icons.shopping_cart),
-      title: 'Order History',
-      onTap: (index, sideMenuController) {
-        sideMenuController.changePage(index);
-      },
-    ),
-    SideMenuItem(
-      icon: const Icon(Icons.person),
-      title: 'Users',
-      onTap: (index, sideMenuController) {
-        sideMenuController.changePage(index);
-      },
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
+    List<SideMenuItem> items = [
+      SideMenuItem(
+        icon: const Icon(Icons.category),
+        title: AppLocalizations.of(context)!.category_title,
+        onTap: (index, sideMenuController) {
+          sideMenuController.changePage(index);
+        },
+      ),
+      SideMenuItem(
+        icon: const Icon(Icons.restaurant_menu),
+        title: AppLocalizations.of(context)!.products_title,
+        onTap: (index, sideMenuController) {
+          sideMenuController.changePage(index);
+        },
+      ),
+      SideMenuItem(
+        icon: const Icon(Icons.table_chart),
+        title: AppLocalizations.of(context)!.tables_title,
+        onTap: (index, sideMenuController) {
+          sideMenuController.changePage(index);
+        },
+      ),
+      SideMenuItem(
+        icon: const Icon(Icons.dashboard),
+        title: AppLocalizations.of(context)!.dashboard_title,
+        onTap: (index, sideMenuController) {
+          sideMenuController.changePage(index);
+        },
+      ),
+      SideMenuItem(
+        icon: const Icon(Icons.shopping_cart),
+        title: AppLocalizations.of(context)!.order_history_title,
+        onTap: (index, sideMenuController) {
+          sideMenuController.changePage(index);
+        },
+      ),
+      SideMenuItem(
+        icon: const Icon(Icons.person),
+        title: AppLocalizations.of(context)!.users_title,
+        onTap: (index, sideMenuController) {
+          sideMenuController.changePage(index);
+        },
+      ),
+    ];
+
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Dashboard"),
+          title: Text(AppLocalizations.of(context)!.dashboard_title),
           actions: [
             IconButton(
                 onPressed: () async {

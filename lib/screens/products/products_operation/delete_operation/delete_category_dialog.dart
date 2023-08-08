@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'delete_bloc.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeleteProductPopup extends StatefulWidget {
   final String productID;
@@ -38,19 +39,21 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
       },
       builder: (context, state) {
         return AlertDialog(
-          title: const Text('Enter Credentials'),
+          title: Text(AppLocalizations.of(context)!.enter_credentials),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: _usernameController,
-                decoration: const InputDecoration(hintText: 'Username'),
+                decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.username),
               ),
               const SizedBox(height: 16),
               TextField(
                 controller: _passwordController,
                 obscureText: true,
-                decoration: const InputDecoration(hintText: 'Password'),
+                decoration: InputDecoration(
+                    hintText: AppLocalizations.of(context)!.password),
               ),
             ],
           ),
@@ -59,7 +62,7 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('Cancel'),
+              child: Text(AppLocalizations.of(context)!.cancel_button),
             ),
             TextButton(
               onPressed: () {
@@ -71,7 +74,7 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
                   ),
                 );
               },
-              child: const Text('Submit'),
+              child: Text(AppLocalizations.of(context)!.submit_button),
             ),
           ],
         );
@@ -91,7 +94,7 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('OK'),
+              child: Text(AppLocalizations.of(context)!.ok_button),
             ),
           ],
         );
@@ -104,14 +107,15 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Delete Product'),
-          content: const Text('Are you sure you want to delete this Product?'),
+          title: Text(AppLocalizations.of(context)!.delete_product_title),
+          content:
+              Text(AppLocalizations.of(context)!.delete_confirm_msg_product),
           actions: [
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('No'),
+              child: Text(AppLocalizations.of(context)!.no_title),
             ),
             TextButton(
               onPressed: () async {
@@ -120,7 +124,7 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
-              child: const Text('Yes'),
+              child: Text(AppLocalizations.of(context)!.yes_title),
             ),
           ],
         );

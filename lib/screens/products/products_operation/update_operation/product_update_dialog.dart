@@ -14,6 +14,7 @@ import '../../../../utils/update_build_image.dart';
 import '../create_operation/create_product_dialog.dart';
 
 var categoryVal = "Select Category";
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UpdateProductDialog extends StatefulWidget {
   final String image;
