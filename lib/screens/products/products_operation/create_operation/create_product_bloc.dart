@@ -6,6 +6,7 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
+import 'package:neopos/screens/products/products_operation/create_operation/create_product_dialog.dart';
 import '../../model/product.dart';
 
 part 'create_product_event.dart';
@@ -48,26 +49,33 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
         emit(ProductErrorState(err.toString()));
       }
     });
-    // on<CategoryLoadingEvent>((event, emit) async {
-    //   try {
-    //     List allcat = [];
-    //     FirebaseFirestore db = FirebaseFirestore.instance;
-    //     await db.collection("category").get().then((value) => {
-    //       value.docs.forEach((element) {
-    //         allcat.add(element['category_name']);
-    //       })
-    //     });
-    //     emit(CategoryLoadedState(allcat));
-    //   } catch (err) {
-    //     emit(const ProductErrorState("Some Error Occurred While Loading Categories"));
-    //   }
-    // });
+    on<ProductPriceCheckEvent>((event, emit) {
+      num? enteredPrice = num.tryParse(event.price);
+      if(enteredPrice == null) {
+        emit(ProductErrorState("Enter a numbered price"));
+      }
+      else {
+        emit(ProductPriceValidated());
+      }
+    });
+    on<ProductTypeEvent>((event, emit){
+      emit(ProductTypeState(event.type));
+    });
+    on<CategoryChangedEvent>((event, emit) {
+      emit(CategoryChangedState(event.category));
+    });
+    on<ImageChangedEvent>((event, emit) {
+      emit(ImageChangedState(event.imageFile));
+    });
     on<InputEvent>((event, emit) async {
       if (event.productName != "") {
         emit(ProductNameAvailableState());
       } else {
         emit(const ProductErrorState("Please Enter a Name"));
       }
+    });
+    on<ProductCreatingEvent>((event, emit) {
+      emit(ProductCreatingState());
     });
     on<CreateProductFBEvent>((event, emit) async {
 
@@ -82,7 +90,11 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
         if (allname.contains(event.productName)) {
           emit(const ProductErrorState("Product name already exist"));
           showMessage!("Product name already exist. Please use different name");
-        } else {
+        } else if(num.tryParse(event.productPrice.toString()) == null){
+          // emit(const ProductErrorState("Product price should be numeric value"));
+          showMessage!("Product price should be numeric value");
+        }
+        else {
           String imagePath = await uploadProductImage(event.productImage);
 
           final data = ProductModel(

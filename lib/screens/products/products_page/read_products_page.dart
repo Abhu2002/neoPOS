@@ -210,15 +210,15 @@ class _ProductsReadState extends State<ProductsRead> {
                             Container(
                               height: 20,
                               width:
-                                  (data['product_type'] == "Non-veg") ? 60 : 30,
+                                  (data['product_type'] == "nonVeg") ? 60 : 30,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  color: (data['product_type']) == "Non-veg"
+                                  color: (data['product_type']) == "nonVeg"
                                       ? Colors.red
                                       : Colors.green),
                               child: Center(
                                 child: Text(
-                                  (data['product_type'] == "Non-veg")
+                                  (data['product_type'] == "nonVeg")
                                       ? "Non-Veg"
                                       : "Veg",
                                   style: const TextStyle(color: Colors.white),
@@ -227,7 +227,7 @@ class _ProductsReadState extends State<ProductsRead> {
                             ),
                             SizedBox(
                               width:
-                                  (data['product_type'] == "Non-veg") ? 30 : 60,
+                                  (data['product_type'] == "nonVeg") ? 30 : 60,
                             ),
                             Expanded(
                                 child: Center(
