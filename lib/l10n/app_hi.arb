@@ -95,5 +95,9 @@
      "delete_confirm_msg_user": "क्या आप वाकई इस उपयोगकर्ता को हटाना चाहते हैं?",
      "user_update_title":"उपयोगकर्ता को अद्यतन करें",
      "user_update_msg":"उपयोगकर्ता अपडेट किया गया",
-     "user_update_error_msg":"उपयोगकर्ता अद्यतन नहीं है, डेटा गायब है"
+     "user_update_error_msg":"उपयोगकर्ता अद्यतन नहीं है, डेटा गायब है",
+     "user_name_text":"उपयोगकर्ता नाम",
+     "added_on":"पर जोड़ा",
+     "updated_on_text":"को अपडेट",
+     "operations_text":"संचालन"
 }

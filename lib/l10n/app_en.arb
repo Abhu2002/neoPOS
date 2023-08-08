@@ -104,5 +104,9 @@
    "delete_confirm_msg_user": "Are you sure you want to delete this User?",
    "user_update_title":"Update User",
    "user_update_msg":"User Updated",
-   "user_update_error_msg":"User Not Updated, Data Missing"
+   "user_update_error_msg":"User Not Updated, Data Missing",
+   "user_name_text":"User Name",
+   "added_on":"Added On",
+   "updated_on_text":"Updated On",
+   "operations_text":"Operations"
 }
