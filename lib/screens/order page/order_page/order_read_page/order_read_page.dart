@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/screens/order%20page/order_page/order_content_page/order_content_page.dart';
 import 'package:neopos/screens/table/table_page/table_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 
@@ -26,37 +27,37 @@ class _OrderPageReadState extends State<OrderPageRead> {
         builder: (context, state) {
       if (state is OrderReadLoadedState) {
         List data = state.all;
-        var pressAttention = true;
+        // var pressAttention = true;
 
         return LayoutBuilder(builder: (ctx, constraints) {
-          return InkWell(
-            child: Column(
-              children: [
-                const Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.all(20.0),
-                        child: Text("Order Page",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
+          return Column(
+            children: [
+              const Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.all(20.0),
+                      child: Text("Order Page",
+                          style: TextStyle(
+                              fontSize: 20, fontWeight: FontWeight.bold)),
+                    ),
+                  ]),
+              SingleChildScrollView(
+                  child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  child: GridView.builder(
+                      itemCount: data.length,
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                        maxCrossAxisExtent: 210,
+                        crossAxisSpacing: 20.0,
+                        mainAxisSpacing: 20.0,
                       ),
-                    ]),
-                SingleChildScrollView(
-                    child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: SizedBox(
-                    height: MediaQuery.of(context).size.height,
-                    child: GridView.builder(
-                        itemCount: data.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithMaxCrossAxisExtent(
-                          maxCrossAxisExtent: 210,
-                          crossAxisSpacing: 20.0,
-                          mainAxisSpacing: 20.0,
-                        ),
-                        itemBuilder: (context, i) => InkWell(
-                              onTap: () {},
+                      itemBuilder: (context, i) => InkWell(
+                            onTap: () {},
+                            child: InkWell(
                               child: Card(
                                 shape: RoundedRectangleBorder(
                                   side: const BorderSide(
@@ -88,14 +89,20 @@ class _OrderPageReadState extends State<OrderPageRead> {
                                   ),
                                 ),
                               ),
-                            )),
-                  ),
-                )),
-              ],
-            ),
-            onTap: () {
-              // Order Page will Get Navigate from here
-            },
+                              onTap: () {
+                                // Navigatigation to new Page
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const OrderContentPage(),
+                                    ));
+                              },
+                            ),
+                          )),
+                ),
+              )),
+            ],
           );
         });
       } else {
