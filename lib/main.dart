@@ -8,7 +8,6 @@ import 'package:neopos/screens/category/category_operation/update_operation/cate
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
-import 'package:neopos/screens/login/login_page.dart';
 import 'package:neopos/screens/order%20page/order_page/order_read_page/order_read_bloc.dart';
 import 'package:neopos/screens/products/products_operation/create_operation/create_product_bloc.dart';
 import 'package:neopos/screens/products/products_operation/delete_operation/delete_bloc.dart';
@@ -29,7 +28,6 @@ import 'firebase_options.dart';
 import 'l10n/l10n.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'navigation/app_router.dart';
-
 
 Future<void> main() async {
   setupSingletons();
