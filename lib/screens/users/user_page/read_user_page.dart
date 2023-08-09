@@ -5,6 +5,7 @@ import '../../../utils/app_colors.dart';
 import '../user_operations/user_create/create_user_dialog.dart';
 import '../user_operations/user_delete/delete_user_dialog.dart';
 import '../user_operations/user_update/update_user_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserRead extends StatefulWidget {
   const UserRead({super.key});

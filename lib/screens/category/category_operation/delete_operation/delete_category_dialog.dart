@@ -6,6 +6,7 @@ import '../../../../utils/app_colors.dart';
 import 'delete_bloc.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeleteCategoryPopup extends StatefulWidget {
   final String categoryID;

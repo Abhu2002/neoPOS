@@ -4,6 +4,7 @@ import 'package:neopos/utils/popup_cancel_button.dart';
 import '../../../../utils/app_colors.dart';
 import 'update_user_bloc.dart';
 import 'update_user_event.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 //pass category name and category id to update the category..
 class UpdateUserForm extends StatefulWidget {

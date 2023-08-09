@@ -7,6 +7,7 @@ import '../category_operation/create_operation/create_category_dialog.dart';
 //import '../../product/product_operation/delete_operation/delete_product_dialog.dart';
 import '../category_operation/delete_operation/delete_category_dialog.dart';
 import '../category_operation/update_operation/category_update_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CategoryRead extends StatefulWidget {
   const CategoryRead({super.key});
