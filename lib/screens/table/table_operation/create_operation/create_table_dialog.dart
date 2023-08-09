@@ -51,6 +51,10 @@ class _CreateTableFormState extends State<CreateTableForm> {
                           color: AppColors.primaryColor,
                         )),
                     onChanged: (val) {
+                      tableName.value = TextEditingValue(
+                        text: val.toUpperCase(),
+                        selection: tableName.selection,
+                      );
                       BlocProvider.of<CreateTableBloc>(context)
                           .add(InputEvent(tableName.text, tableCap.text));
                     },

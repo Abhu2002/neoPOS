@@ -87,6 +87,12 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                       Icons.restaurant_menu,
                       color: AppColors.primaryColor,
                     )),
+                onChanged: (value) {
+                  _productNameController.value = TextEditingValue(
+                    text: value.toUpperCase(),
+                    selection: _productNameController.selection,
+                  );
+                },
               ),
               const SizedBox(
                 height: 20,
