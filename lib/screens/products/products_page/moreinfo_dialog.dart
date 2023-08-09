@@ -239,7 +239,7 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                       ).then((value) {
                         Navigator.of(context).pop();
                         BlocProvider.of<ReadProductsBloc>(context)
-                            .add(ReadInitialEvent());
+                            .add(ReadInitialEvent(false));
                       });
                     },
                     child: const Text("Edit Product"),

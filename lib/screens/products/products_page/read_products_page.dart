@@ -46,7 +46,7 @@ class _ProductsReadState extends State<ProductsRead> {
                           builder: (context) => const CreateProductForm())
                       .then((value) =>
                           BlocProvider.of<ReadProductsBloc>(context)
-                              .add(ReadInitialEvent()));
+                              .add(ReadInitialEvent(false)));
                 },
                 child: const Text("Create")),
           ),
@@ -288,7 +288,10 @@ class _ProductsReadState extends State<ProductsRead> {
               ],
             );
           }
-          return Text("Loading");
+          return const SizedBox(
+              height: 200,
+              width: 200,
+              child: Center(child: CircularProgressIndicator()));
         }),
       )
     ]);
