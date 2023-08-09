@@ -6,6 +6,7 @@ import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'package:neopos/screens/products/products_operation/create_operation/create_product_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart'; // for date format
 
 class ProductsRead extends StatefulWidget {
   const ProductsRead({super.key});
@@ -18,18 +19,17 @@ class _ProductsReadState extends State<ProductsRead> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<ReadProductsBloc>(context).add(ReadInitialEvent());
+    BlocProvider.of<ReadProductsBloc>(context).add(ReadInitialEvent(true));
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Text(AppLocalizations.of(context)!.product_page_title,
-              style:
-                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        const Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Text("Product Page",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         ),
         Flexible(
           child: Padding(
@@ -48,7 +48,7 @@ class _ProductsReadState extends State<ProductsRead> {
                           BlocProvider.of<ReadProductsBloc>(context)
                               .add(ReadInitialEvent()));
                 },
-                child: Text(AppLocalizations.of(context)!.create_button)),
+                child: const Text("Create")),
           ),
         ),
       ]),
@@ -94,21 +94,20 @@ class _ProductsReadState extends State<ProductsRead> {
                               const SizedBox(width: 20),
                               Container(
                                   width: 100,
-                                  child: Center(
+                                  child: const Center(
                                       child: Text(
-                                    AppLocalizations.of(context)!.image_title,
-                                    style: const TextStyle(
+                                    "Image",
+                                    style: TextStyle(
                                         fontSize: 20,
                                         color: AppColors.primaryColor),
                                   ))),
                               const SizedBox(
                                 width: 80,
                               ),
-                              Expanded(
+                              const Expanded(
                                   flex: 2,
                                   child: Text(
-                                    AppLocalizations.of(context)!
-                                        .product_name_title,
+                                    "Product Name",
                                     style: TextStyle(
                                         fontSize: 20,
                                         color: AppColors.primaryColor),
@@ -118,30 +117,29 @@ class _ProductsReadState extends State<ProductsRead> {
                               ),
                               Container(
                                   width: 60,
-                                  child: Center(
+                                  child: const Center(
                                       child: Text(
-                                    AppLocalizations.of(context)!.type_title,
-                                    style: const TextStyle(
+                                    "Type",
+                                    style: TextStyle(
                                         fontSize: 20,
                                         color: AppColors.primaryColor),
                                   ))),
                               const SizedBox(
                                 width: 60,
                               ),
-                              Expanded(
+                              const Expanded(
                                   child: Center(
                                       child: Text(
-                                AppLocalizations.of(context)!
-                                    .category_name_title,
-                                style: const TextStyle(
+                                "Category",
+                                style: TextStyle(
                                     fontSize: 20,
                                     color: AppColors.primaryColor),
                               ))),
-                              Expanded(
+                              const Expanded(
                                   child: Center(
                                 child: Text(
-                                  AppLocalizations.of(context)!.price_title,
-                                  style: const TextStyle(
+                                  "Price",
+                                  style: TextStyle(
                                       fontSize: 20,
                                       color: AppColors.primaryColor),
                                 ),
@@ -161,7 +159,9 @@ class _ProductsReadState extends State<ProductsRead> {
                               width: 80,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Center(child: Text("1 Aug")),
+                                child: Center(
+                                    child: Text(DateFormat.MMMd().format(
+                                        DateTime.parse(data['date_added'])))),
                               ),
                             ),
                             const SizedBox(
@@ -223,9 +223,8 @@ class _ProductsReadState extends State<ProductsRead> {
                               child: Center(
                                 child: Text(
                                   (data['product_type'] == "nonVeg")
-                                      ? AppLocalizations.of(context)!
-                                          .non_veg_text
-                                      : AppLocalizations.of(context)!.veg_text,
+                                      ? "Non-Veg"
+                                      : "Veg",
                                   style: const TextStyle(color: Colors.white),
                                 ),
                               ),

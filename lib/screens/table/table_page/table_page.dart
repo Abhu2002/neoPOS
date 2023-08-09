@@ -31,6 +31,7 @@ class _TableReadState extends State<TableRead> {
       if (state is TableReadLoadedState) {
         List data = state.all;
         return LayoutBuilder(builder: (ctx, constraints) {
+          final width = constraints.maxWidth;
           return Column(
             children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [

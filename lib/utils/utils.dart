@@ -17,17 +17,4 @@ extension StringCheck on String? {
     //return passwordRegExp.hasMatch(this!);
     return true;
   }
-
-  bool get isValidName {
-    if (this == null || this!.isEmpty) return false;
-    final nameRegExp = RegExp(r"^[A-Za-z][A-Za-z0-9]{3,14}$");
-    return nameRegExp.hasMatch(this!);
-    //return true;
-  }
-
-  bool get isUpdateName {
-    if (this == null || this!.isEmpty) return false;
-    final nameRegExp = RegExp(r"^[A-Za-z][A-Za-z0-9]{3,14}$");
-    return nameRegExp.hasMatch(this!);
-  }
 }

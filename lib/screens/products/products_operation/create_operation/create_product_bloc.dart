@@ -63,12 +63,8 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
     on<ImageChangedEvent>((event, emit) {
       emit(ImageChangedState(event.imageFile));
     });
-    on<InputEvent>((event, emit) async {
-      if (event.productName != "") {
-        emit(ProductNameAvailableState());
-      } else {
-        emit(const ProductErrorState("Please Enter a Name"));
-      }
+    on<NameNotAvaiableEvent>((event, emit) async {
+      emit(CreateProductInitial());
     });
     on<ProductCreatingEvent>((event, emit) {
       emit(ProductCreatingState());
@@ -83,8 +79,8 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
               })
             });
         if (allname.contains(event.productName)) {
-          emit(const ProductErrorState("Product name already exist"));
-          showMessage!("Product name already exist. Please use different name");
+          emit(ProductNameNotAvailableState());
+          // showMessage!("Product name already exist. Please use different name");
         } else if (num.tryParse(event.productPrice.toString()) == null) {
           // emit(const ProductErrorState("Product price should be numeric value"));
           showMessage!("Product price should be numeric value");

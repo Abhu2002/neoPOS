@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neopos/utils/app_colors.dart';
@@ -65,6 +64,57 @@ class _CreateProductFormState extends State<CreateProductForm> {
         actionsPadding: const EdgeInsets.all(20),
         title: PopUpRow(title: AppLocalizations.of(context)!.create_product),
         actions: [
+          BlocListener<CreateProductBloc, CreateProductState>(
+            listener: (context, state) {
+              if (state is ProductNameNotAvailableState) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      actionsPadding: const EdgeInsets.all(20),
+                      actions: [
+                        Column(
+                          children: [
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "This Product Name already exist, Try different name",
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color: AppColors.primaryColor,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                ElevatedButton(
+                                    onPressed: () {
+                                      BlocProvider.of<CreateProductBloc>(
+                                              context)
+                                          .add(NameNotAvaiableEvent());
+                                      Navigator.pop(context);
+                                    },
+                                    child: const Text("ok")),
+                              ],
+                            ),
+                          ],
+                        )
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: const Text(""),
+          ),
           Center(
             child: Form(
               key: formKey,
