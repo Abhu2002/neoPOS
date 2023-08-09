@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import 'package:neopos/utils/utils.dart';
@@ -7,6 +6,7 @@ import '../../../../utils/app_colors.dart';
 import 'category_update_bloc.dart';
 import 'category_update_event.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 //pass category name and category id to update the category..
 
 class UpdateCategoryForm extends StatefulWidget {
@@ -22,13 +22,13 @@ class UpdateCategoryForm extends StatefulWidget {
 
 class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
   final formKey = GlobalKey<FormState>();
-  TextEditingController categoryupdate=TextEditingController();
+  TextEditingController categoryupdate = TextEditingController();
   @override
   void initState() {
-    // TODO: implement initState
-    categoryupdate.text=widget.oldName;
+    categoryupdate.text = widget.oldName;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     String newName = widget.oldName;
@@ -41,13 +41,18 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
       content: Form(
         key: formKey,
         child: TextFormField(
-          onChanged: (value) { newName = value;
-          categoryupdate.value = TextEditingValue(
-            text: value.toUpperCase(),
-            selection: categoryupdate.selection,
-          );},
+          onChanged: (value) {
+            categoryupdate.value = TextEditingValue(
+              text: value.toUpperCase(),
+              selection: categoryupdate.selection,
+            );
+          },
           validator: (val) {
-            if (!val.isNotEmptyValidator) return "Enter a Valid Catgeory Name";
+            if (!val.isNotEmptyValidator) {
+              return "Enter a Valid Catgeory Name";
+            } else {
+              return null;
+            }
           },
           controller: categoryupdate,
           decoration: InputDecoration(
@@ -65,12 +70,11 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         TextButton(
-          child: Text(AppLocalizations.of(context)!.update_button),
+          child: Text(AppLocalizations.of(context)!.submit_button),
           onPressed: () {
-            print(formKey.currentState!.validate());
             if (formKey.currentState!.validate()) {
               BlocProvider.of<CategoryUpdateBloc>(context).add(
-                CategoryUpdateRequested(widget.id, newName),
+                CategoryUpdateRequested(widget.id, categoryupdate.text),
               );
               Navigator.of(context).pop();
             }

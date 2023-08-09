@@ -53,7 +53,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
               TextField(
                 controller: _usernameController,
                 decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.user_name_hinttext,
+                    hintText: AppLocalizations.of(context)!.username,
                     prefixIcon: const Icon(
                       Icons.person,
                       color: AppColors.primaryColor,
@@ -64,7 +64,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
                 controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.password_hinttext,
+                    hintText: AppLocalizations.of(context)!.password,
                     prefixIcon: const Icon(
                       Icons.lock,
                       color: AppColors.primaryColor,
@@ -130,7 +130,9 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
           actionsPadding: const EdgeInsets.all(20),
           title:
               PopUpRow(title: AppLocalizations.of(context)!.user_deleted_title),
-          content: Text(AppLocalizations.of(context)!.delete_confirm_msg_user),
+          content: Text(
+            AppLocalizations.of(context)!.user_deleted_msg,
+          ),
           actions: [
             TextButton(
               onPressed: () {

@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
@@ -49,7 +48,7 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
     on<ProductPriceCheckEvent>((event, emit) {
       num? enteredPrice = num.tryParse(event.price);
       if (enteredPrice == null) {
-        emit(ProductErrorState("Enter a numbered price"));
+        emit(const ProductErrorState("Enter a numbered price"));
       } else {
         emit(ProductPriceValidated());
       }
@@ -63,12 +62,8 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
     on<ImageChangedEvent>((event, emit) {
       emit(ImageChangedState(event.imageFile));
     });
-    on<InputEvent>((event, emit) async {
-      if (event.productName != "") {
-        emit(ProductNameAvailableState());
-      } else {
-        emit(const ProductErrorState("Please Enter a Name"));
-      }
+    on<NameNotAvaiableEvent>((event, emit) async {
+      emit(CreateProductInitial());
     });
     on<ProductCreatingEvent>((event, emit) {
       emit(ProductCreatingState());
@@ -83,10 +78,8 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
               })
             });
         if (allname.contains(event.productName)) {
-          emit(const ProductErrorState("Product name already exist"));
-          showMessage!("Product name already exist. Please use different name");
+          emit(ProductNameNotAvailableState());
         } else if (num.tryParse(event.productPrice.toString()) == null) {
-          // emit(const ProductErrorState("Product price should be numeric value"));
           showMessage!("Product price should be numeric value");
         } else {
           String imagePath = await uploadProductImage(event.productImage);

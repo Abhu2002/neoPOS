@@ -91,7 +91,6 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
             ElevatedButton(
               onPressed: () {
                 if (formKey.currentState!.validate()) {
-                  // Navigator.of(context).pop();
                   BlocProvider.of<CategoryDeletionBloc>(context).add(
                     CredentialsEnteredEvent(
                       _usernameController.text,
@@ -123,7 +122,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('OK'),
+              child: Text(AppLocalizations.of(context)!.ok_button),
             ),
           ],
         );

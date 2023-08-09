@@ -22,8 +22,8 @@ class _TableReadState extends State<TableRead> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<TableBloc>(context).add(
-        InitialEvent()); //creates connection and fetch all the map from firebase and add in the list
+    BlocProvider.of<TableBloc>(context).add(InitialEvent(
+        true)); //creates connection and fetch all the map from firebase and add in the list
   }
 
   @override
@@ -32,14 +32,15 @@ class _TableReadState extends State<TableRead> {
       if (state is TableReadLoadedState) {
         List data = state.all;
         return LayoutBuilder(builder: (ctx, constraints) {
+          final width = constraints.maxWidth;
           return Column(
             children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
                 Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: Text(AppLocalizations.of(context)!.choose_table_title,
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold)),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(20.0),
@@ -55,7 +56,7 @@ class _TableReadState extends State<TableRead> {
                                 context: context,
                                 builder: (context) => const CreateTableForm())
                             .then((value) => BlocProvider.of<TableBloc>(context)
-                                .add(InitialEvent()));
+                                .add(InitialEvent(false)));
                       },
                       child: Text(AppLocalizations.of(context)!.create_button)),
                 ),
@@ -100,22 +101,24 @@ class _TableReadState extends State<TableRead> {
                                               color: Colors.white,
                                               itemBuilder: (context) =>
                                                   <PopupMenuEntry<TableItem>>[
-                                                    const PopupMenuItem<
-                                                            TableItem>(
+                                                    PopupMenuItem<TableItem>(
                                                         value:
                                                             TableItem.tableEdit,
                                                         child: Text(
-                                                          "Edit",
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .edit_table_option,
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.black),
                                                         )),
-                                                    const PopupMenuItem<
-                                                            TableItem>(
+                                                    PopupMenuItem<TableItem>(
                                                         value: TableItem
                                                             .tableDelete,
                                                         child: Text(
-                                                          "Delete",
+                                                          AppLocalizations.of(
+                                                                  context)!
+                                                              .delete_table_option,
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.black),
@@ -134,8 +137,8 @@ class _TableReadState extends State<TableRead> {
                                                         BlocProvider.of<
                                                                     TableBloc>(
                                                                 context)
-                                                            .add(
-                                                                InitialEvent()));
+                                                            .add(InitialEvent(
+                                                                false)));
                                                   case "tableEdit":
                                                     showDialog(
                                                         context: context,
@@ -152,8 +155,8 @@ class _TableReadState extends State<TableRead> {
                                                         BlocProvider.of<
                                                                     TableBloc>(
                                                                 context)
-                                                            .add(
-                                                                InitialEvent()));
+                                                            .add(InitialEvent(
+                                                                false)));
                                                 }
                                               }),
                                         ],
