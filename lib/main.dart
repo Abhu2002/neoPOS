@@ -14,7 +14,6 @@ import 'package:neopos/screens/products/products_operation/create_operation/crea
 import 'package:neopos/screens/products/products_operation/delete_operation/delete_bloc.dart';
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_bloc.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
-
 import 'package:neopos/screens/splashScreen/splashscreen_page.dart';
 import 'package:neopos/screens/users/user_operations/user_create/create_user_bloc.dart';
 import 'package:neopos/screens/users/user_operations/user_delete/delete_user_bloc.dart';
@@ -72,7 +71,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => CreateTableBloc()),
         BlocProvider(create: (_) => TableUpdateBloc()),
 
-        // //Bloc for Product CRUD
+        ///Bloc for Product CRUD
         BlocProvider(create: (_) => ReadProductsBloc()),
         BlocProvider(create: (_) => CreateProductBloc()),
         BlocProvider(create: (_) => ProductDeletionBloc()),

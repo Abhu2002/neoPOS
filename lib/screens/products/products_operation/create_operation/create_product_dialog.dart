@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neopos/utils/app_colors.dart';
@@ -102,7 +103,7 @@ class _CreateProductFormState extends State<CreateProductForm> {
                     ),
                     BlocBuilder<CreateProductBloc, CreateProductState>(
                       buildWhen: (previous, current) {
-                        if(current is ProductTypeState) {
+                        if (current is ProductTypeState) {
                           type = current.type;
                         }
                         return current is ProductTypeState;
@@ -323,7 +324,8 @@ class _CreateProductFormState extends State<CreateProductForm> {
                                               context)
                                           .add(ProductCreatingEvent());
                                       if (formKey.currentState!.validate() &&
-                                              state.imageFile != null && type != null) {
+                                          state.imageFile != null &&
+                                          type != null) {
                                         BlocProvider.of<CreateProductBloc>(
                                                 context)
                                             .add(CreateProductFBEvent(

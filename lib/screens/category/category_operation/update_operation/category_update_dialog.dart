@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
+import 'package:neopos/utils/utils.dart';
 import '../../../../utils/app_colors.dart';
 import 'category_update_bloc.dart';
 import 'category_update_event.dart';
@@ -19,6 +20,7 @@ class UpdateCategoryForm extends StatefulWidget {
 }
 
 class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     String newName = widget.oldName;
@@ -26,16 +28,24 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
-      title: const PopUpRow(title: 'Update Category'),
-      content: TextField(
-        onChanged: (value) => newName = value,
-        controller: TextEditingController(text: widget.oldName),
-        decoration: const InputDecoration(
-            hintText: "New Category name",
-            prefixIcon: Icon(
-              Icons.category,
-              color: AppColors.primaryColor,
-            )),
+      title:
+          PopUpRow(title: AppLocalizations.of(context)!.update_category_title),
+      content: Form(
+        key: formKey,
+        child: TextFormField(
+          onChanged: (value) => newName = value,
+          validator: (val) {
+            if (!val.isNotEmptyValidator) return "Enter a Valid Catgeory Name";
+          },
+          controller: TextEditingController(text: widget.oldName),
+          decoration: InputDecoration(
+              hintText:
+                  AppLocalizations.of(context)!.new_category_name_hinttext,
+              prefixIcon: const Icon(
+                Icons.category,
+                color: AppColors.primaryColor,
+              )),
+        ),
       ),
       actions: <Widget>[
         TextButton(
@@ -45,12 +55,13 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
         TextButton(
           child: const Text('Update'),
           onPressed: () {
-            if (newName.trim().isNotEmpty) {
+            print(formKey.currentState!.validate());
+            if (formKey.currentState!.validate()) {
               BlocProvider.of<CategoryUpdateBloc>(context).add(
                 CategoryUpdateRequested(widget.id, newName),
               );
+              Navigator.of(context).pop();
             }
-            Navigator.of(context).pop();
           },
         ),
       ],

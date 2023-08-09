@@ -17,11 +17,12 @@ class ReadDataLoadedState extends ReadProductsState {
   @override
   List<Object> get props => [allProducts];
 }
-class ButtonState extends ReadProductsState{
-final SideMenuDisplayMode mod;
-const ButtonState(this.mod);
-@override
-List<Object> get props => [mod];
+
+class ButtonState extends ReadProductsState {
+  final SideMenuDisplayMode mod;
+  const ButtonState(this.mod);
+  @override
+  List<Object> get props => [mod];
 }
 
 class ReadErrorState extends ReadProductsState {

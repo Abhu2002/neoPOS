@@ -21,10 +21,7 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
     try {
       Uint8List imageData = await XFile(imageFile.path).readAsBytes();
 
-      String fileName = DateTime
-          .now()
-          .millisecondsSinceEpoch
-          .toString();
+      String fileName = DateTime.now().millisecondsSinceEpoch.toString();
       Reference ref = storage.ref().child('product_images/$fileName.jpeg');
       TaskSnapshot snapshot = await ref.putData(imageData);
       String imageUrl = await snapshot.ref.getDownloadURL();
@@ -36,14 +33,14 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
 
   CreateProductBloc() : super(CreateProductInitial()) {
     on<InitialEvent>((event, emit) async {
-      try  {
+      try {
         List allcat = [];
         FirebaseFirestore db = FirebaseFirestore.instance;
         await db.collection("category").get().then((value) => {
-          value.docs.forEach((element) {
-            allcat.add(element['category_name']);
-          })
-        });
+              value.docs.forEach((element) {
+                allcat.add(element['category_name']);
+              })
+            });
         emit(CategoryLoadedState(allcat));
       } catch (err) {
         emit(ProductErrorState(err.toString()));
@@ -51,14 +48,13 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
     });
     on<ProductPriceCheckEvent>((event, emit) {
       num? enteredPrice = num.tryParse(event.price);
-      if(enteredPrice == null) {
+      if (enteredPrice == null) {
         emit(ProductErrorState("Enter a numbered price"));
-      }
-      else {
+      } else {
         emit(ProductPriceValidated());
       }
     });
-    on<ProductTypeEvent>((event, emit){
+    on<ProductTypeEvent>((event, emit) {
       emit(ProductTypeState(event.type));
     });
     on<CategoryChangedEvent>((event, emit) {
@@ -78,7 +74,6 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
       emit(ProductCreatingState());
     });
     on<CreateProductFBEvent>((event, emit) async {
-
       try {
         List allname = [];
         FirebaseFirestore db = FirebaseFirestore.instance;
@@ -90,11 +85,10 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
         if (allname.contains(event.productName)) {
           emit(const ProductErrorState("Product name already exist"));
           showMessage!("Product name already exist. Please use different name");
-        } else if(num.tryParse(event.productPrice.toString()) == null){
+        } else if (num.tryParse(event.productPrice.toString()) == null) {
           // emit(const ProductErrorState("Product price should be numeric value"));
           showMessage!("Product price should be numeric value");
-        }
-        else {
+        } else {
           String imagePath = await uploadProductImage(event.productImage);
 
           final data = ProductModel(
@@ -106,10 +100,13 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
             productPrice: event.productPrice,
             productAvailability: event.productAvailability,
             dateAdded: DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
-            dateUpdated: DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
+            dateUpdated:
+                DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
           );
-          await db.collection("products").add(data.toFirestore()).then(
-              (documentSnapshot) => {
+          await db
+              .collection("products")
+              .add(data.toFirestore())
+              .then((documentSnapshot) => {
                     emit(ProductCreatedState(true)),
                     showMessage!("Product Created"),
                   });
@@ -119,6 +116,5 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
         throw Exception("Error creating product $err");
       }
     });
-
   }
 }

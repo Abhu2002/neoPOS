@@ -60,11 +60,22 @@ class _UserReadState extends State<UserRead> {
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: AppColors.mainTextColor),
-                  columns: const [
-                    DataColumn(label: Flexible(child: Text('User Name'))),
-                    DataColumn(label: Flexible(child: Text('Added On'))),
-                    DataColumn(label: Flexible(child: Text('Updated On'))),
-                    DataColumn(label: Text('Operations')),
+                  columns: [
+                    DataColumn(
+                        label: Flexible(
+                            child: Text(
+                                AppLocalizations.of(context)!.user_name_text))),
+                    DataColumn(
+                        label: Flexible(
+                            child:
+                                Text(AppLocalizations.of(context)!.added_on))),
+                    DataColumn(
+                        label: Flexible(
+                            child: Text(AppLocalizations.of(context)!
+                                .updated_on_text))),
+                    DataColumn(
+                        label: Text(
+                            AppLocalizations.of(context)!.operations_text)),
                   ],
                   rows: state
                       .all // Loops through dataColumnText, each iteration assigning the value to element

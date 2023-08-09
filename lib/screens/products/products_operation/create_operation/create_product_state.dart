@@ -15,7 +15,7 @@ class CreateProductState extends Equatable {
 
 class CreateProductInitial extends CreateProductState {}
 
-class CategoryLoadingState extends CreateProductState{}
+class CategoryLoadingState extends CreateProductState {}
 
 class CategoryLoadedState extends CreateProductState {
   final List<dynamic> categories;
@@ -44,10 +44,9 @@ class ImageChangedState extends CreateProductState {
   List<Object> get props => [imageFile];
 }
 
-
 class ProductNameAvailableState extends CreateProductState {}
 
-class ProductTypeState extends CreateProductState{
+class ProductTypeState extends CreateProductState {
   final ProductType type;
   const ProductTypeState(this.type);
 
@@ -65,6 +64,7 @@ class ProductErrorState extends CreateProductState {
 }
 
 class ProductPriceValidated extends CreateProductState {}
+
 class ProductCreatingState extends CreateProductState {}
 
 class ProductCreatedState extends CreateProductState {

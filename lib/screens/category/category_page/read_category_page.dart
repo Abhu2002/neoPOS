@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../category_operation/create_operation/create_category_dialog.dart';
-// import '../../product/product_operation/delete_operation/delete_category_dialog.dart';
-//import '../../product/product_operation/delete_operation/delete_category_dialog.dart';
+// import '../../product/product_operation/delete_operation/delete_product_dialog.dart';
+//import '../../product/product_operation/delete_operation/delete_product_dialog.dart';
 import '../category_operation/delete_operation/delete_category_dialog.dart';
 import '../category_operation/update_operation/category_update_dialog.dart';
 
@@ -27,10 +27,11 @@ class _CategoryReadState extends State<CategoryRead> {
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text("Category Page",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(AppLocalizations.of(context)!.category_title,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ),
           Flexible(
             child: Padding(
