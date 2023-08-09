@@ -93,6 +93,10 @@ class _CreateProductFormState extends State<CreateProductForm> {
                                 color: AppColors.primaryColor,
                               )),
                           onChanged: (val) {
+                            productName.value = TextEditingValue(
+                              text: val.toUpperCase(),
+                              selection: productName.selection,
+                            );
                             BlocProvider.of<CreateProductBloc>(context)
                                 .add(InputEvent(productName.text));
                           },

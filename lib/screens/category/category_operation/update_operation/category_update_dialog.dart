@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import 'package:neopos/utils/utils.dart';
@@ -32,13 +33,17 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
       title:
           PopUpRow(title: AppLocalizations.of(context)!.update_category_title),
       content: Form(
-        key: formKey,
+        key: formkey,
         child: TextFormField(
-          onChanged: (value) => newName = value,
+          onChanged: (value) { newName = value;
+          categoryupdate.value = TextEditingValue(
+            text: value.toUpperCase(),
+            selection: categoryupdate.selection,
+          );},
           validator: (val) {
             if (!val.isNotEmptyValidator) return "Enter a Valid Catgeory Name";
           },
-          controller: TextEditingController(text: widget.oldName),
+          controller: categoryupdate,
           decoration: InputDecoration(
               hintText:
                   AppLocalizations.of(context)!.new_category_name_hinttext,

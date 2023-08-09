@@ -115,6 +115,10 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                         if (!value.isValidName) return 'Enter valid Category Name';
                       },
                       onChanged: (val) {
+                        categoryName.value = TextEditingValue(
+                          text: val.toUpperCase(),
+                          selection: categoryName.selection,
+                        );
                         BlocProvider.of<CreateCategoryBloc>(context)
                             .add(InputEvent(categoryName.text));
                       },

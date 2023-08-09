@@ -20,6 +20,7 @@ class _CreateTableFormState extends State<CreateTableForm> {
 
   @override
   void initState() {
+    BlocProvider.of<CreateTableBloc>(context).add(const InputEvent("", ""));
     tableName.text = "";
     tableCap.text = "";
     super.initState();
@@ -38,128 +39,102 @@ class _CreateTableFormState extends State<CreateTableForm> {
         title: AppLocalizations.of(context)!.create_table,
       ),
       actions: [
-        BlocListener<CreateTableBloc, CreateTableState>(
-          listener: (context, state) {
-            if (state is TableNameNotAvailableState) {
-              showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20))),
-                    actionsPadding: const EdgeInsets.all(20),
-                    actions: [
-                      Column(
-                        children: [
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                "This Table Name already exist, Try different name",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 15,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    BlocProvider.of<CreateTableBloc>(context)
-                                        .add(TableNameNotAvailableEvent());
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("ok")),
-                            ],
-                          ),
-                        ],
-                      )
-                    ],
-                  );
-                },
-              );
-            }
-          },
-          child: Text(""),
-        ),
         SizedBox(
-            width: MediaQuery.of(context).size.width / 2,
-            child: Form(
-              key: formKey,
-              child: Column(
-                children: [
-                  TextFormField(
-                      controller: tableName,
-                      decoration: InputDecoration(
-                          hintText: AppLocalizations.of(context)!.table_name,
-                          prefixIcon: const Icon(
-                            Icons.table_bar,
-                            color: AppColors.primaryColor,
-                          )),
+          width: MediaQuery.of(context).size.width / 2,
+          child:Form(
+          key:formKey,
+          child:Column(
+            children: [
+              BlocBuilder<CreateTableBloc, CreateTableState>(
+                builder: (context, state) {
+                  return TextFormField(
+                    controller: tableName,
+                    decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.table_name,
+                        prefixIcon: const Icon(
+                          Icons.table_bar,
+                          color: AppColors.primaryColor,
+                        )),
                       validator: (val) {
                         if (!val.isValidName) return "Enter a Valid Table Name";
-                      }),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  BlocBuilder<CreateTableBloc, CreateTableState>(
-                    builder: (context, state) {
-                      if (state is TableCreatedState) {
-                        if (state.isCreated == true) {
-                          state.isCreated = false;
-                          Navigator.pop(context);
-                        }
-                      }
-                      return TextFormField(
-                          keyboardType: TextInputType.number,
-                          controller: tableCap,
-                          inputFormatters: [
-                            FilteringTextInputFormatter.digitsOnly
-                          ],
-                          decoration: InputDecoration(
-                              hintText: AppLocalizations.of(context)!.table_cap,
-                              prefixIcon: const Icon(
-                                Icons.group_add,
-                                color: AppColors.primaryColor,
-                              )),
-                          validator: (val) {
-                            if (!val.isValidTableCap)
-                              return "Enter a Valid Table Name";
-                          });
+                      },
+                    onChanged: (val) {
+                      tableName.value = TextEditingValue(
+                        text: val.toUpperCase(),
+                        selection: tableName.selection,
+                      );
+                      BlocProvider.of<CreateTableBloc>(context)
+                          .add(InputEvent(tableName.text, tableCap.text));
                     },
-                  ),
-                  const SizedBox(
-                    height: 20,
-                  ),
-                  BlocBuilder<CreateTableBloc, CreateTableState>(
-                    builder: (context, state) {
-                      return SizedBox(
-                          width: double.infinity,
-                          height: 45,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: AppColors.primaryColor),
-                            onPressed: () {
-                              if (formKey.currentState!.validate()) {
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BlocBuilder<CreateTableBloc, CreateTableState>(
+                builder: (context, state) {
+                  return TextFormField(
+                    keyboardType: TextInputType.number,
+                    controller: tableCap,
+                    decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.table_cap,
+                        prefixIcon: const Icon(
+                          Icons.group_add,
+                          color: AppColors.primaryColor,
+                        )),
+                    validator: (val) {
+                      if (!val.isValidTableCap)
+                        return "Enter a Valid Table Name";
+                    },
+                    onChanged: (val) {
+                      BlocProvider.of<CreateTableBloc>(context)
+                          .add(InputEvent(tableName.text, tableCap.text));
+                    },
+                  );
+                },
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              BlocBuilder<CreateTableBloc, CreateTableState>(
+                builder: (context, state) {
+                  if (state is TableErrorState) {
+                    if (state.errorMessage == "Please Pop") {
+                      Navigator.pop(context);
+                    }
+                  }
+                  if (state is TableCreatedState) {
+                    if (state.isCreated == true) {
+                      state.isCreated = false;
+                      Navigator.pop(context);
+                    }
+                  }
+                  return SizedBox(
+                      width: double.infinity,
+                      height: 45,
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: (state is TableErrorState)
+                                ? AppColors.unavilableButtonColor
+                                : AppColors.primaryColor),
+                        onPressed: if (formKey.currentState!.validate()) {
+                        (state is TableErrorState)
+                            ? null
+                            : () {
                                 BlocProvider.of<CreateTableBloc>(context).add(
                                     CreateTableFBEvent(
                                         tableName.text, tableCap.text));
-                              }
-                            },
-                            child: Text(
-                                AppLocalizations.of(context)!.create_table),
-                          ));
-                    },
-                  )
-                ],
+                              },
+                  }
+                        child: Text(AppLocalizations.of(context)!.create_table),
+                      ));
+                },
               ),
-            ))
+            ],
+          ),
+          ),
+        ),
       ],
     );
   }
