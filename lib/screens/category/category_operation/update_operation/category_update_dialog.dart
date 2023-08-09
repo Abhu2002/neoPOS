@@ -8,6 +8,8 @@ import 'category_update_bloc.dart';
 import 'category_update_event.dart';
 import 'package:neopos/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'dart:core';
+import 'package:neopos/utils/utils.dart';
 //pass category name and category id to update the category..
 
 class UpdateCategoryForm extends StatefulWidget {
@@ -23,6 +25,7 @@ class UpdateCategoryForm extends StatefulWidget {
 
 class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
   final formkey = GlobalKey<FormState>();
+  TextEditingController categoryupdate=TextEditingController();
   @override
   Widget build(BuildContext context) {
     String newName = widget.oldName;
@@ -41,7 +44,7 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
             selection: categoryupdate.selection,
           );},
           validator: (val) {
-            if (!val.isNotEmptyValidator) return "Enter a Valid Catgeory Name";
+            if (!val.isValidName) return "Enter a Valid Category Name";
           },
           controller: categoryupdate,
           decoration: InputDecoration(

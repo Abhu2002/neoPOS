@@ -118,15 +118,17 @@ class _CreateTableFormState extends State<CreateTableForm> {
                             backgroundColor: (state is TableErrorState)
                                 ? AppColors.unavilableButtonColor
                                 : AppColors.primaryColor),
-                        onPressed: if (formKey.currentState!.validate()) {
+                        onPressed:
                         (state is TableErrorState)
                             ? null
                             : () {
+    if (formKey.currentState!.validate()) {
                                 BlocProvider.of<CreateTableBloc>(context).add(
                                     CreateTableFBEvent(
                                         tableName.text, tableCap.text));
-                              },
-                  }
+                              }
+                               },
+
                         child: Text(AppLocalizations.of(context)!.create_table),
                       ));
                 },

@@ -1,3 +1,5 @@
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +12,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../utils/app_colors.dart';
 import '../../../../utils/update_build_image.dart';
 import '../create_operation/create_product_dialog.dart';
-
+import 'package:neopos/utils/utils.dart';
 var categoryVal = "Select Category";
 
 class UpdateProductDialog extends StatefulWidget {
@@ -61,7 +63,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
     }
     super.initState();
   }
-
+   final formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -76,152 +78,170 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
       content: SingleChildScrollView(
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.5,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _productNameController,
-                decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.product_name_title,
-                    prefixIcon: const Icon(
-                      Icons.restaurant_menu,
-                      color: AppColors.primaryColor,
-                    )),
-                onChanged: (value) {
-                  _productNameController.value = TextEditingValue(
-                    text: value.toUpperCase(),
-                    selection: _productNameController.selection,
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextField(
-                controller: _productPriceController,
-                decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)!.product_price_text,
-                    prefixIcon: Icon(
-                      Icons.price_change,
-                      color: AppColors.primaryColor,
-                    )),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              TextField(
-                controller: _productDescriptionController,
-                keyboardType: TextInputType.multiline,
-                minLines: 1,
-                maxLines: 2,
-                decoration: InputDecoration(
-                    labelText:
-                        AppLocalizations.of(context)!.product_description_title,
-                    prefixIcon: Icon(
-                      Icons.description,
-                      color: AppColors.primaryColor,
-                    )),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              BlocBuilder<UpdateProductBloc, ProductState>(
-                buildWhen: (previous, current) {
-                  if (current is ProductTypeUpdateState) {
-                    type = current.type;
+          child: Form(
+            key: formkey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: _productNameController,
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.product_name_title,
+                      prefixIcon: const Icon(
+                        Icons.restaurant_menu,
+                        color: AppColors.primaryColor,
+                      )),
+                  onChanged: (value) {
+                    _productNameController.value = TextEditingValue(
+                      text: value.toUpperCase(),
+                      selection: _productNameController.selection,
+                    );
+                  },
+                  validator: (val){
+                    if(!val.isValidProductName){
+                      return "Enter a Valid Product Name";
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  controller: _productPriceController,
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.product_price_text,
+                      prefixIcon: Icon(
+                        Icons.price_change,
+                        color: AppColors.primaryColor,
+                      )),
+                  validator: (val){
+                    if(!val.isValidProductName){
+                      return "Enter a Valid Product Price";
+                    }
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                TextFormField(
+                  controller: _productDescriptionController,
+                  keyboardType: TextInputType.multiline,
+                  minLines: 1,
+                  maxLines: 2,
+                  decoration: InputDecoration(
+                      labelText:
+                          AppLocalizations.of(context)!.product_description_title,
+                      prefixIcon: Icon(
+                        Icons.description,
+                        color: AppColors.primaryColor,
+                      )),
+                  validator: (val) {
+                    if (!val.isValidDesc) {
+                      return "Enter a valid Product Description";
+                    }
                   }
-                  return current is ProductTypeUpdateState;
-                },
-                builder: (context, state) {
-                  return Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Text(
-                        AppLocalizations.of(context)!.product_type_title,
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 17),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      Radio<ProductType>(
-                        value: ProductType.veg,
-                        groupValue: state.type ?? type,
-                        onChanged: (ProductType? value) {
-                          BlocProvider.of<UpdateProductBloc>(context)
-                              .add(ProductTypeUpdateEvent(value!));
-                        },
-                      ),
-                      Text(AppLocalizations.of(context)!.veg_text),
-                      const SizedBox(
-                        width: 5,
-                      ),
-                      Radio<ProductType>(
-                        value: ProductType.nonVeg,
-                        groupValue: state.type ?? type,
-                        onChanged: (ProductType? value) {
-                          BlocProvider.of<UpdateProductBloc>(context)
-                              .add(ProductTypeUpdateEvent(value!));
-                        },
-                      ),
-                      Text(AppLocalizations.of(context)!.non_veg_text),
-                    ],
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Row(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.product_category_title,
-                    style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
-                  ),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  BlocBuilder<UpdateProductBloc, ProductState>(
-                    builder: (context, state) {
-                      if (state is LoadedCategoryState) {
-                        _productCategories = state.categories;
-                        categoryVal = widget.productCategory;
-                      }
-                      return CustomDropDown(
-                        categories: _productCategories,
-                        dropdownvalue: categoryVal,
-                      );
-                    },
-                  ),
-                ],
-              ),
-              const SizedBox(height: 20),
-              BlocBuilder<UpdateProductBloc, ProductState>(
-                builder: (BuildContext context, state) {
-                  return Column(
-                    children: [
-                      const BuildUpdateImage(),
-                      const SizedBox(height: 10),
-                      ElevatedButton(
-                        onPressed: () async {
-                          final picker = ImagePicker();
-                          final pickedFile = await picker.pickImage(
-                              source: ImageSource.gallery);
-                          if (pickedFile != null) {
-                            if (!context.mounted) return;
-                            BlocProvider.of<UpdateProductBloc>(context).add(
-                              ImageChangedUpdateEvent(pickedFile),
-                            );
-                            imageFile = state.imageFile;
-                          }
-                        },
-                        child: Text(AppLocalizations.of(context)!.select_image),
-                      ),
-                    ],
-                  );
-                },
-              ),
-            ],
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                BlocBuilder<UpdateProductBloc, ProductState>(
+                  buildWhen: (previous, current) {
+                    if (current is ProductTypeUpdateState) {
+                      type = current.type;
+                    }
+                    return current is ProductTypeUpdateState;
+                  },
+                  builder: (context, state) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          AppLocalizations.of(context)!.product_type_title,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 17),
+                        ),
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        Radio<ProductType>(
+                          value: ProductType.veg,
+                          groupValue: state.type ?? type,
+                          onChanged: (ProductType? value) {
+                            BlocProvider.of<UpdateProductBloc>(context)
+                                .add(ProductTypeUpdateEvent(value!));
+                          },
+                        ),
+                        Text(AppLocalizations.of(context)!.veg_text),
+                        const SizedBox(
+                          width: 5,
+                        ),
+                        Radio<ProductType>(
+                          value: ProductType.nonVeg,
+                          groupValue: state.type ?? type,
+                          onChanged: (ProductType? value) {
+                            BlocProvider.of<UpdateProductBloc>(context)
+                                .add(ProductTypeUpdateEvent(value!));
+                          },
+                        ),
+                        Text(AppLocalizations.of(context)!.non_veg_text),
+                      ],
+                    );
+                  },
+                ),
+                const SizedBox(
+                  height: 20,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.product_category_title,
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    BlocBuilder<UpdateProductBloc, ProductState>(
+                      builder: (context, state) {
+                        if (state is LoadedCategoryState) {
+                          _productCategories = state.categories;
+                          categoryVal = widget.productCategory;
+                        }
+                        return CustomDropDown(
+                          categories: _productCategories,
+                          dropdownvalue: categoryVal,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                BlocBuilder<UpdateProductBloc, ProductState>(
+                  builder: (BuildContext context, state) {
+                    return Column(
+                      children: [
+                        const BuildUpdateImage(),
+                        const SizedBox(height: 10),
+                        ElevatedButton(
+                          onPressed: () async {
+                            final picker = ImagePicker();
+                            final pickedFile = await picker.pickImage(
+                                source: ImageSource.gallery);
+                            if (pickedFile != null) {
+                              if (!context.mounted) return;
+                              BlocProvider.of<UpdateProductBloc>(context).add(
+                                ImageChangedUpdateEvent(pickedFile),
+                              );
+                              imageFile = state.imageFile;
+                            }
+                          },
+                          child: Text(AppLocalizations.of(context)!.select_image),
+                        ),
+                      ],
+                    );
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),

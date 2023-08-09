@@ -10,6 +10,5 @@ abstract class TableEvent extends Equatable {
 class LoadDataEvent extends TableEvent {}
 
 class InitialEvent extends TableEvent {
-  bool isfirst;
-  InitialEvent(this.isfirst);
+
 }

@@ -36,9 +36,8 @@ class LiveTableModel {
   });
 
   factory LiveTableModel.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
-  ) {
+      DocumentSnapshot<Map<String, dynamic>> snapshot,
+      SnapshotOptions? options,) {
     final data = snapshot.data();
     return LiveTableModel(
       tableName: data?['tablename'],
@@ -50,4 +49,7 @@ class LiveTableModel {
       if (tableName != null) "table_name": tableName,
     };
   }
+
+
 }
+

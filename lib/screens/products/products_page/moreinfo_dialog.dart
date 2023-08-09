@@ -244,7 +244,7 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                       ).then((value) {
                         Navigator.of(context).pop();
                         BlocProvider.of<ReadProductsBloc>(context)
-                            .add(ReadInitialEvent(false));
+                            .add(ReadInitialEvent());
                       });
                     },
                     child:
@@ -260,7 +260,7 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                             Navigator.pop(context),
                             BlocProvider.of<ReadProductsBloc>(
                               context,
-                            ).add(ReadInitialEvent(false))
+                            ).add(ReadInitialEvent())
                           });
                     },
                     child: Text(

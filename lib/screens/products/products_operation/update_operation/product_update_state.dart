@@ -48,3 +48,4 @@ class ImageChangedUpdateState extends ProductState {
 
   ImageChangedUpdateState(this.imageFile);
 }
+

@@ -6,7 +6,7 @@ import 'package:neopos/utils/app_colors.dart';
 import '../table_operation/create_operation/create_table_dialog.dart';
 import '../table_operation/delete_operation/delete_table_dialog.dart';
 import '../table_operation/update_operation/table_update_dialog.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 enum TableItem { tableDelete, tableEdit } //enum for popup
 
 class TableRead extends StatefulWidget {

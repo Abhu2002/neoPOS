@@ -23,3 +23,4 @@ class CategoryCreatedState extends CreateCategoryState {
 }
 
 class NameNotAvailableState extends CreateCategoryState {}
+class CategoryNameAvailableState extends CreateCategoryState {}

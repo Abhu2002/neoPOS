@@ -57,7 +57,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
                     }
                   },
                   controller: _usernameController,
-                  decoration: const InputDecoration(hintText: AppLocalizations.of(context)!.username_hinttext)),
+                  decoration:  InputDecoration(hintText: AppLocalizations.of(context)!.username_hinttext)),
                 const SizedBox(height: 16),
                 TextFormField(
                   validator: (val) {
@@ -67,7 +67,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
                   },
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(hintText: AppLocalizations.of(context)!.password_hinttext)), ,
+                  decoration:  InputDecoration(hintText: AppLocalizations.of(context)!.password_hinttext)),
               ],
             ),
         ),
@@ -112,7 +112,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text(AppLocalizations.of(context)!.submit_button),
+              child:  Text(AppLocalizations.of(context)!.submit_button),
             ),
           ],
         );

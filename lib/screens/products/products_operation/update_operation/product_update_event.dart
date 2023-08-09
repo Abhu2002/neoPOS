@@ -52,3 +52,11 @@ class ImageChangedUpdateEvent extends ProductEvent {
   final XFile imageFile;
   ImageChangedUpdateEvent(this.imageFile);
 }
+
+
+
+
+
+
+
+

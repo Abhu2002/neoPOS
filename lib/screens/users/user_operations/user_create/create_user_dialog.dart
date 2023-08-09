@@ -135,7 +135,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                   builder: (context, state) {
                     return TextFormField(
                       controller: password,
-                      decoration: const InputDecoration(
+                      decoration:  InputDecoration(
                           hintText: AppLocalizations.of(context)!.password_hinttext,
                           prefixIcon: Icon(
                             Icons.lock,

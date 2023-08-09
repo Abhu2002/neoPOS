@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'delete_bloc.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
-
+import 'package:neopos/utils/utils.dart';
 class DeleteProductPopup extends StatefulWidget {
   final String productID;
 
@@ -23,7 +23,7 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
     _passwordController.text = "";
     super.initState();
   }
-
+  final formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProductDeletionBloc, ProductDeletionState>(
@@ -39,20 +39,33 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
       builder: (context, state) {
         return AlertDialog(
           title: const Text('Enter Credentials'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _usernameController,
-                decoration: const InputDecoration(hintText: 'Username'),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(hintText: 'Password'),
-              ),
-            ],
+          content: Form(
+            key:formkey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  validator: (val){
+                    if(!val.isValidUsername){
+                      return "Enter a Valid Username";
+                    }
+                  },
+                  controller: _usernameController,
+                  decoration: const InputDecoration(hintText: 'Username'),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  validator: (val){
+                    if(!val.isValidPassword){
+                      return "Enter a Valid Password";
+                    }
+                  },
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(hintText: 'Password'),
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -64,12 +77,14 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
             TextButton(
               onPressed: () {
                 // Navigator.of(context).pop();
-                BlocProvider.of<ProductDeletionBloc>(context).add(
-                  CredentialsEnteredEvent(
-                    _usernameController.text,
-                    _passwordController.text,
-                  ),
-                );
+                if(formkey.currentState!.validate()) {
+                  BlocProvider.of<ProductDeletionBloc>(context).add(
+                    CredentialsEnteredEvent(
+                      _usernameController.text,
+                      _passwordController.text,
+                    ),
+                  );
+                }
               },
               child: const Text('Submit'),
             ),

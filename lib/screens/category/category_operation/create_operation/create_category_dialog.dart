@@ -101,10 +101,6 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                     return TextFormField(
                       controller: categoryName,
                       keyboardType: TextInputType.text,
-                      validator: (val) {
-                        if (!val.isNotEmptyValidator)
-                          return 'Enter valid Category Name';
-                      },
                       decoration: InputDecoration(
                           hintText: AppLocalizations.of(context)!.category_name,
                           prefixIcon: const Icon(

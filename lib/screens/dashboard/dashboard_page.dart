@@ -74,10 +74,9 @@ class _DashboardPage extends State<DashboardPage> {
         },
       ),
     ];
-
     return Scaffold(
         appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.dashboard_title),
+          title: const Text("Dashboard"),
           actions: [
             IconButton(
                 onPressed: () async {
@@ -119,9 +118,6 @@ class _DashboardPage extends State<DashboardPage> {
                       SingleChildScrollView(child: TableRead()),
 
                       ///TODO DashBoard and History page pending
-                      Center(
-                        child: Text('Dashboard'),
-                      ),
                       Center(
                         child: Text('DashBoard Page'),
                       ),

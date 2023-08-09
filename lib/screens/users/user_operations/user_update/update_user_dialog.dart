@@ -60,7 +60,7 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
                 },
                 onChanged: (value) => newFirstName = value,
                 controller: TextEditingController(text: widget.oldFirstName),
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
                     hintText:AppLocalizations.of(context)!.first_name_hinttext,
                     prefixIcon: Icon(
                       Icons.person,
@@ -78,7 +78,7 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
                 },
                 onChanged: (value) => newLastName = value,
                 controller: TextEditingController(text: widget.oldLastName),
-                decoration: const InputDecoration(
+                decoration:  InputDecoration(
                     hintText: AppLocalizations.of(context)!.user_id_hinttext,
                     prefixIcon: Icon(
                       Icons.person,
@@ -143,7 +143,7 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
                   content: Text(AppLocalizations.of(context)!.user_update_msg));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else {
-              Navigator.of(context).pop();
+              //Navigator.of(context).pop();
               final snackBar = SnackBar(
                   content: Text(
                       AppLocalizations.of(context)!.user_update_error_msg));
