@@ -58,35 +58,25 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             actionsPadding: const EdgeInsets.all(20),
                             actions: [
                               Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        "This UserName already exist, Try different name",
-                                        style: TextStyle(
-                                            fontSize: 15,
-                                            color: AppColors.primaryColor,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
+                                  const Text(
+                                    "This UserName already exist, Try different name",
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.bold),
                                   ),
                                   const SizedBox(
                                     height: 15,
                                   ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      ElevatedButton(
-                                          onPressed: () {
-                                            BlocProvider.of<CreateUserBloc>(
-                                                    context)
-                                                .add(UserIntialEvent());
-                                            Navigator.pop(context);
-                                          },
-                                          child: const Text("ok")),
-                                    ],
-                                  ),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        BlocProvider.of<CreateUserBloc>(context)
+                                            .add(UserIntialEvent());
+                                        Navigator.pop(context);
+                                      },
+                                      child: const Text("ok")),
                                 ],
                               )
                             ],

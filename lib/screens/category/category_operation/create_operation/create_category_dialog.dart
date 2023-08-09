@@ -51,34 +51,25 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                     actionsPadding: const EdgeInsets.all(20),
                     actions: [
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                "This Catergory Name already exist, Try different name",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                          const Text(
+                            "This Catergory Name already exist, Try different name",
+                            style: TextStyle(
+                                fontSize: 15,
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             height: 15,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    BlocProvider.of<CreateCategoryBloc>(context)
-                                        .add(NotNameAvaiableEvent());
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("ok")),
-                            ],
-                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                BlocProvider.of<CreateCategoryBloc>(context)
+                                    .add(NotNameAvaiableEvent());
+                                Navigator.pop(context);
+                              },
+                              child: const Text("ok")),
                         ],
                       )
                     ],
@@ -97,12 +88,18 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
               children: [
                 TextFormField(
                   controller: categoryName,
+                  textCapitalization: TextCapitalization.sentences,
                   decoration: InputDecoration(
                       hintText: AppLocalizations.of(context)!.category_name,
                       prefixIcon: const Icon(
                         Icons.category,
                         color: AppColors.primaryColor,
                       )),
+                  onChanged: (value) {
+                    categoryName.value = TextEditingValue(
+                        text: value.toUpperCase(),
+                        selection: categoryName.selection);
+                  },
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return 'Please enter some text';

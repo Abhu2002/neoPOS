@@ -23,13 +23,14 @@ class UpdateCategoryForm extends StatefulWidget {
 
 class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
   final formKey = GlobalKey<FormState>();
-  TextEditingController categoryupdate=TextEditingController();
+  TextEditingController categoryupdate = TextEditingController();
   @override
   void initState() {
     // TODO: implement initState
-    categoryupdate.text=widget.oldName;
+    categoryupdate.text = widget.oldName;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     String newName = widget.oldName;
@@ -42,11 +43,12 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
       content: Form(
         key: formKey,
         child: TextFormField(
-          onChanged: (value) { newName = value;
-          categoryupdate.value = TextEditingValue(
-            text: value.toUpperCase(),
-            selection: categoryupdate.selection,
-          );},
+          onChanged: (value) {
+            categoryupdate.value = TextEditingValue(
+              text: value.toUpperCase(),
+              selection: categoryupdate.selection,
+            );
+          },
           validator: (val) {
             if (!val.isNotEmptyValidator) return "Enter a Valid Catgeory Name";
           },
@@ -68,10 +70,9 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
         TextButton(
           child: const Text('Update'),
           onPressed: () {
-            print(formKey.currentState!.validate());
             if (formKey.currentState!.validate()) {
               BlocProvider.of<CategoryUpdateBloc>(context).add(
-                CategoryUpdateRequested(widget.id, newName),
+                CategoryUpdateRequested(widget.id, categoryupdate.text),
               );
               Navigator.of(context).pop();
             }
