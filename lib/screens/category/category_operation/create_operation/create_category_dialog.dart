@@ -61,6 +61,10 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                             color: AppColors.primaryColor,
                           )),
                       onChanged: (val) {
+                        categoryName.value = TextEditingValue(
+                          text: val.toUpperCase(),
+                          selection: categoryName.selection,
+                        );
                         BlocProvider.of<CreateCategoryBloc>(context)
                             .add(InputEvent(categoryName.text));
                       },

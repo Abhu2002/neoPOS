@@ -173,8 +173,7 @@ class _LoginPage extends State<LoginPage> {
     );
   }
 
-  void onSuccess() =>
-      Navigator.pushReplacementNamed(context, RoutePaths.dashboard);
+  void onSuccess() => Navigator.popAndPushNamed(context, RoutePaths.dashboard);
 
   void createSnackBar(String message) {
     final snackBar = SnackBar(content: Text(message));
