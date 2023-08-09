@@ -83,7 +83,7 @@ class _OrderPageReadState extends State<OrderPageRead> {
                                           ),
                                         ),
                                         Text(
-                                            "Capacity: ${(data[i]["tablecapacity"]).toString()}"),
+                                            "Capacity: ${data[i]["tablecapacity"]}"),
                                       ],
                                     ),
                                   ),

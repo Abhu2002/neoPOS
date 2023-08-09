@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
@@ -21,11 +23,21 @@ class OrderReadBloc extends Bloc<OrderReadEvent, OrderReadState> {
         }
         List allCat = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
-        await db.collection("table").get().then((value) => {
-              value.docs.forEach((element) {
+        var tabledata = await db.collection('table').get();
+        await db.collection("live_table").get().then((value) => {
+              value.docs.forEach((element) async {
+                var a = tabledata.docChanges;
+                int? cap;
+                a.forEach(
+                  (e) {
+                    if (e.doc['table_name'] == element['table_name']) {
+                      cap = e.doc['table_capacity'];
+                    }
+                  },
+                );
                 allCat.add({
-                  "tablecapacity": '${element['table_capacity']}',
                   "tablename": element['table_name'],
+                  "tablecapacity": cap,
                   "docID": element.id
                 });
               })
@@ -34,6 +46,7 @@ class OrderReadBloc extends Bloc<OrderReadEvent, OrderReadState> {
         emit(OrderReadLoadedState(
             allCat)); //gives all document of tables to State
       } catch (err) {
+        print(err);
         emit(const OrderErrorState(
             "Some Error Occur")); //calls state and stores message through parameter
       }
