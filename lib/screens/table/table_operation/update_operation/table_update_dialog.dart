@@ -21,6 +21,14 @@ class UpdateTableForm extends StatefulWidget {
 }
 
 class _UpdateTableFormState extends State<UpdateTableForm> {
+  TextEditingController tableName = TextEditingController();
+  @override
+  void initState() {
+    tableName.text = widget.tableName;
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     String newName = widget.tableName;
@@ -31,9 +39,17 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
-            onChanged: (value) => newName = value,
-            controller: TextEditingController(text: widget.tableName),
-            decoration: const InputDecoration(hintText: 'New table name'),
+            onChanged: (value) {
+              newName = value;
+              tableName.value = TextEditingValue(
+                text: value.toUpperCase(),
+                selection: tableName.selection,
+              );
+            },
+            controller: tableName,
+            decoration: InputDecoration(
+                hintText:
+                    AppLocalizations.of(context)!.new_category_name_hinttext),
           ),
           TextField(
             onChanged: (value) => newCapacity = value,
