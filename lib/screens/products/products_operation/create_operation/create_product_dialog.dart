@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neopos/utils/app_colors.dart';
+import '../../../../utils/popup_cancel_button.dart';
 import 'create_product_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -73,13 +74,7 @@ class _CreateProductFormState extends State<CreateProductForm> {
           ),
         ),
         actionsPadding: const EdgeInsets.all(20),
-        title: Text(
-          AppLocalizations.of(context)!.create_product,
-          style: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: AppColors.mainTextColor),
-        ),
+        title: const PopUpRow(title: "Create Product"),
         actions: [
           Center(
             child: Form(
@@ -132,7 +127,7 @@ class _CreateProductFormState extends State<CreateProductForm> {
                           value: isVeg,
                           onChanged: (bool? val) {
                             setState(() {
-                              if(isNonVeg) return;
+                              if (isNonVeg) return;
                               isVeg = val!;
                             });
                           }),
@@ -149,7 +144,7 @@ class _CreateProductFormState extends State<CreateProductForm> {
                           value: isNonVeg,
                           onChanged: (bool? value) {
                             setState(() {
-                              if(isVeg) return;
+                              if (isVeg) return;
                               isNonVeg = value!;
                             });
                           }),
@@ -194,7 +189,8 @@ class _CreateProductFormState extends State<CreateProductForm> {
                       keyboardType: TextInputType.number,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!.enter_product_price;
+                          return AppLocalizations.of(context)!
+                              .enter_product_price;
                         }
                         return null;
                       },
@@ -217,8 +213,8 @@ class _CreateProductFormState extends State<CreateProductForm> {
                         BlocBuilder<CreateProductBloc, CreateProductState>(
                           builder: (context, state) {
                             if (state is CategoryLoadedState) {
-                                categories = state.categories;
-                                categoryValue = categories[0];
+                              categories = state.categories;
+                              categoryValue = categories[0];
                             }
                             return CustomDropDown(
                               categories: categories,
@@ -256,14 +252,17 @@ class _CreateProductFormState extends State<CreateProductForm> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(children: [
-                      buildImage()!,
-                      const SizedBox(width: 20),
-                      ElevatedButton(
-                        onPressed: _pickImage,
-                        child: Text(AppLocalizations.of(context)!.select_image),
-                      ),
-                    ],),
+                    Row(
+                      children: [
+                        buildImage()!,
+                        const SizedBox(width: 20),
+                        ElevatedButton(
+                          onPressed: _pickImage,
+                          child:
+                              Text(AppLocalizations.of(context)!.select_image),
+                        ),
+                      ],
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -278,7 +277,8 @@ class _CreateProductFormState extends State<CreateProductForm> {
                           if (state.created == true) {
                             state.created = false;
                             Navigator.pop(context);
-                            BlocProvider.of<CreateProductBloc>(context).add(InitialEvent());
+                            BlocProvider.of<CreateProductBloc>(context)
+                                .add(InitialEvent());
                           }
                         }
                         return SizedBox(
@@ -293,8 +293,10 @@ class _CreateProductFormState extends State<CreateProductForm> {
                                   ? null
                                   : () {
                                       if (formKey.currentState!.validate() &&
-                                          imageFile != null && (!isVeg || !isNonVeg)) {
-                                        String productType = isVeg ? 'Veg': 'Non-Veg';
+                                          imageFile != null &&
+                                          (!isVeg || !isNonVeg)) {
+                                        String productType =
+                                            isVeg ? 'Veg' : 'Non-Veg';
                                         BlocProvider.of<CreateProductBloc>(
                                                 context)
                                             .add(CreateProductFBEvent(
@@ -306,7 +308,6 @@ class _CreateProductFormState extends State<CreateProductForm> {
                                           int.parse(productPrice.text).toInt(),
                                           isChecked,
                                         ));
-
                                       } else if (imageFile == null) {
                                         return createSnackBar(
                                             "Select an image");
@@ -315,7 +316,8 @@ class _CreateProductFormState extends State<CreateProductForm> {
                                             "Select product type");
                                       }
                                     },
-                              child: Text(AppLocalizations.of(context)!.create_product),
+                              child: Text(
+                                  AppLocalizations.of(context)!.create_product),
                             ));
                       },
                     ),
@@ -358,7 +360,6 @@ class CustomDropDown extends StatefulWidget {
 }
 
 class _CustomDropDownState extends State<CustomDropDown> {
-
   @override
   Widget build(BuildContext context) {
     return DropdownButton(

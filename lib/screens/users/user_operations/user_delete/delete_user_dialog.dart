@@ -5,6 +5,7 @@ import '../../../../utils/app_colors.dart';
 import 'delete_user_bloc.dart';
 import 'delete_user_event.dart';
 import 'delete_user_state.dart';
+import 'package:neopos/utils/utils.dart';
 
 class DeleteUserPopup extends StatefulWidget {
   final String docID;
@@ -18,7 +19,7 @@ class DeleteUserPopup extends StatefulWidget {
 class _DeleteUserPopupState extends State<DeleteUserPopup> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  final formKey = GlobalKey<FormState>();
   @override
   void initState() {
     _usernameController.text = "";
@@ -44,30 +45,39 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
           title: const PopUpRow(title: 'Enter Credentials'),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _usernameController,
-                decoration: const InputDecoration(
-                    hintText: "Username",
-                    prefixIcon: Icon(
-                      Icons.person,
-                      color: AppColors.primaryColor,
-                    )),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                    hintText: "Password",
-                    prefixIcon: Icon(
-                      Icons.lock,
-                      color: AppColors.primaryColor,
-                    )),
-              ),
-            ],
+          content: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  validator: (val) {
+                    if (!val.isValidUsername) return "Enter a Valid User Name";
+                  },
+                  controller: _usernameController,
+                  decoration: const InputDecoration(
+                      hintText: "Username",
+                      prefixIcon: Icon(
+                        Icons.person,
+                        color: AppColors.primaryColor,
+                      )),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  validator: (val) {
+                    if (!val.isValidPassword) return "Enter a Valid Password";
+                  },
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                      hintText: "Password",
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: AppColors.primaryColor,
+                      )),
+                ),
+              ],
+            ),
           ),
           actions: [
             ElevatedButton(
@@ -78,13 +88,16 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
             ),
             ElevatedButton(
               onPressed: () {
-                // Navigator.of(context).pop();
-                BlocProvider.of<UserDeletionBloc>(context).add(
-                  UserCredentialsEnteredEvent(
-                    _usernameController.text,
-                    _passwordController.text,
-                  ),
-                );
+                print(formKey.currentState!.validate());
+                if (formKey.currentState!.validate()) {
+                  // Navigator.of(context).pop();
+                  BlocProvider.of<UserDeletionBloc>(context).add(
+                    UserCredentialsEnteredEvent(
+                      _usernameController.text,
+                      _passwordController.text,
+                    ),
+                  );
+                }
               },
               child: const Text('Submit'),
             ),

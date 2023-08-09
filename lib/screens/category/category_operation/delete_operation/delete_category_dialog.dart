@@ -5,6 +5,7 @@ import '../../../../utils/app_colors.dart';
 import 'delete_bloc.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
+import 'package:neopos/utils/utils.dart';
 
 class DeleteCategoryPopup extends StatefulWidget {
   final String categoryID;
@@ -16,6 +17,7 @@ class DeleteCategoryPopup extends StatefulWidget {
 }
 
 class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
+  final formkey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -44,30 +46,39 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
           title: const PopUpRow(title: "Enter Credentials"),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _usernameController,
-                decoration: const InputDecoration(
-                    hintText: "Username",
-                    prefixIcon: Icon(
-                      Icons.person,
-                      color: AppColors.primaryColor,
-                    )),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(
-                    hintText: "Password",
-                    prefixIcon: Icon(
-                      Icons.person,
-                      color: AppColors.primaryColor,
-                    )),
-              ),
-            ],
+          content: Form(
+            key: formkey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: _usernameController,
+                  validator: (val) {
+                    if (!val!.isValidUsername) return "Enter a Valid Username";
+                  },
+                  decoration: const InputDecoration(
+                      hintText: "Username",
+                      prefixIcon: Icon(
+                        Icons.person,
+                        color: AppColors.primaryColor,
+                      )),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _passwordController,
+                  validator: (val) {
+                    if (!val!.isValidPassword) return "Enter a Valid Username";
+                  },
+                  obscureText: true,
+                  decoration: const InputDecoration(
+                      hintText: "Password",
+                      prefixIcon: Icon(
+                        Icons.person,
+                        color: AppColors.primaryColor,
+                      )),
+                ),
+              ],
+            ),
           ),
           actions: [
             ElevatedButton(
@@ -79,12 +90,13 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
             ElevatedButton(
               onPressed: () {
                 // Navigator.of(context).pop();
-                BlocProvider.of<CategoryDeletionBloc>(context).add(
-                  CredentialsEnteredEvent(
+                if (formkey.currentState!.validate()) {
+                  BlocProvider.of<CategoryDeletionBloc>(context)
+                      .add(CredentialsEnteredEvent(
                     _usernameController.text,
                     _passwordController.text,
-                  ),
-                );
+                  ));
+                }
               },
               child: const Text('Submit'),
             ),

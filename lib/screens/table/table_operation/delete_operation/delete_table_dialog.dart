@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
+import 'package:neopos/utils/utils.dart';
 import 'delete_bloc.dart';
 import 'delete_event.dart';
 import 'delete_state.dart';
@@ -17,7 +18,7 @@ class DeleteTablePopup extends StatefulWidget {
 class _DeleteTablePopupState extends State<DeleteTablePopup> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-
+  final formkey = GlobalKey<FormState>();
   @override
   void initState() {
     _usernameController.text = "";
@@ -42,20 +43,33 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
           title: const PopUpRow(title: 'Enter Credentials'),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextField(
-                controller: _usernameController,
-                decoration: const InputDecoration(hintText: 'Username'),
-              ),
-              const SizedBox(height: 16),
-              TextField(
-                controller: _passwordController,
-                obscureText: true,
-                decoration: const InputDecoration(hintText: 'Password'),
-              ),
-            ],
+          content: Form(
+            key: formkey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  validator: (val) {
+                    if (!val.isValidUsername) {
+                      return "Enter a Valid User Name";
+                    }
+                  },
+                  controller: _usernameController,
+                  decoration: const InputDecoration(hintText: 'Username'),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  validator: (val) {
+                    if (!val.isValidPassword) {
+                      return "Enter a Valid Password";
+                    }
+                  },
+                  controller: _passwordController,
+                  obscureText: true,
+                  decoration: const InputDecoration(hintText: 'Password'),
+                ),
+              ],
+            ),
           ),
           actions: [
             TextButton(
@@ -67,12 +81,14 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
             TextButton(
               onPressed: () {
                 // Navigator.of(context).pop();
-                BlocProvider.of<TableDeletionBloc>(context).add(
-                  CredentialsEnteredEvent(
-                    _usernameController.text,
-                    _passwordController.text,
-                  ),
-                );
+                if (formkey.currentState!.validate()) {
+                  BlocProvider.of<TableDeletionBloc>(context).add(
+                    CredentialsEnteredEvent(
+                      _usernameController.text,
+                      _passwordController.text,
+                    ),
+                  );
+                }
               },
               child: const Text('Submit'),
             ),

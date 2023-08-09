@@ -36,7 +36,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   Future<void> _onLogin(OnLogin event, Emitter<LoginState> emit) async {
-    if (!state.userId.isNotEmptyValidator || !state.password.isPasswordValid) {
+    if (!state.userId.isNotEmptyValidator || !state.password.isValidPassword) {
       emit(state.copyWith(
           state: LoginButtonState.enable, canLogin: false, verifyData: true));
       return;

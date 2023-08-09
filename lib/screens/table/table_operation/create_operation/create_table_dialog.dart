@@ -5,6 +5,7 @@ import 'package:neopos/utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import 'create_table_bloc.dart';
+import 'package:neopos/utils/utils.dart';
 
 class CreateTableForm extends StatefulWidget {
   const CreateTableForm({super.key});
@@ -88,85 +89,77 @@ class _CreateTableFormState extends State<CreateTableForm> {
           child: Text(""),
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width / 2,
-          child: Form(
-            key: formKey,
-            child: Column(
-              children: [
-                TextFormField(
-                    controller: tableName,
-                    decoration: InputDecoration(
-                        hintText: AppLocalizations.of(context)!.table_name,
-                        prefixIcon: const Icon(
-                          Icons.table_bar,
-                          color: AppColors.primaryColor,
-                        )),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Please enter some text';
-                      }
-                      return null;
-                    }),
-                const SizedBox(
-                  height: 20,
-                ),
-                BlocBuilder<CreateTableBloc, CreateTableState>(
-                  builder: (context, state) {
-                    if (state is TableCreatedState) {
-                      if (state.isCreated == true) {
-                        state.isCreated = false;
-                        Navigator.pop(context);
-                      }
-                    }
-                    return TextFormField(
-                      keyboardType: TextInputType.number,
-                      controller: tableCap,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+            width: MediaQuery.of(context).size.width / 2,
+            child: Form(
+              key: formKey,
+              child: Column(
+                children: [
+                  TextFormField(
+                      controller: tableName,
                       decoration: InputDecoration(
-                          hintText: AppLocalizations.of(context)!.table_cap,
+                          hintText: AppLocalizations.of(context)!.table_name,
                           prefixIcon: const Icon(
-                            Icons.group_add,
+                            Icons.table_bar,
                             color: AppColors.primaryColor,
                           )),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please Enter a Number";
-                        } else if (!RegExp(r'\d').hasMatch(value)) {
-                          return "Please Enter a Valid Capacity";
-                        } else {
-                          return null;
+                      validator: (val) {
+                        if (!val.isValidName) return "Enter a Valid Table Name";
+                      }),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  BlocBuilder<CreateTableBloc, CreateTableState>(
+                    builder: (context, state) {
+                      if (state is TableCreatedState) {
+                        if (state.isCreated == true) {
+                          state.isCreated = false;
+                          Navigator.pop(context);
                         }
-                      },
-                    );
-                  },
-                ),
-                const SizedBox(
-                  height: 20,
-                ),
-                BlocBuilder<CreateTableBloc, CreateTableState>(
-                  builder: (context, state) {
-                    return SizedBox(
-                        width: double.infinity,
-                        height: 45,
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.primaryColor),
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              BlocProvider.of<CreateTableBloc>(context).add(
-                                  CreateTableFBEvent(
-                                      tableName.text, tableCap.text));
-                            }
-                          },
-                          child:
-                              Text(AppLocalizations.of(context)!.create_table),
-                        ));
-                  },
-                ),
-              ],
-            ),
-          ),
-        ),
+                      }
+                      return TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: tableCap,
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly
+                          ],
+                          decoration: InputDecoration(
+                              hintText: AppLocalizations.of(context)!.table_cap,
+                              prefixIcon: const Icon(
+                                Icons.group_add,
+                                color: AppColors.primaryColor,
+                              )),
+                          validator: (val) {
+                            if (!val.isValidTableCap)
+                              return "Enter a Valid Table Name";
+                          });
+                    },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  BlocBuilder<CreateTableBloc, CreateTableState>(
+                    builder: (context, state) {
+                      return SizedBox(
+                          width: double.infinity,
+                          height: 45,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: AppColors.primaryColor),
+                            onPressed: () {
+                              if (formKey.currentState!.validate()) {
+                                BlocProvider.of<CreateTableBloc>(context).add(
+                                    CreateTableFBEvent(
+                                        tableName.text, tableCap.text));
+                              }
+                            },
+                            child: Text(
+                                AppLocalizations.of(context)!.create_table),
+                          ));
+                    },
+                  )
+                ],
+              ),
+            ))
       ],
     );
   }

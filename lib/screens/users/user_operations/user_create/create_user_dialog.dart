@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../../../../utils/popup_cancel_button.dart';
 import 'create_user_bloc.dart';
+import 'package:neopos/utils/utils.dart';
 
 class CreateUserForm extends StatefulWidget {
   const CreateUserForm({super.key});
@@ -107,12 +108,10 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             Icons.person,
                             color: AppColors.primaryColor,
                           )),
-                      validator: (value) {
-                        String? val = value?.trim();
-                        if (val == null || val.isEmpty) {
-                          return 'Please enter some text';
+                      validator: (val) {
+                        if (!val.isValidName) {
+                          return 'Enter a Valid First Name';
                         }
-                        return null;
                       },
                     );
                   },
@@ -130,12 +129,10 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             Icons.person,
                             color: AppColors.primaryColor,
                           )),
-                      validator: (value) {
-                        String? val = value?.trim();
-                        if (val == null || val.isEmpty) {
-                          return 'Please enter some text';
+                      validator: (val) {
+                        if (!val.isValidName) {
+                          return "Enter a Valid Last Name";
                         }
-                        return null;
                       },
                     );
                   },
@@ -153,12 +150,10 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             Icons.person,
                             color: AppColors.primaryColor,
                           )),
-                      validator: (value) {
-                        String? val = value?.trim();
-                        if (val == null || val.isEmpty) {
-                          return 'Please enter some text';
+                      validator: (val) {
+                        if (!val.isValidUsername) {
+                          return "Enter a User Name";
                         }
-                        return null;
                       },
                     );
                   },
@@ -176,12 +171,10 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             Icons.lock,
                             color: AppColors.primaryColor,
                           )),
-                      validator: (value) {
-                        String? val = value?.trim();
-                        if (val == null || val.isEmpty) {
-                          return 'Please enter some text';
+                      validator: (val) {
+                        if (!val.isValidPassword) {
+                          return "Enter a valid Password";
                         }
-                        return null;
                       },
                     );
                   },
