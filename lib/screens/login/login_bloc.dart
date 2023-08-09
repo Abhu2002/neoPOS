@@ -48,7 +48,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         state: LoginButtonState.progress,
         canLogin: false));
     try {
-      /// TODO: Use result later
       var result;
       FirebaseFirestore database = GetIt.I.get<FirebaseFirestore>();
       database

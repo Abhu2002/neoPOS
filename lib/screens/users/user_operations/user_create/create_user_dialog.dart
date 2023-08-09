@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
+import 'package:neopos/utils/utils.dart';
 import '../../../../utils/popup_cancel_button.dart';
 import 'create_user_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateUserForm extends StatefulWidget {
   const CreateUserForm({super.key});
@@ -23,8 +25,6 @@ class _CreateUserFormState extends State<CreateUserForm> {
 
   @override
   void initState() {
-    // BlocProvider.of<CreateUserBloc>(context)
-    //     .add(const InputEvent("", "", "", "", ""));
     userName.text = "";
     super.initState();
   }
@@ -33,11 +33,10 @@ class _CreateUserFormState extends State<CreateUserForm> {
   Widget build(BuildContext context) {
     context.read<CreateUserBloc>().showMessage = createSnackBar;
     return AlertDialog(
-      // contentPadding: EdgeInsets.all(20),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
-      title: const PopUpRow(title: "Create User"),
+      title: PopUpRow(title: AppLocalizations.of(context)!.create_user_title),
       actions: [
         Form(
           key: formKey,
@@ -60,9 +59,10 @@ class _CreateUserFormState extends State<CreateUserForm> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
-                                  const Text(
-                                    "This UserName already exist, Try different name",
-                                    style: TextStyle(
+                                  Text(
+                                    AppLocalizations.of(context)!
+                                        .usr_name_exist,
+                                    style: const TextStyle(
                                         fontSize: 15,
                                         color: AppColors.primaryColor,
                                         fontWeight: FontWeight.bold),
@@ -76,7 +76,8 @@ class _CreateUserFormState extends State<CreateUserForm> {
                                             .add(UserIntialEvent());
                                         Navigator.pop(context);
                                       },
-                                      child: const Text("ok")),
+                                      child: Text(AppLocalizations.of(context)!
+                                          .ok_button)),
                                 ],
                               )
                             ],
@@ -91,16 +92,18 @@ class _CreateUserFormState extends State<CreateUserForm> {
                   builder: (context, state) {
                     return TextFormField(
                       controller: firstName,
-                      decoration: const InputDecoration(
-                          hintText: "first name",
-                          prefixIcon: Icon(
+                      decoration: InputDecoration(
+                          hintText:
+                              AppLocalizations.of(context)!.first_name_hinttext,
+                          prefixIcon: const Icon(
                             Icons.person,
                             color: AppColors.primaryColor,
                           )),
                       validator: (value) {
                         String? val = value?.trim();
-                        if (val == null || val.isEmpty) {
-                          return 'Please enter some text';
+                        if (!val.isNotEmptyValidator) {
+                          return AppLocalizations.of(context)!
+                              .create_user_validation_msg;
                         }
                         return null;
                       },
@@ -114,16 +117,18 @@ class _CreateUserFormState extends State<CreateUserForm> {
                   builder: (context, state) {
                     return TextFormField(
                       controller: lastName,
-                      decoration: const InputDecoration(
-                          hintText: "Last Name",
-                          prefixIcon: Icon(
+                      decoration: InputDecoration(
+                          hintText:
+                              AppLocalizations.of(context)!.last_name_hinttext,
+                          prefixIcon: const Icon(
                             Icons.person,
                             color: AppColors.primaryColor,
                           )),
                       validator: (value) {
                         String? val = value?.trim();
-                        if (val == null || val.isEmpty) {
-                          return 'Please enter some text';
+                        if (!val.isNotEmptyValidator) {
+                          return AppLocalizations.of(context)!
+                              .create_user_validation_msg;
                         }
                         return null;
                       },
@@ -137,16 +142,18 @@ class _CreateUserFormState extends State<CreateUserForm> {
                   builder: (context, state) {
                     return TextFormField(
                       controller: userName,
-                      decoration: const InputDecoration(
-                          hintText: "User Name",
-                          prefixIcon: Icon(
+                      decoration: InputDecoration(
+                          hintText:
+                              AppLocalizations.of(context)!.user_name_hinttext,
+                          prefixIcon: const Icon(
                             Icons.person,
                             color: AppColors.primaryColor,
                           )),
                       validator: (value) {
                         String? val = value?.trim();
-                        if (val == null || val.isEmpty) {
-                          return 'Please enter some text';
+                        if (!val.isNotEmptyValidator) {
+                          return AppLocalizations.of(context)!
+                              .create_user_validation_msg;
                         }
                         return null;
                       },
@@ -160,16 +167,18 @@ class _CreateUserFormState extends State<CreateUserForm> {
                   builder: (context, state) {
                     return TextFormField(
                       controller: password,
-                      decoration: const InputDecoration(
-                          hintText: "Password",
-                          prefixIcon: Icon(
+                      decoration: InputDecoration(
+                          hintText:
+                              AppLocalizations.of(context)!.password_title,
+                          prefixIcon: const Icon(
                             Icons.lock,
                             color: AppColors.primaryColor,
                           )),
                       validator: (value) {
                         String? val = value?.trim();
-                        if (val == null || val.isEmpty) {
-                          return 'Please enter some text';
+                        if (!val.isNotEmptyValidator) {
+                          return AppLocalizations.of(context)!
+                              .create_user_validation_msg;
                         }
                         return null;
                       },
@@ -184,7 +193,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Text("User Role : "),
+                        Text(AppLocalizations.of(context)!.user_role_text),
                         const SizedBox(
                           width: 30,
                         ),
@@ -241,7 +250,8 @@ class _CreateUserFormState extends State<CreateUserForm> {
                                       dropdownValue));
                             }
                           },
-                          child: const Text("Create User"),
+                          child: Text(
+                              AppLocalizations.of(context)!.create_user_title),
                         ));
                   },
                 ),

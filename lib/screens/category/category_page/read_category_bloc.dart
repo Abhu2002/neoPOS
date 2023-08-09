@@ -15,7 +15,7 @@ class ReadCategoryBloc extends Bloc<ReadCategoryEvent, ReadCategoryState> {
           emit(DataLoadingState());
         } else {
           emit(DataLoadingState());
-          await Future.delayed(Duration(seconds: 1));
+          await Future.delayed(const Duration(seconds: 1));
         }
         List allCat = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();

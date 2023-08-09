@@ -9,7 +9,6 @@ abstract class ReadCategoryEvent extends Equatable {
 
 class LoadDataEvent extends ReadCategoryEvent {}
 
-// ignore: must_be_immutable
 class InitialEvent extends ReadCategoryEvent {
   bool isfirst;
   InitialEvent(this.isfirst);

@@ -84,9 +84,9 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
             TextField(
               onChanged: (value) => newPassword = value,
               controller: TextEditingController(text: widget.oldPassword),
-              decoration: const InputDecoration(
-                  hintText: "first name",
-                  prefixIcon: Icon(
+              decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.first_name_hinttext,
+                  prefixIcon: const Icon(
                     Icons.lock,
                     color: AppColors.primaryColor,
                   )),
@@ -100,7 +100,7 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
           onPressed: () => Navigator.of(context).pop(),
         ),
         TextButton(
-          child: const Text('Update'),
+          child: Text(AppLocalizations.of(context)!.update_button),
           onPressed: () {
             if (newFirstName.trim().isNotEmpty &&
                 newLastName.trim().isNotEmpty &&

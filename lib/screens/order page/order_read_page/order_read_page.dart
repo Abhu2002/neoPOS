@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neopos/screens/order%20page/order_page/order_content_page/order_content_page.dart';
-import 'package:neopos/screens/table/table_page/table_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'order_read_bloc.dart';
 
 class OrderPageRead extends StatefulWidget {
@@ -32,16 +30,14 @@ class _OrderPageReadState extends State<OrderPageRead> {
         return LayoutBuilder(builder: (ctx, constraints) {
           return Column(
             children: [
-              const Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(20.0),
-                      child: Text("Order Page",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold)),
-                    ),
-                  ]),
+              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+                Padding(
+                  padding: const EdgeInsets.all(20.0),
+                  child: Text(AppLocalizations.of(context)!.order_page,
+                      style: const TextStyle(
+                          fontSize: 20, fontWeight: FontWeight.bold)),
+                ),
+              ]),
               SingleChildScrollView(
                   child: Padding(
                 padding: const EdgeInsets.all(20.0),
@@ -83,7 +79,7 @@ class _OrderPageReadState extends State<OrderPageRead> {
                                           ),
                                         ),
                                         Text(
-                                            "Capacity: ${data[i]["tablecapacity"]}"),
+                                            "${AppLocalizations.of(context)!.order_cap}: ${data[i]["tablecapacity"]}"),
                                       ],
                                     ),
                                   ),

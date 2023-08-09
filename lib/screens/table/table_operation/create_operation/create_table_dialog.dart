@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
+import 'package:neopos/utils/utils.dart';
 import 'create_table_bloc.dart';
 
 class CreateTableForm extends StatefulWidget {
@@ -27,9 +28,8 @@ class _CreateTableFormState extends State<CreateTableForm> {
   @override
   Widget build(BuildContext context) {
     context.read<CreateTableBloc>().showMessage = createSnackBar;
-    final formKey = GlobalKey<FormState>(); //
+    final formKey = GlobalKey<FormState>();
     return AlertDialog(
-      // contentPadding: EdgeInsets.all(20),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
@@ -51,9 +51,9 @@ class _CreateTableFormState extends State<CreateTableForm> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Text(
-                            "This Table Name already exist, Try different name",
-                            style: TextStyle(
+                          Text(
+                            AppLocalizations.of(context)!.tb_name_exist,
+                            style: const TextStyle(
                                 fontSize: 15,
                                 color: AppColors.primaryColor,
                                 fontWeight: FontWeight.bold),
@@ -67,7 +67,8 @@ class _CreateTableFormState extends State<CreateTableForm> {
                                     .add(TableNameNotAvailableEvent());
                                 Navigator.pop(context);
                               },
-                              child: const Text("ok")),
+                              child: Text(
+                                  AppLocalizations.of(context)!.ok_button)),
                         ],
                       )
                     ],
@@ -76,7 +77,7 @@ class _CreateTableFormState extends State<CreateTableForm> {
               );
             }
           },
-          child: Text(""),
+          child: const Text(""),
         ),
         SizedBox(
           width: MediaQuery.of(context).size.width / 2,
@@ -98,7 +99,7 @@ class _CreateTableFormState extends State<CreateTableForm> {
                           selection: tableName.selection);
                     },
                     validator: (value) {
-                      if (value == null || value.isEmpty) {
+                      if (!value.isNotEmptyValidator) {
                         return 'Please enter some text';
                       }
                       return null;

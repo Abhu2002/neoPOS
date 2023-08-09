@@ -15,7 +15,7 @@ class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
           emit(ReadDataLoadingState());
         } else {
           emit(ReadDataLoadingState());
-          await Future.delayed(Duration(seconds: 1));
+          await Future.delayed(const Duration(seconds: 1));
         }
 
         List allCat = [];
@@ -39,7 +39,6 @@ class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
         ReadLoadedDataEvent();
         emit(ReadDataLoadedState(allCat));
       } catch (err) {
-        print(err);
         emit(ReadErrorState("Error Occur :-$err"));
       }
     });

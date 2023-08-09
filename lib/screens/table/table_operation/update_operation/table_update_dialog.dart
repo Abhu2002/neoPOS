@@ -26,7 +26,6 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
   @override
   void initState() {
     tableName.text = widget.tableName;
-    // TODO: implement initState
     super.initState();
   }
 
@@ -35,7 +34,7 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
     String newName = widget.tableName;
     String newCapacity = widget.tableCapacity;
     return AlertDialog(
-      title: const PopUpRow(title: 'Update Table'),
+      title: PopUpRow(title: AppLocalizations.of(context)!.update_table_title),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -55,17 +54,19 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
           TextField(
             onChanged: (value) => newCapacity = value,
             controller: TextEditingController(text: widget.tableCapacity),
-            decoration: const InputDecoration(hintText: 'New Table Capacity '),
+            decoration: InputDecoration(
+                hintText:
+                    AppLocalizations.of(context)!.new_table_capacity_hinttext),
           )
         ],
       ),
       actions: <Widget>[
         TextButton(
-          child: const Text('Cancel'),
+          child: Text(AppLocalizations.of(context)!.cancel_button),
           onPressed: () => Navigator.of(context).pop(),
         ),
         TextButton(
-          child: const Text('Update'),
+          child: Text(AppLocalizations.of(context)!.update_button),
           onPressed: () {
             if (newName.trim().isNotEmpty) {
               BlocProvider.of<TableUpdateBloc>(context).add(

@@ -108,5 +108,12 @@
    "user_name_text":"User Name",
    "added_on":"Added On",
    "updated_on_text":"Updated On",
-   "operations_text":"Operations"
+   "operations_text":"Operations",
+   "order_page":"Order Page",
+   "order_cap":"Capacity",
+   "pro_name_exist":"This Product Name already exist, Try different name",
+   "tb_name_exist":"This Table Name already exist, Try different name",
+   "usr_name_exist":"This User Name already exist, Try different name",
+   "cat_name_exist":"This Category Name already exist, Try different name",
+   "userpage_title":"User Page"
 }

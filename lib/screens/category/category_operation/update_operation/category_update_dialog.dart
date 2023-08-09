@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import 'package:neopos/utils/utils.dart';
@@ -26,7 +25,6 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
   TextEditingController categoryupdate = TextEditingController();
   @override
   void initState() {
-    // TODO: implement initState
     categoryupdate.text = widget.oldName;
     super.initState();
   }
@@ -50,7 +48,11 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
             );
           },
           validator: (val) {
-            if (!val.isNotEmptyValidator) return "Enter a Valid Catgeory Name";
+            if (!val.isNotEmptyValidator) {
+              return "Enter a Valid Catgeory Name";
+            } else {
+              return null;
+            }
           },
           controller: categoryupdate,
           decoration: InputDecoration(
@@ -64,11 +66,11 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
       ),
       actions: <Widget>[
         TextButton(
-          child: const Text('Cancel'),
+          child: Text(AppLocalizations.of(context)!.cancel_button),
           onPressed: () => Navigator.of(context).pop(),
         ),
         TextButton(
-          child: const Text('Update'),
+          child: Text(AppLocalizations.of(context)!.submit_button),
           onPressed: () {
             if (formKey.currentState!.validate()) {
               BlocProvider.of<CategoryUpdateBloc>(context).add(

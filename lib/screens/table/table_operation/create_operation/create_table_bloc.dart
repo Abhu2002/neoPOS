@@ -40,9 +40,7 @@ class CreateTableBloc extends Bloc<CreateTableEvent, CreateTableState> {
           await GetIt.I.get<FirebaseFirestore>().clearPersistence();
           await GetIt.I.get<FirebaseFirestore>().terminate();
         }
-      } catch (err) {
-        // print(err);
-      }
+      } catch (err) {}
     });
   }
 }

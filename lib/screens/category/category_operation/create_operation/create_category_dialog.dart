@@ -18,18 +18,14 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
   TextEditingController categoryName = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  // CreateCategoryBloc? categoryReadBloc;
-
   @override
   void initState() {
-    // BlocProvider.of<CreateCategoryBloc>(context).add(const InputEvent(""));
     categoryName.text = "";
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // categoryReadBloc = BlocProvider.of<CreateCategoryBloc>(context);
     context.read<CreateCategoryBloc>().showMessage = createSnackBar;
 
     return AlertDialog(
@@ -53,9 +49,9 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Text(
-                            "This Catergory Name already exist, Try different name",
-                            style: TextStyle(
+                          Text(
+                            AppLocalizations.of(context)!.cat_name_exist,
+                            style: const TextStyle(
                                 fontSize: 15,
                                 color: AppColors.primaryColor,
                                 fontWeight: FontWeight.bold),
@@ -69,7 +65,8 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                                     .add(NotNameAvaiableEvent());
                                 Navigator.pop(context);
                               },
-                              child: const Text("ok")),
+                              child: Text(
+                                  AppLocalizations.of(context)!.ok_button)),
                         ],
                       )
                     ],
@@ -101,7 +98,7 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                         selection: categoryName.selection);
                   },
                   validator: (value) {
-                    if (value == null || value.isEmpty) {
+                    if (!value.isNotEmptyValidator) {
                       return 'Please enter some text';
                     }
                     return null;
@@ -112,11 +109,6 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                 ),
                 BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
                   builder: (context, state) {
-                    // if (state is CategoryErrorState) {
-                    //   if (state.errorMessage == "Please Pop") {
-                    //     Navigator.pop(context);
-                    //   }
-                    // }
                     if (state is CategoryCreatedState) {
                       if (state.created == true) {
                         Navigator.pop(context);
@@ -135,7 +127,8 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                                   CreateCategoryFBEvent(categoryName.text));
                             }
                           },
-                          child: const Text("Create Category"),
+                          child: Text(AppLocalizations.of(context)!
+                              .create_category_button),
                         ));
                   },
                 ),
@@ -143,8 +136,6 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
             ),
           ),
         ),
-
-        // ActionButton(text: "Create Table", onPress: () {})
       ],
     );
   }

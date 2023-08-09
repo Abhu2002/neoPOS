@@ -48,7 +48,7 @@ class _ProductsReadState extends State<ProductsRead> {
                           BlocProvider.of<ReadProductsBloc>(context)
                               .add(ReadInitialEvent(false)));
                 },
-                child: const Text("Create")),
+                child: Text(AppLocalizations.of(context)!.create_button)),
           ),
         ),
       ]),
@@ -61,7 +61,6 @@ class _ProductsReadState extends State<ProductsRead> {
                   width: MediaQuery.sizeOf(context).width,
                   height: MediaQuery.sizeOf(context).height - 144,
                   child: ListView.separated(
-                    //shrinkWrap: true,
                     separatorBuilder: (context, index) {
                       return Container(
                         width: MediaQuery.sizeOf(context).width,
@@ -81,7 +80,6 @@ class _ProductsReadState extends State<ProductsRead> {
                               BoxDecoration(color: Colors.grey.shade300),
                           child: Row(
                             children: [
-                              // SizedBox(width: 10),
                               Container(
                                   width: 80,
                                   child: Center(
@@ -94,21 +92,22 @@ class _ProductsReadState extends State<ProductsRead> {
                               const SizedBox(width: 20),
                               Container(
                                   width: 100,
-                                  child: const Center(
+                                  child: Center(
                                       child: Text(
-                                    "Image",
-                                    style: TextStyle(
+                                    AppLocalizations.of(context)!.image_title,
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         color: AppColors.primaryColor),
                                   ))),
                               const SizedBox(
                                 width: 80,
                               ),
-                              const Expanded(
+                              Expanded(
                                   flex: 2,
                                   child: Text(
-                                    "Product Name",
-                                    style: TextStyle(
+                                    AppLocalizations.of(context)!
+                                        .product_name_title,
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         color: AppColors.primaryColor),
                                   )),
@@ -117,34 +116,34 @@ class _ProductsReadState extends State<ProductsRead> {
                               ),
                               Container(
                                   width: 60,
-                                  child: const Center(
+                                  child: Center(
                                       child: Text(
-                                    "Type",
-                                    style: TextStyle(
+                                    AppLocalizations.of(context)!.type_title,
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         color: AppColors.primaryColor),
                                   ))),
                               const SizedBox(
                                 width: 60,
                               ),
-                              const Expanded(
+                              Expanded(
                                   child: Center(
                                       child: Text(
-                                "Category",
-                                style: TextStyle(
+                                AppLocalizations.of(context)!
+                                    .category_name_title,
+                                style: const TextStyle(
                                     fontSize: 20,
                                     color: AppColors.primaryColor),
                               ))),
-                              const Expanded(
+                              Expanded(
                                   child: Center(
                                 child: Text(
-                                  "Price",
-                                  style: TextStyle(
+                                  AppLocalizations.of(context)!.price_title,
+                                  style: const TextStyle(
                                       fontSize: 20,
                                       color: AppColors.primaryColor),
                                 ),
                               )),
-                              // Text("More"),
                             ],
                           ),
                         );
@@ -223,8 +222,9 @@ class _ProductsReadState extends State<ProductsRead> {
                               child: Center(
                                 child: Text(
                                   (data['product_type'] == "nonVeg")
-                                      ? "Non-Veg"
-                                      : "Veg",
+                                      ? AppLocalizations.of(context)!
+                                          .non_veg_text
+                                      : AppLocalizations.of(context)!.veg_text,
                                   style: const TextStyle(color: Colors.white),
                                 ),
                               ),

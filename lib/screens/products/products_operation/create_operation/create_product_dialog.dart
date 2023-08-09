@@ -78,9 +78,9 @@ class _CreateProductFormState extends State<CreateProductForm> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            const Text(
-                              "This Product Name already exist, Try different name",
-                              style: TextStyle(
+                            Text(
+                              AppLocalizations.of(context)!.pro_name_exist,
+                              style: const TextStyle(
                                   fontSize: 15,
                                   color: AppColors.primaryColor,
                                   fontWeight: FontWeight.bold),
@@ -94,7 +94,8 @@ class _CreateProductFormState extends State<CreateProductForm> {
                                       .add(NameNotAvaiableEvent());
                                   Navigator.pop(context);
                                 },
-                                child: const Text("ok")),
+                                child: Text(
+                                    AppLocalizations.of(context)!.ok_button)),
                           ],
                         )
                       ],
@@ -166,7 +167,6 @@ class _CreateProductFormState extends State<CreateProductForm> {
                               width: 20,
                             ),
                             Flexible(
-                              // flex: 1,
                               child: Row(
                                 children: [
                                   Radio<ProductType>(
@@ -176,8 +176,6 @@ class _CreateProductFormState extends State<CreateProductForm> {
                                       BlocProvider.of<CreateProductBloc>(
                                               context)
                                           .add(ProductTypeEvent(value!));
-                                      // type = state.type == ProductType.veg ? state.type : null;
-                                      // print(state.type);
                                     },
                                   ),
                                   Flexible(
@@ -191,8 +189,6 @@ class _CreateProductFormState extends State<CreateProductForm> {
                                       BlocProvider.of<CreateProductBloc>(
                                               context)
                                           .add(ProductTypeEvent(value!));
-                                      // type = state.type == ProductType.nonVeg ? state.type : null;
-                                      // print(state.type);
                                     },
                                   ),
                                   Flexible(
@@ -399,8 +395,6 @@ class _CreateProductFormState extends State<CreateProductForm> {
               ),
             ),
           ),
-
-          // ActionButton(text: "Create Table", onPress: () {})
         ],
       ),
     );
