@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import 'package:neopos/utils/utils.dart';
@@ -22,6 +23,13 @@ class UpdateCategoryForm extends StatefulWidget {
 
 class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
   final formKey = GlobalKey<FormState>();
+  TextEditingController categoryupdate=TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    categoryupdate.text=widget.oldName;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     String newName = widget.oldName;
@@ -34,11 +42,15 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
       content: Form(
         key: formKey,
         child: TextFormField(
-          onChanged: (value) => newName = value,
+          onChanged: (value) { newName = value;
+          categoryupdate.value = TextEditingValue(
+            text: value.toUpperCase(),
+            selection: categoryupdate.selection,
+          );},
           validator: (val) {
             if (!val.isNotEmptyValidator) return "Enter a Valid Catgeory Name";
           },
-          controller: TextEditingController(text: widget.oldName),
+          controller: categoryupdate,
           decoration: InputDecoration(
               hintText:
                   AppLocalizations.of(context)!.new_category_name_hinttext,

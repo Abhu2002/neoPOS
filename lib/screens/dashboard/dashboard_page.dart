@@ -100,18 +100,22 @@ class _DashboardPage extends State<DashboardPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                SideMenu(
-                    items: items,
-                    controller: sideMenu,
-                    style: SideMenuStyle(
-                        openSideMenuWidth: 180,
-                        displayMode: SideMenuDisplayMode.auto,
-                        backgroundColor: Colors.grey.shade50,
-                        selectedColor: AppColors.primarySwatch.shade50,
-                        selectedIconColor: AppColors.primarySwatch.shade400,
-                        selectedTitleTextStyle: TextStyle(
-                            color: AppColors.primarySwatch.shade400))),
                 Expanded(
+                  flex: 1,
+                  child: SideMenu(
+                      items: items,
+                      controller: sideMenu,
+                      style: SideMenuStyle(
+                          openSideMenuWidth: 180,
+                          displayMode: SideMenuDisplayMode.auto,
+                          backgroundColor: Colors.grey.shade50,
+                          selectedColor: AppColors.primarySwatch.shade50,
+                          selectedIconColor: AppColors.primarySwatch.shade400,
+                          selectedTitleTextStyle: TextStyle(
+                              color: AppColors.primarySwatch.shade400))),
+                ),
+                Expanded(
+                  flex: 7,
                   child: PageView(
                     physics: const NeverScrollableScrollPhysics(),
                     controller: pageController,
