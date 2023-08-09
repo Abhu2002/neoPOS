@@ -91,12 +91,8 @@ class _OrderPageReadState extends State<OrderPageRead> {
                               ),
                               onTap: () {
                                 // Navigatigation to new Page
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const OrderMenuPage(),
-                                    ));
+                                Navigator.pushNamed(context, "/menu",
+                                    arguments: {"Id": data[i]["docID"]});
                               },
                             ),
                           )),

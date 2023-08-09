@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class OrderMenuPage extends StatefulWidget {
-  const OrderMenuPage({Key? key}) : super(key: key);
+  dynamic data;
+  OrderMenuPage({Key? key, this.data}) : super(key: key);
 
   @override
   State<OrderMenuPage> createState() => _OrderMenuPageState();

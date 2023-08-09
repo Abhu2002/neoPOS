@@ -46,7 +46,6 @@ class OrderReadBloc extends Bloc<OrderReadEvent, OrderReadState> {
         emit(OrderReadLoadedState(
             allCat)); //gives all document of tables to State
       } catch (err) {
-        print(err);
         emit(const OrderErrorState(
             "Some Error Occur")); //calls state and stores message through parameter
       }
