@@ -4,8 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 
 import '../../../utils/app_colors.dart';
-import '../products_operation/delete_operation/delete_category_dialog.dart';
+import '../products_operation/delete_operation/delete_product_dialog.dart';
 import '../products_operation/update_operation/product_update_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MoreInfoPopup extends StatefulWidget {
   const MoreInfoPopup(
@@ -59,10 +60,10 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Padding(
-                    padding: EdgeInsets.all(15),
-                    child: Text("Product Details",
-                        style: TextStyle(
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Text(AppLocalizations.of(context)!.product_details,
+                        style: const TextStyle(
                             color: Colors.black,
                             fontSize: 20,
                             fontWeight: FontWeight.bold)),
@@ -87,7 +88,8 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                       borderRadius: BorderRadius.circular(20),
                       child: CachedNetworkImage(
                           imageUrl: widget.image,
-                          width: 300,
+                          width: 250,
+                          height: 200,
                           fit: BoxFit.fill)),
                 ),
               ),
@@ -95,10 +97,11 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                 padding: const EdgeInsets.all(10),
                 child: Row(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 155,
-                      child: Text("Product name : ",
-                          style: TextStyle(
+                      child: Text(
+                          AppLocalizations.of(context)!.product_name_title,
+                          style: const TextStyle(
                               color: AppColors.mainTextColor, fontSize: 18)),
                     ),
                     Text(widget.productName,
@@ -110,11 +113,11 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                 padding: const EdgeInsets.all(10),
                 child: Row(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 155,
                       child: Text(
-                        "Product Description : ",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.product_description_title,
+                        style: const TextStyle(
                             color: AppColors.mainTextColor, fontSize: 18),
                       ),
                     ),
@@ -130,11 +133,11 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                 padding: const EdgeInsets.all(10),
                 child: Row(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 155,
                       child: Text(
-                        "Product Category : ",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.product_category_title,
+                        style: const TextStyle(
                             color: AppColors.mainTextColor, fontSize: 18),
                       ),
                     ),
@@ -147,26 +150,28 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                 padding: const EdgeInsets.all(10),
                 child: Row(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 155,
                       child: Text(
-                        "Product Type : ",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.type_title,
+                        style: const TextStyle(
                             color: AppColors.mainTextColor, fontSize: 18),
                       ),
                     ),
                     // Text(element["product_type"]!,style: TextStyle(fontSize: 18))
                     Container(
                       height: 20,
-                      width: (widget.productType == "Non-veg") ? 60 : 30,
+                      width: (widget.productType == "nonVeg") ? 60 : 30,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(5),
-                          color: (widget.productType) == "Non-veg"
+                          color: (widget.productType) == "nonVeg"
                               ? Colors.red
                               : Colors.green),
                       child: Center(
                         child: Text(
-                          (widget.productType == "Non-veg") ? "Non-Veg" : "Veg",
+                          (widget.productType == "nonVeg")
+                              ? AppLocalizations.of(context)!.non_veg_text
+                              : AppLocalizations.of(context)!.veg_text,
                           style: const TextStyle(color: Colors.white),
                         ),
                       ),
@@ -178,11 +183,12 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                 padding: const EdgeInsets.all(10),
                 child: Row(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 158,
                       child: Text(
-                        "Product Availibility : ",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!
+                            .product_availability_title,
+                        style: const TextStyle(
                             color: AppColors.mainTextColor, fontSize: 18),
                       ),
                     ),
@@ -202,11 +208,11 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                 padding: const EdgeInsets.only(top: 10, bottom: 30, left: 10),
                 child: Row(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       width: 160,
                       child: Text(
-                        "Product Price : ",
-                        style: TextStyle(
+                        AppLocalizations.of(context)!.product_price,
+                        style: const TextStyle(
                             color: AppColors.mainTextColor, fontSize: 18),
                       ),
                     ),
@@ -241,7 +247,8 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                             .add(ReadInitialEvent(false));
                       });
                     },
-                    child: const Text("Edit Product"),
+                    child:
+                        Text(AppLocalizations.of(context)!.edit_product_button),
                   ),
                   ElevatedButton(
                     onPressed: () {
@@ -256,7 +263,8 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                             ).add(ReadInitialEvent(false))
                           });
                     },
-                    child: const Text("Delete Product"),
+                    child: Text(
+                        AppLocalizations.of(context)!.delete_product_button),
                   ),
                 ],
               )),

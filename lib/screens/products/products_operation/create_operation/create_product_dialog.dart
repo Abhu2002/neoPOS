@@ -1,16 +1,20 @@
-import 'dart:html';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neopos/utils/app_colors.dart';
+import 'package:neopos/utils/popup_cancel_button.dart';
+import 'package:provider/provider.dart';
+import '../../../../utils/build_image.dart';
 import '../../../../utils/popup_cancel_button.dart';
 import 'create_product_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter/services.dart';
 
 var categoryValue = "Select Category";
 bool initial = false;
+
+enum ProductType { veg, nonVeg }
 
 class CreateProductForm extends StatefulWidget {
   const CreateProductForm({super.key});
@@ -28,31 +32,16 @@ class _CreateProductFormState extends State<CreateProductForm> {
   TextEditingController productImage = TextEditingController();
   TextEditingController productPrice = TextEditingController();
   TextEditingController productAvailability = TextEditingController();
+
+  final CreateProductBloc proTypeBloc = CreateProductBloc();
+  final CreateProductBloc imageBloc = CreateProductBloc();
+
   XFile? imageFile;
   final formKey = GlobalKey<FormState>();
   late var categories = [];
 
   bool isChecked = true;
-  bool isVeg = false;
-  bool isNonVeg = false;
-
-  Widget? buildImage() {
-    if (imageFile != null) {
-      // Display image from the device gallery
-      if (kIsWeb) {
-        // For Flutter web, use Image.network
-        return Image.network(imageFile!.path, height: 50, width: 150);
-      } else {
-        // For mobile platforms, use Image.file
-
-        return null;
-      }
-    } else {
-      return Text('No image selected');
-    }
-  }
-
-  // CreateCategoryBloc? categoryReadBloc;
+  bool priceValidated = true;
 
   @override
   void initState() {
@@ -65,6 +54,7 @@ class _CreateProductFormState extends State<CreateProductForm> {
   @override
   Widget build(BuildContext context) {
     context.read<CreateProductBloc>().showMessage = createSnackBar;
+    late ProductType? type;
 
     return SingleChildScrollView(
       child: AlertDialog(
@@ -74,7 +64,7 @@ class _CreateProductFormState extends State<CreateProductForm> {
           ),
         ),
         actionsPadding: const EdgeInsets.all(20),
-        title: const PopUpRow(title: "Create Product"),
+        title: PopUpRow(title: AppLocalizations.of(context)!.create_product),
         actions: [
           Center(
             child: Form(
@@ -112,49 +102,67 @@ class _CreateProductFormState extends State<CreateProductForm> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(children: [
-                      Text(
-                        AppLocalizations.of(context)!.product_type,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      Checkbox(
-                          value: isVeg,
-                          onChanged: (bool? val) {
-                            setState(() {
-                              if (isNonVeg) return;
-                              isVeg = val!;
-                            });
-                          }),
-                      Text(
-                        AppLocalizations.of(context)!.veg,
-                        style: const TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      Checkbox(
-                          value: isNonVeg,
-                          onChanged: (bool? value) {
-                            setState(() {
-                              if (isVeg) return;
-                              isNonVeg = value!;
-                            });
-                          }),
-                      Text(
-                        AppLocalizations.of(context)!.non_veg,
-                        style: const TextStyle(
-                          fontSize: 15,
-                        ),
-                      ),
-                    ]),
+                    BlocBuilder<CreateProductBloc, CreateProductState>(
+                      buildWhen: (previous, current) {
+                        if (current is ProductTypeState) {
+                          type = current.type;
+                        }
+                        return current is ProductTypeState;
+                      },
+                      builder: (BuildContext context, state) {
+                        return Row(
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.product_type,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 17,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 20,
+                            ),
+                            Flexible(
+                              // flex: 1,
+                              child: Row(
+                                children: [
+                                  Radio<ProductType>(
+                                    value: ProductType.veg,
+                                    groupValue: state.type,
+                                    onChanged: (ProductType? value) {
+                                      BlocProvider.of<CreateProductBloc>(
+                                              context)
+                                          .add(ProductTypeEvent(value!));
+                                      // type = state.type == ProductType.veg ? state.type : null;
+                                      // print(state.type);
+                                    },
+                                  ),
+                                  Flexible(
+                                    child:
+                                        Text(AppLocalizations.of(context)!.veg),
+                                  ),
+                                  Radio<ProductType>(
+                                    value: ProductType.nonVeg,
+                                    groupValue: state.type,
+                                    onChanged: (ProductType? value) {
+                                      BlocProvider.of<CreateProductBloc>(
+                                              context)
+                                          .add(ProductTypeEvent(value!));
+                                      // type = state.type == ProductType.nonVeg ? state.type : null;
+                                      // print(state.type);
+                                    },
+                                  ),
+                                  Flexible(
+                                    child: Text(
+                                        AppLocalizations.of(context)!.non_veg),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
@@ -179,6 +187,7 @@ class _CreateProductFormState extends State<CreateProductForm> {
                       height: 20,
                     ),
                     TextFormField(
+                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       controller: productPrice,
                       decoration: InputDecoration(
                           hintText: AppLocalizations.of(context)!.product_price,
@@ -192,6 +201,7 @@ class _CreateProductFormState extends State<CreateProductForm> {
                           return AppLocalizations.of(context)!
                               .enter_product_price;
                         }
+
                         return null;
                       },
                     ),
@@ -252,16 +262,32 @@ class _CreateProductFormState extends State<CreateProductForm> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Row(
-                      children: [
-                        buildImage()!,
-                        const SizedBox(width: 20),
-                        ElevatedButton(
-                          onPressed: _pickImage,
-                          child:
-                              Text(AppLocalizations.of(context)!.select_image),
-                        ),
-                      ],
+                    BlocBuilder<CreateProductBloc, CreateProductState>(
+                      builder: (context, state) {
+                        return Row(
+                          children: [
+                            const BuildImage(),
+                            const SizedBox(width: 20),
+                            ElevatedButton(
+                              onPressed: () async {
+                                final picker = ImagePicker();
+                                final pickedFile = await picker.pickImage(
+                                    source: ImageSource.gallery);
+                                if (pickedFile != null) {
+                                  if (!context.mounted) return;
+                                  BlocProvider.of<CreateProductBloc>(context)
+                                      .add(
+                                    ImageChangedEvent(pickedFile),
+                                  );
+                                  imageFile = state.imageFile;
+                                }
+                              },
+                              child: Text(
+                                  AppLocalizations.of(context)!.select_image),
+                            ),
+                          ],
+                        );
+                      },
                     ),
                     const SizedBox(
                       height: 20,
@@ -272,6 +298,9 @@ class _CreateProductFormState extends State<CreateProductForm> {
                           if (state.errorMessage == "Error creating product") {
                             Navigator.pop(context);
                           }
+                        }
+                        if (state is ProductCreatingState) {
+                          return const CircularProgressIndicator();
                         }
                         if (state is ProductCreatedState) {
                           if (state.created == true) {
@@ -292,28 +321,29 @@ class _CreateProductFormState extends State<CreateProductForm> {
                               onPressed: (state is ProductErrorState)
                                   ? null
                                   : () {
+                                      BlocProvider.of<CreateProductBloc>(
+                                              context)
+                                          .add(ProductCreatingEvent());
                                       if (formKey.currentState!.validate() &&
-                                          imageFile != null &&
-                                          (!isVeg || !isNonVeg)) {
-                                        String productType =
-                                            isVeg ? 'Veg' : 'Non-Veg';
+                                          state.imageFile != null &&
+                                          type != null) {
                                         BlocProvider.of<CreateProductBloc>(
                                                 context)
                                             .add(CreateProductFBEvent(
                                           productName.text,
-                                          productType,
+                                          type!.name,
                                           productDescription.text,
                                           categoryValue,
-                                          imageFile!,
+                                          state.imageFile!,
                                           int.parse(productPrice.text).toInt(),
                                           isChecked,
                                         ));
-                                      } else if (imageFile == null) {
+                                      } else if (state.imageFile == null) {
                                         return createSnackBar(
                                             "Select an image");
-                                      } else {
+                                      } else if (type == null) {
                                         return createSnackBar(
-                                            "Select product type");
+                                            "Type is not selected");
                                       }
                                     },
                               child: Text(
@@ -337,16 +367,6 @@ class _CreateProductFormState extends State<CreateProductForm> {
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
-
-  void _pickImage() async {
-    final picker = ImagePicker();
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        imageFile = pickedFile;
-      });
-    }
-  }
 }
 
 class CustomDropDown extends StatefulWidget {
@@ -362,20 +382,23 @@ class CustomDropDown extends StatefulWidget {
 class _CustomDropDownState extends State<CustomDropDown> {
   @override
   Widget build(BuildContext context) {
-    return DropdownButton(
-      alignment: Alignment.centerLeft,
-      value: widget.dropdownvalue,
-      items: widget.categories.map((category) {
-        return DropdownMenuItem(
-          value: category,
-          child: Text(category),
+    return BlocBuilder<CreateProductBloc, CreateProductState>(
+      builder: (BuildContext context, state) {
+        return DropdownButton(
+          alignment: Alignment.centerLeft,
+          value: state.category ?? widget.dropdownvalue,
+          items: widget.categories.map((category) {
+            return DropdownMenuItem(
+              value: category,
+              child: Text(category),
+            );
+          }).toList(),
+          onChanged: (newValue) {
+            BlocProvider.of<CreateProductBloc>(context)
+                .add(CategoryChangedEvent(newValue.toString()));
+            categoryValue = newValue.toString();
+          },
         );
-      }).toList(),
-      onChanged: (newValue) {
-        setState(() {
-          widget.dropdownvalue = newValue.toString();
-          categoryValue = newValue.toString();
-        });
       },
     );
   }

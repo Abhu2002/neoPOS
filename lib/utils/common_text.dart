@@ -1,4 +1,3 @@
-import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
@@ -50,7 +49,4 @@ class _AuthCustomTextfieldState extends State<AuthCustomTextfield> {
       ),
     );
   }
-}
-class ConstantVar{
-static SideMenuDisplayMode mode= SideMenuDisplayMode.auto;
 }

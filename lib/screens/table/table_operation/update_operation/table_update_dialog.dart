@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
@@ -27,7 +29,7 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
     String newName = widget.tableName;
     String newCapacity = widget.tableCapacity;
     return AlertDialog(
-      title: const PopUpRow(title: 'Update Table'),
+      title: const PopUpRow(title: AppLocalizations.of(context)!.update_table_title),
       content: Form(
         key: formkey,
         child: Column(
@@ -39,7 +41,7 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
               },
               onChanged: (value) => newName = value,
               controller: TextEditingController(text: widget.tableName),
-              decoration: const InputDecoration(hintText: 'New table name'),
+              decoration: const InputDecoration(hintText:  AppLocalizations.of(context)!.new_category_name_hinttext),
             ),
             TextFormField(
               validator: (val) {
@@ -48,18 +50,18 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
               onChanged: (value) => newCapacity = value,
               controller: TextEditingController(text: widget.tableCapacity),
               decoration:
-                  const InputDecoration(hintText: 'New Table Capacity '),
+                  const InputDecoration(hintText: AppLocalizations.of(context)!.new_table_capacity_hinttext),
             )
           ],
         ),
       ),
       actions: <Widget>[
         TextButton(
-          child: const Text('Cancel'),
+          child: Text(AppLocalizations.of(context)!.cancel_button),
           onPressed: () => Navigator.of(context).pop(),
         ),
         TextButton(
-          child: const Text('Update'),
+          child: Text(AppLocalizations.of(context)!.update_button),
           onPressed: () {
             if (formkey.currentState!.validate()) {
               BlocProvider.of<TableUpdateBloc>(context).add(

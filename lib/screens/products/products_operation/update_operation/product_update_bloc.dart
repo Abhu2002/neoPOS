@@ -14,9 +14,45 @@ class UpdateProductBloc extends Bloc<ProductEvent, ProductState> {
   // firebase storage instance..
   final FirebaseStorage storage = FirebaseStorage.instance;
 
-  // registered event for update product..
+  // registered event for update product and reading Categories..
   UpdateProductBloc() : super(ProductInitial()) {
     on<UpdateProductEvent>(_mapUpdateProductEventToState);
+    on<InitialCategoryEvent>(_mapCategoryEventToState);
+    on<CategoryChangedEvent>(_mapCategoryChangedToState);
+    on<ProductTypeUpdateEvent>(_mapProductTypeUpdateToState);
+    on<ImageChangedUpdateEvent>(_mapImageChangedUpdateToState);
+  }
+
+  void _mapImageChangedUpdateToState(
+      ImageChangedUpdateEvent event, Emitter<ProductState> emit) {
+    emit(ImageChangedUpdateState(event.imageFile));
+  }
+
+  void _mapProductTypeUpdateToState(
+      ProductTypeUpdateEvent event, Emitter<ProductState> emit) {
+    emit(ProductTypeUpdateState(event.type));
+  }
+
+  void _mapCategoryChangedToState(
+      CategoryChangedEvent event, Emitter<ProductState> emit) {
+    emit(CategoryChangedState(event.category));
+  }
+
+  // Event for Reading Categories..
+  Future<void> _mapCategoryEventToState(
+      InitialCategoryEvent event, Emitter<ProductState> emit) async {
+    try {
+      List allcat = [];
+      FirebaseFirestore db = FirebaseFirestore.instance;
+      await db.collection("category").get().then((value) => {
+            value.docs.forEach((element) {
+              allcat.add(element['category_name']);
+            })
+          });
+      emit(LoadedCategoryState(allcat));
+    } catch (err) {
+      emit(ErrorProductState(err.toString()));
+    }
   }
 
   // Event for updating products in Firebase FireStore products table..

@@ -5,6 +5,7 @@ import '../../../utils/app_colors.dart';
 import '../user_operations/user_create/create_user_dialog.dart';
 import '../user_operations/user_delete/delete_user_dialog.dart';
 import '../user_operations/user_update/update_user_dialog.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class UserRead extends StatefulWidget {
   const UserRead({super.key});
@@ -46,7 +47,7 @@ class _UserReadState extends State<UserRead> {
                         .then((value) => BlocProvider.of<ReadUserBloc>(context)
                             .add(InitialEvent(false)));
                   },
-                  child: const Text("Create")),
+                  child: Text(AppLocalizations.of(context)!.create_button)),
             ),
           ),
         ]),
@@ -60,11 +61,22 @@ class _UserReadState extends State<UserRead> {
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: AppColors.mainTextColor),
-                  columns: const [
-                    DataColumn(label: Flexible(child: Text('User Name'))),
-                    DataColumn(label: Flexible(child: Text('Added On'))),
-                    DataColumn(label: Flexible(child: Text('Updated On'))),
-                    DataColumn(label: Text('Operations')),
+                  columns: [
+                    DataColumn(
+                        label: Flexible(
+                            child: Text(
+                                AppLocalizations.of(context)!.user_name_text))),
+                    DataColumn(
+                        label: Flexible(
+                            child:
+                                Text(AppLocalizations.of(context)!.added_on))),
+                    DataColumn(
+                        label: Flexible(
+                            child: Text(AppLocalizations.of(context)!
+                                .updated_on_text))),
+                    DataColumn(
+                        label: Text(
+                            AppLocalizations.of(context)!.operations_text)),
                   ],
                   rows: state
                       .all // Loops through dataColumnText, each iteration assigning the value to element

@@ -8,10 +8,11 @@ import 'package:neopos/screens/category/category_operation/update_operation/cate
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
-import 'package:neopos/screens/login/login_page.dart';
+import 'package:neopos/screens/products/products_operation/create_operation/create_product_bloc.dart';
 import 'package:neopos/screens/products/products_operation/delete_operation/delete_bloc.dart';
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_bloc.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
+import 'package:neopos/screens/splashScreen/splashscreen_page.dart';
 import 'package:neopos/screens/users/user_operations/user_create/create_user_bloc.dart';
 import 'package:neopos/screens/users/user_operations/user_delete/delete_user_bloc.dart';
 import 'package:neopos/screens/users/user_operations/user_update/update_user_bloc.dart';
@@ -20,7 +21,6 @@ import 'package:neopos/screens/table/table_operation/create_operation/create_tab
 import 'package:neopos/screens/table/table_operation/delete_operation/delete_bloc.dart';
 import 'package:neopos/screens/table/table_operation/update_operation/update_bloc.dart';
 import 'package:neopos/screens/table/table_page/table_bloc.dart';
-import 'package:neopos/screens/products/products_operation/create_operation/create_product_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'di/firebase_di.dart';
 import 'firebase_options.dart';
@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => CreateTableBloc()),
         BlocProvider(create: (_) => TableUpdateBloc()),
 
-        //Bloc for Product CRUD
+        ///Bloc for Product CRUD
         BlocProvider(create: (_) => ReadProductsBloc()),
         BlocProvider(create: (_) => CreateProductBloc()),
         BlocProvider(create: (_) => ProductDeletionBloc()),
@@ -102,7 +102,7 @@ Widget? isLoggedIn() {
   /// TODO: Initialize user to check whether already logged in or not
   const user = null;
   if (user == null) {
-    widget = const LoginPage();
+    widget = const SplashScreen();
   } else {
     widget = const DashboardPage();
   }
