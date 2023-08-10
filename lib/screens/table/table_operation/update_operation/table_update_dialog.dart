@@ -39,7 +39,6 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
         children: [
           TextField(
             onChanged: (value) {
-              newName = value;
               tableName.value = TextEditingValue(
                 text: value.toUpperCase(),
                 selection: tableName.selection,
