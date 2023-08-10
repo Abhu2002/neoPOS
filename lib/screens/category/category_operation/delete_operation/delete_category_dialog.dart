@@ -4,8 +4,6 @@ import 'package:neopos/utils/popup_cancel_button.dart';
 import 'package:neopos/utils/utils.dart';
 import '../../../../utils/app_colors.dart';
 import 'delete_bloc.dart';
-import 'delete_event.dart';
-import 'delete_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeleteCategoryPopup extends StatefulWidget {
@@ -35,12 +33,68 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
         if (state is ErrorState) {
           showErrorDialog(context, state.error);
         } else if (state is ConfirmationState) {
-          showConfirmationDialog(context);
+          showConfirmationDialog(context, state.id);
         } else if (state is CategoryDeleteState) {
           showSnackBar(context, 'Category deleted successfully.');
         }
       },
       builder: (context, state) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+          actionsPadding: const EdgeInsets.all(20),
+          title: PopUpRow(
+              title: AppLocalizations.of(context)!.delete_category_title),
+          content:
+              Text(AppLocalizations.of(context)!.delete_confirm_msg_category),
+          actions: [
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text(AppLocalizations.of(context)!.no_title),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                BlocProvider.of<CategoryDeletionBloc>(context)
+                    .add(ConfirmTableDeletionEvent(widget.categoryID));
+              },
+              child: Text(AppLocalizations.of(context)!.yes_title),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showErrorDialog(BuildContext context, String error) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(20))),
+          actionsPadding: const EdgeInsets.all(20),
+          title:  PopUpRow(title: AppLocalizations.of(context)!.error_text),
+          content: Text(error),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+              child:  Text(AppLocalizations.of(context)!.ok_button),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showConfirmationDialog(BuildContext context, String id) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
         return AlertDialog(
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -55,7 +109,11 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
                 TextFormField(
                   controller: _usernameController,
                   validator: (val) {
-                    if (!val!.isValidUsername) return "Enter a Valid Username";
+                    if (!val!.isValidUsername)
+                      return "Enter a Valid Username";
+                    else {
+                      return null;
+                    }
                   },
                   decoration: InputDecoration(
                       hintText: AppLocalizations.of(context)!.username_hinttext,
@@ -68,7 +126,11 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
                 TextFormField(
                   controller: _passwordController,
                   validator: (val) {
-                    if (!val!.isValidPassword) return "Enter a Valid Password";
+                    if (!val!.isValidPassword)
+                      return "Enter a Valid Password";
+                    else {
+                      return null;
+                    }
                   },
                   obscureText: true,
                   decoration: InputDecoration(
@@ -91,12 +153,12 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
             ElevatedButton(
               onPressed: () {
                 if (formKey.currentState!.validate()) {
+
                   BlocProvider.of<CategoryDeletionBloc>(context).add(
                     CredentialsEnteredEvent(
-                      _usernameController.text,
-                      _passwordController.text,
-                    ),
+                        _usernameController.text, _passwordController.text, id),
                   );
+                  Navigator.of(context).pop();
                 }
               },
               child: Text(AppLocalizations.of(context)!.submit_button),
@@ -107,66 +169,13 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
     );
   }
 
-  void showErrorDialog(BuildContext context, String error) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20))),
-          actionsPadding: const EdgeInsets.all(20),
-          title: const PopUpRow(title: "Error"),
-          content: Text(error),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(AppLocalizations.of(context)!.ok_button),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
-  void showConfirmationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20))),
-          actionsPadding: const EdgeInsets.all(20),
-          title: PopUpRow(
-              title: AppLocalizations.of(context)!.delete_category_title),
-          content:
-              Text(AppLocalizations.of(context)!.delete_confirm_msg_category),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text(AppLocalizations.of(context)!.no_title),
-            ),
-            TextButton(
-              onPressed: () async {
-                BlocProvider.of<CategoryDeletionBloc>(context)
-                    .deleteCategory(widget.categoryID);
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              },
-              child: Text(AppLocalizations.of(context)!.yes_title),
-            ),
-          ],
-        );
-      },
-    );
-  }
+
 
   void showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message),
     ));
+    Navigator.of(context).pop();
   }
 }

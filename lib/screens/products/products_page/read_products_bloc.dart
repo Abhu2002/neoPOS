@@ -11,12 +11,7 @@ class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
   ReadProductsBloc() : super(ReadProductsInitial()) {
     on<ReadInitialEvent>((event, emit) async {
       try {
-        if (event.isfirst) {
-          emit(ReadDataLoadingState());
-        } else {
-          emit(ReadDataLoadingState());
-          await Future.delayed(const Duration(seconds: 1));
-        }
+        emit(ReadDataLoadingState());
 
         List allCat = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();

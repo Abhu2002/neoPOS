@@ -12,8 +12,13 @@ class CreateCategoryBloc
   void Function(String)? showMessage;
 
   CreateCategoryBloc() : super(CreateCategoryInitial()) {
-    on<NotNameAvaiableEvent>((event, emit) {
-      emit(CreateCategoryInitial());
+
+    on<InputEvent>((event, emit) async {
+      if (event.categoryName != "") {
+        emit(CategoryNameAvailableState());
+      } else {
+        emit(const CategoryErrorState("Please Enter a Name"));
+      }
     });
     on<CreateCategoryFBEvent>((event, emit) async {
       try {

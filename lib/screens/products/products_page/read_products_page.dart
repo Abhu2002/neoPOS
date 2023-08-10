@@ -19,17 +19,20 @@ class _ProductsReadState extends State<ProductsRead> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<ReadProductsBloc>(context).add(ReadInitialEvent(true));
+    BlocProvider.of<ReadProductsBloc>(
+      context,
+    ).add(ReadInitialEvent(true));
   }
 
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        const Padding(
-          padding: EdgeInsets.all(20.0),
-          child: Text("Product Page",
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+        Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Text(AppLocalizations.of(context)!.product_page_title,
+              style:
+                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
         ),
         Flexible(
           child: Padding(

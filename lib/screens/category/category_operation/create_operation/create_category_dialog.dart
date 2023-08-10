@@ -6,6 +6,7 @@ import 'package:neopos/utils/popup_cancel_button.dart';
 import 'create_category_bloc.dart';
 import 'dart:core';
 import 'package:neopos/utils/utils.dart';
+import 'package:neopos/utils/utils.dart';
 
 class CreateCategoryForm extends StatefulWidget {
   const CreateCategoryForm({super.key});
@@ -98,16 +99,15 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                         selection: categoryName.selection);
                   },
                   validator: (value) {
-                    if (!value.isNotEmptyValidator) {
-                      return 'Please enter some text';
+                    if (!value.isValidName) {
+                      return 'Enter valid Category Name';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(
                   height: 20,
-                ),
-                BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
+                ),BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
                   builder: (context, state) {
                     if (state is CategoryCreatedState) {
                       if (state.created == true) {
@@ -136,6 +136,8 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
             ),
           ),
         ),
+
+        // ActionButton(text: "Create Table", onPress: () {})
       ],
     );
   }

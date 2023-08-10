@@ -8,6 +8,9 @@ class ErrorState extends ProductDeletionState {
   ErrorState(this.error);
 }
 
-class ConfirmationState extends ProductDeletionState {}
+class ConfirmationState extends ProductDeletionState {
+  final String id;
+  ConfirmationState(this.id);
+}
 
 class ProductDeleteState extends ProductDeletionState {}

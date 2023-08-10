@@ -28,8 +28,9 @@ class _CreateTableFormState extends State<CreateTableForm> {
   @override
   Widget build(BuildContext context) {
     context.read<CreateTableBloc>().showMessage = createSnackBar;
-    final formKey = GlobalKey<FormState>();
+    final formKey = GlobalKey<FormState>(); //
     return AlertDialog(
+      // contentPadding: EdgeInsets.all(20),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
@@ -98,45 +99,39 @@ class _CreateTableFormState extends State<CreateTableForm> {
                           text: value.toUpperCase(),
                           selection: tableName.selection);
                     },
-                    validator: (value) {
-                      if (!value.isNotEmptyValidator) {
-                        return 'Please enter some text';
+                    validator: (val) {
+                      if (!val.isValidName) {
+                        return 'Enter a valid Table Name';
                       }
-                      return null;
+                      else{
+                        return null;
+    }
                     }),
                 const SizedBox(
                   height: 20,
                 ),
-                BlocBuilder<CreateTableBloc, CreateTableState>(
-                  builder: (context, state) {
-                    if (state is TableCreatedState) {
-                      if (state.isCreated == true) {
-                        state.isCreated = false;
-                        Navigator.pop(context);
-                      }
-                    }
-                    return TextFormField(
-                      keyboardType: TextInputType.number,
-                      controller: tableCap,
-                      inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                      decoration: InputDecoration(
-                          hintText: AppLocalizations.of(context)!.table_cap,
-                          prefixIcon: const Icon(
-                            Icons.group_add,
-                            color: AppColors.primaryColor,
-                          )),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return "Please Enter a Number";
-                        } else if (!RegExp(r'\d').hasMatch(value)) {
-                          return "Please Enter a Valid Capacity";
-                        } else {
-                          return null;
-                        }
-                      },
-                    );
-                  },
-                ),
+              BlocBuilder<CreateTableBloc, CreateTableState>(
+                builder: (context, state) {
+                  return TextFormField(
+                    keyboardType: TextInputType.number,
+                    controller: tableCap,
+                    decoration: InputDecoration(
+                        hintText: AppLocalizations.of(context)!.table_cap,
+                        prefixIcon: const Icon(
+                          Icons.group_add,
+                          color: AppColors.primaryColor,
+                        )),
+                    validator: (val) {
+                      if (!val.isValidTableCap)
+                        return "Enter a Valid Table Capacity";
+                    },
+                    onChanged: (val) {
+                      BlocProvider.of<CreateTableBloc>(context)
+                          .add(InputEvent(tableName.text, tableCap.text));
+                    },
+                  );
+                },
+              ),
                 const SizedBox(
                   height: 20,
                 ),

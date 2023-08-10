@@ -20,8 +20,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
   TextEditingController password = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
-  static const List<String> list = <String>['Admin', 'Waiter'];
-  String dropdownValue = list.first;
+
 
   @override
   void initState() {
@@ -32,6 +31,11 @@ class _CreateUserFormState extends State<CreateUserForm> {
   @override
   Widget build(BuildContext context) {
     context.read<CreateUserBloc>().showMessage = createSnackBar;
+    List<String> list = <String>[
+      AppLocalizations.of(context)!.admin,
+      AppLocalizations.of(context)!.waiter
+    ];
+    String dropdownValue = list.first;
     return AlertDialog(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -100,8 +104,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             color: AppColors.primaryColor,
                           )),
                       validator: (value) {
-                        String? val = value?.trim();
-                        if (!val.isNotEmptyValidator) {
+                        if (!value.isValidName) {
                           return AppLocalizations.of(context)!
                               .create_user_validation_msg;
                         }
@@ -124,11 +127,9 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             Icons.person,
                             color: AppColors.primaryColor,
                           )),
-                      validator: (value) {
-                        String? val = value?.trim();
-                        if (!val.isNotEmptyValidator) {
-                          return AppLocalizations.of(context)!
-                              .create_user_validation_msg;
+                      validator: (val) {
+                        if (!val.isValidName) {
+                          return "Enter a Valid Last Name";
                         }
                         return null;
                       },
@@ -149,11 +150,9 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             Icons.person,
                             color: AppColors.primaryColor,
                           )),
-                      validator: (value) {
-                        String? val = value?.trim();
-                        if (!val.isNotEmptyValidator) {
-                          return AppLocalizations.of(context)!
-                              .create_user_validation_msg;
+                      validator: (val) {
+                        if (!val.isValidUsername) {
+                          return "Enter a User Name";
                         }
                         return null;
                       },
@@ -174,11 +173,9 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             Icons.lock,
                             color: AppColors.primaryColor,
                           )),
-                      validator: (value) {
-                        String? val = value?.trim();
-                        if (!val.isNotEmptyValidator) {
-                          return AppLocalizations.of(context)!
-                              .create_user_validation_msg;
+                      validator: (val) {
+                        if (!val.isValidPassword) {
+                          return "Enter a valid Password";
                         }
                         return null;
                       },
@@ -252,6 +249,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                           },
                           child: Text(
                               AppLocalizations.of(context)!.create_user_title),
+
                         ));
                   },
                 ),

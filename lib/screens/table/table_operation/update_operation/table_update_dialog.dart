@@ -1,10 +1,12 @@
+
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import 'update_bloc.dart';
 import 'update_event.dart';
+import 'package:neopos/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 //pass table name and table id to update the table..
 
 class UpdateTableForm extends StatefulWidget {
@@ -22,6 +24,7 @@ class UpdateTableForm extends StatefulWidget {
 }
 
 class _UpdateTableFormState extends State<UpdateTableForm> {
+  final formkey = GlobalKey<FormState>();
   TextEditingController tableName = TextEditingController();
   @override
   void initState() {
@@ -31,33 +34,39 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
 
   @override
   Widget build(BuildContext context) {
+    String newName = widget.tableName;
     String newCapacity = widget.tableCapacity;
     return AlertDialog(
       title: PopUpRow(title: AppLocalizations.of(context)!.update_table_title),
-      content: Column(
+      content:Form(
+      key:formkey,
+      child:Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          TextField(
-            onChanged: (value) {
-              tableName.value = TextEditingValue(
-                text: value.toUpperCase(),
-                selection: tableName.selection,
-              );
-            },
-            controller: tableName,
+          TextFormField(
+          validator: (val) {
+      if (!val.isValidName) return "Enter Valid Table Capacity";
+      },
+            onChanged: (value) => newName = value,
+            controller: TextEditingController(text: widget.tableName),
             decoration: InputDecoration(
                 hintText:
                     AppLocalizations.of(context)!.new_category_name_hinttext),
           ),
-          TextField(
+          TextFormField(
+              validator: (val) {
+                if (!val.isValidTableCap) return "Enter Valid Table Capacity";
+              },
             onChanged: (value) => newCapacity = value,
             controller: TextEditingController(text: widget.tableCapacity),
             decoration: InputDecoration(
                 hintText:
                     AppLocalizations.of(context)!.new_table_capacity_hinttext),
+
           )
         ],
       ),
+    ),
       actions: <Widget>[
         TextButton(
           child: Text(AppLocalizations.of(context)!.cancel_button),
@@ -66,12 +75,12 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
         TextButton(
           child: Text(AppLocalizations.of(context)!.update_button),
           onPressed: () {
-            if (tableName.text.trim().isNotEmpty) {
+            if (formkey.currentState!.validate()) {
               BlocProvider.of<TableUpdateBloc>(context).add(
-                TableUpdateRequested(widget.docID, tableName.text, newCapacity),
+                TableUpdateRequested(widget.docID, newName, newCapacity),
               );
+              Navigator.of(context).pop();
             }
-            Navigator.of(context).pop();
           },
         ),
       ],

@@ -38,9 +38,8 @@ final List<Map<String,dynamic>> products;
   });
 
   factory LiveTableModel.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
-  ) {
+      DocumentSnapshot<Map<String, dynamic>> snapshot,
+      SnapshotOptions? options,) {
     final data = snapshot.data();
     return LiveTableModel(
       tableName: data?['tablename'],
@@ -54,4 +53,7 @@ final List<Map<String,dynamic>> products;
       if(products!= null) "products":products
     };
   }
+
+
 }
+

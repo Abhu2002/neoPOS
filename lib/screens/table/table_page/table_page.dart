@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/table/table_page/table_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
+
 import '../table_operation/create_operation/create_table_dialog.dart';
 import '../table_operation/delete_operation/delete_table_dialog.dart';
 import '../table_operation/update_operation/table_update_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
 enum TableItem { tableDelete, tableEdit } //enum for popup
 
 class TableRead extends StatefulWidget {
@@ -101,24 +101,22 @@ class _TableReadState extends State<TableRead> {
                                               color: Colors.white,
                                               itemBuilder: (context) =>
                                                   <PopupMenuEntry<TableItem>>[
-                                                    PopupMenuItem<TableItem>(
+                                                    const PopupMenuItem<
+                                                            TableItem>(
                                                         value:
                                                             TableItem.tableEdit,
                                                         child: Text(
-                                                          AppLocalizations.of(
-                                                                  context)!
-                                                              .edit_table_option,
+                                                          "Edit",
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.black),
                                                         )),
-                                                    PopupMenuItem<TableItem>(
+                                                    const PopupMenuItem<
+                                                            TableItem>(
                                                         value: TableItem
                                                             .tableDelete,
                                                         child: Text(
-                                                          AppLocalizations.of(
-                                                                  context)!
-                                                              .delete_table_option,
+                                                          "Delete",
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.black),
@@ -137,8 +135,8 @@ class _TableReadState extends State<TableRead> {
                                                         BlocProvider.of<
                                                                     TableBloc>(
                                                                 context)
-                                                            .add(InitialEvent(
-                                                                false)));
+                                                            .add(
+                                                                InitialEvent(false)));
                                                   case "tableEdit":
                                                     showDialog(
                                                         context: context,
@@ -174,7 +172,7 @@ class _TableReadState extends State<TableRead> {
                                           "Capacity: ${(data[i]["tablecapacity"]).toString()}"),
                                     ],
                                   ),
-                                ),
+                                  )
                               ),
                             ),
                           )),

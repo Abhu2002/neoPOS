@@ -19,7 +19,7 @@ class UserDeletionBloc extends Bloc<UserDeletionEvent, UserDeletionState> {
       Emitter<UserDeletionState> emit) async {
     String username = event.username;
     String password = event.password;
-
+    String docID = event.id;
     QuerySnapshot querySnapshot =
         await usersCollection.where('user_id', isEqualTo: username).get();
 
@@ -29,7 +29,8 @@ class UserDeletionBloc extends Bloc<UserDeletionEvent, UserDeletionState> {
         String role = userData['user_role'];
 
         if (userData['password'] == password && role == 'admin') {
-          emit(ConfirmationState());
+         usersCollection.doc(docID).delete();
+          emit(UserDeleteState());
         } else {
           emit(ErrorState('Invalid credentials or insufficient permissions.'));
         }
@@ -42,12 +43,8 @@ class UserDeletionBloc extends Bloc<UserDeletionEvent, UserDeletionState> {
   //Event for deletion
   void _mapConfirmUserDeletionEventToState(
       ConfirmUserDeletionEvent event, Emitter<UserDeletionState> emit) {
-    emit(UserDeleteState());
+    emit(ConfirmationState(event.id));
   }
 
-  //delete user based on doc id.
-  void deleteUser(String docId) async {
-    await usersCollection.doc(docId).delete();
-    add(ConfirmUserDeletionEvent());
-  }
+
 }

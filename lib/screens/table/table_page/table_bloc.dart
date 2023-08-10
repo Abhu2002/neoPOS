@@ -11,14 +11,8 @@ class TableBloc extends Bloc<TableEvent, TableState> {
     on<InitialEvent>((event, emit) async {
       //t creates it Initially
       try {
-        if (event.isfirst) {
-          emit(
-              TableReadLoadingState()); //Creating connection with firebase and fetching table
-        } else {
-          emit(
-              TableReadLoadingState()); //Creating connection with firebase and fetching table
-          await Future.delayed(const Duration(seconds: 1));
-        }
+        emit(
+            TableReadLoadingState());
         List allCat = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("table").get().then((value) => {
