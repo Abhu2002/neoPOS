@@ -15,35 +15,25 @@ class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
 
         List allCat = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
-
-        await db
-            .collection("products")
-            .get()
-            .then((value) => {
-                  value.docs.forEach((element) {
-                    allCat.add({
-                      "Id": element.id,
-                      "product_availability": element['product_availability'],
-                      "product_category": element['product_category'],
-                      "product_description": element['product_description'],
-                      "product_image": element['product_image'],
-                      "product_name": element['product_name'],
-                      "product_price": element['product_price'],
-                      "product_type": element['product_type'],
-                      "date_added": (element['date_added'] ?? 'Aug 1'),
-                      "date_updated": (element['date_updated'] ?? 'Aug 1'),
-                    });
-                  }),
-                  if (value.metadata.hasPendingWrites)
-                    {emit(ReadDataLoadingState())}
-                  else
-                    {emit(ReadDataLoadedState(allCat))},
-                })
-            .catchError((onError) {
-          return onError;
-        });
+        await db.collection("products").get().then((value) => {
+              value.docs.forEach((element) {
+                allCat.add({
+                  "Id": element.id,
+                  "product_availability": element['product_availability'],
+                  "product_category": element['product_category'],
+                  "product_description": element['product_description'],
+                  "product_image": element['product_image'],
+                  "product_name": element['product_name'],
+                  "product_price": element['product_price'],
+                  "product_type": element['product_type'],
+                  "date_added": (element['date_added'] ?? 'Aug 1'),
+                  "date_updated": (element['date_updated'] ?? 'Aug 1'),
+                });
+              })
+            });
+        ReadLoadedDataEvent();
+        emit(ReadDataLoadedState(allCat));
       } catch (err) {
-        print(err);
         emit(ReadErrorState("Error Occur :-$err"));
       }
     });

@@ -28,10 +28,10 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
   TextEditingController tableName = TextEditingController();
   @override
   void initState() {
-    tableName.text=widget.tableName;
-    // TODO: implement initState
+    tableName.text = widget.tableName;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     String newName = widget.tableName;

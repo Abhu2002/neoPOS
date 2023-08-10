@@ -26,12 +26,6 @@ class UpdateUserForm extends StatefulWidget {
 }
 
 class _UpdateUserFormState extends State<UpdateUserForm> {
-  @override
-  void initState() {
-    // TODO: implement initState
-
-    super.initState();
-  }
 
   final formkey = GlobalKey<FormState>();
   @override
@@ -143,7 +137,7 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
                   content: Text(AppLocalizations.of(context)!.user_update_msg));
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             } else {
-              //Navigator.of(context).pop();
+
               final snackBar = SnackBar(
                   content: Text(
                       AppLocalizations.of(context)!.user_update_error_msg));

@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
-import 'create_table_bloc.dart';
 import 'package:neopos/utils/utils.dart';
+import 'create_table_bloc.dart';
 
 class CreateTableForm extends StatefulWidget {
   const CreateTableForm({super.key});
@@ -20,7 +20,6 @@ class _CreateTableFormState extends State<CreateTableForm> {
 
   @override
   void initState() {
-    BlocProvider.of<CreateTableBloc>(context).add(const InputEvent("", ""));
     tableName.text = "";
     tableCap.text = "";
     super.initState();
@@ -39,15 +38,55 @@ class _CreateTableFormState extends State<CreateTableForm> {
         title: AppLocalizations.of(context)!.create_table,
       ),
       actions: [
+        BlocListener<CreateTableBloc, CreateTableState>(
+          listener: (context, state) {
+            if (state is TableNameNotAvailableState) {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return AlertDialog(
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20))),
+                    actionsPadding: const EdgeInsets.all(20),
+                    actions: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            AppLocalizations.of(context)!.tb_name_exist,
+                            style: const TextStyle(
+                                fontSize: 15,
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                BlocProvider.of<CreateTableBloc>(context)
+                                    .add(TableNameNotAvailableEvent());
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                  AppLocalizations.of(context)!.ok_button)),
+                        ],
+                      )
+                    ],
+                  );
+                },
+              );
+            }
+          },
+          child: const Text(""),
+        ),
         SizedBox(
           width: MediaQuery.of(context).size.width / 2,
-          child:Form(
-          key:formKey,
-          child:Column(
-            children: [
-              BlocBuilder<CreateTableBloc, CreateTableState>(
-                builder: (context, state) {
-                  return TextFormField(
+          child: Form(
+            key: formKey,
+            child: Column(
+              children: [
+                TextFormField(
                     controller: tableName,
                     decoration: InputDecoration(
                         hintText: AppLocalizations.of(context)!.table_name,
@@ -55,23 +94,22 @@ class _CreateTableFormState extends State<CreateTableForm> {
                           Icons.table_bar,
                           color: AppColors.primaryColor,
                         )),
-                      validator: (val) {
-                        if (!val.isValidName) return "Enter a Valid Table Name";
-                      },
-                    onChanged: (val) {
+                    onChanged: (value) {
                       tableName.value = TextEditingValue(
-                        text: val.toUpperCase(),
-                        selection: tableName.selection,
-                      );
-                      BlocProvider.of<CreateTableBloc>(context)
-                          .add(InputEvent(tableName.text, tableCap.text));
+                          text: value.toUpperCase(),
+                          selection: tableName.selection);
                     },
-                  );
-                },
-              ),
-              const SizedBox(
-                height: 20,
-              ),
+                    validator: (val) {
+                      if (!val.isValidName) {
+                        return 'Enter a valid Table Name';
+                      }
+                      else{
+                        return null;
+    }
+                    }),
+                const SizedBox(
+                  height: 20,
+                ),
               BlocBuilder<CreateTableBloc, CreateTableState>(
                 builder: (context, state) {
                   return TextFormField(
@@ -85,7 +123,7 @@ class _CreateTableFormState extends State<CreateTableForm> {
                         )),
                     validator: (val) {
                       if (!val.isValidTableCap)
-                        return "Enter a Valid Table Name";
+                        return "Enter a Valid Table Capacity";
                     },
                     onChanged: (val) {
                       BlocProvider.of<CreateTableBloc>(context)
@@ -94,47 +132,31 @@ class _CreateTableFormState extends State<CreateTableForm> {
                   );
                 },
               ),
-              const SizedBox(
-                height: 20,
-              ),
-              BlocBuilder<CreateTableBloc, CreateTableState>(
-                builder: (context, state) {
-                  if (state is TableErrorState) {
-                    if (state.errorMessage == "Please Pop") {
-                      Navigator.pop(context);
-                    }
-                  }
-                  if (state is TableCreatedState) {
-                    if (state.isCreated == true) {
-                      state.isCreated = false;
-                      Navigator.pop(context);
-                    }
-                  }
-                  return SizedBox(
-                      width: double.infinity,
-                      height: 45,
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: (state is TableErrorState)
-                                ? AppColors.unavilableButtonColor
-                                : AppColors.primaryColor),
-                        onPressed:
-                        (state is TableErrorState)
-                            ? null
-                            : () {
-    if (formKey.currentState!.validate()) {
-                                BlocProvider.of<CreateTableBloc>(context).add(
-                                    CreateTableFBEvent(
-                                        tableName.text, tableCap.text));
-                              }
-                               },
-
-                        child: Text(AppLocalizations.of(context)!.create_table),
-                      ));
-                },
-              ),
-            ],
-          ),
+                const SizedBox(
+                  height: 20,
+                ),
+                BlocBuilder<CreateTableBloc, CreateTableState>(
+                  builder: (context, state) {
+                    return SizedBox(
+                        width: double.infinity,
+                        height: 45,
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: AppColors.primaryColor),
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              BlocProvider.of<CreateTableBloc>(context).add(
+                                  CreateTableFBEvent(
+                                      tableName.text, tableCap.text));
+                            }
+                          },
+                          child:
+                              Text(AppLocalizations.of(context)!.create_table),
+                        ));
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ],

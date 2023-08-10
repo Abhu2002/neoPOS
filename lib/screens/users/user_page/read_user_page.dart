@@ -26,10 +26,11 @@ class _UserReadState extends State<UserRead> {
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-          const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text("User Page",
-                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(AppLocalizations.of(context)!.userpage_title,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ),
           Flexible(
             child: Padding(

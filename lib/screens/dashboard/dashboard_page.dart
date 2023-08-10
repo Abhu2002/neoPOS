@@ -1,5 +1,6 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
+import 'package:neopos/screens/order%20page/order_read_page/order_read_page.dart';
 import 'package:neopos/screens/products/products_page/read_products_page.dart';
 import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
@@ -73,10 +74,12 @@ class _DashboardPage extends State<DashboardPage> {
           sideMenuController.changePage(index);
         },
       ),
+
     ];
+
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Dashboard"),
+          title: Text(AppLocalizations.of(context)!.dashboard_title),
           actions: [
             IconButton(
                 onPressed: () async {
@@ -113,13 +116,15 @@ class _DashboardPage extends State<DashboardPage> {
                     children: const [
                       SingleChildScrollView(child: CategoryRead()),
 
-                      ProductsRead(),
+                      SingleChildScrollView(child: ProductsRead()),
 
                       SingleChildScrollView(child: TableRead()),
 
+                      SingleChildScrollView(child: OrderPageRead()),
+
                       ///TODO DashBoard and History page pending
                       Center(
-                        child: Text('DashBoard Page'),
+                        child: Text('Dashboard'),
                       ),
                       Center(
                         child: Text('Order History'),

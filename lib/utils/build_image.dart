@@ -4,6 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../screens/products/products_operation/create_operation/create_product_bloc.dart';
 
+// import '../screens/products/products_operation/create_operation/create_product_bloc.dart';
+//
 class BuildImage extends StatefulWidget {
   const BuildImage({super.key});
 

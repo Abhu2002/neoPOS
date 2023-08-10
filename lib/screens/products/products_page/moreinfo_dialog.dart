@@ -158,7 +158,6 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                             color: AppColors.mainTextColor, fontSize: 18),
                       ),
                     ),
-                    // Text(element["product_type"]!,style: TextStyle(fontSize: 18))
                     Container(
                       height: 20,
                       width: (widget.productType == "nonVeg") ? 60 : 30,
@@ -244,7 +243,7 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                       ).then((value) {
                         Navigator.of(context).pop();
                         BlocProvider.of<ReadProductsBloc>(context)
-                            .add(ReadInitialEvent());
+                            .add(ReadInitialEvent(false));
                       });
                     },
                     child:
@@ -258,14 +257,14 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                             return DeleteProductPopup(productID: widget.id);
                           }).then((value) => {
                             Navigator.pop(context),
-                            BlocProvider.of<ReadProductsBloc>(
-                              context,
-                            ).add(ReadInitialEvent())
+                            BlocProvider.of<ReadProductsBloc>(context)
+                                .add(ReadInitialEvent(false))
                           });
                     },
                     child: Text(
                         AppLocalizations.of(context)!.delete_product_button),
                   ),
+
                 ],
               )),
             ]),

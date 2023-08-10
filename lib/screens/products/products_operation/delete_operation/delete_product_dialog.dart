@@ -83,7 +83,7 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
     );
   }
 
-  void showConfirmationDialog(BuildContext context, String id) {
+  void showConfirmationDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {

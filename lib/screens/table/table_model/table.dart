@@ -30,9 +30,11 @@ class TableModel {
 
 class LiveTableModel {
   final String? tableName;
-
+final List<Map<String,dynamic>> products;
   LiveTableModel({
     this.tableName,
+    required this.products
+
   });
 
   factory LiveTableModel.fromFirestore(
@@ -41,12 +43,14 @@ class LiveTableModel {
     final data = snapshot.data();
     return LiveTableModel(
       tableName: data?['tablename'],
+      products: data?['products']
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
       if (tableName != null) "table_name": tableName,
+      if(products!= null) "products":products
     };
   }
 

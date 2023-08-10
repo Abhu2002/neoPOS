@@ -39,9 +39,10 @@ class CreateTableBloc extends Bloc<CreateTableEvent, CreateTableState> {
           emit(const TableErrorState("Please Pop"));
           showMessage!("Table Name Exist Please use Different Name");
         } else {
+          List<Map<String, dynamic>> myData = [];
           final data = TableModel(
               tableName: event.tableName, tableCap: int.parse(event.tableCap));
-          final livedata = LiveTableModel(tableName: event.tableName);
+          final livedata = LiveTableModel(tableName: event.tableName,products: myData);
           await db.collection("table").add(data.toFirestore()).then(
               (documentSnapshot) => {
                     emit(TableCreatedState(true)),
@@ -54,9 +55,7 @@ class CreateTableBloc extends Bloc<CreateTableEvent, CreateTableState> {
           await GetIt.I.get<FirebaseFirestore>().clearPersistence();
           await GetIt.I.get<FirebaseFirestore>().terminate();
         }
-      } catch (err) {
-        // print(err);
-      }
+      } catch (err) {}
     });
   }
 }

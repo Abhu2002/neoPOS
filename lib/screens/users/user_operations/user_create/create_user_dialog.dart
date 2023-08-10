@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
+import 'package:neopos/utils/utils.dart';
 import '../../../../utils/popup_cancel_button.dart';
 import 'create_user_bloc.dart';
-import 'package:neopos/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class CreateUserForm extends StatefulWidget {
@@ -20,16 +20,10 @@ class _CreateUserFormState extends State<CreateUserForm> {
   TextEditingController password = TextEditingController();
 
   final formKey = GlobalKey<FormState>();
-  /*static List<String> list = <String>[
-    AppLocalizations.of(context)!.admin,
-    AppLocalizations.of(context)!.waiter
-  ];*/
-  //String dropdownValue = list.first;
+
 
   @override
   void initState() {
-    BlocProvider.of<CreateUserBloc>(context)
-        .add(const InputEvent("", "", "", "", ""));
     userName.text = "";
     super.initState();
   }
@@ -43,7 +37,6 @@ class _CreateUserFormState extends State<CreateUserForm> {
     ];
     String dropdownValue = list.first;
     return AlertDialog(
-      // contentPadding: EdgeInsets.all(20),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
@@ -55,6 +48,50 @@ class _CreateUserFormState extends State<CreateUserForm> {
             width: MediaQuery.of(context).size.width / 2,
             child: Column(
               children: [
+                BlocListener<CreateUserBloc, CreateUserState>(
+                  listener: (context, state) {
+                    if (state is UserNameNotAvailableState) {
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            shape: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(20))),
+                            actionsPadding: const EdgeInsets.all(20),
+                            actions: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    AppLocalizations.of(context)!
+                                        .usr_name_exist,
+                                    style: const TextStyle(
+                                        fontSize: 15,
+                                        color: AppColors.primaryColor,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  const SizedBox(
+                                    height: 15,
+                                  ),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        BlocProvider.of<CreateUserBloc>(context)
+                                            .add(UserIntialEvent());
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(AppLocalizations.of(context)!
+                                          .ok_button)),
+                                ],
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  child: const Text(""),
+                ),
                 BlocBuilder<CreateUserBloc, CreateUserState>(
                   builder: (context, state) {
                     return TextFormField(
@@ -66,15 +103,12 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             Icons.person,
                             color: AppColors.primaryColor,
                           )),
-                      onChanged: (val) {
-                        BlocProvider.of<CreateUserBloc>(context)
-                            .add(InputEvent(firstName.text, "", "", "", ""));
-                      },
-
-                      validator: (val) {
-                        if (!val.isValidName) {
-                          return 'Enter a Valid First Name';
+                      validator: (value) {
+                        if (!value.isValidName) {
+                          return AppLocalizations.of(context)!
+                              .create_user_validation_msg;
                         }
+                        return null;
                       },
                     );
                   },
@@ -93,15 +127,11 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             Icons.person,
                             color: AppColors.primaryColor,
                           )),
-                      onChanged: (val) {
-                        BlocProvider.of<CreateUserBloc>(context)
-                            .add(InputEvent(lastName.text, "", "", "", ""));
-                      },
-
                       validator: (val) {
                         if (!val.isValidName) {
                           return "Enter a Valid Last Name";
                         }
+                        return null;
                       },
                     );
                   },
@@ -124,6 +154,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                         if (!val.isValidUsername) {
                           return "Enter a User Name";
                         }
+                        return null;
                       },
                     );
                   },
@@ -135,20 +166,18 @@ class _CreateUserFormState extends State<CreateUserForm> {
                   builder: (context, state) {
                     return TextFormField(
                       controller: password,
-                      decoration:  InputDecoration(
-                          hintText: AppLocalizations.of(context)!.password_hinttext,
-                          prefixIcon: Icon(
+                      decoration: InputDecoration(
+                          hintText:
+                              AppLocalizations.of(context)!.password_title,
+                          prefixIcon: const Icon(
                             Icons.lock,
                             color: AppColors.primaryColor,
                           )),
-                      onChanged: (val) {
-                        BlocProvider.of<CreateUserBloc>(context)
-                            .add(InputEvent(password.text, "", "", "", ""));
-                      },
                       validator: (val) {
                         if (!val.isValidPassword) {
                           return "Enter a valid Password";
                         }
+                        return null;
                       },
                     );
                   },
@@ -177,8 +206,6 @@ class _CreateUserFormState extends State<CreateUserForm> {
                             setState(() {
                               dropdownValue = value!;
                             });
-                            BlocProvider.of<CreateUserBloc>(context)
-                                .add(InputEvent(value!, "", "", "", ""));
                           },
                           items: list
                               .map<DropdownMenuItem<String>>((String value) {
@@ -197,37 +224,32 @@ class _CreateUserFormState extends State<CreateUserForm> {
                 ),
                 BlocBuilder<CreateUserBloc, CreateUserState>(
                   builder: (context, state) {
-                    if (state is UserErrorState) {
-                      if (state.errorMessage == "Please Pop") {
-                        Navigator.pop(context);
-                      }
-                    }
                     if (state is UserCreatedState) {
-                      Navigator.pop(context);
+                      if (state.created == true) {
+                        Navigator.pop(context);
+                        state.created = false;
+                      }
                     }
                     return SizedBox(
                         width: double.infinity,
                         height: 45,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: (state is UserErrorState)
-                                  ? AppColors.unavilableButtonColor
-                                  : AppColors.primaryColor),
-                          onPressed: (state is UserErrorState)
-                              ? null
-                              : () {
-                                  if (formKey.currentState!.validate()) {
-                                    BlocProvider.of<CreateUserBloc>(context)
-                                        .add(CreateUserFBEvent(
-                                            userName.text,
-                                            firstName.text,
-                                            lastName.text,
-                                            password.text,
-                                            dropdownValue));
-                                  }
-                                },
+                              backgroundColor: AppColors.primaryColor),
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              BlocProvider.of<CreateUserBloc>(context).add(
+                                  CreateUserFBEvent(
+                                      userName.text,
+                                      firstName.text,
+                                      lastName.text,
+                                      password.text,
+                                      dropdownValue));
+                            }
+                          },
                           child: Text(
                               AppLocalizations.of(context)!.create_user_title),
+
                         ));
                   },
                 ),

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:neopos/navigation/route_paths.dart';
 import '../screens/dashboard/dashboard_page.dart';
 import '../screens/login/login_page.dart';
+import '../screens/order page/order_content_page/order_content_page.dart';
 import '../screens/splashScreen/splashscreen_page.dart';
 
 class AppRouter {
@@ -13,6 +14,13 @@ class AppRouter {
         return CupertinoPageRoute(
           builder: (context) => const SplashScreen(),
           settings: const RouteSettings(name: RoutePaths.splashscreen),
+        );
+      // -------------- Menuscreen Route ------------
+      case RoutePaths.menu:
+        return CupertinoPageRoute(
+          builder: (context) => OrderMenuPage(data: settings.arguments),
+          settings: RouteSettings(
+              name: RoutePaths.menu, arguments: settings.arguments),
         );
       // -------------- Dasboard Route ------------
       case RoutePaths.dashboard:

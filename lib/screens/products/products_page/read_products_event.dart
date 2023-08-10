@@ -1,5 +1,3 @@
-// ignore_for_file: must_be_immutable
-
 part of 'read_products_bloc.dart';
 
 abstract class ReadProductsEvent extends Equatable {

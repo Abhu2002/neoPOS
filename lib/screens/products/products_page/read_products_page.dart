@@ -6,7 +6,7 @@ import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'package:neopos/screens/products/products_operation/create_operation/create_product_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart';
+import 'package:intl/intl.dart'; // for date format
 
 class ProductsRead extends StatefulWidget {
   const ProductsRead({super.key});
@@ -19,7 +19,9 @@ class _ProductsReadState extends State<ProductsRead> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<ReadProductsBloc>(context).add(ReadInitialEvent());
+    BlocProvider.of<ReadProductsBloc>(
+      context,
+    ).add(ReadInitialEvent(true));
   }
 
   @override
@@ -47,7 +49,7 @@ class _ProductsReadState extends State<ProductsRead> {
                           builder: (context) => const CreateProductForm())
                       .then((value) =>
                           BlocProvider.of<ReadProductsBloc>(context)
-                              .add(ReadInitialEvent()));
+                              .add(ReadInitialEvent(false)));
                 },
                 child: Text(AppLocalizations.of(context)!.create_button)),
           ),
@@ -60,9 +62,8 @@ class _ProductsReadState extends State<ProductsRead> {
               children: [
                 Container(
                   width: MediaQuery.sizeOf(context).width,
-                  height: MediaQuery.sizeOf(context).height - 174,
+                  height: MediaQuery.sizeOf(context).height - 144,
                   child: ListView.separated(
-                    //shrinkWrap: true,
                     separatorBuilder: (context, index) {
                       return Container(
                         width: MediaQuery.sizeOf(context).width,
@@ -82,7 +83,6 @@ class _ProductsReadState extends State<ProductsRead> {
                               BoxDecoration(color: Colors.grey.shade300),
                           child: Row(
                             children: [
-                              // SizedBox(width: 10),
                               Container(
                                   width: 80,
                                   child: Center(
@@ -110,7 +110,7 @@ class _ProductsReadState extends State<ProductsRead> {
                                   child: Text(
                                     AppLocalizations.of(context)!
                                         .product_name_title,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                         fontSize: 20,
                                         color: AppColors.primaryColor),
                                   )),
@@ -147,7 +147,6 @@ class _ProductsReadState extends State<ProductsRead> {
                                       color: AppColors.primaryColor),
                                 ),
                               )),
-                              // Text("More"),
                             ],
                           ),
                         );
@@ -162,7 +161,9 @@ class _ProductsReadState extends State<ProductsRead> {
                               width: 80,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
-                                child: Center(child: Text("1 Aug")),
+                                child: Center(
+                                    child: Text(DateFormat.MMMd().format(
+                                        DateTime.parse(data['date_added'])))),
                               ),
                             ),
                             const SizedBox(
@@ -290,7 +291,10 @@ class _ProductsReadState extends State<ProductsRead> {
               ],
             );
           }
-          return Text("Loading");
+          return const SizedBox(
+              height: 200,
+              width: 200,
+              child: Center(child: CircularProgressIndicator()));
         }),
       )
     ]);

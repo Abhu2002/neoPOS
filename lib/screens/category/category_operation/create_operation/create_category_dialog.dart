@@ -19,18 +19,14 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
   TextEditingController categoryName = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  // CreateCategoryBloc? categoryReadBloc;
-
   @override
   void initState() {
-    BlocProvider.of<CreateCategoryBloc>(context).add(const InputEvent(""));
     categoryName.text = "";
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    // categoryReadBloc = BlocProvider.of<CreateCategoryBloc>(context);
     context.read<CreateCategoryBloc>().showMessage = createSnackBar;
 
     return AlertDialog(
@@ -52,34 +48,26 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                     actionsPadding: const EdgeInsets.all(20),
                     actions: [
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                "This Catergory Name already exist, Try different name",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    color: AppColors.primaryColor,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                            ],
+                          Text(
+                            AppLocalizations.of(context)!.cat_name_exist,
+                            style: const TextStyle(
+                                fontSize: 15,
+                                color: AppColors.primaryColor,
+                                fontWeight: FontWeight.bold),
                           ),
                           const SizedBox(
                             height: 15,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              ElevatedButton(
-                                  onPressed: () {
-                                    BlocProvider.of<CreateCategoryBloc>(context)
-                                        .add(NotNameAvaiableEvent());
-                                    Navigator.pop(context);
-                                  },
-                                  child: const Text("ok")),
-                            ],
-                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                BlocProvider.of<CreateCategoryBloc>(context)
+                                    .add(NotNameAvaiableEvent());
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                  AppLocalizations.of(context)!.ok_button)),
                         ],
                       )
                     ],
@@ -96,41 +84,31 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
             width: MediaQuery.of(context).size.width / 3,
             child: Column(
               children: [
-                BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
-                  builder: (context, state) {
-                    return TextFormField(
-                      controller: categoryName,
-                      keyboardType: TextInputType.text,
-                      decoration: InputDecoration(
-                          hintText: AppLocalizations.of(context)!.category_name,
-                          prefixIcon: const Icon(
-                            Icons.category,
-                            color: AppColors.primaryColor,
-                          )),
-                      validator: (value) {
-                        if (!value.isValidName) return 'Enter valid Category Name';
-                      },
-                      onChanged: (val) {
-                        categoryName.value = TextEditingValue(
-                          text: val.toUpperCase(),
-                          selection: categoryName.selection,
-                        );
-                        BlocProvider.of<CreateCategoryBloc>(context)
-                            .add(InputEvent(categoryName.text));
-                      },
-                    );
+                TextFormField(
+                  controller: categoryName,
+                  textCapitalization: TextCapitalization.sentences,
+                  decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.category_name,
+                      prefixIcon: const Icon(
+                        Icons.category,
+                        color: AppColors.primaryColor,
+                      )),
+                  onChanged: (value) {
+                    categoryName.value = TextEditingValue(
+                        text: value.toUpperCase(),
+                        selection: categoryName.selection);
+                  },
+                  validator: (value) {
+                    if (!value.isValidName) {
+                      return 'Enter valid Category Name';
+                    }
+                    return null;
                   },
                 ),
                 const SizedBox(
                   height: 20,
-                ),
-                BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
+                ),BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
                   builder: (context, state) {
-                    if (state is CategoryErrorState) {
-                      if (state.errorMessage == "Please Pop") {
-                        Navigator.pop(context);
-                      }
-                    }
                     if (state is CategoryCreatedState) {
                       if (state.created == true) {
                         Navigator.pop(context);
@@ -142,18 +120,13 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                         height: 45,
                         child: ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              backgroundColor: (state is CategoryErrorState)
-                                  ? AppColors.unavilableButtonColor
-                                  : AppColors.primaryColor),
-                          onPressed: (state is CategoryErrorState)
-                              ? null
-                              : () {
-                                  if (formKey.currentState!.validate()) {
-                                    BlocProvider.of<CreateCategoryBloc>(context)
-                                        .add(CreateCategoryFBEvent(
-                                            categoryName.text));
-                                  }
-                                },
+                              backgroundColor: AppColors.primaryColor),
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              BlocProvider.of<CreateCategoryBloc>(context).add(
+                                  CreateCategoryFBEvent(categoryName.text));
+                            }
+                          },
                           child: Text(AppLocalizations.of(context)!
                               .create_category_button),
                         ));
