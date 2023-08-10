@@ -30,11 +30,15 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
           flex: 2,
           child: Column(
             children: [
-              const Padding(
-                padding: EdgeInsets.all(20.0),
-                child: Text("Menu",
-                    style: TextStyle(
-                        fontSize: 20, fontWeight: FontWeight.bold)),
+              const Row(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.all(20.0),
+                    child: Text("Menu",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold)),
+                  ),
+                ],
               ),
               BlocBuilder<OrderContentBloc, OrderContentState>(
                 builder: (context, state) {
