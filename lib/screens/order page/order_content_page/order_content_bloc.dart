@@ -37,7 +37,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         List<dynamic> allorders = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-            await db.collection("live_table").doc('RjYLgs1MsCatjBeLdHlq').get();
+            await db.collection("live_table").doc(event.docId).get();
         Map<String, dynamic>? data = documentSnapshot.data();
         //print(data);
         dynamic tablename = data?['table_name'];
@@ -57,10 +57,10 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         };
 
         allorders.add(myData);
-
+print(event.docId);
         db
             .collection('live_table')
-            .doc('RjYLgs1MsCatjBeLdHlq')
+            .doc(event.docId)
             .set({'products': allorders, 'table_name': tablename});
       } catch (err) {
         throw Exception("Error creating product $err");

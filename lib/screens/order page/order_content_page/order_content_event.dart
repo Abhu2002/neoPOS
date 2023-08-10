@@ -17,13 +17,15 @@ class AddOrderFBEvent extends OrderContentEvent {
   final String productCategory;
   final String productPrice;
 final String quantity;
+final String docId;
 
    AddOrderFBEvent(
       this.productName,
       this.productType,
       this.productCategory,
       this.productPrice,
-       this.quantity
+       this.quantity,
+       this.docId
   );
 
   @override
@@ -32,4 +34,6 @@ final String quantity;
     productType,
     productCategory,
     productPrice,
+    quantity,
+    docId
   ];}

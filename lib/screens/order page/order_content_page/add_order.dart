@@ -13,12 +13,13 @@ class AddOrder extends StatefulWidget {
       super.key,
       required this.productCategory,
       required this.productType,
-      required this.productPrice});
+      required this.productPrice, required this.docId});
 
   final String productName;
   final String productCategory;
   final String productType;
   final String productPrice;
+  final String docId;
 
   @override
   State<AddOrder> createState() => _AddOrderState();
@@ -97,7 +98,8 @@ class _AddOrderState extends State<AddOrder> {
                           widget.productType,
                           widget.productCategory,
                           widget.productPrice,
-                          quantity.toString()));
+                          quantity.toString(),
+                      widget.docId));
                   Navigator.pop(context);
                 },
                 child: Text("ADD"),
