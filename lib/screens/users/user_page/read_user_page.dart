@@ -17,7 +17,7 @@ class UserRead extends StatefulWidget {
 class _UserReadState extends State<UserRead> {
   @override
   void initState() {
-    BlocProvider.of<ReadUserBloc>(context).add(InitialEvent());
+    BlocProvider.of<ReadUserBloc>(context).add(InitialEvent(true));
     super.initState();
   }
 
@@ -25,17 +25,28 @@ class _UserReadState extends State<UserRead> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+        Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(AppLocalizations.of(context)!.userpage_title,
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          ),
           Flexible(
             child: Padding(
               padding: const EdgeInsets.all(20.0),
               child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                      elevation: 10,
+                      minimumSize: const Size(88, 36),
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)))),
                   onPressed: () {
                     showDialog(
                             context: context,
                             builder: (context) => const CreateUserForm())
                         .then((value) => BlocProvider.of<ReadUserBloc>(context)
-                            .add(InitialEvent()));
+                            .add(InitialEvent(false)));
                   },
                   child: Text(AppLocalizations.of(context)!.create_button)),
             ),
@@ -103,7 +114,7 @@ class _UserReadState extends State<UserRead> {
                                             ).then((value) =>
                                                 BlocProvider.of<ReadUserBloc>(
                                                         context)
-                                                    .add(InitialEvent()));
+                                                    .add(InitialEvent(false)));
                                           },
                                           child: const Icon(
                                             Icons.edit,
@@ -127,7 +138,7 @@ class _UserReadState extends State<UserRead> {
                                             ).then((value) =>
                                                 BlocProvider.of<ReadUserBloc>(
                                                         context)
-                                                    .add(InitialEvent()));
+                                                    .add(InitialEvent(false)));
                                           },
                                           child: const Icon(
                                             Icons.delete,
@@ -143,7 +154,10 @@ class _UserReadState extends State<UserRead> {
                 ),
               );
             } else {
-              return const Text("Loading");
+              return const SizedBox(
+                  height: 200,
+                  width: 200,
+                  child: Center(child: CircularProgressIndicator()));
             }
           },
         ),

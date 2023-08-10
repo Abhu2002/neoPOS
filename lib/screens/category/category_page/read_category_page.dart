@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../category_operation/create_operation/create_category_dialog.dart';
-// import '../../product/product_operation/delete_operation/delete_product_dialog.dart';
-//import '../../product/product_operation/delete_operation/delete_product_dialog.dart';
 import '../category_operation/delete_operation/delete_category_dialog.dart';
 import '../category_operation/update_operation/category_update_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -19,7 +17,7 @@ class CategoryRead extends StatefulWidget {
 class _CategoryReadState extends State<CategoryRead> {
   @override
   void initState() {
-    BlocProvider.of<ReadCategoryBloc>(context).add(InitialEvent());
+    BlocProvider.of<ReadCategoryBloc>(context).add(InitialEvent(true));
     super.initState();
   }
 
@@ -49,7 +47,7 @@ class _CategoryReadState extends State<CategoryRead> {
                             builder: (context) => const CreateCategoryForm())
                         .then((value) =>
                             BlocProvider.of<ReadCategoryBloc>(context)
-                                .add(InitialEvent()));
+                                .add(InitialEvent(false)));
                   },
                   child: Text(AppLocalizations.of(context)!.create_button)),
             ),
@@ -72,7 +70,7 @@ class _CategoryReadState extends State<CategoryRead> {
                         label: Flexible(
                             child: Text(AppLocalizations.of(context)!
                                 .category_name_title))),
-                    const DataColumn(label: Center(child: Text(' '))),
+                    const DataColumn(label: Center(child: Text(''))),
                   ],
                   rows: state
                       .all // Loops through dataColumnText, each iteration assigning the value to element
@@ -101,7 +99,7 @@ class _CategoryReadState extends State<CategoryRead> {
                                                           element['Category']),
                                             ).then((value) => BlocProvider.of<
                                                     ReadCategoryBloc>(context)
-                                                .add(InitialEvent()));
+                                                .add(InitialEvent(false)));
                                           },
                                           child: const Icon(
                                             Icons.edit,
@@ -124,7 +122,7 @@ class _CategoryReadState extends State<CategoryRead> {
                                               ),
                                             ).then((value) => BlocProvider.of<
                                                     ReadCategoryBloc>(context)
-                                                .add(InitialEvent()));
+                                                .add(InitialEvent(false)));
                                           },
                                           child: const Icon(Icons.delete,
                                               color: AppColors.mainTextColor)),
@@ -138,7 +136,10 @@ class _CategoryReadState extends State<CategoryRead> {
                 ),
               );
             } else {
-              return const Text("Loading");
+              return const SizedBox(
+                  height: 200,
+                  width: 200,
+                  child: Center(child: CircularProgressIndicator()));
             }
           },
         ),

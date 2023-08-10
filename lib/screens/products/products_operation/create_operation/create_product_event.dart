@@ -11,6 +11,8 @@ class InitialEvent extends CreateProductEvent {}
 
 class ProductCreatingEvent extends CreateProductEvent {}
 
+class NameNotAvaiableEvent extends CreateProductEvent {}
+
 class CreateProductFBEvent extends CreateProductEvent {
   final String productName;
   final String productType;

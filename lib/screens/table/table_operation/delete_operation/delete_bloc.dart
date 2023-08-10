@@ -53,12 +53,9 @@ class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
       var doc = await tableCollection.doc(docID).get();
       var data = doc.data() as Map<String, dynamic>;
       livename = data['table_name'];
-      print(livename);
     } catch (e) {
       print("Error getting document: $e");
     }
-    //liveDocID = await liveTableCollection.where(['table_name'] ,isEqualTo: livename).get();
-    //await liveTableCollection.doc(liveDocID).delete();
 
     var livedata = await liveTableCollection
         .where("table_name", isEqualTo: livename)
@@ -66,7 +63,6 @@ class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
     for (var docSnapshot in livedata.docs) {
       liveDocID = docSnapshot.id;
     }
-    print(liveDocID);
     await tableCollection.doc(docID).delete();
     await liveTableCollection.doc(liveDocID).delete();
     add(ConfirmTableDeletionEvent());

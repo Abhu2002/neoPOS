@@ -12,12 +12,8 @@ class CreateCategoryBloc
   void Function(String)? showMessage;
 
   CreateCategoryBloc() : super(CreateCategoryInitial()) {
-    on<InputEvent>((event, emit) async {
-      if (event.categoryName != "") {
-        emit(CategoryNameAvailableState());
-      } else {
-        emit(const CategoryErrorState("Please Enter a Name"));
-      }
+    on<NotNameAvaiableEvent>((event, emit) {
+      emit(CreateCategoryInitial());
     });
     on<CreateCategoryFBEvent>((event, emit) async {
       try {
@@ -28,9 +24,8 @@ class CreateCategoryBloc
                 allName.add(element['category_name']);
               })
             });
-        if (allName.contains(event.categoryName)) {
-          emit(const CategoryErrorState("Please Pop"));
-          showMessage!("Category Name Exist Please use Different Name");
+        if (allName.contains((event.categoryName).trim())) {
+          emit(NameNotAvailableState());
         } else {
           final data = CategoryModel(categoryName: event.categoryName);
           await db.collection("category").add(data.toFirestore()).then(
@@ -41,9 +36,7 @@ class CreateCategoryBloc
           await GetIt.I.get<FirebaseFirestore>().clearPersistence();
           await GetIt.I.get<FirebaseFirestore>().terminate();
         }
-      } catch (err) {
-        // print(err);
-      }
+      } catch (err) {}
     });
   }
 }

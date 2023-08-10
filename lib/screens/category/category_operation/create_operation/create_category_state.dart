@@ -8,8 +8,6 @@ class CreateCategoryState extends Equatable {
 
 class CreateCategoryInitial extends CreateCategoryState {}
 
-class CategoryNameAvailableState extends CreateCategoryState {}
-
 class CategoryErrorState extends CreateCategoryState {
   final String errorMessage;
   const CategoryErrorState(this.errorMessage);
@@ -23,3 +21,5 @@ class CategoryCreatedState extends CreateCategoryState {
   @override
   List<Object> get props => [created];
 }
+
+class NameNotAvailableState extends CreateCategoryState {}

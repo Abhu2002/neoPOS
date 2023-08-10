@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
@@ -27,10 +25,10 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
   TextEditingController tableName = TextEditingController();
   @override
   void initState() {
-    tableName.text=widget.tableName;
-    // TODO: implement initState
+    tableName.text = widget.tableName;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     String newName = widget.tableName;
@@ -41,12 +39,13 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
         mainAxisSize: MainAxisSize.min,
         children: [
           TextField(
-            onChanged: (value) {newName = value;
-            tableName.value = TextEditingValue(
-              text: value.toUpperCase(),
-              selection: tableName.selection,
-            );
-              },
+            onChanged: (value) {
+              newName = value;
+              tableName.value = TextEditingValue(
+                text: value.toUpperCase(),
+                selection: tableName.selection,
+              );
+            },
             controller: tableName,
             decoration: InputDecoration(
                 hintText:

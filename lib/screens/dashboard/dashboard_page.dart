@@ -1,6 +1,7 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:neopos/screens/order%20page/order_page/order_content_page/order_content_page.dart';
+import 'package:neopos/screens/order%20page/order_read_page/order_read_page.dart';
 import 'package:neopos/screens/products/products_page/read_products_page.dart';
 import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
@@ -49,6 +50,13 @@ class _DashboardPage extends State<DashboardPage> {
       SideMenuItem(
         icon: const Icon(Icons.table_chart),
         title: AppLocalizations.of(context)!.tables_title,
+        onTap: (index, sideMenuController) {
+          sideMenuController.changePage(index);
+        },
+      ),
+      SideMenuItem(
+        icon: const Icon(Icons.dashboard),
+        title: AppLocalizations.of(context)!.order_page,
         onTap: (index, sideMenuController) {
           sideMenuController.changePage(index);
         },
@@ -125,6 +133,8 @@ class _DashboardPage extends State<DashboardPage> {
                       SingleChildScrollView(child: ProductsRead()),
 
                       SingleChildScrollView(child: TableRead()),
+
+                      SingleChildScrollView(child: OrderPageRead()),
 
                       ///TODO DashBoard and History page pending
                       Center(

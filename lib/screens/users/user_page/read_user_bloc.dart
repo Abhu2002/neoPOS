@@ -10,7 +10,12 @@ class ReadUserBloc extends Bloc<ReadUserEvent, ReadUserState> {
   ReadUserBloc() : super(ReadUserInitial()) {
     on<InitialEvent>((event, emit) async {
       try {
-        emit(DataLoadingState());
+        if (event.isfirst) {
+          emit(DataLoadingState());
+        } else {
+          emit(DataLoadingState());
+          await Future.delayed(const Duration(seconds: 1));
+        }
         List allcat = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("users").get().then((value) => {
