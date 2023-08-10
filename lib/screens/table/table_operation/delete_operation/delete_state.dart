@@ -8,6 +8,10 @@ class ErrorState extends TableDeletionState {
   ErrorState(this.error);
 }
 
-class ConfirmationState extends TableDeletionState {}
+class ConfirmationState extends TableDeletionState {
+
+  final String id;
+  ConfirmationState(this.id);
+}
 
 class TableDeleteState extends TableDeletionState {}

@@ -19,8 +19,13 @@ class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
 
   void _mapCredentialsEnteredEventToState(
       CredentialsEnteredEvent event, Emitter<TableDeletionState> emit) async {
+
+    var liveDocID;
+    var livename;
     String username = event.username;
     String password = event.password;
+    String  docId = event.id;
+
 
     QuerySnapshot querySnapshot =
         await usersCollection.where('user_id', isEqualTo: username).get();
@@ -31,8 +36,26 @@ class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
         String role = userData['user_role'];
 
         if (userData['password'] == password && role == 'admin') {
-          emit(ConfirmationState());
-        } else {
+          try {
+            var doc = await tableCollection.doc(docId).get();
+            var data = doc.data() as Map<String, dynamic>;
+            livename = data['table_name'];
+          } catch (e) {
+            throw Exception("Error: $e");
+          }
+
+          var livedata = await liveTableCollection
+              .where("table_name", isEqualTo: livename)
+              .get();
+          for (var docSnapshot in livedata.docs) {
+            liveDocID = docSnapshot.id;
+          }
+
+          await tableCollection.doc(docId).delete();
+          emit(TableDeleteState());
+          await liveTableCollection.doc(liveDocID).delete();
+        }
+         else {
           emit(ErrorState('Invalid credentials or insufficient permissions.'));
         }
       }
@@ -43,32 +66,6 @@ class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
 
   void _mapConfirmTableDeletionEventToState(
       ConfirmTableDeletionEvent event, Emitter<TableDeletionState> emit) {
-    emit(TableDeleteState());
-  }
-
-  void deleteTable(String docID) async {
-    var liveDocID;
-    var livename;
-    try {
-      var doc = await tableCollection.doc(docID).get();
-      var data = doc.data() as Map<String, dynamic>;
-      livename = data['table_name'];
-      print(livename);
-    } catch (e) {
-      print("Error getting document: $e");
-    }
-    //liveDocID = await liveTableCollection.where(['table_name'] ,isEqualTo: livename).get();
-    //await liveTableCollection.doc(liveDocID).delete();
-
-    var livedata = await liveTableCollection
-        .where("table_name", isEqualTo: livename)
-        .get();
-    for (var docSnapshot in livedata.docs) {
-      liveDocID = docSnapshot.id;
-    }
-    print(liveDocID);
-    await tableCollection.doc(docID).delete();
-    await liveTableCollection.doc(liveDocID).delete();
-    add(ConfirmTableDeletionEvent());
+    emit(ConfirmationState(event.id));
   }
 }

@@ -19,7 +19,7 @@ class ProductDeletionBloc
       CredentialsEnteredEvent event, Emitter<ProductDeletionState> emit) async {
     String username = event.username;
     String password = event.password;
-
+    String docID = event.id;
     QuerySnapshot querySnapshot =
         await usersCollection.where('user_id', isEqualTo: username).get();
 
@@ -29,7 +29,8 @@ class ProductDeletionBloc
         String role = userData['user_role'];
 
         if (userData['password'] == password && role == 'admin') {
-          emit(ConfirmationState());
+          productCollection.doc(docID).delete();
+          emit(ProductDeleteState());
         } else {
           emit(ErrorState('Invalid credentials or insufficient permissions.'));
         }
@@ -41,11 +42,6 @@ class ProductDeletionBloc
 
   void _mapConfirmTableDeletionEventToState(
       ConfirmTableDeletionEvent event, Emitter<ProductDeletionState> emit) {
-    emit(ProductDeleteState());
-  }
-
-  void deleteProduct(String productId) async {
-    await productCollection.doc(productId).delete();
-    add(ConfirmTableDeletionEvent());
+    emit(ConfirmationState(event.id));
   }
 }

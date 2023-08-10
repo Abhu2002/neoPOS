@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../screens/products/products_operation/update_operation/product_update_bloc.dart';
-import '../screens/products/products_operation/update_operation/product_update_state.dart';
+//import '../screens/products/products_operation/update_operation/product_update_state.dart';
 
 class BuildUpdateImage extends StatefulWidget {
   const BuildUpdateImage({super.key});

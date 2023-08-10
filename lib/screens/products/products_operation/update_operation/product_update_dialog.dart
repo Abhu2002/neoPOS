@@ -5,14 +5,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_bloc.dart';
-import 'package:neopos/screens/products/products_operation/update_operation/product_update_event.dart';
-import 'package:neopos/screens/products/products_operation/update_operation/product_update_state.dart';
+//import 'package:neopos/screens/products/products_operation/update_operation/product_update_event.dart';
+//import 'package:neopos/screens/products/products_operation/update_operation/product_update_state.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../utils/app_colors.dart';
 import '../../../../utils/update_build_image.dart';
 import '../create_operation/create_product_dialog.dart';
 import 'package:neopos/utils/utils.dart';
+
 var categoryVal = "Select Category";
 
 class UpdateProductDialog extends StatefulWidget {
@@ -48,7 +49,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
   final _productTypeController = TextEditingController();
   XFile? imageFile;
   late ProductType? type;
-
+  late bool isCheck;
   @override
   void initState() {
     BlocProvider.of<UpdateProductBloc>(context).add(InitialCategoryEvent());
@@ -56,16 +57,18 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
     _productPriceController.text = "${widget.productPrice}";
     _productDescriptionController.text = widget.productDescription;
     _productTypeController.text = widget.productType;
-    if (widget.productType == "veg") {
-      type = ProductType.veg;
-    } else {
-      type = ProductType.nonVeg;
-    }
+
+    widget.productAvailibility ? isCheck = true : isCheck = false;
+    widget.productType == "veg"
+        ? type = ProductType.veg
+        : type = ProductType.nonVeg;
     super.initState();
   }
-   final formkey = GlobalKey<FormState>();
+
+  final formkey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    context.read<UpdateProductBloc>().showMessage = createSnackBar;
     return AlertDialog(
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
@@ -86,7 +89,8 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                 TextFormField(
                   controller: _productNameController,
                   decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.product_name_title,
+                      labelText:
+                          AppLocalizations.of(context)!.product_name_title,
                       prefixIcon: const Icon(
                         Icons.restaurant_menu,
                         color: AppColors.primaryColor,
@@ -97,8 +101,8 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                       selection: _productNameController.selection,
                     );
                   },
-                  validator: (val){
-                    if(!val.isValidProductName){
+                  validator: (val) {
+                    if (!val.isValidProductName) {
                       return "Enter a Valid Product Name";
                     }
                   },
@@ -109,13 +113,14 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                 TextFormField(
                   controller: _productPriceController,
                   decoration: InputDecoration(
-                      labelText: AppLocalizations.of(context)!.product_price_text,
+                      labelText:
+                          AppLocalizations.of(context)!.product_price_text,
                       prefixIcon: Icon(
                         Icons.price_change,
                         color: AppColors.primaryColor,
                       )),
-                  validator: (val){
-                    if(!val.isValidProductName){
+                  validator: (val) {
+                    if (!val.isValidProductName) {
                       return "Enter a Valid Product Price";
                     }
                   },
@@ -124,23 +129,22 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                   height: 20,
                 ),
                 TextFormField(
-                  controller: _productDescriptionController,
-                  keyboardType: TextInputType.multiline,
-                  minLines: 1,
-                  maxLines: 2,
-                  decoration: InputDecoration(
-                      labelText:
-                          AppLocalizations.of(context)!.product_description_title,
-                      prefixIcon: Icon(
-                        Icons.description,
-                        color: AppColors.primaryColor,
-                      )),
-                  validator: (val) {
-                    if (!val.isValidDesc) {
-                      return "Enter a valid Product Description";
-                    }
-                  }
-                ),
+                    controller: _productDescriptionController,
+                    keyboardType: TextInputType.multiline,
+                    minLines: 1,
+                    maxLines: 2,
+                    decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)!
+                            .product_description_title,
+                        prefixIcon: Icon(
+                          Icons.description,
+                          color: AppColors.primaryColor,
+                        )),
+                    validator: (val) {
+                      if (!val.isValidDesc) {
+                        return "Enter a valid Product Description";
+                      }
+                    }),
                 const SizedBox(
                   height: 20,
                 ),
@@ -195,7 +199,8 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.product_category_title,
-                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                      style:
+                          TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                     ),
                     const SizedBox(
                       width: 20,
@@ -210,6 +215,29 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                           categories: _productCategories,
                           dropdownvalue: categoryVal,
                         );
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 20),
+                Row(
+                  children: [
+                    Text(
+                      AppLocalizations.of(context)!.product_available,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 17,
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Checkbox(
+                      value: isCheck,
+                      onChanged: (bool? val) {
+                        setState(() {
+                          isCheck = val!;
+                        });
                       },
                     ),
                   ],
@@ -234,7 +262,8 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                               imageFile = state.imageFile;
                             }
                           },
-                          child: Text(AppLocalizations.of(context)!.select_image),
+                          child:
+                              Text(AppLocalizations.of(context)!.select_image),
                         ),
                       ],
                     );
@@ -246,7 +275,55 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
         ),
       ),
       actions: [
-        SizedBox(
+        BlocBuilder<UpdateProductBloc, ProductState>(
+          builder: (BuildContext context, state) {
+            if (state is ProductImageUpdating) {
+              return const Center(child: CircularProgressIndicator());
+            }
+            if (state is ProductImageUpdated) {
+              if (state.created == true) {
+                state.created = false;
+                Navigator.pop(context);
+                BlocProvider.of<UpdateProductBloc>(context)
+                    .add(InitialCategoryEvent());
+              }
+            }
+            return SizedBox(
+              height: 40,
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () {
+                  String productName = _productNameController.text.trim();
+                  double productPrice =
+                      double.tryParse(_productPriceController.text) ?? 0.0;
+
+                  BlocProvider.of<UpdateProductBloc>(context)
+                      .add(UpdatingImageEvent());
+
+                  if (productName.isNotEmpty && productPrice > 0.0) {
+                    BlocProvider.of<UpdateProductBloc>(context).add(
+                        UpdateProductEvent(
+                            productId: widget.id,
+                            productName: productName,
+                            productDescription:
+                                _productDescriptionController.text.trim(),
+                            productPrice: productPrice,
+                            productType: type!.name,
+                            productUpdatedTime:
+                                DateFormat("yyyy-MM-dd hh:mm:ss")
+                                    .format(DateTime.now()),
+                            imageFile: state.imageFile,
+                            oldImage: widget.image,
+                            productCategory: categoryVal,
+                            productAvailability: isCheck));
+                  }
+                },
+                child: Text(AppLocalizations.of(context)!.update_button),
+              ),
+            );
+          },
+        ),
+        /*  SizedBox(
           height: 40,
           width: double.infinity,
           child: ElevatedButton(
@@ -255,12 +332,12 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
             },
             child: Text(AppLocalizations.of(context)!.update_button),
           ),
-        ),
+        ),*/
       ],
     );
   }
 
-  void _updateProduct(BuildContext context) {
+  /* void _updateProduct(BuildContext context) {
     final productBloc = BlocProvider.of<UpdateProductBloc>(context);
     String productName = _productNameController.text.trim();
     double productPrice = double.tryParse(_productPriceController.text) ?? 0.0;
@@ -279,7 +356,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
 
       Navigator.of(context).pop();
     }
-  }
+  } */
 
   void createSnackBar(String message) {
     final snackBar = SnackBar(content: Text(message));

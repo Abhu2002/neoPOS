@@ -4,9 +4,6 @@ import 'package:neopos/utils/popup_cancel_button.dart';
 import 'package:neopos/utils/utils.dart';
 import '../../../../utils/app_colors.dart';
 import 'delete_bloc.dart';
-import 'delete_event.dart';
-import 'delete_state.dart';
-import 'package:neopos/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeleteCategoryPopup extends StatefulWidget {
@@ -19,7 +16,6 @@ class DeleteCategoryPopup extends StatefulWidget {
 }
 
 class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
-  final formkey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -37,7 +33,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
         if (state is ErrorState) {
           showErrorDialog(context, state.error);
         } else if (state is ConfirmationState) {
-          showConfirmationDialog(context);
+          showConfirmationDialog(context, state.id);
         } else if (state is CategoryDeleteState) {
           showSnackBar(context, 'Category deleted successfully.');
         }
@@ -47,61 +43,23 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title:
-              PopUpRow(title: AppLocalizations.of(context)!.enter_credentials),
-          content: Form(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  controller: _usernameController,
-                  validator: (val) {
-                    if (!val!.isValidUsername) return "Enter a Valid Username";
-                  },
-                  decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.username_hinttext,
-                      prefixIcon: const Icon(
-                        Icons.person,
-                        color: AppColors.primaryColor,
-                      )),
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  controller: _passwordController,
-                  validator: (val) {
-                    if (!val!.isValidPassword) return "Enter a Valid Username";
-                  },
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                      hintText: "Password",
-                      prefixIcon: Icon(
-                        Icons.person,
-                        color: AppColors.primaryColor,
-                      )),
-                ),
-              ],
-            ),
-          ),
+          title: PopUpRow(
+              title: AppLocalizations.of(context)!.delete_category_title),
+          content:
+              Text(AppLocalizations.of(context)!.delete_confirm_msg_category),
           actions: [
-            ElevatedButton(
+            TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(AppLocalizations.of(context)!.cancel_button),
+              child: Text(AppLocalizations.of(context)!.no_title),
             ),
-            ElevatedButton(
-              onPressed: () {
-                // Navigator.of(context).pop();
-                if (formkey.currentState!.validate()) {
-                  BlocProvider.of<CategoryDeletionBloc>(context)
-                      .add(CredentialsEnteredEvent(
-                    _usernameController.text,
-                    _passwordController.text,
-                  ));
-                }
+            TextButton(
+              onPressed: () async {
+                BlocProvider.of<CategoryDeletionBloc>(context)
+                    .add(ConfirmTableDeletionEvent(widget.categoryID));
               },
-              child: Text(AppLocalizations.of(context)!.submit_button),
+              child: Text(AppLocalizations.of(context)!.yes_title),
             ),
           ],
         );
@@ -123,6 +81,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
+                Navigator.of(context).pop();
               },
               child: const Text('OK'),
             ),
@@ -132,7 +91,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
     );
   }
 
-  void showConfirmationDialog(BuildContext context) {
+  void showConfirmationDialog(BuildContext context, String id) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -140,25 +99,69 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: PopUpRow(
-              title: AppLocalizations.of(context)!.delete_category_title),
-          content:
-              Text(AppLocalizations.of(context)!.delete_confirm_msg_category),
+          title:
+              PopUpRow(title: AppLocalizations.of(context)!.enter_credentials),
+          content: Form(
+            key: formKey,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                TextFormField(
+                  controller: _usernameController,
+                  validator: (val) {
+                    if (!val!.isValidUsername)
+                      return "Enter a Valid Username";
+                    else {
+                      return null;
+                    }
+                  },
+                  decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.username_hinttext,
+                      prefixIcon: const Icon(
+                        Icons.person,
+                        color: AppColors.primaryColor,
+                      )),
+                ),
+                const SizedBox(height: 16),
+                TextFormField(
+                  controller: _passwordController,
+                  validator: (val) {
+                    if (!val!.isValidPassword)
+                      return "Enter a Valid Password";
+                    else {
+                      return null;
+                    }
+                  },
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.password_hinttext,
+                      prefixIcon: const Icon(
+                        Icons.person,
+                        color: AppColors.primaryColor,
+                      )),
+                ),
+              ],
+            ),
+          ),
           actions: [
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text(AppLocalizations.of(context)!.no_title),
+              child: Text(AppLocalizations.of(context)!.cancel_button),
             ),
-            TextButton(
-              onPressed: () async {
-                BlocProvider.of<CategoryDeletionBloc>(context)
-                    .deleteCategory(widget.categoryID);
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
+            ElevatedButton(
+              onPressed: () {
+                if (formKey.currentState!.validate()) {
+
+                  BlocProvider.of<CategoryDeletionBloc>(context).add(
+                    CredentialsEnteredEvent(
+                        _usernameController.text, _passwordController.text, id),
+                  );
+                  Navigator.of(context).pop();
+                }
               },
-              child: Text(AppLocalizations.of(context)!.yes_title),
+              child: Text(AppLocalizations.of(context)!.submit_button),
             ),
           ],
         );
@@ -170,5 +173,6 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message),
     ));
+    Navigator.of(context).pop();
   }
 }

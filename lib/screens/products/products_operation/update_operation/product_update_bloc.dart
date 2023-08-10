@@ -1,13 +1,21 @@
+import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:neopos/screens/products/products_operation/update_operation/product_update_event.dart';
-import 'package:neopos/screens/products/products_operation/update_operation/product_update_state.dart';
+
+
+import '../create_operation/create_product_dialog.dart';
+
+part 'product_update_event.dart';
+
+part 'product_update_state.dart';
 
 class UpdateProductBloc extends Bloc<ProductEvent, ProductState> {
   // Collection reference to the products table..
+
+  void Function(String)? showMessage;
   final CollectionReference productsCollection =
       FirebaseFirestore.instance.collection('products');
 
@@ -21,11 +29,17 @@ class UpdateProductBloc extends Bloc<ProductEvent, ProductState> {
     on<CategoryChangedEvent>(_mapCategoryChangedToState);
     on<ProductTypeUpdateEvent>(_mapProductTypeUpdateToState);
     on<ImageChangedUpdateEvent>(_mapImageChangedUpdateToState);
+    on<UpdatingImageEvent>(_mapUpdatingImageToState);
   }
 
   void _mapImageChangedUpdateToState(
       ImageChangedUpdateEvent event, Emitter<ProductState> emit) {
     emit(ImageChangedUpdateState(event.imageFile));
+  }
+
+  void _mapUpdatingImageToState(
+      UpdatingImageEvent event, Emitter<ProductState> emit) {
+    emit(ProductImageUpdating());
   }
 
   void _mapProductTypeUpdateToState(
@@ -68,15 +82,18 @@ class UpdateProductBloc extends Bloc<ProductEvent, ProductState> {
       // getting image download url..
 
       await _updateProduct(
-        event.productId,
-        event.productName,
-        event.productPrice,
-        event.productDescription,
-        event.productUpdatedTime,
-        event.productType,
-        imagePath,
-      );
+          event.productId,
+          event.productName,
+          event.productPrice,
+          event.productDescription,
+          event.productUpdatedTime,
+          event.productType,
+          imagePath,
+          event.productCategory,
+          event.productAvailability);
       emit(ProductUpdated());
+      emit(ProductImageUpdated(true));
+      showMessage!("Product Updated");
     } catch (e) {
       emit(ProductError("Error updating product: $e"));
     }
@@ -105,14 +122,18 @@ class UpdateProductBloc extends Bloc<ProductEvent, ProductState> {
       String productDescription,
       String productUpdatedTime,
       String productType,
-      String imagePath) {
+      String imagePath,
+      String productCategory,
+      bool productAvailability) {
     return productsCollection.doc(productId).update({
       'product_name': productName,
       'product_price': productPrice,
       'product_image': imagePath,
       'product_description': productDescription,
       'product_type': productType,
-      'date_updated': productUpdatedTime
+      'date_updated': productUpdatedTime,
+      'product_category': productCategory,
+      'product_availability': productAvailability
     });
   }
 }

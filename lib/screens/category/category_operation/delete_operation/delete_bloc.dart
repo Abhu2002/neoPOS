@@ -1,8 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
-import 'delete_event.dart';
-import 'delete_state.dart';
+//import 'delete_event.dart';
+//import 'delete_state.dart';
+import 'package:equatable/equatable.dart';
+part 'delete_event.dart';
+part 'delete_state.dart';
 
 class CategoryDeletionBloc
     extends Bloc<CategoryDeletionEvent, CategoryDeletionState> {
@@ -20,6 +23,7 @@ class CategoryDeletionBloc
       Emitter<CategoryDeletionState> emit) async {
     String username = event.username;
     String password = event.password;
+    String docId = event.id;
 
     QuerySnapshot querySnapshot =
         await usersCollection.where('user_id', isEqualTo: username).get();
@@ -30,7 +34,8 @@ class CategoryDeletionBloc
         String role = userData['user_role'];
 
         if (userData['password'] == password && role == 'admin') {
-          emit(ConfirmationState());
+          categoryCollection.doc(docId).delete();
+          emit(CategoryDeleteState());
         } else {
           emit(ErrorState('Invalid credentials or insufficient permissions.'));
         }
@@ -42,11 +47,6 @@ class CategoryDeletionBloc
 
   void _mapConfirmTableDeletionEventToState(
       ConfirmTableDeletionEvent event, Emitter<CategoryDeletionState> emit) {
-    emit(CategoryDeleteState());
-  }
-
-  void deleteCategory(String categoryId) async {
-    await categoryCollection.doc(categoryId).delete();
-    add(ConfirmTableDeletionEvent());
+    emit(ConfirmationState(event.id));
   }
 }

@@ -8,6 +8,10 @@ class ErrorState extends UserDeletionState {
   ErrorState(this.error);
 }
 
-class ConfirmationState extends UserDeletionState {}
+class ConfirmationState extends UserDeletionState {
+  final String id;
+
+  ConfirmationState(this.id);
+}
 
 class UserDeleteState extends UserDeletionState {}

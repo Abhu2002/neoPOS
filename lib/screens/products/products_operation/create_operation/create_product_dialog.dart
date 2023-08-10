@@ -3,17 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neopos/utils/app_colors.dart';
-<<<<<<< HEAD
-import '../../../../utils/popup_cancel_button.dart';
-=======
 import 'package:neopos/utils/popup_cancel_button.dart';
 import 'package:provider/provider.dart';
 import '../../../../utils/build_image.dart';
->>>>>>> da19ea9efbb72148681dda3a234609d5b4a3dfff
+import '../../../../utils/popup_cancel_button.dart';
 import 'create_product_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
-
+import 'package:neopos/utils/utils.dart';
 var categoryValue = "Select Category";
 bool initial = false;
 
@@ -57,7 +54,7 @@ class _CreateProductFormState extends State<CreateProductForm> {
   @override
   Widget build(BuildContext context) {
     context.read<CreateProductBloc>().showMessage = createSnackBar;
-    late ProductType? type;
+    ProductType? type = ProductType.veg;
 
     return SingleChildScrollView(
       child: AlertDialog(
@@ -81,12 +78,9 @@ class _CreateProductFormState extends State<CreateProductForm> {
                         return TextFormField(
                           controller: productName,
                           validator: (val) {
-                            if (val == null || val.isEmpty) {
-                              return AppLocalizations.of(context)!
-                                  .enter_product_name;
+                            if (!val.isValidProductName) {
+                              return "Enter a Valid Product Name";
                             }
-
-                            return null;
                           },
                           decoration: InputDecoration(
                               hintText:
@@ -96,6 +90,10 @@ class _CreateProductFormState extends State<CreateProductForm> {
                                 color: AppColors.primaryColor,
                               )),
                           onChanged: (val) {
+                            productName.value = TextEditingValue(
+                              text: val.toUpperCase(),
+                              selection: productName.selection,
+                            );
                             BlocProvider.of<CreateProductBloc>(context)
                                 .add(InputEvent(productName.text));
                           },
@@ -131,7 +129,7 @@ class _CreateProductFormState extends State<CreateProductForm> {
                                 children: [
                                   Radio<ProductType>(
                                     value: ProductType.veg,
-                                    groupValue: state.type,
+                                    groupValue: state.type ?? type,
                                     onChanged: (ProductType? value) {
                                       BlocProvider.of<CreateProductBloc>(
                                               context)
@@ -146,7 +144,7 @@ class _CreateProductFormState extends State<CreateProductForm> {
                                   ),
                                   Radio<ProductType>(
                                     value: ProductType.nonVeg,
-                                    groupValue: state.type,
+                                    groupValue: state.type ?? type,
                                     onChanged: (ProductType? value) {
                                       BlocProvider.of<CreateProductBloc>(
                                               context)
@@ -178,12 +176,11 @@ class _CreateProductFormState extends State<CreateProductForm> {
                             Icons.description,
                             color: AppColors.primaryColor,
                           )),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!
-                              .enter_product_description;
+                      validator: (val) {
+                        if (!val.isValidDesc) {
+                          return "Enter a Valid Description";
                         }
-                        return null;
+
                       },
                     ),
                     const SizedBox(
@@ -199,13 +196,10 @@ class _CreateProductFormState extends State<CreateProductForm> {
                             color: AppColors.primaryColor,
                           )),
                       keyboardType: TextInputType.number,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return AppLocalizations.of(context)!
-                              .enter_product_price;
+                      validator: (val) {
+                        if (!val.isValidPrice) {
+                          return "Enter a Valid Product price";
                         }
-
-                        return null;
                       },
                     ),
                     const SizedBox(
@@ -253,6 +247,7 @@ class _CreateProductFormState extends State<CreateProductForm> {
                           width: 20,
                         ),
                         Checkbox(
+
                           value: isChecked,
                           onChanged: (bool? val) {
                             setState(() {
