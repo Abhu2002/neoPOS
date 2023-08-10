@@ -39,7 +39,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
             await db.collection("live_table").doc(event.docId).get();
         Map<String, dynamic>? data = documentSnapshot.data();
-        //print(data);
+
         dynamic tablename = data?['table_name'];
         if (data != null && data.containsKey('products')) {
           allorders = data['products'];
