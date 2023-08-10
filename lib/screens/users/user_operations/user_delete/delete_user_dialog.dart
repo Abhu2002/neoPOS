@@ -80,7 +80,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
           title: PopUpRow(title: AppLocalizations.of(context)!.error_text),
           content: Text(error),
           actions: [
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();

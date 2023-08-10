@@ -136,7 +136,7 @@ class _TableReadState extends State<TableRead> {
                                                                     TableBloc>(
                                                                 context)
                                                             .add(
-                                                                InitialEvent()));
+                                                                InitialEvent(false)));
                                                   case "tableEdit":
                                                     showDialog(
                                                         context: context,
@@ -172,7 +172,7 @@ class _TableReadState extends State<TableRead> {
                                           "Capacity: ${(data[i]["tablecapacity"]).toString()}"),
                                     ],
                                   ),
-                                  )         ),
+                                  )
                               ),
                             ),
                           )),

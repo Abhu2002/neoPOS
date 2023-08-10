@@ -48,13 +48,13 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
           PopUpRow(title: AppLocalizations.of(context)!.update_table_title),
           content: Text(AppLocalizations.of(context)!.delete_confirm_msg_table),
           actions: [
-            TextButton(
+              ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
               child: Text(AppLocalizations.of(context)!.no_title),
             ),
-            TextButton(
+              ElevatedButton(
               onPressed: () async {
                 BlocProvider.of<TableDeletionBloc>(context)
                     .add(ConfirmTableDeletionEvent(widget.docID));
@@ -74,11 +74,11 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
       builder: (BuildContext context) {
         return AlertDialog(
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           title: PopUpRow(title: AppLocalizations.of(context)!.error_text),
           content: Text(error),
           actions: [
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();

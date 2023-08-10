@@ -40,16 +40,18 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
       },
       builder: (context, state) {
         return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15))),
           title: const Text('Delete Product'),
           content: const Text('Are you sure you want to delete this Product?'),
           actions: [
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
               child: const Text('No'),
             ),
-            TextButton(
+            ElevatedButton(
               onPressed: () async {
                 BlocProvider.of<ProductDeletionBloc>(context)
                     .add(ConfirmTableDeletionEvent(widget.productID));
@@ -67,6 +69,8 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15))),
           title: const Text('Error'),
           content: Text(error),
           actions: [
@@ -83,11 +87,13 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
     );
   }
 
-  void showConfirmationDialog(BuildContext context) {
+  void showConfirmationDialog(BuildContext context,String id) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
+            shape: const RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15))),
           title: const Text('Enter Credentials'),
           content: Form(
             key: formkey,
@@ -118,13 +124,13 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
             ),
           ),
           actions: [
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
               child: const Text('Cancel'),
             ),
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 // Navigator.of(context).pop();
                 if (formkey.currentState!.validate()) {

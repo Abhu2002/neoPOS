@@ -12,7 +12,7 @@ class CreateUserBloc extends Bloc<CreateUserEvent, CreateUserState> {
   void Function(String)? showMessage;
 
   CreateUserBloc() : super(CreateUserInitial()) {
-    on<InputEvent>((event, emit) {
+    on<UserIntialEvent>((event, emit) {
       emit(CreateUserInitial());
     });
     on<CreateUserFBEvent>((event, emit) async {

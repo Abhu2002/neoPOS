@@ -48,13 +48,13 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
           content:
               Text(AppLocalizations.of(context)!.delete_confirm_msg_category),
           actions: [
-            TextButton(
+            ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
               child: Text(AppLocalizations.of(context)!.no_title),
             ),
-            TextButton(
+            ElevatedButton(
               onPressed: () async {
                 BlocProvider.of<CategoryDeletionBloc>(context)
                     .add(ConfirmTableDeletionEvent(widget.categoryID));
@@ -75,7 +75,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title: const PopUpRow(title: "Error"),
+          title:  PopUpRow(title: AppLocalizations.of(context)!.error_text),
           content: Text(error),
           actions: [
             TextButton(
@@ -83,7 +83,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
-              child: const Text('OK'),
+              child:  Text(AppLocalizations.of(context)!.ok_button),
             ),
           ],
         );
