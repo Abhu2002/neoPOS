@@ -31,7 +31,6 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
 
   @override
   Widget build(BuildContext context) {
-    String newName = widget.tableName;
     String newCapacity = widget.tableCapacity;
     return AlertDialog(
       title: PopUpRow(title: AppLocalizations.of(context)!.update_table_title),
@@ -40,7 +39,6 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
         children: [
           TextField(
             onChanged: (value) {
-              newName = value;
               tableName.value = TextEditingValue(
                 text: value.toUpperCase(),
                 selection: tableName.selection,
@@ -68,9 +66,9 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
         TextButton(
           child: Text(AppLocalizations.of(context)!.update_button),
           onPressed: () {
-            if (newName.trim().isNotEmpty) {
+            if (tableName.text.trim().isNotEmpty) {
               BlocProvider.of<TableUpdateBloc>(context).add(
-                TableUpdateRequested(widget.docID, newName, newCapacity),
+                TableUpdateRequested(widget.docID, tableName.text, newCapacity),
               );
             }
             Navigator.of(context).pop();

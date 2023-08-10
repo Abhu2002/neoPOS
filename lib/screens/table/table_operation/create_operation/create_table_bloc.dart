@@ -25,9 +25,10 @@ class CreateTableBloc extends Bloc<CreateTableEvent, CreateTableState> {
         if (allName.contains((event.tableName).trim())) {
           emit(TableNameNotAvailableState());
         } else {
+          List<Map<String, dynamic>> myData = [];
           final data = TableModel(
               tableName: event.tableName, tableCap: int.parse(event.tableCap));
-          final livedata = LiveTableModel(tableName: event.tableName);
+          final livedata = LiveTableModel(tableName: event.tableName,products: myData);
           await db.collection("table").add(data.toFirestore()).then(
               (documentSnapshot) => {
                     emit(TableCreatedState(true)),
