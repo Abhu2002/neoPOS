@@ -31,7 +31,7 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
   }
   @override
   Widget build(BuildContext context) {
-    String newName = widget.oldName;
+
     return AlertDialog(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -41,11 +41,12 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
       content: Form(
         key: formKey,
         child: TextFormField(
-          onChanged: (value) { newName = value;
+          onChanged: (value) {
           categoryupdate.value = TextEditingValue(
             text: value.toUpperCase(),
             selection: categoryupdate.selection,
-          );},
+          );
+         },
           validator: (val) {
             if (!val.isNotEmptyValidator) return "Enter a Valid Catgeory Name";
           },
@@ -70,7 +71,7 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
             print(formKey.currentState!.validate());
             if (formKey.currentState!.validate()) {
               BlocProvider.of<CategoryUpdateBloc>(context).add(
-                CategoryUpdateRequested(widget.id, newName),
+                CategoryUpdateRequested(widget.id, categoryupdate.text),
               );
               Navigator.of(context).pop();
             }

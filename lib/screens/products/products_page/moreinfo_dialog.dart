@@ -265,6 +265,7 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                     child: Text(
                         AppLocalizations.of(context)!.delete_product_button),
                   ),
+
                 ],
               )),
             ]),

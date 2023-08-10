@@ -6,6 +6,7 @@ import 'package:neopos/screens/order%20page/order_page/order_content_page/order_
 import 'package:neopos/screens/order%20page/order_page/order_content_page/order_content_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../utils/app_colors.dart';
+import 'add_order.dart';
 
 class OrderMenuPage extends StatefulWidget {
   const OrderMenuPage({Key? key}) : super(key: key);
@@ -201,7 +202,11 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                   ]),
                                 ),
                                 onTap: () {
-
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return AddOrder(productName: data["product_name"]!,productCategory: data["product_category"]!,productType: data["product_type"]!,productPrice: data["product_price"].toString());
+                                      });
                                 },
                               );
                             },
