@@ -6,7 +6,6 @@ import 'package:neopos/utils/popup_cancel_button.dart';
 import 'create_category_bloc.dart';
 import 'dart:core';
 import 'package:neopos/utils/utils.dart';
-import 'package:neopos/utils/utils.dart';
 
 class CreateCategoryForm extends StatefulWidget {
   const CreateCategoryForm({super.key});
@@ -23,7 +22,7 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
 
   @override
   void initState() {
-    BlocProvider.of<CreateCategoryBloc>(context).add(const InputEvent(""));
+    // BlocProvider.of<CreateCategoryBloc>(context).add(const InputEvent(""));
     categoryName.text = "";
     super.initState();
   }
@@ -101,20 +100,17 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                     return TextFormField(
                       controller: categoryName,
                       keyboardType: TextInputType.text,
+                      validator: (val) {
+                        if (!val.isNotEmptyValidator)
+                          return 'Enter valid Category Name';
+                      },
                       decoration: InputDecoration(
                           hintText: AppLocalizations.of(context)!.category_name,
                           prefixIcon: const Icon(
                             Icons.category,
                             color: AppColors.primaryColor,
                           )),
-                      validator: (value) {
-                        if (!value.isValidName) return 'Enter valid Category Name';
-                      },
                       onChanged: (val) {
-                        categoryName.value = TextEditingValue(
-                          text: val.toUpperCase(),
-                          selection: categoryName.selection,
-                        );
                         BlocProvider.of<CreateCategoryBloc>(context)
                             .add(InputEvent(categoryName.text));
                       },
@@ -126,11 +122,11 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                 ),
                 BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
                   builder: (context, state) {
-                    if (state is CategoryErrorState) {
-                      if (state.errorMessage == "Please Pop") {
-                        Navigator.pop(context);
-                      }
-                    }
+                    // if (state is CategoryErrorState) {
+                    //   if (state.errorMessage == "Please Pop") {
+                    //     Navigator.pop(context);
+                    //   }
+                    // }
                     if (state is CategoryCreatedState) {
                       if (state.created == true) {
                         Navigator.pop(context);

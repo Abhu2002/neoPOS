@@ -19,6 +19,7 @@ class DeleteCategoryPopup extends StatefulWidget {
 }
 
 class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
+  final formkey = GlobalKey<FormState>();
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
@@ -69,12 +70,12 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
                 TextFormField(
                   controller: _passwordController,
                   validator: (val) {
-                    if (!val!.isValidPassword) return "Enter a Valid Password";
+                    if (!val!.isValidPassword) return "Enter a Valid Username";
                   },
                   obscureText: true,
-                  decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.password_hinttext,
-                      prefixIcon: const Icon(
+                  decoration: const InputDecoration(
+                      hintText: "Password",
+                      prefixIcon: Icon(
                         Icons.person,
                         color: AppColors.primaryColor,
                       )),
@@ -91,17 +92,16 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
             ),
             ElevatedButton(
               onPressed: () {
-                if (formKey.currentState!.validate()) {
-                  // Navigator.of(context).pop();
-                  BlocProvider.of<CategoryDeletionBloc>(context).add(
-                    CredentialsEnteredEvent(
-                      _usernameController.text,
-                      _passwordController.text,
-                    ),
-                  );
+                // Navigator.of(context).pop();
+                if (formkey.currentState!.validate()) {
+                  BlocProvider.of<CategoryDeletionBloc>(context)
+                      .add(CredentialsEnteredEvent(
+                    _usernameController.text,
+                    _passwordController.text,
+                  ));
                 }
               },
-              child: const Text('Submit'),
+              child: Text(AppLocalizations.of(context)!.submit_button),
             ),
           ],
         );
