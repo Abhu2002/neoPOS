@@ -11,7 +11,13 @@ class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
   ReadProductsBloc() : super(ReadProductsInitial()) {
     on<ReadInitialEvent>((event, emit) async {
       try {
-        emit(ReadDataLoadingState());
+        if (event.isfirst) {
+          emit(ReadDataLoadingState());
+        } else {
+          emit(ReadDataLoadingState());
+          await Future.delayed(const Duration(seconds: 1));
+        }
+
         List allCat = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("products").get().then((value) => {
@@ -33,7 +39,6 @@ class ReadProductsBloc extends Bloc<ReadProductsEvent, ReadProductsState> {
         ReadLoadedDataEvent();
         emit(ReadDataLoadedState(allCat));
       } catch (err) {
-        print(err);
         emit(ReadErrorState("Error Occur :-$err"));
       }
     });

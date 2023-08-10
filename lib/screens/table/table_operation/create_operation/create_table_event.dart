@@ -7,18 +7,14 @@ abstract class CreateTableEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class InitialEvent extends CreateTableEvent {}
+
+class TableNameNotAvailableEvent extends CreateTableEvent {}
+
 class CreateTableFBEvent extends CreateTableEvent {
   final String tableName;
   final String tableCap;
   const CreateTableFBEvent(this.tableName, this.tableCap);
-  @override
-  List<Object> get props => [tableName, tableCap];
-}
-
-class InputEvent extends CreateTableEvent {
-  final String tableName;
-  final String tableCap;
-  const InputEvent(this.tableName, this.tableCap);
   @override
   List<Object> get props => [tableName, tableCap];
 }

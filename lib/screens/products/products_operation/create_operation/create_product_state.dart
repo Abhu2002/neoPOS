@@ -67,6 +67,8 @@ class ProductPriceValidated extends CreateProductState {}
 
 class ProductCreatingState extends CreateProductState {}
 
+class ProductNameNotAvailableState extends CreateProductState {}
+
 class ProductCreatedState extends CreateProductState {
   bool created;
 

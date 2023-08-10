@@ -1,6 +1,6 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
-import 'package:neopos/screens/order%20page/order_page/order_content_page/order_content_page.dart';
+import 'package:neopos/screens/order%20page/order_read_page/order_read_page.dart';
 import 'package:neopos/screens/products/products_page/read_products_page.dart';
 import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
@@ -55,6 +55,13 @@ class _DashboardPage extends State<DashboardPage> {
       ),
       SideMenuItem(
         icon: const Icon(Icons.dashboard),
+        title: AppLocalizations.of(context)!.order_page,
+        onTap: (index, sideMenuController) {
+          sideMenuController.changePage(index);
+        },
+      ),
+      SideMenuItem(
+        icon: const Icon(Icons.dashboard),
         title: AppLocalizations.of(context)!.dashboard_title,
         onTap: (index, sideMenuController) {
           sideMenuController.changePage(index);
@@ -74,13 +81,7 @@ class _DashboardPage extends State<DashboardPage> {
           sideMenuController.changePage(index);
         },
       ),
-      SideMenuItem(
-        icon: const Icon(Icons.room_service_rounded),
-        title: "Order Menu",
-        onTap: (index, sideMenuController) {
-          sideMenuController.changePage(index);
-        },
-      ),
+
     ];
 
     return Scaffold(
@@ -126,6 +127,8 @@ class _DashboardPage extends State<DashboardPage> {
 
                       SingleChildScrollView(child: TableRead()),
 
+                      SingleChildScrollView(child: OrderPageRead()),
+
                       ///TODO DashBoard and History page pending
                       Center(
                         child: Text('Dashboard'),
@@ -134,7 +137,6 @@ class _DashboardPage extends State<DashboardPage> {
                         child: Text('Order History'),
                       ),
                       SingleChildScrollView(child: UserRead()),
-                      SingleChildScrollView(child: OrderMenuPage()),
                     ],
                   ),
                 )

@@ -9,4 +9,7 @@ abstract class ReadCategoryEvent extends Equatable {
 
 class LoadDataEvent extends ReadCategoryEvent {}
 
-class InitialEvent extends ReadCategoryEvent {}
+class InitialEvent extends ReadCategoryEvent {
+  bool isfirst;
+  InitialEvent(this.isfirst);
+}

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neopos/utils/app_colors.dart';
@@ -65,6 +64,48 @@ class _CreateProductFormState extends State<CreateProductForm> {
         actionsPadding: const EdgeInsets.all(20),
         title: PopUpRow(title: AppLocalizations.of(context)!.create_product),
         actions: [
+          BlocListener<CreateProductBloc, CreateProductState>(
+            listener: (context, state) {
+              if (state is ProductNameNotAvailableState) {
+                showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20))),
+                      actionsPadding: const EdgeInsets.all(20),
+                      actions: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              AppLocalizations.of(context)!.pro_name_exist,
+                              style: const TextStyle(
+                                  fontSize: 15,
+                                  color: AppColors.primaryColor,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            ElevatedButton(
+                                onPressed: () {
+                                  BlocProvider.of<CreateProductBloc>(context)
+                                      .add(NameNotAvaiableEvent());
+                                  Navigator.pop(context);
+                                },
+                                child: Text(
+                                    AppLocalizations.of(context)!.ok_button)),
+                          ],
+                        )
+                      ],
+                    );
+                  },
+                );
+              }
+            },
+            child: const Text(""),
+          ),
           Center(
             child: Form(
               key: formKey,
@@ -126,7 +167,6 @@ class _CreateProductFormState extends State<CreateProductForm> {
                               width: 20,
                             ),
                             Flexible(
-                              // flex: 1,
                               child: Row(
                                 children: [
                                   Radio<ProductType>(
@@ -136,8 +176,6 @@ class _CreateProductFormState extends State<CreateProductForm> {
                                       BlocProvider.of<CreateProductBloc>(
                                               context)
                                           .add(ProductTypeEvent(value!));
-                                      // type = state.type == ProductType.veg ? state.type : null;
-                                      // print(state.type);
                                     },
                                   ),
                                   Flexible(
@@ -151,8 +189,6 @@ class _CreateProductFormState extends State<CreateProductForm> {
                                       BlocProvider.of<CreateProductBloc>(
                                               context)
                                           .add(ProductTypeEvent(value!));
-                                      // type = state.type == ProductType.nonVeg ? state.type : null;
-                                      // print(state.type);
                                     },
                                   ),
                                   Flexible(
@@ -359,8 +395,6 @@ class _CreateProductFormState extends State<CreateProductForm> {
               ),
             ),
           ),
-
-          // ActionButton(text: "Create Table", onPress: () {})
         ],
       ),
     );

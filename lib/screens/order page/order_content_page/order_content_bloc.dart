@@ -3,8 +3,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'package:neopos/screens/order%20page/order_page/order_content_page/order_content_event.dart';
-import 'package:neopos/screens/order%20page/order_page/order_content_page/order_content_state.dart';
+
+import 'order_content_event.dart';
+import 'order_content_state.dart';
 
 class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
   OrderContentBloc() : super(InitialState()) {

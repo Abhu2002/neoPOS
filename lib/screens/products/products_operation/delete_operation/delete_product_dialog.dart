@@ -63,7 +63,6 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
             ),
             TextButton(
               onPressed: () {
-                // Navigator.of(context).pop();
                 BlocProvider.of<ProductDeletionBloc>(context).add(
                   CredentialsEnteredEvent(
                     _usernameController.text,

@@ -12,12 +12,8 @@ class CreateUserBloc extends Bloc<CreateUserEvent, CreateUserState> {
   void Function(String)? showMessage;
 
   CreateUserBloc() : super(CreateUserInitial()) {
-    on<InputEvent>((event, emit) async {
-      if (event.userName != "") {
-        emit(UserNameAvailableState());
-      } else {
-        emit(UserErrorState("Please Enter a Name"));
-      }
+    on<UserIntialEvent>((event, emit) {
+      emit(CreateUserInitial());
     });
     on<CreateUserFBEvent>((event, emit) async {
       try {
@@ -28,9 +24,8 @@ class CreateUserBloc extends Bloc<CreateUserEvent, CreateUserState> {
                 allName.add(element['user_id']);
               })
             });
-        if (allName.contains(event.userName)) {
-          emit(UserErrorState("Please Pop"));
-          showMessage!("User Name Exist Please use Different Name");
+        if (allName.contains((event.userName).trim())) {
+          emit(UserNameNotAvailableState());
         } else {
           final data = UserModel(
               username: event.userName,
@@ -43,7 +38,7 @@ class CreateUserBloc extends Bloc<CreateUserEvent, CreateUserState> {
                   DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()));
           await db.collection("users").add(data.toFirestore()).then(
               (documentSnapshot) =>
-                  {emit(UserCreatedState()), showMessage!("User Created")});
+                  {emit(UserCreatedState(true)), showMessage!("User Created")});
           await GetIt.I.get<FirebaseFirestore>().clearPersistence();
           await GetIt.I.get<FirebaseFirestore>().terminate();
         }

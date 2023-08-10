@@ -84,11 +84,12 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
             TextField(
               onChanged: (value) => newPassword = value,
               controller: TextEditingController(text: widget.oldPassword),
-              decoration: const InputDecoration(
-                  prefixIcon: Icon(
-                Icons.lock,
-                color: AppColors.primaryColor,
-              )),
+              decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.first_name_hinttext,
+                  prefixIcon: const Icon(
+                    Icons.lock,
+                    color: AppColors.primaryColor,
+                  )),
             ),
           ],
         ),

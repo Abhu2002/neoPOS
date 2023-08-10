@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
@@ -27,12 +25,13 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
   TextEditingController tableName = TextEditingController();
   @override
   void initState() {
-    tableName.text=widget.tableName;
-    // TODO: implement initState
+    tableName.text = widget.tableName;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
+    String newName = widget.tableName;
     String newCapacity = widget.tableCapacity;
     return AlertDialog(
       title: PopUpRow(title: AppLocalizations.of(context)!.update_table_title),
@@ -41,11 +40,12 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
         children: [
           TextField(
             onChanged: (value) {
-            tableName.value = TextEditingValue(
-              text: value.toUpperCase(),
-              selection: tableName.selection,
-            );
-              },
+              newName = value;
+              tableName.value = TextEditingValue(
+                text: value.toUpperCase(),
+                selection: tableName.selection,
+              );
+            },
             controller: tableName,
             decoration: InputDecoration(
                 hintText:
@@ -68,7 +68,7 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
         TextButton(
           child: Text(AppLocalizations.of(context)!.update_button),
           onPressed: () {
-            if (tableName.text.trim().isNotEmpty) {
+            if (tableName.trim().isNotEmpty) {
               BlocProvider.of<TableUpdateBloc>(context).add(
                 TableUpdateRequested(widget.docID, tableName.text, newCapacity),
               );
