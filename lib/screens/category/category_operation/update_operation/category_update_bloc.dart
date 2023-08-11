@@ -23,7 +23,7 @@ class CategoryUpdateBloc extends Bloc<CategoryEvent, CategoryState> {
       });
       emit(CategoryUpdatedState());
     } catch (e) {
-      showMessage!("$e");
+      throw Exception("Error creating product $e");
     }
   }
 }

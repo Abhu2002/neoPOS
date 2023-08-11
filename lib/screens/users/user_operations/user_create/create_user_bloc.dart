@@ -43,7 +43,7 @@ class CreateUserBloc extends Bloc<CreateUserEvent, CreateUserState> {
           await GetIt.I.get<FirebaseFirestore>().terminate();
         }
       } catch (err) {
-        showMessage!("$err");
+        throw Exception("Error creating product $err");
       }
     });
   }

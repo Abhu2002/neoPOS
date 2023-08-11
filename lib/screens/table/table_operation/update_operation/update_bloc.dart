@@ -23,7 +23,7 @@ class TableUpdateBloc extends Bloc<TableEvent, TableState> {
           {"table_name": event.newName, "table_capacity": event.newCapacity});
       emit(TableUpdatedState());
     } catch (e) {
-      showMessage!("$e");
+      throw Exception("Error creating product $e");
     }
   }
 }

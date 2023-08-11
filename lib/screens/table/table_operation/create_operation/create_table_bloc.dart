@@ -38,13 +38,12 @@ class CreateTableBloc extends Bloc<CreateTableEvent, CreateTableState> {
                   });
           await db
               .collection("live_table")
-              .add(livedata.toFirestore())
-              .then((documentSnapshot) => {showMessage!("Live Table Created")});
+              .add(livedata.toFirestore());
           await GetIt.I.get<FirebaseFirestore>().clearPersistence();
           await GetIt.I.get<FirebaseFirestore>().terminate();
         }
       } catch (err) {
-        showMessage!("$err");
+        throw Exception("Error creating product $err");
       }
     });
   }

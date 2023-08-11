@@ -30,7 +30,7 @@ class UpdateUserBloc extends Bloc<UpdateUserEvent, UpdateUserState> {
       });
       emit(UserUpdatedState());
     } catch (e) {
-      showMessage!("$e");
+      throw Exception("Error creating product $e");
     }
   }
 }

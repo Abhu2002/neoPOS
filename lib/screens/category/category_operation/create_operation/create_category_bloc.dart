@@ -37,7 +37,7 @@ class CreateCategoryBloc
           await GetIt.I.get<FirebaseFirestore>().terminate();
         }
       } catch (err) {
-        showMessage!("$err");
+        throw Exception("Error creating product $err");
       }
     });
   }

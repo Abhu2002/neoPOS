@@ -33,7 +33,7 @@ class ReadCategoryBloc extends Bloc<ReadCategoryEvent, ReadCategoryState> {
         LoadDataEvent();
         emit(DataLoadedState(allCat));
       } catch (err) {
-        showMessage!("$err");
+        throw Exception("Error creating product $err");
       }
     });
   }
