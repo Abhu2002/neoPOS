@@ -3,9 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
-import 'package:provider/provider.dart';
 import '../../../../utils/build_image.dart';
-import '../../../../utils/popup_cancel_button.dart';
 import 'create_product_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
@@ -120,7 +118,9 @@ class _CreateProductFormState extends State<CreateProductForm> {
                           controller: productName,
                           validator: (val) {
                             if (!val.isValidProductName) {
-                              return "Enter a Valid Product Name";
+                              return AppLocalizations.of(context)!.valid_product_name;
+                            }else{
+                              return null;
                             }
                           },
                           decoration: InputDecoration(
@@ -135,8 +135,6 @@ class _CreateProductFormState extends State<CreateProductForm> {
                               text: val.toUpperCase(),
                               selection: productName.selection,
                             );
-                            BlocProvider.of<CreateProductBloc>(context)
-                                .add(InputEvent(productName.text));
                           },
                         );
                       },
@@ -214,7 +212,9 @@ class _CreateProductFormState extends State<CreateProductForm> {
                           )),
                       validator: (val) {
                         if (!val.isValidDesc) {
-                          return "Enter a Valid Description";
+                          return  AppLocalizations.of(context)!.valid_description;
+                        }else{
+                          return null;
                         }
 
                       },
@@ -234,7 +234,9 @@ class _CreateProductFormState extends State<CreateProductForm> {
                       keyboardType: TextInputType.number,
                       validator: (val) {
                         if (!val.isValidPrice) {
-                          return "Enter a Valid Product price";
+                          return  AppLocalizations.of(context)!.valid_price;
+                        }else{
+                          return null;
                         }
                       },
                     ),
@@ -403,9 +405,9 @@ class _CreateProductFormState extends State<CreateProductForm> {
 
 class CustomDropDown extends StatefulWidget {
   final List categories;
-  String? dropdownvalue;
+  final String? dropdownvalue;
 
-  CustomDropDown({required this.categories, super.key, this.dropdownvalue});
+  const CustomDropDown({required this.categories, super.key, this.dropdownvalue});
 
   @override
   State<CustomDropDown> createState() => _CustomDropDownState();

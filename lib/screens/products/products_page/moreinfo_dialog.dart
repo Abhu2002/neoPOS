@@ -16,7 +16,7 @@ class MoreInfoPopup extends StatefulWidget {
       required this.productName,
       required this.productDescription,
       required this.productType,
-      required this.productAvailibility,
+      required this.productAvailability,
       required this.productPrice,
       required this.productCategory});
 
@@ -26,7 +26,7 @@ class MoreInfoPopup extends StatefulWidget {
   final String productDescription;
   final String productCategory;
   final String productType;
-  final bool productAvailibility;
+  final bool productAvailability;
   final int productPrice;
 
   @override
@@ -37,7 +37,7 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
   @override
   Widget build(BuildContext context) {
     return Material(
-      borderRadius: BorderRadius.only(
+      borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(20), bottomLeft: Radius.circular(20)),
       child: Container(
           decoration: const BoxDecoration(
@@ -193,10 +193,10 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                     ),
                     Icon(
                       size: 30,
-                      (widget.productAvailibility) == true
+                      (widget.productAvailability) == true
                           ? Icons.check
                           : Icons.cancel,
-                      color: (widget.productAvailibility) == true
+                      color: (widget.productAvailability) == true
                           ? Colors.green
                           : Colors.red,
                     )
@@ -235,7 +235,7 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                             productName: widget.productName,
                             productDescription: widget.productDescription,
                             productType: widget.productType,
-                            productAvailibility: widget.productAvailibility,
+                            productAvailability: widget.productAvailability,
                             productPrice: widget.productPrice,
                             productCategory: widget.productCategory,
                           );

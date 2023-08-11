@@ -21,6 +21,7 @@ class _OrderPageReadState extends State<OrderPageRead> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<OrderReadBloc>().showMessage = createSnackBar;
     return BlocBuilder<OrderReadBloc, OrderReadState>(
         builder: (context, state) {
       if (state is OrderReadLoadedState) {
@@ -86,7 +87,7 @@ class _OrderPageReadState extends State<OrderPageRead> {
                                 ),
                               ),
                               onTap: () {
-                                // Navigatigation to new Page
+                                // Navigation to new Page
                                 Navigator.pushNamed(context, "/menu",
                                     arguments: {"Id": data[i]["docID"]});
                               },
@@ -104,5 +105,9 @@ class _OrderPageReadState extends State<OrderPageRead> {
             child: Center(child: CircularProgressIndicator()));
       }
     });
+  }
+  void createSnackBar(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

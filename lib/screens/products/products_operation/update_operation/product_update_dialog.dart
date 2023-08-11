@@ -1,12 +1,8 @@
-import 'dart:io';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_bloc.dart';
-//import 'package:neopos/screens/products/products_operation/update_operation/product_update_event.dart';
-//import 'package:neopos/screens/products/products_operation/update_operation/product_update_state.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../../utils/app_colors.dart';
@@ -23,22 +19,22 @@ class UpdateProductDialog extends StatefulWidget {
   final String productDescription;
   final String productCategory;
   final String productType;
-  final bool productAvailibility;
+  final bool productAvailability;
   final int productPrice;
 
-  UpdateProductDialog(
+  const UpdateProductDialog(
       {super.key,
       required this.image,
       required this.id,
       required this.productName,
       required this.productDescription,
       required this.productType,
-      required this.productAvailibility,
+      required this.productAvailability,
       required this.productPrice,
       required this.productCategory});
 
   @override
-  _UpdateProductDialogState createState() => _UpdateProductDialogState();
+  State<UpdateProductDialog> createState() => _UpdateProductDialogState();
 }
 
 class _UpdateProductDialogState extends State<UpdateProductDialog> {
@@ -58,14 +54,14 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
     _productDescriptionController.text = widget.productDescription;
     _productTypeController.text = widget.productType;
 
-    widget.productAvailibility ? isCheck = true : isCheck = false;
+    widget.productAvailability ? isCheck = true : isCheck = false;
     widget.productType == "veg"
         ? type = ProductType.veg
         : type = ProductType.nonVeg;
     super.initState();
   }
 
-  final formkey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     context.read<UpdateProductBloc>().showMessage = createSnackBar;
@@ -82,7 +78,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
         child: SizedBox(
           width: MediaQuery.of(context).size.width * 0.5,
           child: Form(
-            key: formkey,
+            key: formKey,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -103,7 +99,9 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                   },
                   validator: (val) {
                     if (!val.isValidProductName) {
-                      return "Enter a Valid Product Name";
+                      return AppLocalizations.of(context)!.valid_product_name;
+                    }else{
+                      return null;
                     }
                   },
                 ),
@@ -115,13 +113,15 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                   decoration: InputDecoration(
                       labelText:
                           AppLocalizations.of(context)!.product_price_text,
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.price_change,
                         color: AppColors.primaryColor,
                       )),
                   validator: (val) {
                     if (!val.isValidProductName) {
-                      return "Enter a Valid Product Price";
+                      return AppLocalizations.of(context)!.valid_price;
+                    }else {
+                      return null;
                     }
                   },
                 ),
@@ -136,13 +136,15 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                     decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!
                             .product_description_title,
-                        prefixIcon: Icon(
+                        prefixIcon: const Icon(
                           Icons.description,
                           color: AppColors.primaryColor,
                         )),
                     validator: (val) {
                       if (!val.isValidDesc) {
-                        return "Enter a valid Product Description";
+                        return AppLocalizations.of(context)!.valid_description;
+                      }else{
+                        return null;
                       }
                     }),
                 const SizedBox(
@@ -161,7 +163,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                       children: [
                         Text(
                           AppLocalizations.of(context)!.product_type_title,
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 17),
                         ),
                         const SizedBox(
@@ -200,7 +202,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                     Text(
                       AppLocalizations.of(context)!.product_category_title,
                       style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
                     ),
                     const SizedBox(
                       width: 20,
@@ -366,9 +368,9 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
 
 class CustomDropDown extends StatefulWidget {
   final List categories;
-  String? dropdownvalue;
+  final String? dropdownvalue;
 
-  CustomDropDown({required this.categories, super.key, this.dropdownvalue});
+  const CustomDropDown({required this.categories, super.key, this.dropdownvalue});
 
   @override
   State<CustomDropDown> createState() => _CustomDropDownState();

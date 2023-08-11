@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:neopos/screens/users/user_operations/user_update/update_user_event.dart';
-import 'package:neopos/screens/users/user_operations/user_update/update_user_state.dart';
 import 'package:intl/intl.dart';
 import 'package:get_it/get_it.dart';
+import 'package:equatable/equatable.dart';
+
+part 'update_user_event.dart';
+part 'update_user_state.dart';
 
 class UpdateUserBloc extends Bloc<UpdateUserEvent, UpdateUserState> {
   final FirebaseFirestore _fireStore = GetIt.I.get<FirebaseFirestore>();
+  void Function(String)? showMessage;
 
   UpdateUserBloc() : super(UpdateUserInitialState()) {
     on<UpdateUserBlocRequested>(_mapUpdateUserBlocRequested);
@@ -27,7 +30,7 @@ class UpdateUserBloc extends Bloc<UpdateUserEvent, UpdateUserState> {
       });
       emit(UserUpdatedState());
     } catch (e) {
-      emit(UserErrorState("Failed to update User."));
+      showMessage!("$e");
     }
   }
 }

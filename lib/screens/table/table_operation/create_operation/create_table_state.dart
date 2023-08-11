@@ -9,12 +9,6 @@ class CreateTableState extends Equatable {
 
 class CreateTableInitial extends CreateTableState {}
 
-class TableNameAvailableState extends CreateTableState {}
-
-class TableErrorState extends CreateTableState {
-  final String errorMessage;
-  const TableErrorState(this.errorMessage);
-}
 class TableNameNotAvailableState extends CreateTableState {}
 class TableCreatedState extends CreateTableState {
   bool isCreated;

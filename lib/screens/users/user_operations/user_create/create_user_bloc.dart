@@ -12,7 +12,7 @@ class CreateUserBloc extends Bloc<CreateUserEvent, CreateUserState> {
   void Function(String)? showMessage;
 
   CreateUserBloc() : super(CreateUserInitial()) {
-    on<UserIntialEvent>((event, emit) {
+    on<UserInitialEvent>((event, emit) {
       emit(CreateUserInitial());
     });
     on<CreateUserFBEvent>((event, emit) async {
@@ -43,7 +43,7 @@ class CreateUserBloc extends Bloc<CreateUserEvent, CreateUserState> {
           await GetIt.I.get<FirebaseFirestore>().terminate();
         }
       } catch (err) {
-        // print(err);
+        showMessage!("$err");
       }
     });
   }

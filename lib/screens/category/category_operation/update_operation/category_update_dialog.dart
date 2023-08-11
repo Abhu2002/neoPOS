@@ -4,8 +4,6 @@ import 'package:neopos/utils/popup_cancel_button.dart';
 import 'package:neopos/utils/utils.dart';
 import '../../../../utils/app_colors.dart';
 import 'category_update_bloc.dart';
-import 'category_update_event.dart';
-import 'package:neopos/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 //pass category name and category id to update the category..
@@ -22,17 +20,17 @@ class UpdateCategoryForm extends StatefulWidget {
 }
 
 class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
-  TextEditingController categoryupdate = TextEditingController();
+  TextEditingController categoryUpdate = TextEditingController();
   @override
   void initState() {
-    categoryupdate.text = widget.oldName;
+    categoryUpdate.text = widget.oldName;
     super.initState();
   }
 
   final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
-    String newName = widget.oldName;
+    context.read<CategoryUpdateBloc>().showMessage = createSnackBar;
     return AlertDialog(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
@@ -43,20 +41,20 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
         key: formKey,
         child: TextFormField(
           onChanged: (value) {
-            categoryupdate.value = TextEditingValue(
+            categoryUpdate.value = TextEditingValue(
               text: value.toUpperCase(),
-              selection: categoryupdate.selection,
+              selection: categoryUpdate.selection,
             );
           },
           validator: (val) {
             if (!val.isValidName) {
               return
-                "Enter a Valid Category Name";
+                AppLocalizations.of(context)!.valid_category;
             } else{
               return null;
             }
           },
-          controller: categoryupdate,
+          controller: categoryUpdate,
           decoration: InputDecoration(
               hintText:
                   AppLocalizations.of(context)!.new_category_name_hinttext,
@@ -76,7 +74,7 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
           onPressed: () {
             if (formKey.currentState!.validate()) {
               BlocProvider.of<CategoryUpdateBloc>(context).add(
-                CategoryUpdateRequested(widget.id, categoryupdate.text),
+                CategoryUpdateRequested(widget.id, categoryUpdate.text),
               );
               Navigator.of(context).pop();
             }
@@ -84,5 +82,9 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
         ),
       ],
     );
+  }
+  void createSnackBar(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

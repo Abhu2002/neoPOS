@@ -44,8 +44,6 @@ class ImageChangedState extends CreateProductState {
   List<Object> get props => [imageFile];
 }
 
-class ProductNameAvailableState extends CreateProductState {}
-
 class ProductTypeState extends CreateProductState {
   final ProductType type;
   const ProductTypeState(this.type);

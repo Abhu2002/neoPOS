@@ -1,8 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
-import 'delete_event.dart';
-import 'delete_state.dart';
+import 'package:equatable/equatable.dart';
+part  'delete_event.dart';
+part  'delete_state.dart';
 
 class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
   final CollectionReference usersCollection =
@@ -11,6 +12,7 @@ class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
       GetIt.I.get<FirebaseFirestore>().collection('table');
   final CollectionReference liveTableCollection =
       GetIt.I.get<FirebaseFirestore>().collection('live_table');
+  void Function(String)? showMessage;
 
   TableDeletionBloc() : super(InitialTableDeletionState()) {
     on<CredentialsEnteredEvent>(_mapCredentialsEnteredEventToState);
@@ -56,11 +58,11 @@ class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
           await liveTableCollection.doc(liveDocID).delete();
         }
          else {
-          emit(ErrorState('Invalid credentials or insufficient permissions.'));
+          emit(ErrorState());
         }
       }
     } else {
-      emit(ErrorState('Invalid credentials or insufficient permissions.'));
+      emit(ErrorState());
     }
   }
 

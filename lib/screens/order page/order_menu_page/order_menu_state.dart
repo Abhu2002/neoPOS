@@ -1,5 +1,4 @@
-import 'package:equatable/equatable.dart';
-
+part of 'order_menu_bloc.dart';
 abstract class OrderContentState extends Equatable {}
 
 class InitialState extends OrderContentState{

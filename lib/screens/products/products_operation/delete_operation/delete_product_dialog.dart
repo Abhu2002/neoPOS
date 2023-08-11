@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'delete_bloc.dart';
-import 'delete_event.dart';
-import 'delete_state.dart';
 import 'package:neopos/utils/utils.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeleteProductPopup extends StatefulWidget {
   final String productID;
@@ -25,7 +24,7 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
     super.initState();
   }
 
-  final formkey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProductDeletionBloc, ProductDeletionState>(
@@ -35,28 +34,28 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
         } else if (state is ConfirmationState) {
           showConfirmationDialog(context, state.id);
         } else if (state is ProductDeleteState) {
-          showSnackBar(context, 'Product deleted successfully.');
+          showSnackBar(context, AppLocalizations.of(context)!.product_delete_msg);
         }
       },
       builder: (context, state) {
         return AlertDialog(
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15))),
-          title: const Text('Delete Product'),
-          content: const Text('Are you sure you want to delete this Product?'),
+          title:  Text(AppLocalizations.of(context)!.product_delete_title),
+          content:  Text(AppLocalizations.of(context)!.product_delete_confirm_msg),
           actions: [
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: const Text('No'),
+              child:  Text(AppLocalizations.of(context)!.no_title),
             ),
             ElevatedButton(
               onPressed: () async {
                 BlocProvider.of<ProductDeletionBloc>(context)
                     .add(ConfirmTableDeletionEvent(widget.productID));
               },
-              child: const Text('Yes'),
+              child:  Text(AppLocalizations.of(context)!.yes_title),
             ),
           ],
         );
@@ -71,7 +70,7 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
         return AlertDialog(
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15))),
-          title: const Text('Error'),
+          title:  Text(AppLocalizations.of(context)!.error_text),
           content: Text(error),
           actions: [
             TextButton(
@@ -79,7 +78,7 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
-              child: const Text('OK'),
+              child:  Text(AppLocalizations.of(context)!.ok_button),
             ),
           ],
         );
@@ -94,31 +93,35 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
         return AlertDialog(
             shape: const RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15))),
-          title: const Text('Enter Credentials'),
+          title:  Text(AppLocalizations.of(context)!.enter_credentials),
           content: Form(
-            key: formkey,
+            key: formKey,
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextFormField(
                   validator: (val) {
                     if (!val.isValidUsername) {
-                      return "Enter a Valid Username";
+                      return AppLocalizations.of(context)!.valid_username;
+                    }else{
+                      return null;
                     }
                   },
                   controller: _usernameController,
-                  decoration: const InputDecoration(hintText: 'Username'),
+                  decoration:  InputDecoration(hintText: AppLocalizations.of(context)!.username_hinttext),
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
                   validator: (val) {
                     if (!val.isValidPassword) {
-                      return "Enter a Valid Password";
+                      return AppLocalizations.of(context)!.valid_password;
+                    }else{
+                      return null;
                     }
                   },
                   controller: _passwordController,
                   obscureText: true,
-                  decoration: const InputDecoration(hintText: 'Password'),
+                  decoration:  InputDecoration(hintText: AppLocalizations.of(context)!.password_hinttext),
                 ),
               ],
             ),
@@ -133,7 +136,7 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
             ElevatedButton(
               onPressed: () {
                 // Navigator.of(context).pop();
-                if (formkey.currentState!.validate()) {
+                if (formKey.currentState!.validate()) {
                   BlocProvider.of<ProductDeletionBloc>(context).add(
                     CredentialsEnteredEvent(
                         _usernameController.text, _passwordController.text, id),

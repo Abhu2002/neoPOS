@@ -2,11 +2,10 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:neopos/screens/order%20page/order_content_page/add_order.dart';
+import 'package:neopos/screens/order%20page/order_menu_page/add_order.dart';
 import '../../../../utils/app_colors.dart';
-import 'order_content_bloc.dart';
-import 'order_content_event.dart';
-import 'order_content_state.dart';
+import 'order_menu_bloc.dart';
+
 
 class OrderMenuPage extends StatefulWidget {
   dynamic data;
@@ -29,11 +28,11 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
         children: [
           Expanded(
             flex: 2,
-            child: Container(height: MediaQuery.sizeOf(context).height,
+            child: SizedBox(height: MediaQuery.sizeOf(context).height,
               child: Column(
                 children: [
-                  Expanded(flex: 1,
-                    child: const Row(
+                  const Expanded(flex: 1,
+                    child: Row(
                       children: [
                         Padding(
                           padding: EdgeInsets.all(20.0),
@@ -80,11 +79,11 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                               .width,
                                           height: 50,
                                          decoration:
-                                         BoxDecoration(color: Colors.orange),
+                                         const BoxDecoration(color: Colors.orange),
                                           child: Row(
                                             children: [
 
-                                              Container(
+                                              SizedBox(
                                                   width: 100,
                                                   child: Center(
                                                       child: Text(
@@ -109,7 +108,7 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                               const SizedBox(
                                                 width: 40,
                                               ),
-                                              Container(
+                                              SizedBox(
                                                   width: 60,
                                                   child: Center(
                                                       child: Text(
@@ -148,14 +147,14 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                       }
 
                                       return InkWell(
-                                        child: Container(
+                                        child: SizedBox(
                                           width: 100,
                                           height: 50,
                                           child: Row(children: [
                                             Padding(
                                               padding: const EdgeInsets.only(
                                                   left: 10.0),
-                                              child: Container(
+                                              child: SizedBox(
                                                 width: 50,
                                                 child: ClipRRect(
                                                   borderRadius: BorderRadius.circular(

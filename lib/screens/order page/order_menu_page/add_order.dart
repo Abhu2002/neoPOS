@@ -3,9 +3,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:input_quantity/input_quantity.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'order_menu_bloc.dart';
 
-import 'order_content_bloc.dart';
-import 'order_content_event.dart';
 
 class AddOrder extends StatefulWidget {
   const AddOrder(
@@ -38,7 +38,7 @@ class _AddOrderState extends State<AddOrder> {
       ),
       actionsPadding: const EdgeInsets.all(20),
       title: PopUpRow(
-        title: 'Add Order',
+        title: AppLocalizations.of(context)!.add_order,
       ),
       actions: [
         SizedBox(
@@ -49,17 +49,17 @@ class _AddOrderState extends State<AddOrder> {
               Text(
                 widget.productName,
                 softWrap: true,
-                style: TextStyle(
+                style: const TextStyle(
                   fontSize: 22,
                   color: AppColors.mainTextColor,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               Row(
                 children: [
-                  Expanded(
+                  const Expanded(
                       flex: 1,
                       child: Text("QTY : ",
                           style: TextStyle(
@@ -78,14 +78,13 @@ class _AddOrderState extends State<AddOrder> {
                       steps: 1,
                       showMessageLimit: false,
                       onQtyChanged: (val) {
-                        print(val);
                         quantity = val!.toInt();
                       },
                     ),
                   ),
                 ],
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               ElevatedButton(
@@ -102,7 +101,7 @@ class _AddOrderState extends State<AddOrder> {
                       widget.docId));
                   Navigator.pop(context);
                 },
-                child: Text("ADD"),
+                child: Text(AppLocalizations.of(context)!.add_button),
               )
             ],
           ),

@@ -19,8 +19,4 @@ class OrderReadLoadedState extends OrderReadState {
   List<Object> get props => [all];
 }
 
-class OrderErrorState extends OrderReadState {
-  // it store the errorMesssage
-  final String errorMessage;
-  const OrderErrorState(this.errorMessage);
-}
+

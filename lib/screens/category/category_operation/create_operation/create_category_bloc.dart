@@ -12,14 +12,9 @@ class CreateCategoryBloc
   void Function(String)? showMessage;
 
   CreateCategoryBloc() : super(CreateCategoryInitial()) {
-
-    on<InputEvent>((event, emit) async {
-      if (event.categoryName != "") {
-        emit(CategoryNameAvailableState());
-      } else {
-        emit(const CategoryErrorState("Please Enter a Name"));
-      }
-    });
+     on<NotNameAvaiableEvent>((event,emit){
+       emit(CreateCategoryInitial());
+     });
     on<CreateCategoryFBEvent>((event, emit) async {
       try {
         List allName = [];
@@ -41,7 +36,9 @@ class CreateCategoryBloc
           await GetIt.I.get<FirebaseFirestore>().clearPersistence();
           await GetIt.I.get<FirebaseFirestore>().terminate();
         }
-      } catch (err) {}
+      } catch (err) {
+        showMessage!("$err");
+      }
     });
   }
 }

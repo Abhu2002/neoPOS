@@ -1,10 +1,7 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import 'update_bloc.dart';
-import 'update_event.dart';
 import 'package:neopos/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 //pass table name and table id to update the table..
@@ -26,6 +23,7 @@ class UpdateTableForm extends StatefulWidget {
 class _UpdateTableFormState extends State<UpdateTableForm> {
   final formkey = GlobalKey<FormState>();
   TextEditingController tableName = TextEditingController();
+
   @override
   void initState() {
     tableName.text = widget.tableName;
@@ -36,6 +34,7 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
   Widget build(BuildContext context) {
     String newName = widget.tableName;
     String newCapacity = widget.tableCapacity;
+    context.read<TableUpdateBloc>().showMessage = createSnackBar;
     return AlertDialog(
       title: PopUpRow(title: AppLocalizations.of(context)!.update_table_title),
       content:Form(
@@ -45,7 +44,9 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
         children: [
           TextFormField(
           validator: (val) {
-      if (!val.isValidName) return "Enter Valid Table Capacity";
+      if (!val.isValidName) {
+        return AppLocalizations.of(context)!.valid_table_name;
+      }else{return null;}
       },
             onChanged: (value) => newName = value,
             controller: TextEditingController(text: widget.tableName),
@@ -55,8 +56,9 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
           ),
           TextFormField(
               validator: (val) {
-                if (!val.isValidTableCap) return "Enter Valid Table Capacity";
-              },
+      if (!val.isValidTableCap) {
+        return AppLocalizations.of(context)!.valid_table_cap;
+      }else{return null;}},
             onChanged: (value) => newCapacity = value,
             controller: TextEditingController(text: widget.tableCapacity),
             decoration: InputDecoration(
@@ -85,5 +87,9 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
         ),
       ],
     );
+  }
+  void createSnackBar(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

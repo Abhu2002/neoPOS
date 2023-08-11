@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import '../../../../utils/app_colors.dart';
 import 'delete_user_bloc.dart';
-import 'delete_user_event.dart';
-import 'delete_user_state.dart';
 import 'package:neopos/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -33,7 +31,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
     return BlocConsumer<UserDeletionBloc, UserDeletionState>(
       listener: (context, state) {
         if (state is ErrorState) {
-          showErrorDialog(context, state.error);
+          showErrorDialog(context);
         } else if (state is ConfirmationState) {
           showConfirmationDialog(context,state.id);
         } else if (state is UserDeleteState) {
@@ -69,7 +67,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
     );
   }
 
-  void showErrorDialog(BuildContext context, String error) {
+  void showErrorDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -78,7 +76,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
           title: PopUpRow(title: AppLocalizations.of(context)!.error_text),
-          content: Text(error),
+          content: Text(AppLocalizations.of(context)!.invalid_credentials),
           actions: [
             ElevatedButton(
               onPressed: () {
@@ -111,7 +109,12 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
               children: [
                 TextFormField(
                   validator: (val) {
-                    if (!val.isValidUsername) return "Enter a Valid User Name";
+                    if (!val.isValidUsername) {
+                      return AppLocalizations.of(context)!.valid_username;
+                    }
+                    else{
+                      return null;
+                    }
                   },
                   controller: _usernameController,
                   decoration: InputDecoration(
@@ -124,8 +127,11 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
                 const SizedBox(height: 16),
                 TextFormField(
                   validator: (val) {
-                    if (!val.isValidPassword) return "Enter a Valid Password";
-                  },
+        if (!val!.isValidPassword) {
+        return AppLocalizations.of(context)!.valid_password;
+        } else {
+        return null;
+        }},
                   controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(

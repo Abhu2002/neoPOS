@@ -1,13 +1,17 @@
-abstract class UpdateUserState {}
+part of 'update_user_bloc.dart';
+abstract class UpdateUserState extends Equatable{}
 
-class UpdateUserInitialState extends UpdateUserState {}
+class UpdateUserInitialState extends UpdateUserState {
+  @override
+  List<Object?> get props => [];
+}
 
-class UserUpdatingState extends UpdateUserState {}
+class UserUpdatingState extends UpdateUserState {
+  @override
+  List<Object?> get props => [];
+}
 
-class UserUpdatedState extends UpdateUserState {}
-
-class UserErrorState extends UpdateUserState {
-  final String error;
-
-  UserErrorState(this.error);
+class UserUpdatedState extends UpdateUserState {
+  @override
+  List<Object?> get props => [];
 }

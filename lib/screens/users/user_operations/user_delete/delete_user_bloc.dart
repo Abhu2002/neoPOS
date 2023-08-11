@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-import 'delete_user_event.dart';
-import 'delete_user_state.dart';
+import 'package:equatable/equatable.dart';
+part 'delete_user_event.dart';
+part 'delete_user_state.dart';
 
 class UserDeletionBloc extends Bloc<UserDeletionEvent, UserDeletionState> {
   final CollectionReference usersCollection =
@@ -32,11 +33,11 @@ class UserDeletionBloc extends Bloc<UserDeletionEvent, UserDeletionState> {
          usersCollection.doc(docID).delete();
           emit(UserDeleteState());
         } else {
-          emit(ErrorState('Invalid credentials or insufficient permissions.'));
+          emit(ErrorState());
         }
       }
     } else {
-      emit(ErrorState('Invalid credentials or insufficient permissions.'));
+      emit(ErrorState());
     }
   }
 

@@ -28,8 +28,7 @@ class TableBloc extends Bloc<TableEvent, TableState> {
         emit(TableReadLoadedState(
             allCat)); //gives all document of tables to State
       } catch (err) {
-        emit(const ErrorState(
-            "Some Error Occur")); //calls state and stores message through parameter
+        emit(const ErrorState("Some Error Occur")); //calls state and stores message through parameter
       }
     });
   }

@@ -115,5 +115,23 @@
    "tb_name_exist":"This Table Name already exist, Try different name",
    "usr_name_exist":"This User Name already exist, Try different name",
    "cat_name_exist":"This Category Name already exist, Try different name",
-   "userpage_title":"User Page"
+   "userpage_title":"User Page",
+   "invalid_credentials":"Invalid credentials or insufficient permissions.",
+   "add_order":"Add Order",
+   "add_button":"Add",
+   "valid_table_cap":"Enter Valid Table Capacity",
+   "valid_username":"Enter a Valid User Name",
+   "valid_password":"Enter a Valid Password",
+   "table_delete_msg":"Table deleted successfully",
+   "category_delete_msg":"Category deleted successfully.",
+   "valid_category":"Enter valid Category Name",
+   "valid_table_name":"Enter a valid Table Name",
+   "valid_last_name":"Enter a valid Last Name",
+   "valid_product_name":"Enter a Valid Product Name",
+   "valid_description":"Enter a Valid Description",
+   "valid_price":"Enter a Valid Product price",
+   "product_delete_msg":"Product deleted successfully.",
+   "product_delete_title":"Delete Product",
+   "product_delete_confirm_msg":"Are you sure you want to delete this Product?"
+
 }

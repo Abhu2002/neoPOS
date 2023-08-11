@@ -10,6 +10,6 @@ sealed class OrderReadEvent extends Equatable {
 class OrderReadLoadDataEvent extends OrderReadEvent {}
 
 class OrderReadInitialEvent extends OrderReadEvent {
-  bool isfirst;
-  OrderReadInitialEvent(this.isfirst);
+  bool isFirst;
+  OrderReadInitialEvent(this.isFirst);
 }

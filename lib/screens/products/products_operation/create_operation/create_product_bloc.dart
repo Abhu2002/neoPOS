@@ -9,7 +9,6 @@ import 'package:neopos/screens/products/products_operation/create_operation/crea
 import '../../model/product.dart';
 
 part 'create_product_event.dart';
-
 part 'create_product_state.dart';
 
 class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -101,7 +100,7 @@ class _CreateTableFormState extends State<CreateTableForm> {
                     },
                     validator: (val) {
                       if (!val.isValidName) {
-                        return 'Enter a valid Table Name';
+                        return AppLocalizations.of(context)!.valid_table_name;
                       }
                       else{
                         return null;
@@ -122,12 +121,12 @@ class _CreateTableFormState extends State<CreateTableForm> {
                           color: AppColors.primaryColor,
                         )),
                     validator: (val) {
-                      if (!val.isValidTableCap)
-                        return "Enter a Valid Table Capacity";
-                    },
-                    onChanged: (val) {
-                      BlocProvider.of<CreateTableBloc>(context)
-                          .add(InputEvent(tableName.text, tableCap.text));
+                      if (!val.isValidTableCap) {
+                        return AppLocalizations.of(context)!.valid_table_cap;
+                      }
+                      else {
+                        return null;
+                      }
                     },
                   );
                 },

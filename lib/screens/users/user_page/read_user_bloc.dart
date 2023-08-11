@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
 part 'read_user_event.dart';
-
 part 'read_user_state.dart';
 
 class ReadUserBloc extends Bloc<ReadUserEvent, ReadUserState> {
@@ -16,11 +15,11 @@ class ReadUserBloc extends Bloc<ReadUserEvent, ReadUserState> {
           emit(DataLoadingState());
           await Future.delayed(const Duration(seconds: 1));
         }
-        List allcat = [];
+        List allCat = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("users").get().then((value) => {
               value.docs.forEach((element) {
-                allcat.add({
+                allCat.add({
                   "Id": element.id,
                   "user_id": element['user_id'],
                   "first_name": element['first_name'],
@@ -32,7 +31,7 @@ class ReadUserBloc extends Bloc<ReadUserEvent, ReadUserState> {
               })
             });
         LoadDataEvent();
-        emit(DataLoadedState(allcat));
+        emit(DataLoadedState(allCat));
       } catch (err) {
         emit(const ErrorState("Some Error Occur"));
       }

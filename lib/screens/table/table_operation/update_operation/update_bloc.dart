@@ -1,13 +1,16 @@
 import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'update_event.dart';
-import 'update_state.dart';
 import 'package:get_it/get_it.dart';
+import 'package:equatable/equatable.dart';
+
+part 'update_event.dart';
+part 'update_state.dart';
+
 
 class TableUpdateBloc extends Bloc<TableEvent, TableState> {
   final FirebaseFirestore _fireStore = GetIt.I.get<FirebaseFirestore>();
-
+  void Function(String)? showMessage;
   TableUpdateBloc() : super(TableInitialState()) {
     on<TableUpdateRequested>(_mapTableUpdateRequested);
   }
@@ -21,7 +24,7 @@ class TableUpdateBloc extends Bloc<TableEvent, TableState> {
           {"table_name": event.newName, "table_capacity": event.newCapacity});
       emit(TableUpdatedState());
     } catch (e) {
-      emit(TableErrorState("Failed to update table."));
+      showMessage!("$e");
     }
   }
 }

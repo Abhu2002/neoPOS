@@ -77,7 +77,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                                   ElevatedButton(
                                       onPressed: () {
                                         BlocProvider.of<CreateUserBloc>(context)
-                                            .add(UserIntialEvent());
+                                            .add(UserInitialEvent());
                                         Navigator.pop(context);
                                       },
                                       child: Text(AppLocalizations.of(context)!
@@ -129,7 +129,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                           )),
                       validator: (val) {
                         if (!val.isValidName) {
-                          return "Enter a Valid Last Name";
+                          return  AppLocalizations.of(context)!.valid_last_name;
                         }
                         return null;
                       },
@@ -152,7 +152,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                           )),
                       validator: (val) {
                         if (!val.isValidUsername) {
-                          return "Enter a User Name";
+                          return  AppLocalizations.of(context)!.valid_username;
                         }
                         return null;
                       },
@@ -175,7 +175,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                           )),
                       validator: (val) {
                         if (!val.isValidPassword) {
-                          return "Enter a valid Password";
+                          return  AppLocalizations.of(context)!.valid_password;
                         }
                         return null;
                       },

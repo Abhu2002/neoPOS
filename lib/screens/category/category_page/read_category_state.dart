@@ -20,8 +20,3 @@ class DataLoadedState extends ReadCategoryState {
   List<Object> get props => [all];
 }
 
-class ErrorState extends ReadCategoryState {
-  final String errorMessage;
-
-  const ErrorState(this.errorMessage);
-}

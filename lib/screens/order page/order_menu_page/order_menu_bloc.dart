@@ -1,11 +1,10 @@
-
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:equatable/equatable.dart';
 
-import 'order_content_event.dart';
-import 'order_content_state.dart';
+part  'order_menu_event.dart';
+part  'order_menu_state.dart';
 
 class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
   OrderContentBloc() : super(InitialState()) {
@@ -34,7 +33,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
     });
     on<AddOrderFBEvent>((event, emit) async {
       try {
-        List<dynamic> allorders = [];
+        List<dynamic> allOrders = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
             await db.collection("live_table").doc(event.docId).get();
@@ -42,9 +41,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
 
         dynamic tablename = data?['table_name'];
         if (data != null && data.containsKey('products')) {
-          allorders = data['products'];
-        } else {
-          print('Field "products" is missing or has invalid data');
+          allOrders = data['products'];
         }
         // Now you have the list of maps
 
@@ -56,12 +53,11 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
           'quantity': event.quantity
         };
 
-        allorders.add(myData);
-print(event.docId);
+        allOrders.add(myData);
         db
             .collection('live_table')
             .doc(event.docId)
-            .set({'products': allorders, 'table_name': tablename});
+            .set({'products': allOrders, 'table_name': tablename});
       } catch (err) {
         throw Exception("Error creating product $err");
       }

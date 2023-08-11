@@ -43,15 +43,6 @@ class CreateProductFBEvent extends CreateProductEvent {
       ];
 }
 
-class InputEvent extends CreateProductEvent {
-  final String productName;
-
-  const InputEvent(this.productName);
-
-  @override
-  List<Object> get props => [productName];
-}
-
 class CategoryLoadingEvent extends CreateProductEvent {}
 
 class CategoryLoadedEvent extends CreateProductEvent {

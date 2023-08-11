@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'delete_event.dart';
-import 'delete_state.dart';
+import 'package:equatable/equatable.dart';
+
+part 'delete_event.dart';
+part 'delete_state.dart';
 
 class ProductDeletionBloc
     extends Bloc<ProductDeletionEvent, ProductDeletionState> {

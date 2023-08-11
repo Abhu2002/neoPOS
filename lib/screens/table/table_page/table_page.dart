@@ -32,7 +32,6 @@ class _TableReadState extends State<TableRead> {
       if (state is TableReadLoadedState) {
         List data = state.all;
         return LayoutBuilder(builder: (ctx, constraints) {
-          final width = constraints.maxWidth;
           return Column(
             children: [
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -101,22 +100,22 @@ class _TableReadState extends State<TableRead> {
                                               color: Colors.white,
                                               itemBuilder: (context) =>
                                                   <PopupMenuEntry<TableItem>>[
-                                                    const PopupMenuItem<
+                                                     PopupMenuItem<
                                                             TableItem>(
                                                         value:
                                                             TableItem.tableEdit,
                                                         child: Text(
-                                                          "Edit",
+                                                          AppLocalizations.of(context)!.edit_table_option,
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.black),
                                                         )),
-                                                    const PopupMenuItem<
+                                                     PopupMenuItem<
                                                             TableItem>(
                                                         value: TableItem
                                                             .tableDelete,
                                                         child: Text(
-                                                          "Delete",
+                                                          AppLocalizations.of(context)!.delete_table_option,
                                                           style: TextStyle(
                                                               color:
                                                                   Colors.black),

@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
-import '../../../utils/popup_cancel_button.dart';
 import '../category_operation/create_operation/create_category_dialog.dart';
 import '../category_operation/delete_operation/delete_category_dialog.dart';
 import '../category_operation/update_operation/category_update_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:neopos/utils/utils.dart';
+
 class CategoryRead extends StatefulWidget {
   const CategoryRead({super.key});
 
@@ -24,6 +23,7 @@ class _CategoryReadState extends State<CategoryRead> {
 
   @override
   Widget build(BuildContext context) {
+    context.read<ReadCategoryBloc>().showMessage = createSnackBar;
     return Column(
       children: [
         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
@@ -146,5 +146,9 @@ class _CategoryReadState extends State<CategoryRead> {
         ),
       ],
     );
+  }
+  void createSnackBar(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

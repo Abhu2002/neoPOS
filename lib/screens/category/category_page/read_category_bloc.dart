@@ -7,6 +7,7 @@ part 'read_category_event.dart';
 part 'read_category_state.dart';
 
 class ReadCategoryBloc extends Bloc<ReadCategoryEvent, ReadCategoryState> {
+  void Function(String)? showMessage;
   ReadCategoryBloc() : super(ReadCategoryInitial()) {
     on<InitialEvent>((event, emit) async {
       try {
@@ -32,7 +33,7 @@ class ReadCategoryBloc extends Bloc<ReadCategoryEvent, ReadCategoryState> {
         LoadDataEvent();
         emit(DataLoadedState(allCat));
       } catch (err) {
-        emit(const ErrorState("Some Error Occur"));
+        showMessage!("$err");
       }
     });
   }

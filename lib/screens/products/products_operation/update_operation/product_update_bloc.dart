@@ -4,12 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
-
-
 import '../create_operation/create_product_dialog.dart';
 
 part 'product_update_event.dart';
-
 part 'product_update_state.dart';
 
 class UpdateProductBloc extends Bloc<ProductEvent, ProductState> {
@@ -56,14 +53,14 @@ class UpdateProductBloc extends Bloc<ProductEvent, ProductState> {
   Future<void> _mapCategoryEventToState(
       InitialCategoryEvent event, Emitter<ProductState> emit) async {
     try {
-      List allcat = [];
+      List allCat = [];
       FirebaseFirestore db = FirebaseFirestore.instance;
       await db.collection("category").get().then((value) => {
             value.docs.forEach((element) {
-              allcat.add(element['category_name']);
+              allCat.add(element['category_name']);
             })
           });
-      emit(LoadedCategoryState(allcat));
+      emit(LoadedCategoryState(allCat));
     } catch (err) {
       emit(ErrorProductState(err.toString()));
     }

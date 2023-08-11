@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import '../../../../utils/app_colors.dart';
 import 'update_user_bloc.dart';
-import 'update_user_event.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:neopos/utils/utils.dart';
 //pass category name and category id to update the category..
@@ -27,9 +26,10 @@ class UpdateUserForm extends StatefulWidget {
 
 class _UpdateUserFormState extends State<UpdateUserForm> {
 
-  final formkey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
+    context.read<UpdateUserBloc>().showMessage = createSnackBar;
     String newFirstName = widget.oldFirstName;
     String newLastName = widget.oldLastName;
     String newUserId = widget.oldUserId;
@@ -42,21 +42,24 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
       content: SizedBox(
         width: MediaQuery.of(context).size.width / 2,
         child: Form(
-          key: formkey,
+          key: formKey,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextFormField(
                 validator: (val) {
                   if (!val.isValidName) {
-                    return "Enter a Valid First Name";
+                    return AppLocalizations.of(context)!.valid_username;
+                  }
+                  else{
+                    return null;
                   }
                 },
                 onChanged: (value) => newFirstName = value,
                 controller: TextEditingController(text: widget.oldFirstName),
                 decoration:  InputDecoration(
                     hintText:AppLocalizations.of(context)!.first_name_hinttext,
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.person,
                       color: AppColors.primaryColor,
                     )),
@@ -67,14 +70,16 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
               TextFormField(
                 validator: (val) {
                   if (!val.isValidName) {
-                    return "Enter a Valid Last Name";
+                    return AppLocalizations.of(context)!.valid_last_name;
+                  }else{
+                    return null;
                   }
                 },
                 onChanged: (value) => newLastName = value,
                 controller: TextEditingController(text: widget.oldLastName),
                 decoration:  InputDecoration(
                     hintText: AppLocalizations.of(context)!.user_id_hinttext,
-                    prefixIcon: Icon(
+                    prefixIcon: const Icon(
                       Icons.person,
                       color: AppColors.primaryColor,
                     )),
@@ -85,14 +90,16 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
               TextFormField(
                 validator: (val) {
                   if (!val.isValidUsername) {
-                    return "Enter a valid Username ";
+                    return AppLocalizations.of(context)!.valid_username;
+                  }else{
+                    return null;
                   }
                 },
                 onChanged: (value) => newUserId = value,
                 controller: TextEditingController(text: widget.oldUserId),
-                decoration: const InputDecoration(
-                    hintText: "User name",
-                    prefixIcon: Icon(
+                decoration:  InputDecoration(
+                    hintText: AppLocalizations.of(context)!.username_hinttext,
+                    prefixIcon: const Icon(
                       Icons.person,
                       color: AppColors.primaryColor,
                     )),
@@ -103,7 +110,10 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
               TextFormField(
                 validator: (val) {
                   if (!val.isValidPassword) {
-                    return "Enter a valid Username ";
+                    return AppLocalizations.of(context)!.valid_password;
+                  }
+                  else{
+                    return null;
                   }
                 },
                 onChanged: (value) => newPassword = value,
@@ -127,7 +137,7 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
         TextButton(
           child: Text(AppLocalizations.of(context)!.update_button),
           onPressed: () {
-            if (formkey.currentState!.validate()) {
+            if (formKey.currentState!.validate()) {
               BlocProvider.of<UpdateUserBloc>(context).add(
                 UpdateUserBlocRequested(widget.docId, newFirstName, newLastName,
                     newPassword, newUserId),
@@ -147,5 +157,9 @@ class _UpdateUserFormState extends State<UpdateUserForm> {
         ),
       ],
     );
+  }
+  void createSnackBar(String message) {
+    final snackBar = SnackBar(content: Text(message));
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

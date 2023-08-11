@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
 

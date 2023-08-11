@@ -1,5 +1,3 @@
-import 'dart:html';
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
@@ -9,11 +7,12 @@ part 'order_read_event.dart';
 part 'order_read_state.dart';
 
 class OrderReadBloc extends Bloc<OrderReadEvent, OrderReadState> {
+  void Function(String)? showMessage;
   OrderReadBloc() : super(OrderReadInitial()) {
     on<OrderReadInitialEvent>((event, emit) async {
       //t creates it Initially
       try {
-        if (event.isfirst) {
+        if (event.isFirst) {
           emit(
               OrderReadLoadingState()); //Creating connection with firebase and fetching table
         } else {
@@ -23,10 +22,10 @@ class OrderReadBloc extends Bloc<OrderReadEvent, OrderReadState> {
         }
         List allCat = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
-        var tabledata = await db.collection('table').get();
+        var tableData = await db.collection('table').get();
         await db.collection("live_table").get().then((value) => {
               value.docs.forEach((element) async {
-                var a = tabledata.docChanges;
+                var a = tableData.docChanges;
                 int? cap;
                 a.forEach(
                   (e) {
@@ -43,11 +42,9 @@ class OrderReadBloc extends Bloc<OrderReadEvent, OrderReadState> {
               })
             });
         OrderReadLoadDataEvent();
-        emit(OrderReadLoadedState(
-            allCat)); //gives all document of tables to State
+        emit(OrderReadLoadedState(allCat)); //gives all document of tables to State
       } catch (err) {
-        emit(const OrderErrorState(
-            "Some Error Occur")); //calls state and stores message through parameter
+        showMessage!("$err"); //calls state and stores message through parameter
       }
     });
   }

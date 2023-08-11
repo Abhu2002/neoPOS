@@ -31,11 +31,11 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
     return BlocConsumer<CategoryDeletionBloc, CategoryDeletionState>(
       listener: (context, state) {
         if (state is ErrorState) {
-          showErrorDialog(context, state.error);
+          showErrorDialog(context);
         } else if (state is ConfirmationState) {
           showConfirmationDialog(context, state.id);
         } else if (state is CategoryDeleteState) {
-          showSnackBar(context, 'Category deleted successfully.');
+          showSnackBar(context,AppLocalizations.of(context)!.category_delete_msg );
         }
       },
       builder: (context, state) {
@@ -67,7 +67,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
     );
   }
 
-  void showErrorDialog(BuildContext context, String error) {
+  void showErrorDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -76,7 +76,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
           title:  PopUpRow(title: AppLocalizations.of(context)!.error_text),
-          content: Text(error),
+          content: Text(AppLocalizations.of(context)!.invalid_credentials),
           actions: [
             TextButton(
               onPressed: () {
@@ -109,9 +109,9 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
                 TextFormField(
                   controller: _usernameController,
                   validator: (val) {
-                    if (!val!.isValidUsername)
-                      return "Enter a Valid Username";
-                    else {
+                    if (!val!.isValidUsername) {
+                      return AppLocalizations.of(context)!.valid_username;
+                    } else {
                       return null;
                     }
                   },
@@ -126,9 +126,9 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
                 TextFormField(
                   controller: _passwordController,
                   validator: (val) {
-                    if (!val!.isValidPassword)
-                      return "Enter a Valid Password";
-                    else {
+                    if (!val!.isValidPassword) {
+                      return AppLocalizations.of(context)!.valid_password;
+                    } else {
                       return null;
                     }
                   },

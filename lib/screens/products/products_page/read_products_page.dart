@@ -60,7 +60,7 @@ class _ProductsReadState extends State<ProductsRead> {
           if (state is ReadDataLoadedState) {
             return Column(
               children: [
-                Container(
+                SizedBox(
                   width: MediaQuery.sizeOf(context).width,
                   height: MediaQuery.sizeOf(context).height - 144,
                   child: ListView.separated(
@@ -83,7 +83,7 @@ class _ProductsReadState extends State<ProductsRead> {
                               BoxDecoration(color: Colors.grey.shade300),
                           child: Row(
                             children: [
-                              Container(
+                              SizedBox(
                                   width: 80,
                                   child: Center(
                                       child: Text(
@@ -93,7 +93,7 @@ class _ProductsReadState extends State<ProductsRead> {
                                         color: AppColors.primaryColor),
                                   ))),
                               const SizedBox(width: 20),
-                              Container(
+                              SizedBox(
                                   width: 100,
                                   child: Center(
                                       child: Text(
@@ -117,7 +117,7 @@ class _ProductsReadState extends State<ProductsRead> {
                               const SizedBox(
                                 width: 40,
                               ),
-                              Container(
+                              SizedBox(
                                   width: 60,
                                   child: Center(
                                       child: Text(
@@ -153,11 +153,11 @@ class _ProductsReadState extends State<ProductsRead> {
                       }
 
                       return InkWell(
-                        child: Container(
+                        child: SizedBox(
                           width: 100,
                           height: 100,
                           child: Row(children: [
-                            Container(
+                            SizedBox(
                               width: 80,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -169,7 +169,7 @@ class _ProductsReadState extends State<ProductsRead> {
                             const SizedBox(
                               width: 20,
                             ),
-                            Container(
+                            SizedBox(
                               width: 100,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
@@ -277,7 +277,7 @@ class _ProductsReadState extends State<ProductsRead> {
                                       productDescription:
                                           data["product_description"]!,
                                       productType: data['product_type'],
-                                      productAvailibility:
+                                      productAvailability:
                                           data['product_availability'],
                                       productPrice: data["product_price"],
                                       productCategory: data['product_category'],

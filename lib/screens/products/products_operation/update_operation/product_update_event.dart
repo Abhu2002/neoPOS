@@ -4,7 +4,6 @@ abstract class ProductEvent extends Equatable {}
 
 class InitialCategoryEvent extends ProductEvent {
   @override
-  // TODO: implement props
   List<Object?> get props => [];
 }
 
