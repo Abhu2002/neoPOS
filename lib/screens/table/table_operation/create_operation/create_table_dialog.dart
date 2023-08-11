@@ -101,36 +101,34 @@ class _CreateTableFormState extends State<CreateTableForm> {
                     validator: (val) {
                       if (!val.isValidName) {
                         return AppLocalizations.of(context)!.valid_table_name;
-                      }
-                      else{
+                      } else {
                         return null;
-    }
+                      }
                     }),
                 const SizedBox(
                   height: 20,
                 ),
-              BlocBuilder<CreateTableBloc, CreateTableState>(
-                builder: (context, state) {
-                  return TextFormField(
-                    keyboardType: TextInputType.number,
-                    controller: tableCap,
-                    decoration: InputDecoration(
-                        hintText: AppLocalizations.of(context)!.table_cap,
-                        prefixIcon: const Icon(
-                          Icons.group_add,
-                          color: AppColors.primaryColor,
-                        )),
-                    validator: (val) {
-                      if (!val.isValidTableCap) {
-                        return AppLocalizations.of(context)!.valid_table_cap;
-                      }
-                      else {
-                        return null;
-                      }
-                    },
-                  );
-                },
-              ),
+                BlocBuilder<CreateTableBloc, CreateTableState>(
+                  builder: (context, state) {
+                    return TextFormField(
+                      keyboardType: TextInputType.number,
+                      controller: tableCap,
+                      decoration: InputDecoration(
+                          hintText: AppLocalizations.of(context)!.table_cap,
+                          prefixIcon: const Icon(
+                            Icons.group_add,
+                            color: AppColors.primaryColor,
+                          )),
+                      validator: (val) {
+                        if (!val.isValidTableCap) {
+                          return AppLocalizations.of(context)!.valid_table_cap;
+                        } else {
+                          return null;
+                        }
+                      },
+                    );
+                  },
+                ),
                 const SizedBox(
                   height: 20,
                 ),

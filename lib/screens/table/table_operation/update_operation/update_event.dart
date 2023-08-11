@@ -1,5 +1,6 @@
 part of 'update_bloc.dart';
-abstract class TableEvent extends Equatable{}
+
+abstract class TableEvent extends Equatable {}
 
 class TableUpdateRequested extends TableEvent {
   final String tableId;
@@ -9,5 +10,5 @@ class TableUpdateRequested extends TableEvent {
   TableUpdateRequested(this.tableId, this.newName, this.newCapacity);
 
   @override
-  List<Object?> get props =>[tableId,newName,newCapacity];
+  List<Object?> get props => [tableId, newName, newCapacity];
 }

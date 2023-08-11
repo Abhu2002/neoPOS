@@ -33,7 +33,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
         if (state is ErrorState) {
           showErrorDialog(context);
         } else if (state is ConfirmationState) {
-          showConfirmationDialog(context,state.id);
+          showConfirmationDialog(context, state.id);
         } else if (state is UserDeleteState) {
           showUserSnackBar(
               context, AppLocalizations.of(context)!.user_deleted_msg);
@@ -45,7 +45,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
           title:
-          PopUpRow(title: AppLocalizations.of(context)!.user_deleted_title),
+              PopUpRow(title: AppLocalizations.of(context)!.user_deleted_title),
           content: Text(AppLocalizations.of(context)!.delete_confirm_msg_user),
           actions: [
             ElevatedButton(
@@ -57,7 +57,8 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
             ElevatedButton(
               onPressed: () async {
                 BlocProvider.of<UserDeletionBloc>(context).add(
-                   ConfirmUserDeletionEvent(widget.docID)); //passing doc id to bloc for user deletion
+                    ConfirmUserDeletionEvent(widget
+                        .docID)); //passing doc id to bloc for user deletion
               },
               child: Text(AppLocalizations.of(context)!.yes_title),
             ),
@@ -91,34 +92,33 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
     );
   }
 
-  void showConfirmationDialog(BuildContext context,String id) {
+  void showConfirmationDialog(BuildContext context, String id) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return  AlertDialog(
+        return AlertDialog(
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
           title:
-          PopUpRow(title: AppLocalizations.of(context)!.enter_credentials),
-          content:Form(
-            key:formKey,
-
-            child:Column(
+              PopUpRow(title: AppLocalizations.of(context)!.enter_credentials),
+          content: Form(
+            key: formKey,
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextFormField(
                   validator: (val) {
                     if (!val.isValidUsername) {
                       return AppLocalizations.of(context)!.valid_username;
-                    }
-                    else{
+                    } else {
                       return null;
                     }
                   },
                   controller: _usernameController,
                   decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.user_name_hinttext,
+                      hintText:
+                          AppLocalizations.of(context)!.user_name_hinttext,
                       prefixIcon: const Icon(
                         Icons.person,
                         color: AppColors.primaryColor,
@@ -127,11 +127,12 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
                 const SizedBox(height: 16),
                 TextFormField(
                   validator: (val) {
-        if (!val!.isValidPassword) {
-        return AppLocalizations.of(context)!.valid_password;
-        } else {
-        return null;
-        }},
+                    if (!val!.isValidPassword) {
+                      return AppLocalizations.of(context)!.valid_password;
+                    } else {
+                      return null;
+                    }
+                  },
                   controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
@@ -157,10 +158,7 @@ class _DeleteUserPopupState extends State<DeleteUserPopup> {
                   // Navigator.of(context).pop();
                   BlocProvider.of<UserDeletionBloc>(context).add(
                     UserCredentialsEnteredEvent(
-                      _usernameController.text,
-                      _passwordController.text,
-                      id
-                    ),
+                        _usernameController.text, _passwordController.text, id),
                   );
                   Navigator.of(context).pop();
                 }

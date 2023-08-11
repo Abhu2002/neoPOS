@@ -3,11 +3,10 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
 import 'package:equatable/equatable.dart';
-part  'category_update_event.dart';
-part  'category_update_state.dart';
+part 'category_update_event.dart';
+part 'category_update_state.dart';
 
 class CategoryUpdateBloc extends Bloc<CategoryEvent, CategoryState> {
-
   final FirebaseFirestore _fireStore = GetIt.I.get<FirebaseFirestore>();
   void Function(String)? showMessage;
   CategoryUpdateBloc() : super(CategoryInitialState()) {

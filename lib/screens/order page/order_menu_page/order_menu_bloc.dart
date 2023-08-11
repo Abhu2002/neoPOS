@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:equatable/equatable.dart';
 
-part  'order_menu_event.dart';
-part  'order_menu_state.dart';
+part 'order_menu_event.dart';
+part 'order_menu_state.dart';
 
 class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
   OrderContentBloc() : super(InitialState()) {

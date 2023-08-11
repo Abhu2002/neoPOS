@@ -19,4 +19,3 @@ class DataLoadedState extends ReadCategoryState {
   @override
   List<Object> get props => [all];
 }
-

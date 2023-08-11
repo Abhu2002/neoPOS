@@ -34,28 +34,30 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
         } else if (state is ConfirmationState) {
           showConfirmationDialog(context, state.id);
         } else if (state is ProductDeleteState) {
-          showSnackBar(context, AppLocalizations.of(context)!.product_delete_msg);
+          showSnackBar(
+              context, AppLocalizations.of(context)!.product_delete_msg);
         }
       },
       builder: (context, state) {
         return AlertDialog(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15))),
-          title:  Text(AppLocalizations.of(context)!.product_delete_title),
-          content:  Text(AppLocalizations.of(context)!.product_delete_confirm_msg),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15))),
+          title: Text(AppLocalizations.of(context)!.product_delete_title),
+          content:
+              Text(AppLocalizations.of(context)!.product_delete_confirm_msg),
           actions: [
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child:  Text(AppLocalizations.of(context)!.no_title),
+              child: Text(AppLocalizations.of(context)!.no_title),
             ),
             ElevatedButton(
               onPressed: () async {
                 BlocProvider.of<ProductDeletionBloc>(context)
                     .add(ConfirmTableDeletionEvent(widget.productID));
               },
-              child:  Text(AppLocalizations.of(context)!.yes_title),
+              child: Text(AppLocalizations.of(context)!.yes_title),
             ),
           ],
         );
@@ -68,9 +70,9 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15))),
-          title:  Text(AppLocalizations.of(context)!.error_text),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15))),
+          title: Text(AppLocalizations.of(context)!.error_text),
           content: Text(error),
           actions: [
             TextButton(
@@ -78,7 +80,7 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
-              child:  Text(AppLocalizations.of(context)!.ok_button),
+              child: Text(AppLocalizations.of(context)!.ok_button),
             ),
           ],
         );
@@ -86,14 +88,14 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
     );
   }
 
-  void showConfirmationDialog(BuildContext context,String id) {
+  void showConfirmationDialog(BuildContext context, String id) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-            shape: const RoundedRectangleBorder(
-                borderRadius: BorderRadius.all(Radius.circular(15))),
-          title:  Text(AppLocalizations.of(context)!.enter_credentials),
+          shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(15))),
+          title: Text(AppLocalizations.of(context)!.enter_credentials),
           content: Form(
             key: formKey,
             child: Column(
@@ -103,25 +105,29 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
                   validator: (val) {
                     if (!val.isValidUsername) {
                       return AppLocalizations.of(context)!.valid_username;
-                    }else{
+                    } else {
                       return null;
                     }
                   },
                   controller: _usernameController,
-                  decoration:  InputDecoration(hintText: AppLocalizations.of(context)!.username_hinttext),
+                  decoration: InputDecoration(
+                      hintText:
+                          AppLocalizations.of(context)!.username_hinttext),
                 ),
                 const SizedBox(height: 16),
                 TextFormField(
                   validator: (val) {
                     if (!val.isValidPassword) {
                       return AppLocalizations.of(context)!.valid_password;
-                    }else{
+                    } else {
                       return null;
                     }
                   },
                   controller: _passwordController,
                   obscureText: true,
-                  decoration:  InputDecoration(hintText: AppLocalizations.of(context)!.password_hinttext),
+                  decoration: InputDecoration(
+                      hintText:
+                          AppLocalizations.of(context)!.password_hinttext),
                 ),
               ],
             ),

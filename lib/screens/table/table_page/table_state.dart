@@ -13,7 +13,8 @@ class TableReadLoadingState extends TableState {}
 
 class TableReadLoadedState extends TableState {
   final List all;
-  const TableReadLoadedState(this.all); //it receives from bloc and store it in properties
+  const TableReadLoadedState(
+      this.all); //it receives from bloc and store it in properties
   @override
   List<Object> get props => [all];
 }

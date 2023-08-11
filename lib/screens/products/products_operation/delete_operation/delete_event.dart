@@ -1,5 +1,6 @@
 part of 'delete_bloc.dart';
-abstract class ProductDeletionEvent extends Equatable{}
+
+abstract class ProductDeletionEvent extends Equatable {}
 
 class CredentialsEnteredEvent extends ProductDeletionEvent {
   final String username;
@@ -8,7 +9,7 @@ class CredentialsEnteredEvent extends ProductDeletionEvent {
   CredentialsEnteredEvent(this.username, this.password, this.id);
 
   @override
-  List<Object?> get props => [username,password,id];
+  List<Object?> get props => [username, password, id];
 }
 
 class ConfirmTableDeletionEvent extends ProductDeletionEvent {

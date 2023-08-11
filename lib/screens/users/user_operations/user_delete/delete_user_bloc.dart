@@ -30,7 +30,7 @@ class UserDeletionBloc extends Bloc<UserDeletionEvent, UserDeletionState> {
         String role = userData['user_role'];
 
         if (userData['password'] == password && role == 'admin') {
-         usersCollection.doc(docID).delete();
+          usersCollection.doc(docID).delete();
           emit(UserDeleteState());
         } else {
           emit(ErrorState());
@@ -46,6 +46,4 @@ class UserDeletionBloc extends Bloc<UserDeletionEvent, UserDeletionState> {
       ConfirmUserDeletionEvent event, Emitter<UserDeletionState> emit) {
     emit(ConfirmationState(event.id));
   }
-
-
 }

@@ -42,7 +42,8 @@ class OrderReadBloc extends Bloc<OrderReadEvent, OrderReadState> {
               })
             });
         OrderReadLoadDataEvent();
-        emit(OrderReadLoadedState(allCat)); //gives all document of tables to State
+        emit(OrderReadLoadedState(
+            allCat)); //gives all document of tables to State
       } catch (err) {
         showMessage!("$err"); //calls state and stores message through parameter
       }

@@ -75,7 +75,6 @@ class _DashboardPage extends State<DashboardPage> {
           sideMenuController.changePage(index);
         },
       ),
-
     ];
 
     return Scaffold(

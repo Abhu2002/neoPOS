@@ -21,7 +21,6 @@ class _CreateUserFormState extends State<CreateUserForm> {
 
   final formKey = GlobalKey<FormState>();
 
-
   @override
   void initState() {
     userName.text = "";
@@ -129,7 +128,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                           )),
                       validator: (val) {
                         if (!val.isValidName) {
-                          return  AppLocalizations.of(context)!.valid_last_name;
+                          return AppLocalizations.of(context)!.valid_last_name;
                         }
                         return null;
                       },
@@ -152,7 +151,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                           )),
                       validator: (val) {
                         if (!val.isValidUsername) {
-                          return  AppLocalizations.of(context)!.valid_username;
+                          return AppLocalizations.of(context)!.valid_username;
                         }
                         return null;
                       },
@@ -175,7 +174,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
                           )),
                       validator: (val) {
                         if (!val.isValidPassword) {
-                          return  AppLocalizations.of(context)!.valid_password;
+                          return AppLocalizations.of(context)!.valid_password;
                         }
                         return null;
                       },
@@ -249,7 +248,6 @@ class _CreateUserFormState extends State<CreateUserForm> {
                           },
                           child: Text(
                               AppLocalizations.of(context)!.create_user_title),
-
                         ));
                   },
                 ),

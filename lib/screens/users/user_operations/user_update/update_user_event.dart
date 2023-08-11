@@ -1,5 +1,6 @@
 part of 'update_user_bloc.dart';
-abstract class UpdateUserEvent extends Equatable{}
+
+abstract class UpdateUserEvent extends Equatable {}
 
 class UpdateUserBlocRequested extends UpdateUserEvent {
   final String docId;
@@ -12,5 +13,6 @@ class UpdateUserBlocRequested extends UpdateUserEvent {
       this.newPassword, this.newUserId);
 
   @override
-  List<Object?> get props => [docId,newFirstName,newLastName,newPassword,newUserId];
+  List<Object?> get props =>
+      [docId, newFirstName, newLastName, newPassword, newUserId];
 }

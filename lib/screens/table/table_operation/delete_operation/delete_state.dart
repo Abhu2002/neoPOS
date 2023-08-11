@@ -1,5 +1,6 @@
 part of 'delete_bloc.dart';
-abstract class TableDeletionState extends Equatable{}
+
+abstract class TableDeletionState extends Equatable {}
 
 class InitialTableDeletionState extends TableDeletionState {
   @override
@@ -7,14 +8,12 @@ class InitialTableDeletionState extends TableDeletionState {
 }
 
 class ErrorState extends TableDeletionState {
-
   ErrorState();
   @override
   List<Object?> get props => [];
 }
 
 class ConfirmationState extends TableDeletionState {
-
   final String id;
   ConfirmationState(this.id);
   @override

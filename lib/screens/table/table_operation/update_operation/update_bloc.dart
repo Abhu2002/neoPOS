@@ -7,7 +7,6 @@ import 'package:equatable/equatable.dart';
 part 'update_event.dart';
 part 'update_state.dart';
 
-
 class TableUpdateBloc extends Bloc<TableEvent, TableState> {
   final FirebaseFirestore _fireStore = GetIt.I.get<FirebaseFirestore>();
   void Function(String)? showMessage;

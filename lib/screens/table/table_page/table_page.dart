@@ -7,6 +7,7 @@ import '../table_operation/create_operation/create_table_dialog.dart';
 import '../table_operation/delete_operation/delete_table_dialog.dart';
 import '../table_operation/update_operation/table_update_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 enum TableItem { tableDelete, tableEdit } //enum for popup
 
 class TableRead extends StatefulWidget {
@@ -84,95 +85,94 @@ class _TableReadState extends State<TableRead> {
                                 borderRadius: BorderRadius.circular(20.0),
                               ),
                               child: Center(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          PopupMenuButton<TableItem>(
-                                              initialValue: selectedMenu,
-                                              icon: const Icon(
-                                                  Icons.more_vert_outlined,
-                                                  color: Colors.black),
-                                              color: Colors.white,
-                                              itemBuilder: (context) =>
-                                                  <PopupMenuEntry<TableItem>>[
-                                                     PopupMenuItem<
-                                                            TableItem>(
-                                                        value:
-                                                            TableItem.tableEdit,
-                                                        child: Text(
-                                                          AppLocalizations.of(context)!.edit_table_option,
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black),
-                                                        )),
-                                                     PopupMenuItem<
-                                                            TableItem>(
-                                                        value: TableItem
-                                                            .tableDelete,
-                                                        child: Text(
-                                                          AppLocalizations.of(context)!.delete_table_option,
-                                                          style: TextStyle(
-                                                              color:
-                                                                  Colors.black),
-                                                        ))
-                                                  ],
-                                              onSelected: (TableItem item) {
-                                                switch (item.name) {
-                                                  case "tableDelete":
-                                                    showDialog(
+                                  child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        PopupMenuButton<TableItem>(
+                                            initialValue: selectedMenu,
+                                            icon: const Icon(
+                                                Icons.more_vert_outlined,
+                                                color: Colors.black),
+                                            color: Colors.white,
+                                            itemBuilder: (context) =>
+                                                <PopupMenuEntry<TableItem>>[
+                                                  PopupMenuItem<TableItem>(
+                                                      value:
+                                                          TableItem.tableEdit,
+                                                      child: Text(
+                                                        AppLocalizations.of(
+                                                                context)!
+                                                            .edit_table_option,
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.black),
+                                                      )),
+                                                  PopupMenuItem<TableItem>(
+                                                      value:
+                                                          TableItem.tableDelete,
+                                                      child: Text(
+                                                        AppLocalizations.of(
+                                                                context)!
+                                                            .delete_table_option,
+                                                        style: TextStyle(
+                                                            color:
+                                                                Colors.black),
+                                                      ))
+                                                ],
+                                            onSelected: (TableItem item) {
+                                              switch (item.name) {
+                                                case "tableDelete":
+                                                  showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        DeleteTablePopup(
+                                                      docID: data[i]["docID"],
+                                                    ),
+                                                  ).then((value) => BlocProvider
+                                                          .of<TableBloc>(
+                                                              context)
+                                                      .add(
+                                                          InitialEvent(false)));
+                                                case "tableEdit":
+                                                  showDialog(
                                                       context: context,
                                                       builder: (context) =>
-                                                          DeleteTablePopup(
-                                                        docID: data[i]["docID"],
-                                                      ),
-                                                    ).then((value) =>
-                                                        BlocProvider.of<
-                                                                    TableBloc>(
-                                                                context)
-                                                            .add(
-                                                                InitialEvent(false)));
-                                                  case "tableEdit":
-                                                    showDialog(
-                                                        context: context,
-                                                        builder: (context) =>
-                                                            UpdateTableForm(
-                                                              docID: data[i]
-                                                                  ["docID"],
-                                                              tableName: data[i]
-                                                                  ["tablename"],
-                                                              tableCapacity: data[
-                                                                      i][
-                                                                  "tablecapacity"],
-                                                            )).then((value) =>
-                                                        BlocProvider.of<
-                                                                    TableBloc>(
-                                                                context)
-                                                            .add(InitialEvent(
-                                                                false)));
-                                                }
-                                              }),
-                                        ],
+                                                          UpdateTableForm(
+                                                            docID: data[i]
+                                                                ["docID"],
+                                                            tableName: data[i]
+                                                                ["tablename"],
+                                                            tableCapacity: data[
+                                                                    i][
+                                                                "tablecapacity"],
+                                                          )).then((value) =>
+                                                      BlocProvider.of<
+                                                                  TableBloc>(
+                                                              context)
+                                                          .add(InitialEvent(
+                                                              false)));
+                                              }
+                                            }),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        (data[i]["tablename"]),
+                                        style: const TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(5.0),
-                                        child: Text(
-                                          (data[i]["tablename"]),
-                                          style: const TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                      Text(
-                                          "Capacity: ${(data[i]["tablecapacity"]).toString()}"),
-                                    ],
-                                  ),
-                                  )
-                              ),
+                                    ),
+                                    Text(
+                                        "Capacity: ${(data[i]["tablecapacity"]).toString()}"),
+                                  ],
+                                ),
+                              )),
                             ),
                           )),
                 ),

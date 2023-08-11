@@ -106,6 +106,7 @@ class _OrderPageReadState extends State<OrderPageRead> {
       }
     });
   }
+
   void createSnackBar(String message) {
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);

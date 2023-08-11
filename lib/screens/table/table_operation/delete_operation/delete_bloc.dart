@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
 import 'package:equatable/equatable.dart';
-part  'delete_event.dart';
-part  'delete_state.dart';
+part 'delete_event.dart';
+part 'delete_state.dart';
 
 class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
   final CollectionReference usersCollection =
@@ -21,13 +21,11 @@ class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
 
   void _mapCredentialsEnteredEventToState(
       CredentialsEnteredEvent event, Emitter<TableDeletionState> emit) async {
-
     var liveDocID;
     var livename;
     String username = event.username;
     String password = event.password;
-    String  docId = event.id;
-
+    String docId = event.id;
 
     QuerySnapshot querySnapshot =
         await usersCollection.where('user_id', isEqualTo: username).get();
@@ -56,8 +54,7 @@ class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
           await tableCollection.doc(docId).delete();
           emit(TableDeleteState());
           await liveTableCollection.doc(liveDocID).delete();
-        }
-         else {
+        } else {
           emit(ErrorState());
         }
       }

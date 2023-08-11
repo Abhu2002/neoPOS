@@ -6,10 +6,9 @@ import 'package:neopos/screens/order%20page/order_menu_page/add_order.dart';
 import '../../../../utils/app_colors.dart';
 import 'order_menu_bloc.dart';
 
-
 class OrderMenuPage extends StatefulWidget {
   dynamic data;
-   OrderMenuPage({Key? key, this.data}) : super(key: key);
+  OrderMenuPage({Key? key, this.data}) : super(key: key);
   @override
   State<OrderMenuPage> createState() => _OrderMenuPageState();
 }
@@ -23,15 +22,18 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(backgroundColor: Colors.transparent,
+    return Scaffold(
+      backgroundColor: Colors.transparent,
       body: Row(
         children: [
           Expanded(
             flex: 2,
-            child: SizedBox(height: MediaQuery.sizeOf(context).height,
+            child: SizedBox(
+              height: MediaQuery.sizeOf(context).height,
               child: Column(
                 children: [
-                  const Expanded(flex: 1,
+                  const Expanded(
+                    flex: 1,
                     child: Row(
                       children: [
                         Padding(
@@ -43,27 +45,23 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                       ],
                     ),
                   ),
-                  Expanded(flex: 10,
+                  Expanded(
+                    flex: 10,
                     child: BlocBuilder<OrderContentBloc, OrderContentState>(
                       builder: (context, state) {
                         if (state is ProductLoadingState) {
                           return SingleChildScrollView(
                             child: Column(
                               children: [
-                                Container(color:Colors.white,
-                                  width: MediaQuery
-                                      .sizeOf(context)
-                                      .width,
-                                  height: MediaQuery
-                                      .sizeOf(context)
-                                      .height ,
+                                Container(
+                                  color: Colors.white,
+                                  width: MediaQuery.sizeOf(context).width,
+                                  height: MediaQuery.sizeOf(context).height,
                                   child: ListView.separated(
                                     //shrinkWrap: true,
                                     separatorBuilder: (context, index) {
                                       return Container(
-                                        width: MediaQuery
-                                            .sizeOf(context)
-                                            .width,
+                                        width: MediaQuery.sizeOf(context).width,
                                         height: 2,
                                         color: Colors.grey.shade200,
                                       );
@@ -74,36 +72,36 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                       if (index == 0) {
                                         // return the header
                                         return Container(
-                                          width: MediaQuery
-                                              .sizeOf(context)
-                                              .width,
+                                          width:
+                                              MediaQuery.sizeOf(context).width,
                                           height: 50,
-                                         decoration:
-                                         const BoxDecoration(color: Colors.orange),
+                                          decoration: const BoxDecoration(
+                                              color: Colors.orange),
                                           child: Row(
                                             children: [
-
                                               SizedBox(
                                                   width: 100,
                                                   child: Center(
                                                       child: Text(
-                                                        AppLocalizations.of(context)!
-                                                            .image_title,
-                                                        style: const TextStyle(
-                                                            fontSize: 20,
-                                                            ),
-                                                      ))),
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .image_title,
+                                                    style: const TextStyle(
+                                                      fontSize: 20,
+                                                    ),
+                                                  ))),
                                               const SizedBox(
                                                 width: 40,
                                               ),
                                               Expanded(
                                                   flex: 2,
                                                   child: Text(
-                                                    AppLocalizations.of(context)!
+                                                    AppLocalizations.of(
+                                                            context)!
                                                         .product_name_title,
                                                     style: const TextStyle(
-                                                        fontSize: 20,
-                                                        ),
+                                                      fontSize: 20,
+                                                    ),
                                                   )),
                                               const SizedBox(
                                                 width: 40,
@@ -112,34 +110,35 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                                   width: 60,
                                                   child: Center(
                                                       child: Text(
-                                                        AppLocalizations.of(context)!
-                                                            .type_title,
-                                                        style: const TextStyle(
-                                                            fontSize: 20,
-                                                            ),
-                                                      ))),
+                                                    AppLocalizations.of(
+                                                            context)!
+                                                        .type_title,
+                                                    style: const TextStyle(
+                                                      fontSize: 20,
+                                                    ),
+                                                  ))),
                                               const SizedBox(
                                                 width: 60,
                                               ),
                                               Expanded(
                                                   child: Center(
                                                       child: Text(
-                                                        AppLocalizations.of(context)!
-                                                            .category_name_title,
-                                                        style: const TextStyle(
-                                                            fontSize: 20,
-                                                            ),
-                                                      ))),
+                                                AppLocalizations.of(context)!
+                                                    .category_name_title,
+                                                style: const TextStyle(
+                                                  fontSize: 20,
+                                                ),
+                                              ))),
                                               Expanded(
                                                   child: Center(
-                                                    child: Text(
-                                                      AppLocalizations.of(context)!
-                                                          .price_title,
-                                                      style: const TextStyle(
-                                                          fontSize: 20,
-                                                          ),
-                                                    ),
-                                                  )),
+                                                child: Text(
+                                                  AppLocalizations.of(context)!
+                                                      .price_title,
+                                                  style: const TextStyle(
+                                                    fontSize: 20,
+                                                  ),
+                                                ),
+                                              )),
                                               // Text("More"),
                                             ],
                                           ),
@@ -157,10 +156,11 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                               child: SizedBox(
                                                 width: 50,
                                                 child: ClipRRect(
-                                                  borderRadius: BorderRadius.circular(
-                                                      5),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
                                                   child: CachedNetworkImage(
-                                                    imageUrl: data['product_image'],
+                                                    imageUrl:
+                                                        data['product_image'],
                                                     width: 20,
                                                     height: 30,
                                                     fit: BoxFit.cover,
@@ -174,17 +174,19 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                             Expanded(
                                               flex: 2,
                                               child: Column(
-                                                mainAxisAlignment: MainAxisAlignment
-                                                    .center,
-                                                crossAxisAlignment: CrossAxisAlignment
-                                                    .start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     data['product_name'],
                                                     style: const TextStyle(
                                                         fontSize: 15,
-                                                        color: AppColors.primaryColor,
-                                                        fontWeight: FontWeight.bold),
+                                                        color: AppColors
+                                                            .primaryColor,
+                                                        fontWeight:
+                                                            FontWeight.bold),
                                                   ),
                                                 ],
                                               ),
@@ -194,57 +196,68 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                             ),
                                             Container(
                                               height: 20,
-                                              width:
-                                              (data['product_type'] == "nonVeg")
+                                              width: (data['product_type'] ==
+                                                      "nonVeg")
                                                   ? 60
                                                   : 30,
                                               decoration: BoxDecoration(
-                                                  borderRadius: BorderRadius.circular(
-                                                      5),
-                                                  color: (data['product_type']) ==
-                                                      "nonVeg"
-                                                      ? Colors.red
-                                                      : Colors.green),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                  color:
+                                                      (data['product_type']) ==
+                                                              "nonVeg"
+                                                          ? Colors.red
+                                                          : Colors.green),
                                               child: Center(
                                                 child: Text(
-                                                  (data['product_type'] == "nonVeg")
-                                                      ? AppLocalizations.of(context)!
-                                                      .non_veg_text
-                                                      : AppLocalizations.of(context)!
-                                                      .veg_text,
-                                                  style: const TextStyle(color: Colors
-                                                      .white),
+                                                  (data['product_type'] ==
+                                                          "nonVeg")
+                                                      ? AppLocalizations.of(
+                                                              context)!
+                                                          .non_veg_text
+                                                      : AppLocalizations.of(
+                                                              context)!
+                                                          .veg_text,
+                                                  style: const TextStyle(
+                                                      color: Colors.white),
                                                 ),
                                               ),
                                             ),
                                             SizedBox(
-                                              width:
-                                              (data['product_type'] == "nonVeg")
+                                              width: (data['product_type'] ==
+                                                      "nonVeg")
                                                   ? 30
                                                   : 60,
                                             ),
                                             Expanded(
                                                 child: Center(
-                                                    child: Text(
-                                                        data["product_category"]!))),
+                                                    child: Text(data[
+                                                        "product_category"]!))),
                                             Expanded(
                                                 child: Center(
-                                                    child:
-                                                    Text(
+                                                    child: Text(
                                                         "Rs ${data["product_price"]!}"))),
                                           ]),
                                         ),
                                         onTap: () {
                                           showDialog(
-                                            context: context, builder: (context) {
-                                            return AddOrder(
-                                                productName: data['product_name'],
-                                                productCategory: data['product_category'],
-                                                productType: data['product_type'],
-                                                productPrice: data['product_price']
+                                            context: context,
+                                            builder: (context) {
+                                              return AddOrder(
+                                                productName:
+                                                    data['product_name'],
+                                                productCategory:
+                                                    data['product_category'],
+                                                productType:
+                                                    data['product_type'],
+                                                productPrice:
+                                                    data['product_price']
+                                                        .toString(),
+                                                docId: widget.data['Id']
                                                     .toString(),
-                                            docId: widget.data['Id'].toString(),);
-                                          },);
+                                              );
+                                            },
+                                          );
                                         },
                                       );
                                     },

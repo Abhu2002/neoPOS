@@ -1,5 +1,6 @@
 part of 'update_user_bloc.dart';
-abstract class UpdateUserState extends Equatable{}
+
+abstract class UpdateUserState extends Equatable {}
 
 class UpdateUserInitialState extends UpdateUserState {
   @override

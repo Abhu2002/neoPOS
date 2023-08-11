@@ -1,4 +1,5 @@
 part of 'category_update_bloc.dart';
+
 abstract class CategoryState extends Equatable {}
 
 class CategoryInitialState extends CategoryState {
@@ -15,5 +16,3 @@ class CategoryUpdatedState extends CategoryState {
   @override
   List<Object> get props => [];
 }
-
-

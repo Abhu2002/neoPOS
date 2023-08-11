@@ -18,5 +18,3 @@ class OrderReadLoadedState extends OrderReadState {
   @override
   List<Object> get props => [all];
 }
-
-

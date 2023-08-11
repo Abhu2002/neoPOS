@@ -100,7 +100,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                   validator: (val) {
                     if (!val.isValidProductName) {
                       return AppLocalizations.of(context)!.valid_product_name;
-                    }else{
+                    } else {
                       return null;
                     }
                   },
@@ -120,7 +120,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                   validator: (val) {
                     if (!val.isValidProductName) {
                       return AppLocalizations.of(context)!.valid_price;
-                    }else {
+                    } else {
                       return null;
                     }
                   },
@@ -143,7 +143,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                     validator: (val) {
                       if (!val.isValidDesc) {
                         return AppLocalizations.of(context)!.valid_description;
-                      }else{
+                      } else {
                         return null;
                       }
                     }),
@@ -201,8 +201,8 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                   children: [
                     Text(
                       AppLocalizations.of(context)!.product_category_title,
-                      style:
-                          const TextStyle(fontWeight: FontWeight.bold, fontSize: 17),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 17),
                     ),
                     const SizedBox(
                       width: 20,
@@ -370,7 +370,8 @@ class CustomDropDown extends StatefulWidget {
   final List categories;
   final String? dropdownvalue;
 
-  const CustomDropDown({required this.categories, super.key, this.dropdownvalue});
+  const CustomDropDown(
+      {required this.categories, super.key, this.dropdownvalue});
 
   @override
   State<CustomDropDown> createState() => _CustomDropDownState();

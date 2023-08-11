@@ -35,7 +35,8 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
         } else if (state is ConfirmationState) {
           showConfirmationDialog(context, state.id);
         } else if (state is CategoryDeleteState) {
-          showSnackBar(context,AppLocalizations.of(context)!.category_delete_msg );
+          showSnackBar(
+              context, AppLocalizations.of(context)!.category_delete_msg);
         }
       },
       builder: (context, state) {
@@ -75,7 +76,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
-          title:  PopUpRow(title: AppLocalizations.of(context)!.error_text),
+          title: PopUpRow(title: AppLocalizations.of(context)!.error_text),
           content: Text(AppLocalizations.of(context)!.invalid_credentials),
           actions: [
             TextButton(
@@ -83,7 +84,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
                 Navigator.of(context).pop();
                 Navigator.of(context).pop();
               },
-              child:  Text(AppLocalizations.of(context)!.ok_button),
+              child: Text(AppLocalizations.of(context)!.ok_button),
             ),
           ],
         );
@@ -153,7 +154,6 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
             ElevatedButton(
               onPressed: () {
                 if (formKey.currentState!.validate()) {
-
                   BlocProvider.of<CategoryDeletionBloc>(context).add(
                     CredentialsEnteredEvent(
                         _usernameController.text, _passwordController.text, id),
@@ -168,9 +168,6 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
       },
     );
   }
-
-
-
 
   void showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

@@ -6,14 +6,14 @@ import 'package:neopos/utils/popup_cancel_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'order_menu_bloc.dart';
 
-
 class AddOrder extends StatefulWidget {
   const AddOrder(
       {required this.productName,
       super.key,
       required this.productCategory,
       required this.productType,
-      required this.productPrice, required this.docId});
+      required this.productPrice,
+      required this.docId});
 
   final String productName;
   final String productCategory;
@@ -98,7 +98,7 @@ class _AddOrderState extends State<AddOrder> {
                           widget.productCategory,
                           widget.productPrice,
                           quantity.toString(),
-                      widget.docId));
+                          widget.docId));
                   Navigator.pop(context);
                 },
                 child: Text(AppLocalizations.of(context)!.add_button),

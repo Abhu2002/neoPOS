@@ -8,6 +8,7 @@ import 'create_product_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter/services.dart';
 import 'package:neopos/utils/utils.dart';
+
 var categoryValue = "Select Category";
 bool initial = false;
 
@@ -118,8 +119,9 @@ class _CreateProductFormState extends State<CreateProductForm> {
                           controller: productName,
                           validator: (val) {
                             if (!val.isValidProductName) {
-                              return AppLocalizations.of(context)!.valid_product_name;
-                            }else{
+                              return AppLocalizations.of(context)!
+                                  .valid_product_name;
+                            } else {
                               return null;
                             }
                           },
@@ -212,11 +214,11 @@ class _CreateProductFormState extends State<CreateProductForm> {
                           )),
                       validator: (val) {
                         if (!val.isValidDesc) {
-                          return  AppLocalizations.of(context)!.valid_description;
-                        }else{
+                          return AppLocalizations.of(context)!
+                              .valid_description;
+                        } else {
                           return null;
                         }
-
                       },
                     ),
                     const SizedBox(
@@ -234,8 +236,8 @@ class _CreateProductFormState extends State<CreateProductForm> {
                       keyboardType: TextInputType.number,
                       validator: (val) {
                         if (!val.isValidPrice) {
-                          return  AppLocalizations.of(context)!.valid_price;
-                        }else{
+                          return AppLocalizations.of(context)!.valid_price;
+                        } else {
                           return null;
                         }
                       },
@@ -285,7 +287,6 @@ class _CreateProductFormState extends State<CreateProductForm> {
                           width: 20,
                         ),
                         Checkbox(
-
                           value: isChecked,
                           onChanged: (bool? val) {
                             setState(() {
@@ -407,7 +408,8 @@ class CustomDropDown extends StatefulWidget {
   final List categories;
   final String? dropdownvalue;
 
-  const CustomDropDown({required this.categories, super.key, this.dropdownvalue});
+  const CustomDropDown(
+      {required this.categories, super.key, this.dropdownvalue});
 
   @override
   State<CustomDropDown> createState() => _CustomDropDownState();

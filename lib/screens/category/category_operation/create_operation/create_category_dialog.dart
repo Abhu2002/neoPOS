@@ -7,7 +7,6 @@ import 'create_category_bloc.dart';
 import 'dart:core';
 import 'package:neopos/utils/utils.dart';
 
-
 class CreateCategoryForm extends StatefulWidget {
   const CreateCategoryForm({super.key});
 
@@ -107,7 +106,8 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                 ),
                 const SizedBox(
                   height: 20,
-                ),BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
+                ),
+                BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
                   builder: (context, state) {
                     if (state is CategoryCreatedState) {
                       if (state.created == true) {

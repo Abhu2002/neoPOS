@@ -1,5 +1,6 @@
 part of 'category_update_bloc.dart';
-abstract class CategoryEvent extends Equatable{}
+
+abstract class CategoryEvent extends Equatable {}
 
 class CategoryUpdateRequested extends CategoryEvent {
   final String categoryId;
@@ -8,5 +9,5 @@ class CategoryUpdateRequested extends CategoryEvent {
   CategoryUpdateRequested(this.categoryId, this.newName);
 
   @override
-  List<Object?> get props => [categoryId,newName];
+  List<Object?> get props => [categoryId, newName];
 }

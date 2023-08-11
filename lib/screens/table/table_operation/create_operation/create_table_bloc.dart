@@ -10,7 +10,7 @@ part 'create_table_state.dart';
 class CreateTableBloc extends Bloc<CreateTableEvent, CreateTableState> {
   void Function(String)? showMessage;
   CreateTableBloc() : super(CreateTableInitial()) {
-    on<TableNameNotAvailableEvent>((event,emit){
+    on<TableNameNotAvailableEvent>((event, emit) {
       emit(CreateTableInitial());
     });
     on<CreateTableFBEvent>((event, emit) async {
@@ -23,13 +23,14 @@ class CreateTableBloc extends Bloc<CreateTableEvent, CreateTableState> {
               })
             });
         if (allName.contains((event.tableName).trim())) {
-          emit( TableNameNotAvailableState());
+          emit(TableNameNotAvailableState());
           //showMessage!("Table Name Exist Please use Different Name");
         } else {
           List<Map<String, dynamic>> myData = [];
           final data = TableModel(
               tableName: event.tableName, tableCap: int.parse(event.tableCap));
-          final livedata = LiveTableModel(tableName: event.tableName,products: myData);
+          final livedata =
+              LiveTableModel(tableName: event.tableName, products: myData);
           await db.collection("table").add(data.toFirestore()).then(
               (documentSnapshot) => {
                     emit(TableCreatedState(true)),

@@ -48,9 +48,8 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
           },
           validator: (val) {
             if (!val.isValidName) {
-              return
-                AppLocalizations.of(context)!.valid_category;
-            } else{
+              return AppLocalizations.of(context)!.valid_category;
+            } else {
               return null;
             }
           },
@@ -83,6 +82,7 @@ class _UpdateCategoryFormState extends State<UpdateCategoryForm> {
       ],
     );
   }
+
   void createSnackBar(String message) {
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);

@@ -1,5 +1,6 @@
 part of 'delete_user_bloc.dart';
-abstract class UserDeletionState extends Equatable{}
+
+abstract class UserDeletionState extends Equatable {}
 
 class InitialUserDeletionState extends UserDeletionState {
   @override
@@ -7,7 +8,6 @@ class InitialUserDeletionState extends UserDeletionState {
 }
 
 class ErrorState extends UserDeletionState {
-
   ErrorState();
   @override
   List<Object?> get props => [];

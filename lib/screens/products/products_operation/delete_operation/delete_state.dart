@@ -1,5 +1,6 @@
 part of 'delete_bloc.dart';
-abstract class ProductDeletionState extends Equatable{}
+
+abstract class ProductDeletionState extends Equatable {}
 
 class InitialProductDeletionState extends ProductDeletionState {
   @override

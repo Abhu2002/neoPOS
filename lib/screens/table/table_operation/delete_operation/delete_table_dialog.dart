@@ -34,7 +34,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
         } else if (state is ConfirmationState) {
           showConfirmationDialog(context, state.id);
         } else if (state is TableDeleteState) {
-          showSnackBar(context,AppLocalizations.of(context)!.table_delete_msg );
+          showSnackBar(context, AppLocalizations.of(context)!.table_delete_msg);
         }
       },
       builder: (context, state) {
@@ -157,6 +157,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
       },
     );
   }
+
   void showSnackBar(BuildContext context, String message) {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message),

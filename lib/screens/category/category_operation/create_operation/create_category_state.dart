@@ -8,7 +8,6 @@ class CreateCategoryState extends Equatable {
 
 class CreateCategoryInitial extends CreateCategoryState {}
 
-
 class CategoryCreatedState extends CreateCategoryState {
   bool created;
   CategoryCreatedState(this.created);

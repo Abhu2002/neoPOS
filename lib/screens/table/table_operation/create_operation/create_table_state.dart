@@ -10,6 +10,7 @@ class CreateTableState extends Equatable {
 class CreateTableInitial extends CreateTableState {}
 
 class TableNameNotAvailableState extends CreateTableState {}
+
 class TableCreatedState extends CreateTableState {
   bool isCreated;
   TableCreatedState(this.isCreated);

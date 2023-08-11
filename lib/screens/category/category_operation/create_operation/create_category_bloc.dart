@@ -12,9 +12,9 @@ class CreateCategoryBloc
   void Function(String)? showMessage;
 
   CreateCategoryBloc() : super(CreateCategoryInitial()) {
-     on<NotNameAvaiableEvent>((event,emit){
-       emit(CreateCategoryInitial());
-     });
+    on<NotNameAvaiableEvent>((event, emit) {
+      emit(CreateCategoryInitial());
+    });
     on<CreateCategoryFBEvent>((event, emit) async {
       try {
         List allName = [];

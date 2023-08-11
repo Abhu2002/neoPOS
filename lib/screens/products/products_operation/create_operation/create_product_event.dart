@@ -86,10 +86,3 @@ class ImageChangedEvent extends CreateProductEvent {
   @override
   List<Object> get props => [imageFile];
 }
-
-
-
-
-
-
-

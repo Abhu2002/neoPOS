@@ -37,38 +37,42 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
     context.read<TableUpdateBloc>().showMessage = createSnackBar;
     return AlertDialog(
       title: PopUpRow(title: AppLocalizations.of(context)!.update_table_title),
-      content:Form(
-      key:formkey,
-      child:Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextFormField(
-          validator: (val) {
-      if (!val.isValidName) {
-        return AppLocalizations.of(context)!.valid_table_name;
-      }else{return null;}
-      },
-            onChanged: (value) => newName = value,
-            controller: TextEditingController(text: widget.tableName),
-            decoration: InputDecoration(
-                hintText:
-                    AppLocalizations.of(context)!.new_category_name_hinttext),
-          ),
-          TextFormField(
+      content: Form(
+        key: formkey,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextFormField(
               validator: (val) {
-      if (!val.isValidTableCap) {
-        return AppLocalizations.of(context)!.valid_table_cap;
-      }else{return null;}},
-            onChanged: (value) => newCapacity = value,
-            controller: TextEditingController(text: widget.tableCapacity),
-            decoration: InputDecoration(
-                hintText:
-                    AppLocalizations.of(context)!.new_table_capacity_hinttext),
-
-          )
-        ],
+                if (!val.isValidName) {
+                  return AppLocalizations.of(context)!.valid_table_name;
+                } else {
+                  return null;
+                }
+              },
+              onChanged: (value) => newName = value,
+              controller: TextEditingController(text: widget.tableName),
+              decoration: InputDecoration(
+                  hintText:
+                      AppLocalizations.of(context)!.new_category_name_hinttext),
+            ),
+            TextFormField(
+              validator: (val) {
+                if (!val.isValidTableCap) {
+                  return AppLocalizations.of(context)!.valid_table_cap;
+                } else {
+                  return null;
+                }
+              },
+              onChanged: (value) => newCapacity = value,
+              controller: TextEditingController(text: widget.tableCapacity),
+              decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!
+                      .new_table_capacity_hinttext),
+            )
+          ],
+        ),
       ),
-    ),
       actions: <Widget>[
         TextButton(
           child: Text(AppLocalizations.of(context)!.cancel_button),
@@ -88,6 +92,7 @@ class _UpdateTableFormState extends State<UpdateTableForm> {
       ],
     );
   }
+
   void createSnackBar(String message) {
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);

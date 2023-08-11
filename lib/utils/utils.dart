@@ -38,21 +38,21 @@ extension StringCheck on String? {
   }
 
   bool get isValidDesc {
-    if( this == null || this!.isEmpty) return false;
-    final descRegExp= RegExp(r"^(.|\s)*[a-zA-Z]+(.|\s)*$");
+    if (this == null || this!.isEmpty) return false;
+    final descRegExp = RegExp(r"^(.|\s)*[a-zA-Z]+(.|\s)*$");
     return descRegExp.hasMatch(this!);
   }
 
-  bool get isValidPrice{
-    if( this == null || this!.isEmpty) return false;
+  bool get isValidPrice {
+    if (this == null || this!.isEmpty) return false;
     final priceRegExp = RegExp(r"^\d{0,8}(\.\d{1,4})?$");
     return priceRegExp.hasMatch(this!);
   }
+
   bool get isValidProductName {
     if (this == null || this!.isEmpty) return false;
     final nameRegExp = RegExp(r"^[A-Za-z]([a-zA-Z0-9.-_,]|[- @.#&!])*$");
     return nameRegExp.hasMatch(this!);
     //return true;
   }
-
 }

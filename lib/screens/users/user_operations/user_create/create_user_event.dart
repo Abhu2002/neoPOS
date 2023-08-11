@@ -21,4 +21,3 @@ class CreateUserFBEvent extends CreateUserEvent {
   @override
   List<Object> get props => [userName, firstName, lastName, password, userRole];
 }
-
