@@ -36,11 +36,7 @@ class CreateTableBloc extends Bloc<CreateTableEvent, CreateTableState> {
                     emit(TableCreatedState(true)),
                     showMessage!("Table Created")
                   });
-          await db
-              .collection("live_table")
-              .add(livedata.toFirestore());
-          await GetIt.I.get<FirebaseFirestore>().clearPersistence();
-          await GetIt.I.get<FirebaseFirestore>().terminate();
+          await db.collection("live_table").add(livedata.toFirestore());
         }
       } catch (err) {
         throw Exception("Error creating product $err");

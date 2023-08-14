@@ -33,8 +33,6 @@ class CreateCategoryBloc
                     emit(CategoryCreatedState(true)),
                     showMessage!("Category Created")
                   });
-          await GetIt.I.get<FirebaseFirestore>().clearPersistence();
-          await GetIt.I.get<FirebaseFirestore>().terminate();
         }
       } catch (err) {
         throw Exception("Error creating product $err");

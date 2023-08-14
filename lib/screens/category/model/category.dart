@@ -2,19 +2,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CategoryModel {
   final String? categoryName;
+  final String? id;
+  final int? sr;
 
-  CategoryModel({
-    this.categoryName,
-  });
+  CategoryModel({required this.categoryName, this.id, this.sr});
 
   factory CategoryModel.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
-  ) {
-    final data = snapshot.data();
+      QueryDocumentSnapshot<Map<String, dynamic>> snapshot, int sr) {
+    final data = snapshot;
     return CategoryModel(
-      categoryName: data?['categoryname'],
-    );
+        categoryName: data['category_name'], id: data.id, sr: sr);
   }
 
   Map<String, dynamic> toFirestore() {

@@ -2,6 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
+
+import '../model/user.dart';
 part 'read_user_event.dart';
 part 'read_user_state.dart';
 
@@ -19,15 +21,7 @@ class ReadUserBloc extends Bloc<ReadUserEvent, ReadUserState> {
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("users").get().then((value) => {
               value.docs.forEach((element) {
-                allCat.add({
-                  "Id": element.id,
-                  "user_id": element['user_id'],
-                  "first_name": element['first_name'],
-                  "last_name": element['last_name'],
-                  "password": element['password'],
-                  "added_on": element['added_on'],
-                  "updated_on": element['updated_on']
-                });
+                allCat.add(UserModel.fromFirestore(element));
               })
             });
         LoadDataEvent();

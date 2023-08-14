@@ -24,11 +24,11 @@ class CreateUserBloc extends Bloc<CreateUserEvent, CreateUserState> {
                 allName.add(element['user_id']);
               })
             });
-        if (allName.contains((event.userName).trim())) {
+        if (allName.contains((event.userid).trim())) {
           emit(UserNameNotAvailableState());
         } else {
           final data = UserModel(
-              username: event.userName,
+              userid: event.userid,
               firstname: event.firstName,
               lastname: event.lastName,
               password: event.password,
@@ -39,8 +39,6 @@ class CreateUserBloc extends Bloc<CreateUserEvent, CreateUserState> {
           await db.collection("users").add(data.toFirestore()).then(
               (documentSnapshot) =>
                   {emit(UserCreatedState(true)), showMessage!("User Created")});
-          await GetIt.I.get<FirebaseFirestore>().clearPersistence();
-          await GetIt.I.get<FirebaseFirestore>().terminate();
         }
       } catch (err) {
         throw Exception("Error creating product $err");

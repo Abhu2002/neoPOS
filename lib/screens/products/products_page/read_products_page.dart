@@ -163,7 +163,7 @@ class _ProductsReadState extends State<ProductsRead> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Center(
                                     child: Text(DateFormat.MMMd().format(
-                                        DateTime.parse(data['date_added'])))),
+                                        DateTime.parse(data.dateAdded)))),
                               ),
                             ),
                             const SizedBox(
@@ -174,7 +174,7 @@ class _ProductsReadState extends State<ProductsRead> {
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: CachedNetworkImage(
-                                  imageUrl: data['product_image'],
+                                  imageUrl: data.productImage,
                                   width: 50,
                                   height: 100,
                                   fit: BoxFit.cover,
@@ -191,18 +191,18 @@ class _ProductsReadState extends State<ProductsRead> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    data['product_name'],
+                                    data.productName,
                                     style: const TextStyle(
                                         fontSize: 15,
                                         color: AppColors.primaryColor,
                                         fontWeight: FontWeight.bold),
                                   ),
                                   Text(
-                                    data['product_description'].length > 50
-                                        ? data['product_description']
+                                    data.productDescription.length > 50
+                                        ? data.productDescription
                                                 .substring(0, 50) +
                                             '...'
-                                        : data['product_description'],
+                                        : data.productDescription,
                                     style: const TextStyle(
                                       fontSize: 10,
                                     ),
@@ -215,16 +215,15 @@ class _ProductsReadState extends State<ProductsRead> {
                             ),
                             Container(
                               height: 20,
-                              width:
-                                  (data['product_type'] == "nonVeg") ? 60 : 30,
+                              width: (data.productType == "nonVeg") ? 60 : 30,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(5),
-                                  color: (data['product_type']) == "nonVeg"
+                                  color: (data.productType) == "nonVeg"
                                       ? Colors.red
                                       : Colors.green),
                               child: Center(
                                 child: Text(
-                                  (data['product_type'] == "nonVeg")
+                                  (data.productType == "nonVeg")
                                       ? AppLocalizations.of(context)!
                                           .non_veg_text
                                       : AppLocalizations.of(context)!.veg_text,
@@ -233,16 +232,14 @@ class _ProductsReadState extends State<ProductsRead> {
                               ),
                             ),
                             SizedBox(
-                              width:
-                                  (data['product_type'] == "nonVeg") ? 30 : 60,
+                              width: (data.productType == "nonVeg") ? 30 : 60,
                             ),
                             Expanded(
-                                child: Center(
-                                    child: Text(data["product_category"]!))),
+                                child:
+                                    Center(child: Text(data.productCategory!))),
                             Expanded(
                                 child: Center(
-                                    child:
-                                        Text("Rs ${data["product_price"]!}"))),
+                                    child: Text("Rs ${data.productPrice!}"))),
                           ]),
                         ),
                         onTap: () {
@@ -271,16 +268,16 @@ class _ProductsReadState extends State<ProductsRead> {
                                 return Align(
                                     alignment: Alignment.centerRight,
                                     child: MoreInfoPopup(
-                                      image: data['product_image'],
-                                      id: data['Id'],
-                                      productName: data["product_name"]!,
+                                      image: data.productImage,
+                                      id: data.id,
+                                      productName: data.productName!,
                                       productDescription:
-                                          data["product_description"]!,
-                                      productType: data['product_type'],
+                                          data.productDescription!,
+                                      productType: data.productType,
                                       productAvailability:
-                                          data['product_availability'],
-                                      productPrice: data["product_price"],
-                                      productCategory: data['product_category'],
+                                          data.productAvailability,
+                                      productPrice: data.productPrice,
+                                      productCategory: data.productCategory,
                                     ));
                               });
                         },
