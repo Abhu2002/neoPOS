@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/screens/order%20page/widgets/order_checkout_popup.dart';
 import '../widgets/menu_btns_widget.dart';
 import '../widgets/menu_cards_widget.dart';
 import 'order_menu_bloc.dart';
@@ -104,7 +105,7 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                           subtitle:
                                               Text(product.productCategory),
                                           trailing: Text(
-                                              '${product.quantity} x \₹${product.productPrice}'),
+                                              '${product.quantity} x ₹${product.productPrice}'),
                                         ),
                                       ),
                                     );
@@ -116,8 +117,8 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                     MediaQuery.of(context).size.height * 0.3,
                                 decoration: BoxDecoration(
                                     color: Colors.blue.shade50,
-                                    borderRadius:
-                                        const BorderRadius.all(Radius.circular(20))),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(20))),
                                 child: Center(
                                   child: Column(
                                     children: [
@@ -207,12 +208,13 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                                 borderRadius:
                                                     BorderRadius.circular(5))),
                                         onPressed: () {
-                                          // BlocProvider.of<OrderContentBloc>(
-                                          //         context)
-                                          //     .add(ProductLoadingEvent(
-                                          //         widget.data['Id'].toString()));
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return CheckOutPopUp(totalPrice: totalPrice.toInt(),id: widget.data['Id']);
+                                              });
                                         },
-                                        child: const Text('Print bills'),
+                                        child: const Text('Checkout'),
                                       ),
                                     ],
                                   ),
