@@ -11,6 +11,14 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
     on<ProductLoadingEvent>((event, emit) async {
       FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
       List<Map<String, dynamic>> allProds = [];
+      List<String> allCats = [];
+
+      await db.collection("category").get().then((value) {
+        for(var element in value.docs) {
+          allCats.add(element['category_name']);
+        }
+        // print(allCats);
+      });
 
       await db
           .collection("products")
@@ -29,7 +37,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         }
       });
 
-      emit(ProductLoadingState(allProds));
+      emit(ProductLoadingState(allProds, allCats));
     });
     on<AddOrderFBEvent>((event, emit) async {
       try {
@@ -61,6 +69,41 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
       } catch (err) {
         throw Exception("Error creating product $err");
       }
+    });
+
+    on<FilterProductsEvent>((event, emit) async {
+      String category = event.category;
+      FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
+      List<Map<String,dynamic>> allProds = [];
+      List<Map<String, dynamic>> filteredProds = [];
+
+      await db
+          .collection("products")
+          .where("product_availability", isEqualTo: true)
+          .get()
+          .then((value) async {
+        for (var element in value.docs) {
+          Map<String, dynamic> mp = {
+            "product_name": element["product_name"],
+            "product_image": element["product_image"],
+            "product_price": element["product_price"],
+            "product_category": element["product_category"],
+            "product_type": element["product_type"]
+          };
+          allProds.add(mp);
+        }
+      });
+
+      if(event.category == "All") {
+        emit(FilterProductsState(allProds, event.allCats, event.category));
+        return;
+      }
+      filteredProds = allProds.where((element) {
+        return (element["product_category"].toString() == category);
+      }).toList();
+
+      // print(filteredProds);
+      emit(FilterProductsState(filteredProds,event.allCats, event.category));
     });
   }
 }

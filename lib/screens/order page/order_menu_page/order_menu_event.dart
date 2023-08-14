@@ -33,3 +33,15 @@ class AddOrderFBEvent extends OrderContentEvent {
         docId
       ];
 }
+
+class FilterProductsEvent extends OrderContentEvent {
+  final String category;
+  final List<Map<String, dynamic>> allProds;
+  final List<String> allCats;
+
+  FilterProductsEvent(this.category, this.allProds, this.allCats);
+
+  @override
+  List<Object> get props => [category, allProds, allCats];
+
+}
