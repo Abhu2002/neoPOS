@@ -22,7 +22,6 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         for(var element in value.docs) {
           allCats.add(element['category_name']);
         }
-        // print(allCats);
       });
 
       await db
@@ -48,7 +47,6 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         await liveCollection.doc(event.tableId).get();
         List<Map<String, dynamic>> productsData =
         List<Map<String, dynamic>>.from(tableSnapshot['products']);
-        //print(productsData);
 
         List<Product> products = productsData.map((data) {
           return Product(
@@ -127,7 +125,6 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         await liveCollection.doc(event.tableId).get();
         List<Map<String, dynamic>> productsData =
         List<Map<String, dynamic>>.from(tableSnapshot['products']);
-        //print(productsData);
 
         products = productsData.map((data) {
           return Product(
@@ -150,7 +147,6 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         return (element["product_category"].toString() == category);
       }).toList();
 
-      // print(filteredProds);
       emit(FilterProductsState(filteredProds,event.allCats, event.category, products));
     });
   }
