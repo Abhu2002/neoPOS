@@ -133,9 +133,11 @@ class _DashboardPage extends State<DashboardPage> {
                       Center(
                         child: Text('Dashboard'),
                       ),
-                      Center(
+                      SingleChildScrollView(child: OrderHistoryPage()),
+
+                     /* Center(
                         child: Text('Order History'),
-                      ),
+                      ),*/
                       SingleChildScrollView(child: UserRead()),
                     ],
                   ),
