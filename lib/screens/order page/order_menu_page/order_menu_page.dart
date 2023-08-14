@@ -1,14 +1,15 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:neopos/screens/order%20page/order_menu_page/add_order.dart';
-import '../../../../utils/app_colors.dart';
+import '../widgets/menu_btns_widget.dart';
+import '../widgets/menu_cards_widget.dart';
 import 'order_menu_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderMenuPage extends StatefulWidget {
   dynamic data;
+
   OrderMenuPage({Key? key, this.data}) : super(key: key);
+
   @override
   State<OrderMenuPage> createState() => _OrderMenuPageState();
 }
@@ -17,13 +18,17 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<OrderContentBloc>(context).add(ProductLoadingEvent());
+    if (widget.data != null && widget.data.containsKey('Id')) {
+      BlocProvider.of<OrderContentBloc>(context)
+          .add(ProductLoadingEvent(widget.data['Id'].toString()));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    double totalPrice = 0.0;
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color.fromRGBO(250, 250, 250, 100),
       body: Row(
         children: [
           Expanded(
@@ -32,245 +37,11 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
               height: MediaQuery.sizeOf(context).height,
               child: Column(
                 children: [
-                  const Expanded(
-                    flex: 1,
-                    child: Row(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(20.0),
-                          child: Text("Menu",
-                              style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold)),
-                        ),
-                      ],
-                    ),
-                  ),
+                  MenuBtnsWidget(data: widget.data),
                   Expanded(
-                    flex: 10,
-                    child: BlocBuilder<OrderContentBloc, OrderContentState>(
-                      builder: (context, state) {
-                        if (state is ProductLoadingState) {
-                          return SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Container(
-                                  color: Colors.white,
-                                  width: MediaQuery.sizeOf(context).width,
-                                  height: MediaQuery.sizeOf(context).height,
-                                  child: ListView.separated(
-                                    //shrinkWrap: true,
-                                    separatorBuilder: (context, index) {
-                                      return Container(
-                                        width: MediaQuery.sizeOf(context).width,
-                                        height: 2,
-                                        color: Colors.grey.shade200,
-                                      );
-                                    },
-                                    itemCount: state.allProds.length,
-                                    itemBuilder: (context, index) {
-                                      var data = state.allProds[index];
-                                      if (index == 0) {
-                                        // return the header
-                                        return Container(
-                                          width:
-                                              MediaQuery.sizeOf(context).width,
-                                          height: 50,
-                                          decoration: const BoxDecoration(
-                                              color: Colors.orange),
-                                          child: Row(
-                                            children: [
-                                              SizedBox(
-                                                  width: 100,
-                                                  child: Center(
-                                                      child: Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .image_title,
-                                                    style: const TextStyle(
-                                                      fontSize: 20,
-                                                    ),
-                                                  ))),
-                                              const SizedBox(
-                                                width: 40,
-                                              ),
-                                              Expanded(
-                                                  flex: 2,
-                                                  child: Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .product_name_title,
-                                                    style: const TextStyle(
-                                                      fontSize: 20,
-                                                    ),
-                                                  )),
-                                              const SizedBox(
-                                                width: 40,
-                                              ),
-                                              SizedBox(
-                                                  width: 60,
-                                                  child: Center(
-                                                      child: Text(
-                                                    AppLocalizations.of(
-                                                            context)!
-                                                        .type_title,
-                                                    style: const TextStyle(
-                                                      fontSize: 20,
-                                                    ),
-                                                  ))),
-                                              const SizedBox(
-                                                width: 60,
-                                              ),
-                                              Expanded(
-                                                  child: Center(
-                                                      child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .category_name_title,
-                                                style: const TextStyle(
-                                                  fontSize: 20,
-                                                ),
-                                              ))),
-                                              Expanded(
-                                                  child: Center(
-                                                child: Text(
-                                                  AppLocalizations.of(context)!
-                                                      .price_title,
-                                                  style: const TextStyle(
-                                                    fontSize: 20,
-                                                  ),
-                                                ),
-                                              )),
-                                              // Text("More"),
-                                            ],
-                                          ),
-                                        );
-                                      }
-
-                                      return InkWell(
-                                        child: SizedBox(
-                                          width: 100,
-                                          height: 50,
-                                          child: Row(children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  left: 10.0),
-                                              child: SizedBox(
-                                                width: 50,
-                                                child: ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  child: CachedNetworkImage(
-                                                    imageUrl:
-                                                        data['product_image'],
-                                                    width: 20,
-                                                    height: 30,
-                                                    fit: BoxFit.cover,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 80,
-                                            ),
-                                            Expanded(
-                                              flex: 2,
-                                              child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Text(
-                                                    data['product_name'],
-                                                    style: const TextStyle(
-                                                        fontSize: 15,
-                                                        color: AppColors
-                                                            .primaryColor,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              width: 40,
-                                            ),
-                                            Container(
-                                              height: 20,
-                                              width: (data['product_type'] ==
-                                                      "nonVeg")
-                                                  ? 60
-                                                  : 30,
-                                              decoration: BoxDecoration(
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                  color:
-                                                      (data['product_type']) ==
-                                                              "nonVeg"
-                                                          ? Colors.red
-                                                          : Colors.green),
-                                              child: Center(
-                                                child: Text(
-                                                  (data['product_type'] ==
-                                                          "nonVeg")
-                                                      ? AppLocalizations.of(
-                                                              context)!
-                                                          .non_veg_text
-                                                      : AppLocalizations.of(
-                                                              context)!
-                                                          .veg_text,
-                                                  style: const TextStyle(
-                                                      color: Colors.white),
-                                                ),
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: (data['product_type'] ==
-                                                      "nonVeg")
-                                                  ? 30
-                                                  : 60,
-                                            ),
-                                            Expanded(
-                                                child: Center(
-                                                    child: Text(data[
-                                                        "product_category"]!))),
-                                            Expanded(
-                                                child: Center(
-                                                    child: Text(
-                                                        "Rs ${data["product_price"]!}"))),
-                                          ]),
-                                        ),
-                                        onTap: () {
-                                          showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return AddOrder(
-                                                productName:
-                                                    data['product_name'],
-                                                productCategory:
-                                                    data['product_category'],
-                                                productType:
-                                                    data['product_type'],
-                                                productPrice:
-                                                    data['product_price']
-                                                        .toString(),
-                                                docId: widget.data['Id']
-                                                    .toString(),
-                                              );
-                                            },
-                                          );
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
-                        }
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
+                    flex: 8,
+                    child: MenuCardWidget(
+                      data: widget.data,
                     ),
                   ),
                 ],
@@ -279,7 +50,189 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
           ),
           Expanded(
             flex: 1,
-            child: Container(),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.95,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.08,
+                      child: Center(
+                        child: Text(AppLocalizations.of(context)!.order,
+                            style: const TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                    SizedBox(
+                        child: BlocBuilder<OrderContentBloc, OrderContentState>(
+                      builder: (BuildContext context, state) {
+                        if (state is ProductLoadingState ||
+                            state is FilterProductsState) {
+                          final products = state.products;
+                          totalPrice = 0.0; // Reset the total price
+                          for (final product in products) {
+                            double productPrice =
+                                double.parse(product.productPrice);
+                            int productQuantity = int.parse(product.quantity);
+
+                            totalPrice += productPrice * productQuantity;
+                          }
+                          return Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.57,
+                                child: ListView.builder(
+                                  itemCount: products.length,
+                                  itemBuilder: (context, index) {
+                                    final product = products[index];
+                                    return Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Card(
+                                        elevation: 3,
+                                        color: Colors.grey.shade50,
+                                        child: ListTile(
+                                          title: Text(product.productName),
+                                          subtitle:
+                                              Text(product.productCategory),
+                                          trailing: Text(
+                                              '${product.quantity} x \₹${product.productPrice}'),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.3,
+                                decoration: BoxDecoration(
+                                    color: Colors.blue.shade50,
+                                    borderRadius:
+                                        const BorderRadius.all(Radius.circular(20))),
+                                child: Center(
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 25, top: 25),
+                                            child: Text(
+                                              "Items(${state.products.length})",
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 25, top: 25),
+                                            child: Text(
+                                              "₹$totalPrice",
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 25, top: 15, bottom: 10),
+                                            child: Text(
+                                              "GST (${5}%)",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 25, top: 15, bottom: 10),
+                                            child: Text(
+                                              "₹${totalPrice * 0.05}",
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 25, right: 25),
+                                        child: Divider(
+                                          height: 2,
+                                          color: Colors.grey.shade800,
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 25, top: 25),
+                                            child: Text(
+                                              "Total",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 25, top: 25),
+                                            child: Text(
+                                              "₹${(totalPrice + totalPrice * 0.05).round()}",
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(5))),
+                                        onPressed: () {
+                                          // BlocProvider.of<OrderContentBloc>(
+                                          //         context)
+                                          //     .add(ProductLoadingEvent(
+                                          //         widget.data['Id'].toString()));
+                                        },
+                                        child: const Text('Print bills'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        } else if (state is ErrorState) {
+                          return Center(
+                              child: Center(child: Text(state.errorMessage)));
+                        } else {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                      },
+                    )),
+                  ],
+                ),
+              ),
+            ),
           ),
         ],
       ),

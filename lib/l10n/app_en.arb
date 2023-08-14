@@ -64,9 +64,7 @@
    "product_page_title":"Product Page",
    "date_title":"Date",
    "image_title":"Image",
-   "product_name_title":"Product Name",
    "type_title":"Type",
-   "category_title":"Category",
    "price_title":"Price",
    "non_veg_text":"Non-Veg",
    "veg_text":"Veg",
@@ -132,6 +130,8 @@
    "valid_price":"Enter a Valid Product price",
    "product_delete_msg":"Product deleted successfully.",
    "product_delete_title":"Delete Product",
-   "product_delete_confirm_msg":"Are you sure you want to delete this Product?"
+   "product_delete_confirm_msg":"Are you sure you want to delete this Product?",
+  "menu" : "Menu",
+  "order" : "Order"
 
 }
