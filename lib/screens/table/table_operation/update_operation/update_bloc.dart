@@ -19,8 +19,10 @@ class TableUpdateBloc extends Bloc<TableEvent, TableState> {
     emit(TableUpdatingState());
     try {
       // Update the Table in Firestore
-      await _fireStore.collection("table").doc(event.tableId).update(
-          {"table_name": event.newName, "table_capacity": event.newCapacity});
+      await _fireStore.collection("table").doc(event.tableId).update({
+        "table_name": event.newName,
+        "table_capacity": int.parse(event.newCapacity)
+      });
       emit(TableUpdatedState());
     } catch (e) {
       throw Exception("Error creating product $e");

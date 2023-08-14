@@ -3,6 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
 
+import '../model/category.dart';
+
 part 'read_category_event.dart';
 part 'read_category_state.dart';
 
@@ -11,7 +13,7 @@ class ReadCategoryBloc extends Bloc<ReadCategoryEvent, ReadCategoryState> {
   ReadCategoryBloc() : super(ReadCategoryInitial()) {
     on<InitialEvent>((event, emit) async {
       try {
-        int sr = 1;
+        int counter = 1;
         if (event.isfirst) {
           emit(DataLoadingState());
         } else {
@@ -22,12 +24,8 @@ class ReadCategoryBloc extends Bloc<ReadCategoryEvent, ReadCategoryState> {
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("category").get().then((value) => {
               value.docs.forEach((element) {
-                allCat.add({
-                  "Id": element.id,
-                  "Category": element['category_name'],
-                  "sr": sr.toString()
-                });
-                sr = sr + 1;
+                allCat.add(CategoryModel.fromFirestore(element, counter));
+                counter += 1;
               })
             });
         LoadDataEvent();

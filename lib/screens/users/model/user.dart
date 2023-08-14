@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class UserModel {
-  final String? username;
+  final String? id;
+  final String? userid;
   final String? firstname;
   final String? lastname;
   final String? password;
@@ -10,8 +11,9 @@ class UserModel {
   final String? updatedon;
 
   UserModel({
+    this.id,
     this.firstname,
-    this.username,
+    this.userid,
     this.lastname,
     this.password,
     this.userrole,
@@ -20,24 +22,24 @@ class UserModel {
   });
 
   factory UserModel.fromFirestore(
-    DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
+    QueryDocumentSnapshot<Map<String, dynamic>> snapshot,
   ) {
-    final data = snapshot.data();
+    final data = snapshot;
     return UserModel(
-      firstname: data?['firstname'],
-      lastname: data?['lastname'],
-      username: data?['username'],
-      password: data?['password'],
-      userrole: data?['userrole'],
-      addedon: data?['addedon'],
-      updatedon: data?['updatedon'],
+      id: data.id,
+      firstname: data['first_name'],
+      lastname: data['last_name'],
+      userid: data['user_id'],
+      password: data['password'],
+      userrole: data['user_role'],
+      addedon: data['added_on'],
+      updatedon: data['updated_on'],
     );
   }
 
   Map<String, dynamic> toFirestore() {
     return {
-      if (username != null) "user_id": username,
+      if (userid != null) "user_id": userid,
       if (firstname != null) "first_name": firstname,
       if (lastname != null) "last_name": lastname,
       if (password != null) "password": password,

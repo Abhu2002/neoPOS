@@ -79,8 +79,8 @@ class _CategoryReadState extends State<CategoryRead> {
                         ((element) => DataRow(
                               cells: <DataCell>[
                                 //Extracting from Map element the value
-                                DataCell(Text(element["sr"])),
-                                DataCell(Text(element["Category"]!)),
+                                DataCell(Text("${element.sr}")),
+                                DataCell(Text(element.categoryName!)),
                                 DataCell(Row(
                                   children: [
                                     Padding(
@@ -95,9 +95,9 @@ class _CategoryReadState extends State<CategoryRead> {
                                               context: context,
                                               builder: (context) =>
                                                   UpdateCategoryForm(
-                                                      id: element['Id'],
+                                                      id: element.id,
                                                       oldName:
-                                                          element['Category']),
+                                                          element.categoryName),
                                             ).then((value) => BlocProvider.of<
                                                     ReadCategoryBloc>(context)
                                                 .add(InitialEvent(false)));
@@ -119,7 +119,7 @@ class _CategoryReadState extends State<CategoryRead> {
                                               context: context,
                                               builder: (context) =>
                                                   DeleteCategoryPopup(
-                                                categoryID: element["Id"]!,
+                                                categoryID: element.id!,
                                               ),
                                             ).then((value) => BlocProvider.of<
                                                     ReadCategoryBloc>(context)

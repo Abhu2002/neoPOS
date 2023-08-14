@@ -85,9 +85,9 @@ class _UserReadState extends State<UserRead> {
                         ((element) => DataRow(
                               cells: <DataCell>[
                                 //Extracting from Map element the value
-                                DataCell(Text(element["user_id"]!)),
-                                DataCell(Text(element["added_on"]!)),
-                                DataCell(Text(element["updated_on"]!)),
+                                DataCell(Text(element.userid!)),
+                                DataCell(Text(element.addedon!)),
+                                DataCell(Text(element.updatedon!)),
                                 DataCell(Row(
                                   children: [
                                     Padding(
@@ -102,14 +102,11 @@ class _UserReadState extends State<UserRead> {
                                               context: context,
                                               builder: (context) =>
                                                   UpdateUserForm(
-                                                docId: element['Id'],
-                                                oldFirstName:
-                                                    element['first_name'],
-                                                oldLastName:
-                                                    element['last_name'],
-                                                oldPassword:
-                                                    element['password'],
-                                                oldUserId: element['user_id'],
+                                                docId: element.id,
+                                                oldFirstName: element.firstname,
+                                                oldLastName: element.lastname,
+                                                oldPassword: element.password,
+                                                oldUserId: element.userid,
                                               ),
                                             ).then((value) =>
                                                 BlocProvider.of<ReadUserBloc>(
@@ -133,7 +130,7 @@ class _UserReadState extends State<UserRead> {
                                               context: context,
                                               builder: (context) =>
                                                   DeleteUserPopup(
-                                                docID: element["Id"]!,
+                                                docID: element.id!,
                                               ),
                                             ).then((value) =>
                                                 BlocProvider.of<ReadUserBloc>(

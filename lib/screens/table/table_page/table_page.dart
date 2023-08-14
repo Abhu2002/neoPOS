@@ -107,7 +107,7 @@ class _TableReadState extends State<TableRead> {
                                                         AppLocalizations.of(
                                                                 context)!
                                                             .edit_table_option,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color:
                                                                 Colors.black),
                                                       )),
@@ -118,7 +118,7 @@ class _TableReadState extends State<TableRead> {
                                                         AppLocalizations.of(
                                                                 context)!
                                                             .delete_table_option,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             color:
                                                                 Colors.black),
                                                       ))
@@ -130,7 +130,7 @@ class _TableReadState extends State<TableRead> {
                                                     context: context,
                                                     builder: (context) =>
                                                         DeleteTablePopup(
-                                                      docID: data[i]["docID"],
+                                                      docID: data[i].id,
                                                     ),
                                                   ).then((value) => BlocProvider
                                                           .of<TableBloc>(
@@ -142,13 +142,13 @@ class _TableReadState extends State<TableRead> {
                                                       context: context,
                                                       builder: (context) =>
                                                           UpdateTableForm(
-                                                            docID: data[i]
-                                                                ["docID"],
+                                                            docID: data[i].id,
                                                             tableName: data[i]
-                                                                ["tablename"],
-                                                            tableCapacity: data[
-                                                                    i][
-                                                                "tablecapacity"],
+                                                                .tableName,
+                                                            tableCapacity:
+                                                                data[i]
+                                                                    .tableCap
+                                                                    .toString(),
                                                           )).then((value) =>
                                                       BlocProvider.of<
                                                                   TableBloc>(
@@ -162,14 +162,14 @@ class _TableReadState extends State<TableRead> {
                                     Padding(
                                       padding: const EdgeInsets.all(5.0),
                                       child: Text(
-                                        (data[i]["tablename"]),
+                                        (data[i].tableName),
                                         style: const TextStyle(
                                             fontSize: 20,
                                             fontWeight: FontWeight.bold),
                                       ),
                                     ),
                                     Text(
-                                        "Capacity: ${(data[i]["tablecapacity"]).toString()}"),
+                                        "Capacity: ${(data[i].tableCap).toString()}"),
                                   ],
                                 ),
                               )),

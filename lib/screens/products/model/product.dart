@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 class ProductModel {
+  final String? id;
   final String? productName;
   final String? productType;
   final String? productDescription;
@@ -16,6 +17,7 @@ class ProductModel {
   static DateTime date = DateFormat.yMd(dateTime) as DateTime;
 
   ProductModel({
+    this.id,
     this.productName,
     this.productType,
     this.productDescription,
@@ -29,19 +31,19 @@ class ProductModel {
 
   factory ProductModel.fromFirestore(
     DocumentSnapshot<Map<String, dynamic>> snapshot,
-    SnapshotOptions? options,
   ) {
-    final data = snapshot.data();
+    final data = snapshot;
     return ProductModel(
-      productName: data?['product_name'],
-      productType: data?['product_type'],
-      productDescription: data?['product_description'],
-      productCategory: data?['product_category'],
-      productImage: data?['product_image'],
-      productPrice: data?['product_price'],
-      productAvailability: data?['product_availability'],
-      dateAdded: data?['date_added'],
-      dateUpdated: data?['date_updated'],
+      id: data.id,
+      productName: data['product_name'],
+      productType: data['product_type'],
+      productDescription: data['product_description'],
+      productCategory: data['product_category'],
+      productImage: data['product_image'],
+      productPrice: data['product_price'],
+      productAvailability: data['product_availability'],
+      dateAdded: data['date_added'],
+      dateUpdated: data['date_updated'],
     );
   }
 

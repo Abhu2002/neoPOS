@@ -10,14 +10,14 @@ abstract class CreateUserEvent extends Equatable {
 class UserInitialEvent extends CreateUserEvent {}
 
 class CreateUserFBEvent extends CreateUserEvent {
-  final String userName;
+  final String userid;
   final String firstName;
   final String lastName;
   final String password;
   final String userRole;
 
-  const CreateUserFBEvent(this.userName, this.firstName, this.lastName,
-      this.password, this.userRole);
+  const CreateUserFBEvent(
+      this.userid, this.firstName, this.lastName, this.password, this.userRole);
   @override
-  List<Object> get props => [userName, firstName, lastName, password, userRole];
+  List<Object> get props => [userid, firstName, lastName, password, userRole];
 }
