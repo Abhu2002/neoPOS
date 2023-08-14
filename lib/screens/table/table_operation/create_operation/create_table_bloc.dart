@@ -10,7 +10,11 @@ part 'create_table_state.dart';
 class CreateTableBloc extends Bloc<CreateTableEvent, CreateTableState> {
   void Function(String)? showMessage;
   CreateTableBloc() : super(CreateTableInitial()) {
-    on<InputEvent>((event, emit) async {
+    on<TableNameNotAvailableEvent>((event,emit){
+      emit(CreateTableInitial());
+    });
+
+    /*on<InputEvent>((event, emit) async {
       if (event.tableName != "") {
         if (event.tableCap != "") {
           if (int.tryParse(event.tableCap) == null) {
@@ -24,7 +28,7 @@ class CreateTableBloc extends Bloc<CreateTableEvent, CreateTableState> {
       } else {
         emit(const TableErrorState("Please Enter a Name"));
       }
-    });
+    });*/
 
     on<CreateTableFBEvent>((event, emit) async {
       try {
@@ -36,8 +40,8 @@ class CreateTableBloc extends Bloc<CreateTableEvent, CreateTableState> {
               })
             });
         if (allName.contains((event.tableName).trim())) {
-          emit(const TableErrorState("Please Pop"));
-          showMessage!("Table Name Exist Please use Different Name");
+          emit(TableNameNotAvailableState());
+         // showMessage!("Table Name Exist Please use Different Name");
         } else {
           List<Map<String, dynamic>> myData = [];
           final data = TableModel(

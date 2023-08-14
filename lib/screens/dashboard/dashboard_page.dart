@@ -8,7 +8,7 @@ import '../table/table_page/table_page.dart';
 import '../category/category_page/read_category_page.dart';
 import '../users/user_page/read_user_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-
+import 'package:neopos/screens/order history/order_history_page.dart';
 class DashboardPage extends StatefulWidget {
   const DashboardPage({Key? key}) : super(key: key);
 
@@ -119,16 +119,15 @@ class _DashboardPage extends State<DashboardPage> {
                       SingleChildScrollView(child: ProductsRead()),
 
                       SingleChildScrollView(child: TableRead()),
-
-                      SingleChildScrollView(child: OrderPageRead()),
-
                       ///TODO DashBoard and History page pending
-                      /*Center(
-                        child: Text('Dashboard'),
-                      ),*/
                       Center(
-                        child: Text('Order History'),
+                        child: Text('Dashboard'),
                       ),
+                      SingleChildScrollView(child: OrderHistoryPage()),
+                      //SingleChildScrollView(child: OrderPageRead()),
+                     /* Center(
+                        child: Text('Order History'),
+                      ),*/
                       SingleChildScrollView(child: UserRead()),
                     ],
                   ),

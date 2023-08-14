@@ -115,5 +115,6 @@
    "tb_name_exist":"This Table Name already exist, Try different name",
    "usr_name_exist":"This User Name already exist, Try different name",
    "cat_name_exist":"This Category Name already exist, Try different name",
-   "userpage_title":"User Page"
+   "userpage_title":"User Page",
+  "order_history_page_title": "Order History"
 }

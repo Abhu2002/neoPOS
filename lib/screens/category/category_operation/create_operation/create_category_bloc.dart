@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
+import 'package:neopos/screens/products/products_operation/create_operation/create_product_bloc.dart';
 import '../../model/category.dart';
 
 part 'create_category_event.dart';
@@ -12,14 +13,18 @@ class CreateCategoryBloc
   void Function(String)? showMessage;
 
   CreateCategoryBloc() : super(CreateCategoryInitial()) {
+     on<NotNameAvaiableEvent>((event,emit){
+       emit(CreateCategoryInitial());
+     });
 
-    on<InputEvent>((event, emit) async {
+
+   /*  on<InputEvent>((event, emit) async {
       if (event.categoryName != "") {
         emit(CategoryNameAvailableState());
       } else {
         emit(const CategoryErrorState("Please Enter a Name"));
       }
-    });
+    });*/
     on<CreateCategoryFBEvent>((event, emit) async {
       try {
         List allName = [];
