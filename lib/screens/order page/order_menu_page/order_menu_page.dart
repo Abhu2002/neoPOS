@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/menu_btns_widget.dart';
 import '../widgets/menu_cards_widget.dart';
 import 'order_menu_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class OrderMenuPage extends StatefulWidget {
   dynamic data;
@@ -63,9 +64,9 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                   children: [
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.08,
-                      child: const Center(
-                        child: Text("Orders",
-                            style: TextStyle(
+                      child: Center(
+                        child: Text(AppLocalizations.of(context)!.order,
+                            style: const TextStyle(
                                 fontSize: 20, fontWeight: FontWeight.bold)),
                       ),
                     ),

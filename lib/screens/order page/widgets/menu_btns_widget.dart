@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../order_menu_page/order_menu_bloc.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MenuBtnsWidget extends StatefulWidget {
   dynamic data;
@@ -19,10 +19,10 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
       flex: 2,
       child: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.all(20.0),
-            child: Text("Menu",
-                style: TextStyle(
+          Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Text(AppLocalizations.of(context)!.menu,
+                style: const TextStyle(
                     fontSize: 20, fontWeight: FontWeight.bold)),
           ),
           BlocBuilder<OrderContentBloc, OrderContentState>(

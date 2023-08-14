@@ -32,7 +32,6 @@
    "edit_table_option":"संपादन करना",
    "delete_table_option":"मिटाना",
    "dashboard_title":"डैशबोर्ड",
-   "category_title":"वर्ग",
    "products_title":"उत्पादों",
     "tables_title":"टेबल",
     "order_history_title":"आदेश इतिहास",
@@ -55,7 +54,6 @@
      "product_page_title":"उत्पाद पृष्ठ",
      "date_title":"तारीख",
      "image_title":"छवि",
-     "product_name_title":"प्रोडक्ट का नाम",
      "type_title":"प्रकार",
      "category_title":"वर्ग",
      "price_title":"कीमत",
@@ -123,6 +121,8 @@
      "valid_price":"एक वैध उत्पाद मूल्य दर्ज करें",
      "product_delete_msg":"उत्पाद सफलतापूर्वक हटा दिया गया.",
      "product_delete_title":"उत्पाद हटाएँ",
-     "product_delete_confirm_msg":"क्या आप वाकई इस उत्पाद को हटाना चाहते हैं?"
+     "product_delete_confirm_msg":"क्या आप वाकई इस उत्पाद को हटाना चाहते हैं?",
+  "menu" : "मेन्यू",
+  "order": "आदेश"
 
 }
