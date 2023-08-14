@@ -56,6 +56,13 @@ class _DashboardPage extends State<DashboardPage> {
       ),
       SideMenuItem(
         icon: const Icon(Icons.dashboard),
+        title: AppLocalizations.of(context)!.order_page,
+        onTap: (index, sideMenuController) {
+          sideMenuController.changePage(index);
+        },
+      ),
+      SideMenuItem(
+        icon: const Icon(Icons.dashboard),
         title: AppLocalizations.of(context)!.dashboard_title,
         onTap: (index, sideMenuController) {
           sideMenuController.changePage(index);
@@ -123,9 +130,9 @@ class _DashboardPage extends State<DashboardPage> {
                       SingleChildScrollView(child: OrderPageRead()),
 
                       ///TODO DashBoard and History page pending
-                      /*Center(
+                      Center(
                         child: Text('Dashboard'),
-                      ),*/
+                      ),
                       Center(
                         child: Text('Order History'),
                       ),

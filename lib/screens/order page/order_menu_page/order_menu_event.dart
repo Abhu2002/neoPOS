@@ -8,8 +8,11 @@ class InitialEvent extends OrderContentEvent {
 }
 
 class ProductLoadingEvent extends OrderContentEvent {
+  final String tableId;
+  ProductLoadingEvent(this.tableId);
+
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [tableId];
 }
 
 class AddOrderFBEvent extends OrderContentEvent {
@@ -38,8 +41,8 @@ class FilterProductsEvent extends OrderContentEvent {
   final String category;
   final List<Map<String, dynamic>> allProds;
   final List<String> allCats;
-
-  FilterProductsEvent(this.category, this.allProds, this.allCats);
+  final String tableId;
+  FilterProductsEvent(this.category, this.allProds, this.allCats, this.tableId);
 
   @override
   List<Object> get props => [category, allProds, allCats];

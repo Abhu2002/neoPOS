@@ -3,10 +3,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:equatable/equatable.dart';
 
+import '../model/order_products_model.dart';
+
 part 'order_menu_event.dart';
 part 'order_menu_state.dart';
 
 class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
+  final CollectionReference liveCollection =
+  GetIt.I.get<FirebaseFirestore>().collection('live_table');
+
   OrderContentBloc() : super(InitialState()) {
     on<ProductLoadingEvent>((event, emit) async {
       FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
@@ -37,7 +42,28 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         }
       });
 
-      emit(ProductLoadingState(allProds, allCats));
+      try {
+        await Future.delayed(Duration(milliseconds: 500));
+        DocumentSnapshot tableSnapshot =
+        await liveCollection.doc(event.tableId).get();
+        List<Map<String, dynamic>> productsData =
+        List<Map<String, dynamic>>.from(tableSnapshot['products']);
+        //print(productsData);
+
+        List<Product> products = productsData.map((data) {
+          return Product(
+            productCategory: data['productCategory'],
+            productName: data['productName'],
+            productPrice: data['productPrice'],
+            productType: data['productType'],
+            quantity: data['quantity'],
+          );
+        }).toList();
+        emit(ProductLoadingState(allProds, allCats, products));
+      } catch (error) {
+        emit(ErrorState('Error loading live table data'));
+      }
+
     });
     on<AddOrderFBEvent>((event, emit) async {
       try {
@@ -94,8 +120,30 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         }
       });
 
+      List<Product> products = [];
+      try {
+        await Future.delayed(Duration(milliseconds: 500));
+        DocumentSnapshot tableSnapshot =
+        await liveCollection.doc(event.tableId).get();
+        List<Map<String, dynamic>> productsData =
+        List<Map<String, dynamic>>.from(tableSnapshot['products']);
+        //print(productsData);
+
+        products = productsData.map((data) {
+          return Product(
+            productCategory: data['productCategory'],
+            productName: data['productName'],
+            productPrice: data['productPrice'],
+            productType: data['productType'],
+            quantity: data['quantity'],
+          );
+        }).toList();
+      } catch (error) {
+        emit(ErrorState('Error loading live table data'));
+      }
+
       if(event.category == "All") {
-        emit(FilterProductsState(allProds, event.allCats, event.category));
+        emit(FilterProductsState(allProds, event.allCats, event.category, products));
         return;
       }
       filteredProds = allProds.where((element) {
@@ -103,7 +151,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
       }).toList();
 
       // print(filteredProds);
-      emit(FilterProductsState(filteredProds,event.allCats, event.category));
+      emit(FilterProductsState(filteredProds,event.allCats, event.category, products));
     });
   }
 }

@@ -5,7 +5,8 @@ import '../order_menu_page/order_menu_bloc.dart';
 
 
 class MenuBtnsWidget extends StatefulWidget {
-  const MenuBtnsWidget({super.key});
+  dynamic data;
+  MenuBtnsWidget({Key? key,  this.data}) : super(key: key);
 
   @override
   State<MenuBtnsWidget> createState() => _MenuBtnsWidgetState();
@@ -49,7 +50,7 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                       onPressed: () {
                         BlocProvider.of<OrderContentBloc>(context)
                             .add(FilterProductsEvent("All",
-                            state.allProds, state.allCats));
+                            state.allProds, state.allCats,widget.data['Id'].toString()));
                       },
                       backgroundColor: (state.category == "All" ||
                           state.category == "")
@@ -84,7 +85,7 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                           BlocProvider.of<OrderContentBloc>(
                               context)
                               .add(FilterProductsEvent(element,
-                              state.allProds, state.allCats));
+                              state.allProds, state.allCats, widget.data['Id'].toString()));
                         },
                         backgroundColor: (state.category == element)
                             ? Colors.orangeAccent
@@ -105,7 +106,7 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                   ),
                 );
               }
-              return Spacer();
+              return const Spacer();
             },
           ),
         ],

@@ -22,7 +22,7 @@ class _MenuCardWidgetState extends State<MenuCardWidget> {
             state is FilterProductsState) {
           var prods = state.allProds;
 
-          if (prods.length == 0) {
+          if (prods.isEmpty) {
             return Text(
               "No products found in ${state.category}",
               style: const TextStyle(
@@ -171,7 +171,11 @@ class _MenuCardWidgetState extends State<MenuCardWidget> {
                           docId: widget.data['Id'].toString(),
                         );
                       },
-                    );
+                    ).then((value) =>
+                        BlocProvider.of<OrderContentBloc>(
+                            context)
+                            .add(ProductLoadingEvent(
+                            widget.data['Id'])));
                   },
                 );
               },

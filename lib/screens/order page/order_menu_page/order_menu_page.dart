@@ -17,13 +17,17 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<OrderContentBloc>(context).add(ProductLoadingEvent());
+    if (widget.data != null && widget.data.containsKey('Id')) {
+      BlocProvider.of<OrderContentBloc>(context)
+          .add(ProductLoadingEvent(widget.data['Id'].toString()));
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    double totalPrice = 0.0;
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: const Color.fromRGBO(250, 250, 250, 100),
       body: Row(
         children: [
           Expanded(
@@ -32,7 +36,7 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
               height: MediaQuery.sizeOf(context).height,
               child: Column(
                 children: [
-                  const MenuBtnsWidget(),
+                  MenuBtnsWidget(data: widget.data),
                   Expanded(
                     flex: 8,
                     child: MenuCardWidget(
@@ -45,7 +49,189 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
           ),
           Expanded(
             flex: 1,
-            child: Container(),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 10.0),
+              child: Container(
+                height: MediaQuery.of(context).size.height * 0.95,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.08,
+                      child: const Center(
+                        child: Text("Orders",
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.bold)),
+                      ),
+                    ),
+                    SizedBox(
+                        child: BlocBuilder<OrderContentBloc, OrderContentState>(
+                      builder: (BuildContext context, state) {
+                        if (state is ProductLoadingState ||
+                            state is FilterProductsState) {
+                          final products = state.products;
+                          totalPrice = 0.0; // Reset the total price
+                          for (final product in products) {
+                            double productPrice =
+                                double.parse(product.productPrice);
+                            int productQuantity = int.parse(product.quantity);
+
+                            totalPrice += productPrice * productQuantity;
+                          }
+                          return Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.57,
+                                child: ListView.builder(
+                                  itemCount: products.length,
+                                  itemBuilder: (context, index) {
+                                    final product = products[index];
+                                    return Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Card(
+                                        elevation: 3,
+                                        color: Colors.grey.shade50,
+                                        child: ListTile(
+                                          title: Text(product.productName),
+                                          subtitle:
+                                              Text(product.productCategory),
+                                          trailing: Text(
+                                              '${product.quantity} x \₹${product.productPrice}'),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              Container(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.3,
+                                decoration: BoxDecoration(
+                                    color: Colors.blue.shade50,
+                                    borderRadius:
+                                        const BorderRadius.all(Radius.circular(20))),
+                                child: Center(
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 25, top: 25),
+                                            child: Text(
+                                              "Items(${state.products.length})",
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 25, top: 25),
+                                            child: Text(
+                                              "₹$totalPrice",
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 25, top: 15, bottom: 10),
+                                            child: Text(
+                                              "GST (${5}%)",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 25, top: 15, bottom: 10),
+                                            child: Text(
+                                              "₹${totalPrice * 0.05}",
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 25, right: 25),
+                                        child: Divider(
+                                          height: 2,
+                                          color: Colors.grey.shade800,
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          const Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 25, top: 25),
+                                            child: Text(
+                                              "Total",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                          const Spacer(),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                right: 25, top: 25),
+                                            child: Text(
+                                              "₹${(totalPrice + totalPrice * 0.05).round()}",
+                                              style: const TextStyle(
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      const SizedBox(
+                                        height: 5,
+                                      ),
+                                      ElevatedButton(
+                                        style: ElevatedButton.styleFrom(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(5))),
+                                        onPressed: () {
+                                          // BlocProvider.of<OrderContentBloc>(
+                                          //         context)
+                                          //     .add(ProductLoadingEvent(
+                                          //         widget.data['Id'].toString()));
+                                        },
+                                        child: const Text('Print bills'),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        } else if (state is ErrorState) {
+                          return Center(
+                              child: Center(child: Text(state.errorMessage)));
+                        } else {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        }
+                      },
+                    )),
+                  ],
+                ),
+              ),
+            ),
           ),
         ],
       ),
