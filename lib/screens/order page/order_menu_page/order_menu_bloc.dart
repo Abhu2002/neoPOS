@@ -2,7 +2,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:equatable/equatable.dart';
-
+/// Need to import for date time format
+import 'package:intl/intl.dart';
 import '../model/order_products_model.dart';
 
 part 'order_menu_event.dart';
@@ -42,7 +43,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
       });
 
       try {
-        await Future.delayed(Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 500));
         DocumentSnapshot tableSnapshot =
         await liveCollection.doc(event.tableId).get();
         List<Map<String, dynamic>> productsData =
@@ -71,7 +72,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
             await db.collection("live_table").doc(event.docId).get();
         Map<String, dynamic>? data = documentSnapshot.data();
 
-        dynamic tablename = data?['table_name'];
+        dynamic tableName = data?['table_name'];
         if (data != null && data.containsKey('products')) {
           allOrders = data['products'];
         }
@@ -89,7 +90,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         db
             .collection('live_table')
             .doc(event.docId)
-            .set({'products': allOrders, 'table_name': tablename});
+            .set({'products': allOrders, 'table_name': tableName});
       } catch (err) {
         throw Exception("Error creating product $err");
       }
@@ -120,7 +121,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
 
       List<Product> products = [];
       try {
-        await Future.delayed(Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 500));
         DocumentSnapshot tableSnapshot =
         await liveCollection.doc(event.tableId).get();
         List<Map<String, dynamic>> productsData =
@@ -149,5 +150,49 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
 
       emit(FilterProductsState(filteredProds,event.allCats, event.category, products));
     });
+
+    on<CheckoutOrderFBEvent>((event, emit) async {
+      try {
+        int allOrders = 0;
+        var allProducts= [];
+        var emptyProducts=[];
+        FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
+        DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
+        await db.collection("live_table").doc(event.docId).get();
+        Map<String, dynamic>? data = documentSnapshot.data();
+        dynamic tableName = data?['table_name'];
+        await db.collection('order_history').count().get().then((value) {
+          allOrders=value.count;
+        }
+        );
+        if (data != null && data.containsKey('products')) {
+          allProducts = data['products'];
+        }
+        //Now you have the list of maps
+
+        String orderId = (allOrders + 1).toString();
+        db
+            .collection('order_history')
+            .doc(orderId)
+            .set({
+          'products': allProducts,
+          'amount': event.totalPrice,
+          'customer_mobile_no': event.customerMbNo,
+          'customer_name': event.customerName,
+          'payment_mode': event.paymentMode,
+          'order_date':DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now())
+
+        });
+
+        db
+            .collection('live_table')
+            .doc(event.docId)
+            .set({'products': emptyProducts, 'table_name': tableName});
+      } catch (err) {
+        throw Exception("Error creating product $err");
+      }
+    }
+    );
+
   }
 }
