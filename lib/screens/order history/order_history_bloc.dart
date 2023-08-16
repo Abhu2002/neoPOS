@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
@@ -11,7 +10,7 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
   OrderHistoryBloc() : super(OrderHistoryInitial()) {
     on<OrderHistoryPageInitEvent>((event, emit) async {
       try {
-        if (event.isfirst) {
+        if (event.isFirst) {
           emit(OrderHistoryLoading());
         } else {
           emit(OrderHistoryLoading());

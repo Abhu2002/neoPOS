@@ -40,4 +40,3 @@ class ShowProductsState extends OrderHistoryState {
   @override
   List<Object> get props => [allOrder, productList, amount];
 }
-

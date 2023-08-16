@@ -2,8 +2,10 @@ import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
+import 'package:intl/intl.dart';
 
 part 'sales_dashboard_event.dart';
+
 part 'sales_dashboard_state.dart';
 
 class SalesDashboardBloc
@@ -13,13 +15,21 @@ class SalesDashboardBloc
       try {
         emit(SalesDashBoardLoadingState());
 
-        var AllOrderHistory = [];
-        List<dynamic> alldata = [];
+        var allOrderHistory = [];
+        var graphData = [];
+        List<dynamic> allData = [];
+        var currentDateD;
+        var currentDateM;
+        var currentDateW;
+
+        num dailyValue = 0;
+        num weeklyValue = 0;
+        num monthlyValue = 0;
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("order_history").get().then(
           (value) {
             value.docs.forEach((element) {
-              AllOrderHistory.add({
+              allOrderHistory.add({
                 "Id": element.id,
                 "amount": element['amount'],
                 "order_date": element['order_date'],
@@ -28,11 +38,42 @@ class SalesDashboardBloc
                 "payment_mode": element['payment_mode'],
                 "products": element["products"]
               });
+              graphData.add(SalesData(
+                  DateTime.parse(element['order_date']), element['amount']));
             });
           },
         );
-
-        emit(SalesDashBoardLoadedState(AllOrderHistory, alldata));
+        List<SalesData> processedData = [];
+        for (var dailySales in graphData) {
+          num sales = 0;
+          final dailyFormat = DateFormat("dd-MM-yyyy").format(dailySales.x);
+          for (int i = 0; i < graphData.length; i++) {
+            final dateFromData =
+                DateFormat("dd-MM-yyyy").format(graphData[i].x);
+            if (dateFromData == dailyFormat) {
+              sales += graphData[i].y;
+            }
+          }
+          processedData.add(SalesData(
+              DateFormat("dd-MM-yyyy").parse(dailyFormat), sales as double));
+        }
+        final Map<DateTime, SalesData> map = {
+          for (var dailySales in processedData) dailySales.x: dailySales,
+        };
+        currentDateD = DateFormat("dd-MM-yyyy").format(DateTime.now());
+        currentDateM = DateFormat("MM-yyyy").format(DateTime.now());
+        currentDateW = weekNumber(DateTime.now());
+        processedData = map.values.toList();
+        for (var a in processedData) {
+          dailyValue += ((currentDateD == DateFormat("dd-MM-yyyy").format(a.x))
+              ? a.y
+              : 0);
+          weeklyValue += ((currentDateW == weekNumber(a.x)) ? a.y : 0);
+          monthlyValue +=
+              ((currentDateM == DateFormat("MM-yyyy").format(a.x)) ? a.y : 0);
+        }
+        emit(SalesDashBoardLoadedState(
+            allOrderHistory, allData, dailyValue, weeklyValue, monthlyValue));
         //gives all document of tables to State
       } catch (err) {
         emit(SalesDashboardErrorState(
@@ -40,4 +81,27 @@ class SalesDashboardBloc
       }
     });
   }
+  int numOfWeeks(int year) {
+    DateTime dec28 = DateTime(year, 12, 28);
+    int dayOfDec28 = int.parse(DateFormat("D").format(dec28));
+    return ((dayOfDec28 - dec28.weekday + 10) / 7).floor();
+  }
+
+  int weekNumber(DateTime date) {
+    int dayOfYear = int.parse(DateFormat("D").format(date));
+    int woy = ((dayOfYear - date.weekday + 10) / 7).floor();
+    if (woy < 1) {
+      woy = numOfWeeks(date.year - 1);
+    } else if (woy > numOfWeeks(date.year)) {
+      woy = 1;
+    }
+    return woy;
+  }
+}
+
+class SalesData {
+  SalesData(this.x, this.y);
+
+  final DateTime x;
+  final double y;
 }

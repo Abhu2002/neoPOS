@@ -8,8 +8,8 @@ sealed class OrderHistoryEvent extends Equatable {
 }
 
 class OrderHistoryPageInitEvent extends OrderHistoryEvent {
-  bool isfirst;
-  OrderHistoryPageInitEvent(this.isfirst);
+  bool isFirst;
+  OrderHistoryPageInitEvent(this.isFirst);
 }
 
 class ShowOrderProductsEvent extends OrderHistoryEvent {
@@ -19,4 +19,3 @@ class ShowOrderProductsEvent extends OrderHistoryEvent {
   @override
   List<Object> get props => [id, allOrders];
 }
-
