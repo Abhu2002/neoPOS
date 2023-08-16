@@ -14,7 +14,11 @@ class SalesDashBoardLoadingState extends SalesDashboardState {}
 class SalesDashBoardLoadedState extends SalesDashboardState {
   final List allOrder;
   final List productList;
-  const SalesDashBoardLoadedState(this.allOrder, this.productList);
+  final num dailyValue;
+  final num weeklyValue;
+  final num monthlyValue;
+  const SalesDashBoardLoadedState(this.allOrder, this.productList,
+      this.dailyValue, this.weeklyValue, this.monthlyValue);
   @override
   List<Object> get props => [allOrder, productList];
 }
