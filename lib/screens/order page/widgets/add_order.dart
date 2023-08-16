@@ -7,9 +7,6 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../order_menu_page/order_menu_bloc.dart';
 
-
-
-
 class AddOrder extends StatefulWidget {
   const AddOrder(
       {required this.productName,

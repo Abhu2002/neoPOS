@@ -11,6 +11,6 @@ class DashboardPageinitevent extends SalesDashboardEvent {
   DashboardPageinitevent([this.monthIndex]);
   int? monthIndex;
 
-  // @override
-  // List<Object> get props => [monthIndex];
+  @override
+  List<Object> get props => [];
 }

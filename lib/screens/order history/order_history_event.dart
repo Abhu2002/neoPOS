@@ -19,4 +19,3 @@ class ShowOrderProductsEvent extends OrderHistoryEvent {
   @override
   List<Object> get props => [id, allOrders];
 }
-

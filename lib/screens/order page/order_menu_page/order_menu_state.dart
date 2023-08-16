@@ -31,7 +31,7 @@ class ProductLoadingState extends OrderContentState {
 
 class FilterProductsState extends OrderContentState {
   @override
-  final List<Map<String,dynamic>> allProds;
+  final List<Map<String, dynamic>> allProds;
   @override
   final List<String> allCats;
   @override
@@ -39,7 +39,8 @@ class FilterProductsState extends OrderContentState {
   @override
   final List<Product> products;
 
-  FilterProductsState(this.allProds, this.allCats, this.category, this.products);
+  FilterProductsState(
+      this.allProds, this.allCats, this.category, this.products);
 
   @override
   List<Object> get props => [allProds, allCats, category];

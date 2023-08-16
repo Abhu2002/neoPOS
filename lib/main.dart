@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => OrderHistoryBloc()),
 
         //Bloc for SalesDashboard page
-        BlocProvider(create: (_)=> SalesDashboardBloc()),
+        BlocProvider(create: (_) => SalesDashboardBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
