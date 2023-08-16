@@ -122,12 +122,16 @@ class _DashboardPage extends State<DashboardPage> {
                   child: PageView(
                     physics: const NeverScrollableScrollPhysics(),
                     controller: pageController,
-                    children: const [
+                    children: [
                       SingleChildScrollView(child: CategoryRead()),
                       SingleChildScrollView(child: ProductsRead()),
                       SingleChildScrollView(child: TableRead()),
                       SingleChildScrollView(child: OrderPageRead()),
-                      SingleChildScrollView(child: SalesDashboardPage()),
+                      SingleChildScrollView(
+                          child: SalesDashboardPage(
+                        controller: pageController,
+                        sidemenu: sideMenu,
+                      )),
                       SingleChildScrollView(child: OrderHistoryPage()),
                       SingleChildScrollView(child: UserRead()),
                     ],

@@ -17,8 +17,9 @@ class SalesDashBoardLoadedState extends SalesDashboardState {
   final num dailyValue;
   final num weeklyValue;
   final num monthlyValue;
+  final Map<String, double> piemap;
   const SalesDashBoardLoadedState(this.allOrder, this.productList,
-      this.dailyValue, this.weeklyValue, this.monthlyValue);
+      this.dailyValue, this.weeklyValue, this.monthlyValue, this.piemap);
   @override
   List<Object> get props => [allOrder, productList];
 }

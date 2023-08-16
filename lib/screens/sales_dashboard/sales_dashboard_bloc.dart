@@ -25,6 +25,7 @@ class SalesDashboardBloc
         num dailyValue = 0;
         num weeklyValue = 0;
         num monthlyValue = 0;
+        Map<String, double> pie = {};
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("order_history").get().then(
           (value) {
@@ -40,6 +41,14 @@ class SalesDashboardBloc
               });
               graphData.add(SalesData(
                   DateTime.parse(element['order_date']), element['amount']));
+              for (var element in element['products']) {
+                if (pie.keys.contains(element['productCategory'])) {
+                  pie[element['productCategory']] =
+                      pie[element['productCategory']]! + 1;
+                } else {
+                  pie[element['productCategory']] = 1;
+                }
+              }
             });
           },
         );
@@ -72,8 +81,8 @@ class SalesDashboardBloc
           monthlyValue +=
               ((currentDateM == DateFormat("MM-yyyy").format(a.x)) ? a.y : 0);
         }
-        emit(SalesDashBoardLoadedState(
-            allOrderHistory, allData, dailyValue, weeklyValue, monthlyValue));
+        emit(SalesDashBoardLoadedState(allOrderHistory, allData, dailyValue,
+            weeklyValue, monthlyValue, pie));
         //gives all document of tables to State
       } catch (err) {
         emit(SalesDashboardErrorState(
