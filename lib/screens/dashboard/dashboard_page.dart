@@ -6,6 +6,7 @@ import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../order history/order_history_page.dart';
 import '../order page/order_table_page/order_read_page.dart';
+import '../sales_dashboard/sales_dashboard_page.dart';
 import '../table/table_page/table_page.dart';
 import '../category/category_page/read_category_page.dart';
 import '../users/user_page/read_user_page.dart';
@@ -123,22 +124,11 @@ class _DashboardPage extends State<DashboardPage> {
                     controller: pageController,
                     children: const [
                       SingleChildScrollView(child: CategoryRead()),
-
                       SingleChildScrollView(child: ProductsRead()),
-
                       SingleChildScrollView(child: TableRead()),
-
                       SingleChildScrollView(child: OrderPageRead()),
-
-                      ///TODO DashBoard and History page pending
-                      Center(
-                        child: Text('Dashboard'),
-                      ),
+                      SingleChildScrollView(child: SalesDashboardPage()),
                       SingleChildScrollView(child: OrderHistoryPage()),
-
-                     /* Center(
-                        child: Text('Order History'),
-                      ),*/
                       SingleChildScrollView(child: UserRead()),
                     ],
                   ),
