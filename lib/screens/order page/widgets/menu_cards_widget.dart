@@ -111,12 +111,15 @@ class _MenuCardWidgetState extends State<MenuCardWidget> {
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Text(
-                                prods[index]
-                                ['product_category'],
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.blueGrey,
+                              Flexible(
+                                child: Text(
+                                  prods[index]
+                                  ['product_category'],
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.blueGrey,
+                                  ),
                                 ),
                               ),
                               Padding(
