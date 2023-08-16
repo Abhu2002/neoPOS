@@ -79,10 +79,11 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => ProductDeletionBloc()),
         BlocProvider(create: (_) => UpdateProductBloc()),
 
-        BlocProvider(create: (_) => OrderContentBloc()),
-
         //Bloc for Order Page
         BlocProvider(create: (_) => OrderReadBloc()),
+        BlocProvider(create: (_) => OrderContentBloc()),
+
+        //Bloc for Order History Page
         BlocProvider(create: (_) => OrderHistoryBloc()),
 
         //Bloc for SalesDashboard page

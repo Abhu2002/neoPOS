@@ -98,30 +98,9 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
 
     on<FilterProductsEvent>((event, emit) async {
       String category = event.category;
-      FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
-      List<Map<String, dynamic>> allProds = [];
       List<Map<String, dynamic>> filteredProds = [];
-
-      await db
-          .collection("products")
-          .where("product_availability", isEqualTo: true)
-          .get()
-          .then((value) async {
-        for (var element in value.docs) {
-          Map<String, dynamic> mp = {
-            "product_name": element["product_name"],
-            "product_image": element["product_image"],
-            "product_price": element["product_price"],
-            "product_category": element["product_category"],
-            "product_type": element["product_type"]
-          };
-          allProds.add(mp);
-        }
-      });
-
       List<Product> products = [];
       try {
-        await Future.delayed(const Duration(milliseconds: 500));
         DocumentSnapshot tableSnapshot =
             await liveCollection.doc(event.tableId).get();
         List<Map<String, dynamic>> productsData =
@@ -140,12 +119,11 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         emit(ErrorState('Error loading live table data'));
       }
 
-      if (event.category == "All") {
-        emit(FilterProductsState(
-            allProds, event.allCats, event.category, products));
+      if(event.category == "All") {
+        emit(FilterProductsState(event.allProds, event.allCats, event.category, products));
         return;
       }
-      filteredProds = allProds.where((element) {
+      filteredProds = event.allProds.where((element) {
         return (element["product_category"].toString() == category);
       }).toList();
 
