@@ -9,6 +9,7 @@ class CreateCategoryState extends Equatable {
 class CreateCategoryInitial extends CreateCategoryState {}
 
 class CategoryCreatedState extends CreateCategoryState {
+  // extends immutable class but needs to be mutable
   bool created;
   CategoryCreatedState(this.created);
   @override

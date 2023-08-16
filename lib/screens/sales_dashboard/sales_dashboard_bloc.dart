@@ -18,9 +18,9 @@ class SalesDashboardBloc
         var allOrderHistory = [];
         var graphData = [];
         List<dynamic> allData = [];
-        var currentDateD;
-        var currentDateM;
-        var currentDateW;
+        String currentDateD;
+        String currentDateM;
+        int currentDateW;
 
         num dailyValue = 0;
         num weeklyValue = 0;
