@@ -20,10 +20,3 @@ class ShowOrderProductsEvent extends OrderHistoryEvent {
   List<Object> get props => [id, allOrders];
 }
 
-/*class ProductOrderPerTableEvent extends OrderHistoryEvent {
-  final List productorderpertable;
-
-  const ProductOrderPerTableEvent(this.productorderpertable);
-  @override
-  List<Object> get props => [productorderpertable];
-} */

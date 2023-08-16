@@ -38,9 +38,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
         ]),
         BlocBuilder<OrderHistoryBloc, OrderHistoryState>(
           builder: (context, state) {
-            // print(state);
             if (state is OrderHistoryLoaded || state is ShowProductsState) {
-              // return Text("${state.allOrder.docs[0]["amount"]}");
               allOrders = state.allOrder;
               return Row(
                 children: [
@@ -101,22 +99,6 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                             ],
                                           ),
                                         ),
-                                        /*  Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                data["table_name"],
-                                                style: const TextStyle(
-                                                    fontSize: 12,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ],
-                                          ),
-                                        ),*/
                                         Padding(
                                           padding: const EdgeInsets.all(5.0),
                                           child: Row(children: [

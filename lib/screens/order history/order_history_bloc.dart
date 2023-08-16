@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'dart:html';
 
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -11,11 +9,6 @@ part 'order_history_state.dart';
 
 class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
   OrderHistoryBloc() : super(OrderHistoryInitial()) {
-    /* on<ProductOrderPerTableEvent>((event, emit) {
-      print(event.productorderpertable);
-      emit(ProductOrderPerTableLoaded(event.productorderpertable));
-    });*/
-
     on<OrderHistoryPageInitEvent>((event, emit) async {
       try {
         if (event.isfirst) {
@@ -30,10 +23,6 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
         await db.collection("order_history").get().then(
           (value) {
             value.docs.forEach((element) {
-              // print((element["customer_mobile_no"]));
-              //print((element["customer_name"]));
-              //print((element["payment_mode"]));
-              //print((element["products"]));
               AllOrderHistory.add({
                 "Id": element.id,
                 "amount": element['amount'],
@@ -44,19 +33,10 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
                 "products": element["products"]
               });
             });
-            // print("a::::::${AllOrderHistory}");
           },
         );
-        // for (var i = 0; i < AllOrderHistory.length; i++) {
-        //   if (AllOrderHistory[i]["Id"] == int.parse(event.id)) {
-        //     alldata.add(AllOrderHistory[0]["products"]);
-        //     // print(alldata);
-        //   }
-        // }
 
-        // print(alldata);
         emit(OrderHistoryLoaded(AllOrderHistory, alldata));
-        //emit(ProductOrderPerTableLoaded(event.productorderpertable));
         //gives all document of tables to State
       } catch (err) {
         emit(OrderHistoryErrorState(
@@ -65,24 +45,17 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
     });
 
     on<ShowOrderProductsEvent>((event, emit) {
-      // print("Bloc id: ${event.id}");
-      // print(event.allOrders);
       var productList;
       num amount = 0;
       String orderId = "";
       var allOrders = event.allOrders;
       for (var i = 0; i < allOrders.length; i++) {
-        // print("all order id: ${allOrders[i]["Id"]}");
-        // print(allOrders[i]["Id"].runtimeType);
-        // print("event id: ${int.parse(event.id)}");
-
         var id = int.parse(event.id);
         // print(allOrders[i]["Id"] == id);
         if (int.parse(allOrders[i]["Id"]) == id) {
           amount = event.allOrders[i]["amount"];
           orderId = allOrders[i]["Id"];
           productList = (event.allOrders[i]["products"]);
-          // print(alldata);
           break;
         }
       }

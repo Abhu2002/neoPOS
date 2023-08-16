@@ -14,7 +14,8 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(color: Colors.white,
+        decoration: BoxDecoration(
+          color: Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(30)),
         ),
         width: (MediaQuery.sizeOf(context).width / 2) - 80,
@@ -30,8 +31,6 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
                     Flexible(
                       flex: 1,
                       child: Row(
-                        //mainAxisAlignment:
-                        //  MainAxisAlignment.spaceBetween,
                         children: [
                           Flexible(
                             flex: 5,
@@ -61,14 +60,6 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
                         ],
                       ),
                     ),
-
-                    //SizedBox(height: 30),
-                    // Spacer(flex: 1),
-
-                    // Container(
-                    //   height: 300,
-                    //   color: Colors.black,
-                    // )
                     Flexible(
                         flex: 4,
                         fit: FlexFit.tight,
@@ -81,7 +72,8 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
                               itemBuilder: (BuildContext context, int index) {
                                 return Padding(
                                   padding: const EdgeInsets.all(4.0),
-                                  child: Card(elevation: 3,
+                                  child: Card(
+                                    elevation: 3,
                                     child: Padding(
                                       padding: const EdgeInsets.all(4.0),
                                       child: Row(
@@ -89,18 +81,23 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
                                           Flexible(
                                               flex: 4,
                                               child: Padding(
-                                                padding: const EdgeInsets.fromLTRB(
-                                                    10, 20, 10, 10),
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        10, 20, 10, 10),
                                                 child: Column(
                                                     crossAxisAlignment:
-                                                        CrossAxisAlignment.start,
+                                                        CrossAxisAlignment
+                                                            .start,
                                                     children: [
                                                       Text(
                                                           "${productList[index]["productName"]}",
-                                                          style: const TextStyle(
-                                                              fontWeight:
-                                                                  FontWeight.bold,
-                                                              fontSize: 20)),
+                                                          style:
+                                                              const TextStyle(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  fontSize:
+                                                                      20)),
                                                       const SizedBox(
                                                         height: 10,
                                                       ),
@@ -108,19 +105,25 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
                                                         "Category :${productList[index]["productCategory"]}",
                                                         style: const TextStyle(
                                                             fontWeight:
-                                                                FontWeight.normal,
+                                                                FontWeight
+                                                                    .normal,
                                                             fontSize: 12),
                                                       ),
                                                       Row(
                                                         mainAxisAlignment:
-                                                            MainAxisAlignment.start,
+                                                            MainAxisAlignment
+                                                                .start,
                                                         children: [
                                                           Text(
                                                               "Price: ${productList[index]["productPrice"]}"),
                                                           Padding(
                                                               padding:
-                                                                  EdgeInsets.fromLTRB(
-                                                                      20, 8, 8, 8),
+                                                                  EdgeInsets
+                                                                      .fromLTRB(
+                                                                          20,
+                                                                          8,
+                                                                          8,
+                                                                          8),
                                                               child: Text(
                                                                   "Quantity ${productList[index]["quantity"]}"))
                                                         ],
@@ -131,7 +134,8 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
                                             fit: FlexFit.tight,
                                             flex: 2,
                                             child: Column(
-                                              mainAxisAlignment: MainAxisAlignment.end,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.end,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.end,
                                               children: [
@@ -148,21 +152,22 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
                               }),
                         )),
                     Flexible(
-                        flex: 2,
-                        fit: FlexFit.tight,
-                        child: Container(
-                            height: MediaQuery.of(context).size.height * 0.3,
-                            decoration: BoxDecoration(
-                                color: Colors.blue.shade50,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(20))),
-                            child: Center(
-                                child: Column(children: [
+                      flex: 2,
+                      fit: FlexFit.tight,
+                      child: Container(
+                        height: MediaQuery.of(context).size.height * 0.3,
+                        decoration: BoxDecoration(
+                            color: Colors.blue.shade50,
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(20))),
+                        child: Center(
+                          child: Column(
+                            children: [
                               Row(
                                 children: [
                                   Padding(
-                                    padding:
-                                        const EdgeInsets.only(left: 25, top: 25),
+                                    padding: const EdgeInsets.only(
+                                        left: 25, top: 25),
                                     child: Text(
                                       "Items(${state.productList.length})",
                                       style: const TextStyle(
@@ -171,8 +176,8 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
                                   ),
                                   const Spacer(),
                                   Padding(
-                                    padding:
-                                        const EdgeInsets.only(right: 25, top: 25),
+                                    padding: const EdgeInsets.only(
+                                        right: 25, top: 25),
                                     child: Text(
                                       "₹${state.amount}",
                                       style: const TextStyle(
@@ -188,8 +193,8 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
                                         left: 25, top: 15, bottom: 10),
                                     child: Text(
                                       "GST (${5}%)",
-                                      style:
-                                          TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   const Spacer(),
@@ -218,14 +223,14 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
                                     padding: EdgeInsets.only(left: 25, top: 25),
                                     child: Text(
                                       "Total",
-                                      style:
-                                          TextStyle(fontWeight: FontWeight.bold),
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold),
                                     ),
                                   ),
                                   const Spacer(),
                                   Padding(
-                                    padding:
-                                        const EdgeInsets.only(right: 25, top: 25),
+                                    padding: const EdgeInsets.only(
+                                        right: 25, top: 25),
                                     child: Text(
                                       "₹${(state.amount + state.amount * 0.05).round()}",
                                       style: const TextStyle(
@@ -234,7 +239,11 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
                                   ),
                                 ],
                               ),
-                            ]))))
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               );
