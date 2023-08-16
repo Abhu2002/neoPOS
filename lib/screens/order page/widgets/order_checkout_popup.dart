@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/navigation/route_paths.dart';
 
 import '../../../utils/app_colors.dart';
 import '../../../utils/popup_cancel_button.dart';
@@ -136,7 +137,7 @@ class _CheckOutPopUpState extends State<CheckOutPopUp> {
                             isPaymentType(_character),
                             widget.totalPrice,
                             widget.id));
-                    Navigator.pop(context);
+                    Navigator.pushReplacementNamed(context,RoutePaths.dashboard);
                   }
                 },
                 child: const Text("Checkout"),

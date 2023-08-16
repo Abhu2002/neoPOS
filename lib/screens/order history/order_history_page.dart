@@ -55,7 +55,6 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
 
                           return InkWell(
                             onTap: () {
-                              print("in page: ${data['Id']}");
                               BlocProvider.of<OrderHistoryBloc>(context).add(
                                   ShowOrderProductsEvent(
                                       data["Id"], allOrders));
