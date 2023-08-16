@@ -14,11 +14,10 @@ class SalesDashboardPage extends StatefulWidget {
 class _SalesDashboardPageState extends State<SalesDashboardPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     BlocProvider.of<SalesDashboardBloc>(
       context,
-    ).add(DashboardPageinitevent());
+    ).add(const DashboardPageinitevent());
   }
 
   @override
@@ -42,17 +41,17 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                       Expanded(
                           child: CommonCard(
                         title: "Today's Revenue",
-                        amount: "${state.dailyValue.toString()}",
+                        amount: state.dailyValue.toString(),
                       )),
                       Expanded(
                           child: CommonCard(
                         title: "Weekly Revenue",
-                        amount: "${state.weeklyValue.toString()}",
+                        amount: state.weeklyValue.toString(),
                       )),
                       Expanded(
                           child: CommonCard(
                         title: "Monthly Revenue",
-                        amount: "${state.monthlyValue.toString()}",
+                        amount: state.monthlyValue.toString(),
                       )),
                     ],
                   ),
