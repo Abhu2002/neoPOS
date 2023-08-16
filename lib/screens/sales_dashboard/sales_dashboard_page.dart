@@ -180,16 +180,18 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                             }
                           },
                         )),
-                    Expanded(
-                        flex: 2,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10)),
-                          child: Container(
-                            height: 380,
-                            child: const Center(child: Text("Top Sales")),
-                          ),
-                        ))
+
+                    /// TODO Need Top sales to be Added Later
+                    // Expanded(
+                    //     flex: 2,
+                    //     child: Card(
+                    //       shape: RoundedRectangleBorder(
+                    //           borderRadius: BorderRadius.circular(10)),
+                    //       child: Container(
+                    //         height: 380,
+                    //         child: const Center(child: Text("Top Sales")),
+                    //       ),
+                    //     ))
                   ],
                 ),
               ),
