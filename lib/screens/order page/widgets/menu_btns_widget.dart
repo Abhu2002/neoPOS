@@ -37,7 +37,6 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                     margin: const EdgeInsets.all(10),
                     child: ActionChip(
                       elevation: 8.0,
-                      padding: const EdgeInsets.all(2.0),
                       avatar: const CircleAvatar(
                         backgroundColor: Colors.orangeAccent,
                         child: Icon(
@@ -71,7 +70,6 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                       margin: const EdgeInsets.all(10),
                       child: ActionChip(
                         elevation: 8.0,
-                        padding: const EdgeInsets.all(2.0),
                         avatar: const CircleAvatar(
                           backgroundColor: Colors.orangeAccent,
                           child: Icon(

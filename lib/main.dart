@@ -10,6 +10,7 @@ import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/order%20page/order_menu_page/order_menu_bloc.dart';
 import 'package:neopos/screens/order%20page/order_table_page/order_read_bloc.dart';
+import 'package:neopos/screens/order%20history/order_history_bloc.dart';
 import 'package:neopos/screens/products/products_operation/create_operation/create_product_bloc.dart';
 import 'package:neopos/screens/products/products_operation/delete_operation/delete_bloc.dart';
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_bloc.dart';
@@ -81,6 +82,7 @@ class MyApp extends StatelessWidget {
 
         //Bloc for Order Page
         BlocProvider(create: (_) => OrderReadBloc()),
+        BlocProvider(create: (_) => OrderHistoryBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
