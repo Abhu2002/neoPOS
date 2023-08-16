@@ -211,7 +211,10 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                           showDialog(
                                               context: context,
                                               builder: (context) {
-                                                return CheckOutPopUp(totalPrice: totalPrice.toInt(),id: widget.data['Id']);
+                                                return CheckOutPopUp(
+                                                    totalPrice:
+                                                        totalPrice.toInt(),
+                                                    id: widget.data['Id']);
                                               });
                                         },
                                         child: const Text('Checkout'),

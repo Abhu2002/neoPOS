@@ -5,8 +5,9 @@ import '../order_menu_page/order_menu_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MenuBtnsWidget extends StatefulWidget {
+  // immutable class but given data can vary
   dynamic data;
-  MenuBtnsWidget({Key? key,  this.data}) : super(key: key);
+  MenuBtnsWidget({Key? key, this.data}) : super(key: key);
 
   @override
   State<MenuBtnsWidget> createState() => _MenuBtnsWidgetState();
@@ -32,8 +33,8 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
           Padding(
             padding: const EdgeInsets.all(20.0),
             child: Text(AppLocalizations.of(context)!.menu,
-                style: const TextStyle(
-                    fontSize: 20, fontWeight: FontWeight.bold)),
+                style:
+                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
           ),
           BlocBuilder<OrderContentBloc, OrderContentState>(
             builder: (context, state) {
@@ -70,16 +71,15 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                           : Colors.white,
                       shape: const StadiumBorder(
                           side: BorderSide(
-                            width: 1,
-                            color: Colors.orange,
-                          )),
+                        width: 1,
+                        color: Colors.orange,
+                      )),
                     ),
                   ),
                 );
                 for (var element in allCats) {
                   catBtns.add(
-                    Container
-                      (
+                    Container(
                       margin: const EdgeInsets.all(10),
                       child: ActionChip(
                         elevation: 8.0,
@@ -103,9 +103,9 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                             : Colors.white,
                         shape: const StadiumBorder(
                             side: BorderSide(
-                              width: 1,
-                              color: Colors.orange,
-                            )),
+                          width: 1,
+                          color: Colors.orange,
+                        )),
                       ),
                     ),
                   );
