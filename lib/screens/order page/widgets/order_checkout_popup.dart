@@ -63,7 +63,9 @@ class _CheckOutPopUpState extends State<CheckOutPopUp> {
                             },
                           ),
                           TextFormField(
-                            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                            inputFormatters: [
+                              FilteringTextInputFormatter.digitsOnly
+                            ],
                             controller: number,
                             decoration: const InputDecoration(
                                 hintText: "Enter Customer Mobile umber",
@@ -72,7 +74,7 @@ class _CheckOutPopUpState extends State<CheckOutPopUp> {
                                   color: AppColors.primaryColor,
                                 )),
                             validator: (val) {
-                              if (val!.isEmpty || val.length<10) {
+                              if (val!.isEmpty || val.length < 10) {
                                 return 'Please enter valid contact number';
                               } else {
                                 return null;
@@ -137,7 +139,8 @@ class _CheckOutPopUpState extends State<CheckOutPopUp> {
                             isPaymentType(_character),
                             widget.totalPrice,
                             widget.id));
-                    Navigator.pushReplacementNamed(context,RoutePaths.dashboard);
+                    Navigator.pushReplacementNamed(
+                        context, RoutePaths.dashboard);
                   }
                 },
                 child: const Text("Checkout"),

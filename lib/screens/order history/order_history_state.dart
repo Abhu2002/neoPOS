@@ -44,12 +44,3 @@ class ShowProductsState extends OrderHistoryState {
   List<Object> get props => [allOrder, productList, amount];
 }
 
-/*class ChangeVisibilityState extends OrderHistoryState {
-  final bool showORhide;
-  final List allOrder;
-  final List productList;
-  ChangeVisibilityState(this.showORhide, this.allOrder, this.productList);
-
-  @override
-  List<Object> get props => [showORhide];
-}*/

@@ -15,6 +15,9 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
       GetIt.I.get<FirebaseFirestore>().collection('live_table');
 
   OrderContentBloc() : super(InitialState()) {
+    on<DecreaseQuantityEvent>(_mapDecreaseQuantityEventToState);
+    on<IncreaseQuantityEvent>(_mapIncreaseQuantityEventToState);
+    on<DeleteOrderEvent>(_mapDeleteOrderEventToState);
     on<ProductLoadingEvent>((event, emit) async {
       FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
       List<Map<String, dynamic>> allProds = [];
@@ -69,7 +72,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         List<dynamic> allOrders = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-            await db.collection("live_table").doc(event.docId).get();
+        await db.collection("live_table").doc(event.docId).get();
         Map<String, dynamic>? data = documentSnapshot.data();
 
         dynamic tableName = data?['table_name'];
@@ -189,5 +192,116 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         throw Exception("Error creating product $err");
       }
     });
+  }
+
+  Future<void> _mapDecreaseQuantityEventToState(
+      DecreaseQuantityEvent event, Emitter<OrderContentState> emit) async {
+    if (state is ProductLoadingState || state is FilterProductsState) {
+      final List<Map<String, dynamic>> allProds = List.from(state.allProds);
+      final List<String> allCats = List.from(state.allCats);
+      try {
+        DocumentSnapshot tableSnapshot =
+        await liveCollection.doc(event.tableId).get();
+        List<Map<String, dynamic>> productsData =
+        List<Map<String, dynamic>>.from(tableSnapshot['products']);
+
+        productsData[event.id]['quantity'] = (event.quantity).toString();
+
+        await FirebaseFirestore.instance
+            .collection('live_table')
+            .doc(event.tableId)
+            .update({'products': productsData});
+
+
+        List<Product> products = productsData.map((data) {
+          return Product(
+            productCategory: data['productCategory'],
+            productName: data['productName'],
+            productPrice: data['productPrice'],
+            productType: data['productType'],
+            quantity: data['quantity'],
+          );
+        }).toList();
+
+        emit(ProductLoadingState(allProds, allCats, products));
+      } catch (error) {
+        emit(ErrorState('Error loading live table data'));
+      }
+    }
+  }
+
+  Future<void> _mapIncreaseQuantityEventToState(
+      IncreaseQuantityEvent event, Emitter<OrderContentState> emit) async {
+
+    if (state is ProductLoadingState || state is FilterProductsState) {
+      final List<Map<String, dynamic>> allProds = List.from(state.allProds);
+      final List<String> allCats = List.from(state.allCats);
+      try {
+        DocumentSnapshot tableSnapshot =
+        await liveCollection.doc(event.tableId).get();
+        List<Map<String, dynamic>> productsData =
+        List<Map<String, dynamic>>.from(tableSnapshot['products']);
+
+        productsData[event.id]['quantity'] = (event.quantity).toString();
+
+        await FirebaseFirestore.instance
+            .collection('live_table')
+            .doc(event.tableId)
+            .update({'products': productsData});
+
+
+        List<Product> products = productsData.map((data) {
+          return Product(
+            productCategory: data['productCategory'],
+            productName: data['productName'],
+            productPrice: data['productPrice'],
+            productType: data['productType'],
+            quantity: data['quantity'],
+          );
+        }).toList();
+
+        emit(ProductLoadingState(allProds, allCats, products));
+      } catch (error) {
+        emit(ErrorState('Error loading live table data'));
+      }
+    }
+
+  }
+
+  Future<void> _mapDeleteOrderEventToState(
+      DeleteOrderEvent event, Emitter<OrderContentState> emit) async {
+
+    if (state is ProductLoadingState || state is FilterProductsState) {
+      final List<Map<String, dynamic>> allProds = List.from(state.allProds);
+      final List<String> allCats = List.from(state.allCats);
+      try {
+        DocumentSnapshot tableSnapshot =
+        await liveCollection.doc(event.tableId).get();
+        List<Map<String, dynamic>> productsData =
+        List<Map<String, dynamic>>.from(tableSnapshot['products']);
+
+        productsData.removeAt(event.id);
+
+        await FirebaseFirestore.instance
+            .collection('live_table')
+            .doc(event.tableId)
+            .update({'products': productsData});
+
+
+        List<Product> products = productsData.map((data) {
+          return Product(
+            productCategory: data['productCategory'],
+            productName: data['productName'],
+            productPrice: data['productPrice'],
+            productType: data['productType'],
+            quantity: data['quantity'],
+          );
+        }).toList();
+
+        emit(ProductLoadingState(allProds, allCats, products));
+      } catch (error) {
+        emit(ErrorState('Error loading live table data'));
+      }
+    }
   }
 }

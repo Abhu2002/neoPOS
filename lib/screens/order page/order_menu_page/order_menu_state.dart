@@ -31,7 +31,7 @@ class ProductLoadingState extends OrderContentState {
       this.allProds, this.allCats, this.products, this.showORhide);
 
   @override
-  List<Object> get props => [allProds, allCats, products];
+  List<Object> get props => [allProds!, allCats, products];
 }
 
 class FilterProductsState extends OrderContentState {

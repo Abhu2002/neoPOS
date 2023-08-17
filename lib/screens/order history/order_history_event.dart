@@ -21,12 +21,3 @@ class ShowOrderProductsEvent extends OrderHistoryEvent {
   List<Object> get props => [id, allOrders];
 }
 
-class ChangeVisibilityEvent extends OrderHistoryEvent {
-  final bool showORhide;
-  final List allOrder;
-  final List productList;
-
-  const ChangeVisibilityEvent(this.showORhide, this.allOrder, this.productList);
-  @override
-  List<Object> get props => [showORhide];
-}

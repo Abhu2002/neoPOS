@@ -10,7 +10,7 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
   OrderHistoryBloc() : super(OrderHistoryInitial()) {
     on<OrderHistoryPageInitEvent>((event, emit) async {
       try {
-        if (event.isfirst) {
+        if (event.isFirst) {
           emit(OrderHistoryLoading());
         } else {
           emit(OrderHistoryLoading());
