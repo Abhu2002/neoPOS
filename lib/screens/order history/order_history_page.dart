@@ -50,12 +50,15 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                         itemCount: state.allOrder.length,
                         itemBuilder: (context, index) {
                           var data = state.allOrder[index];
-
+                          var showORhide = true;
                           return InkWell(
                             onTap: () {
                               BlocProvider.of<OrderHistoryBloc>(context).add(
                                   ShowOrderProductsEvent(
-                                      data["Id"], allOrders));
+                                      data["Id"], allOrders, showORhide));
+                              /*BlocProvider.of<OrderHistoryBloc>(context).add(
+                                  ChangeVisibilityEvent(
+                                      true, state.allOrder, state.productList));*/
                             },
                             child: Card(
                               shape: RoundedRectangleBorder(
@@ -130,9 +133,12 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                       ),
                     ),
                   ),
-                  const Expanded(
-                    flex: 3,
-                    child: ProductOrderPerTable(),
+                  Visibility(
+                    visible: state.showORhide,
+                    child: Expanded(
+                      flex: 3,
+                      child: ProductOrderPerTable(),
+                    ),
                   ), //--->widget end
                 ],
               );

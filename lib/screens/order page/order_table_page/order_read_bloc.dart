@@ -1,3 +1,5 @@
+import 'dart:js_interop';
+
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
@@ -21,12 +23,19 @@ class OrderReadBloc extends Bloc<OrderReadEvent, OrderReadState> {
           await Future.delayed(const Duration(seconds: 1));
         }
         List allCat = [];
+        bool tableBusy = false;
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         var tableData = await db.collection('table').get();
         await db.collection("live_table").get().then((value) => {
               value.docs.forEach((element) async {
                 var a = tableData.docChanges;
                 int? cap;
+
+                if (element['products'].isEmpty) {
+                  tableBusy = false;
+                } else {
+                  tableBusy = true;
+                }
                 a.forEach(
                   (e) {
                     if (e.doc['table_name'] == element['table_name']) {
@@ -43,9 +52,10 @@ class OrderReadBloc extends Bloc<OrderReadEvent, OrderReadState> {
             });
         OrderReadLoadDataEvent();
         emit(OrderReadLoadedState(
-            allCat)); //gives all document of tables to State
+            allCat, tableBusy)); //gives all document of tables to State
       } catch (err) {
-        throw Exception("Error creating product $err"); //calls state and stores message through parameter
+        throw Exception(
+            "Error creating product $err"); //calls state and stores message through parameter
       }
     });
   }

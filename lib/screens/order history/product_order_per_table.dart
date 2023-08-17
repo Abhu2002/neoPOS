@@ -24,6 +24,8 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
           builder: (context, state) {
             if (state is OrderHistoryLoaded || state is ShowProductsState) {
               var productList = state.productList;
+              var data = state.allOrder;
+              var showORhide = false;
               return Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Column(
@@ -37,15 +39,25 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
                             fit: FlexFit.tight,
                             child: Column(
                               children: [
-                                const Padding(
-                                    padding: EdgeInsets.fromLTRB(5, 20, 10, 8),
-                                    child: Text(
-                                      "",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w200,
-                                          color: Colors.grey),
-                                    )),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            8, 8, 10, 8),
+                                        child: IconButton(
+                                            onPressed: () {
+                                              BlocProvider.of<OrderHistoryBloc>(
+                                                      context)
+                                                  .add(ShowOrderProductsEvent(
+                                                      '0', data, showORhide));
+                                            },
+                                            icon: const Icon(
+                                              Icons.close_sharp,
+                                              color: Colors.black87,
+                                            ))),
+                                  ],
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 14),
                                   child: Text("Order ID : #${state.orderId}",

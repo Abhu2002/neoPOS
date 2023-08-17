@@ -15,8 +15,18 @@ class OrderHistoryPageInitEvent extends OrderHistoryEvent {
 class ShowOrderProductsEvent extends OrderHistoryEvent {
   String id;
   List allOrders;
-  ShowOrderProductsEvent(this.id, this.allOrders);
+  bool showORhide = false;
+  ShowOrderProductsEvent(this.id, this.allOrders, this.showORhide);
   @override
   List<Object> get props => [id, allOrders];
 }
 
+class ChangeVisibilityEvent extends OrderHistoryEvent {
+  final bool showORhide;
+  final List allOrder;
+  final List productList;
+
+  const ChangeVisibilityEvent(this.showORhide, this.allOrder, this.productList);
+  @override
+  List<Object> get props => [showORhide];
+}

@@ -1,4 +1,3 @@
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
@@ -45,13 +44,14 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
     });
 
     on<ShowOrderProductsEvent>((event, emit) {
-      var productList;
+      var productList = [];
       num amount = 0;
       String orderId = "";
       var allOrders = event.allOrders;
       for (var i = 0; i < allOrders.length; i++) {
         var id = int.parse(event.id);
         // print(allOrders[i]["Id"] == id);
+        if (id == 0) break;
         if (int.parse(allOrders[i]["Id"]) == id) {
           amount = event.allOrders[i]["amount"];
           orderId = allOrders[i]["Id"];
@@ -59,7 +59,13 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
           break;
         }
       }
-      emit(ShowProductsState(event.allOrders, productList, amount, orderId));
+      emit(ShowProductsState(
+          event.allOrders, productList, amount, orderId, event.showORhide));
     });
+
+    /*on<ChangeVisibilityEvent>((event, emit) => {
+          emit(ChangeVisibilityState(
+              event.showORhide, event.allOrder, event.productList))
+        });*/
   }
 }
