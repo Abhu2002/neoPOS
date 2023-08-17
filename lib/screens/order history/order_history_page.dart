@@ -56,9 +56,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                               BlocProvider.of<OrderHistoryBloc>(context).add(
                                   ShowOrderProductsEvent(
                                       data["Id"], allOrders, showORhide));
-                              /*BlocProvider.of<OrderHistoryBloc>(context).add(
-                                  ChangeVisibilityEvent(
-                                      true, state.allOrder, state.productList));*/
+
                             },
                             child: Card(
                               shape: RoundedRectangleBorder(
