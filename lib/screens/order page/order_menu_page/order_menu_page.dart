@@ -21,7 +21,7 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
     super.initState();
     if (widget.data != null && widget.data.containsKey('Id')) {
       BlocProvider.of<OrderContentBloc>(context)
-          .add(ProductLoadingEvent(widget.data['Id'].toString()));
+          .add(ProductLoadingEvent(widget.data['Id'].toString(), false));
     }
   }
 
@@ -49,60 +49,83 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
               ),
             ),
           ),
-          Expanded(
-            flex: 1,
-            child: Padding(
-              padding: const EdgeInsets.only(right: 10.0),
-              child: Container(
-                height: MediaQuery.of(context).size.height * 0.95,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(20),
-                  ),
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * 0.08,
-                      child: Center(
-                        child: Text(AppLocalizations.of(context)!.order,
-                            style: const TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold)),
-                      ),
-                    ),
-                    SizedBox(
-                        child: BlocBuilder<OrderContentBloc, OrderContentState>(
-                          builder: (BuildContext context, state) {
-                            if (state is ProductLoadingState ||
-                                state is FilterProductsState) {
-                              final products = state.products;
-                              totalPrice = 0.0; // Reset the total price
-                              for (final product in products) {
-                                double productPrice =
-                                double.parse(product.productPrice);
-                                int productQuantity = int.parse(product.quantity);
+          BlocBuilder<OrderContentBloc, OrderContentState>(
+              builder: (context, state) {
+            if (state is ProductLoadingState || state is FilterProductsState) {
+              final products = state.products;
+              totalPrice = 0.0;
+              var showORhide = state.showORhide;
+              for (final product in products) {
+                double productPrice = double.parse(product.productPrice);
+                int productQuantity = int.parse(product.quantity);
 
-                                totalPrice += productPrice * productQuantity;
-                              }
-                              return Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  SizedBox(
-                                    height:
-                                    MediaQuery.of(context).size.height * 0.57,
-                                    child: ListView.builder(
-                                      itemCount: products.length,
-                                      itemBuilder: (context, index) {
-                                        final product = products[index];
-                                        return Padding(
-                                          padding: const EdgeInsets.all(4.0),
-                                          child: Card(
-                                            elevation: 3,
-                                            color: Colors.grey.shade50,
-                                            child: ListTile(
-                                              title: Text(product.productName),
-                                              subtitle:
+                totalPrice += productPrice * productQuantity;
+              } // Reset the total price
+
+              return Visibility(
+                visible: state.showORhide,
+                child: Expanded(
+                  flex: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 10.0),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height * 0.95,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(20),
+                        ),
+                      ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(8, 8, 10, 8),
+                                  child: IconButton(
+                                      onPressed: () {
+                                        showORhide = false;
+                                        BlocProvider.of<OrderContentBloc>(
+                                                context)
+                                            .add(ProductLoadingEvent(
+                                                widget.data['Id'].toString(),
+                                                showORhide));
+                                      },
+                                      icon: const Icon(
+                                        Icons.close_sharp,
+                                        color: Colors.black87,
+                                      ))),
+                            ],
+                          ),
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * 0.07,
+                            child: Center(
+                              child: Text(AppLocalizations.of(context)!.order,
+                                  style: const TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold)),
+                            ),
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              SizedBox(
+                                height:
+                                    MediaQuery.of(context).size.height * 0.5,
+                                child: ListView.builder(
+                                  itemCount: products.length,
+                                  itemBuilder: (context, index) {
+                                    final product = products[index];
+                                    return Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: Card(
+                                        elevation: 3,
+                                        color: Colors.grey.shade50,
+                                        child: ListTile(
+                                          title: Text(product.productName),
+                                          subtitle:
                                               Text(product.productCategory),
                                               trailing: Row(
                                                 mainAxisSize: MainAxisSize.min,
@@ -240,38 +263,36 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                                                 shape: RoundedRectangleBorder(
                                                     borderRadius:
                                                     BorderRadius.circular(5))),
-                                            onPressed: () {
-                                              showDialog(
-                                                  context: context,
-                                                  builder: (context) {
-                                                    return CheckOutPopUp(totalPrice: totalPrice.toInt(),id: widget.data['Id']);
-                                                  });
-                                            },
-                                            child: const Text('Checkout'),
-                                          ),
-                                        ],
+                                        onPressed: () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (context) {
+                                                return CheckOutPopUp(
+                                                    totalPrice:
+                                                        totalPrice.toInt(),
+                                                    id: widget.data['Id']);
+                                              });
+                                        },
+                                        child: const Text('Checkout'),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                ],
-                              );
-                            } else if (state is ErrorState) {
-                              return Center(
-                                  child: Center(child: Text(state.errorMessage)));
-                            } else {
-                              return const Center(
-                                  child: CircularProgressIndicator());
-                            }
-                          },
-                        )),
-                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
+              );
+            } else {
+              return Container();
+            }
+          }),
         ],
       ),
     );
   }
 }
-

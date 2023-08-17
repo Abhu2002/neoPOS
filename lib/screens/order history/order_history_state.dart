@@ -7,6 +7,7 @@ sealed class OrderHistoryState extends Equatable {
   String get orderId => "";
   List get allOrder => [];
   List get productList => [];
+  bool get showORhide => false;
   @override
   List<Object> get props => [];
 }
@@ -35,8 +36,11 @@ class ShowProductsState extends OrderHistoryState {
   final List allOrder;
   final num amount;
   final String orderId;
-  ShowProductsState(this.allOrder, this.productList, this.amount, this.orderId);
+  final bool showORhide;
+  ShowProductsState(this.allOrder, this.productList, this.amount, this.orderId,
+      this.showORhide);
 
   @override
   List<Object> get props => [allOrder, productList, amount];
 }
+

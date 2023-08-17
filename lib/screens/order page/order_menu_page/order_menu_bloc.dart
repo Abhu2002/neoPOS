@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
 import 'package:equatable/equatable.dart';
+
 /// Need to import for date time format
 import 'package:intl/intl.dart';
 import '../model/order_products_model.dart';
@@ -11,7 +12,7 @@ part 'order_menu_state.dart';
 
 class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
   final CollectionReference liveCollection =
-  GetIt.I.get<FirebaseFirestore>().collection('live_table');
+      GetIt.I.get<FirebaseFirestore>().collection('live_table');
 
   OrderContentBloc() : super(InitialState()) {
     on<DecreaseQuantityEvent>(_mapDecreaseQuantityEventToState);
@@ -23,7 +24,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
       List<String> allCats = [];
 
       await db.collection("category").get().then((value) {
-        for(var element in value.docs) {
+        for (var element in value.docs) {
           allCats.add(element['category_name']);
         }
       });
@@ -48,10 +49,10 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
       try {
         await Future.delayed(const Duration(milliseconds: 500));
         DocumentSnapshot tableSnapshot =
-        await liveCollection.doc(event.tableId).get();
+            await liveCollection.doc(event.tableId).get();
         List<Map<String, dynamic>> productsData =
-        List<Map<String, dynamic>>.from(tableSnapshot['products']);
-
+            List<Map<String, dynamic>>.from(tableSnapshot['products']);
+        bool showORhide = event.showORhide;
         List<Product> products = productsData.map((data) {
           return Product(
             productCategory: data['productCategory'],
@@ -61,11 +62,10 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
             quantity: data['quantity'],
           );
         }).toList();
-        emit(ProductLoadingState(allProds, allCats, products));
+        emit(ProductLoadingState(allProds, allCats, products, showORhide));
       } catch (error) {
         emit(ErrorState('Error loading live table data'));
       }
-
     });
     on<AddOrderFBEvent>((event, emit) async {
       try {
@@ -102,7 +102,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
     on<FilterProductsEvent>((event, emit) async {
       String category = event.category;
       FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
-      List<Map<String,dynamic>> allProds = [];
+      List<Map<String, dynamic>> allProds = [];
       List<Map<String, dynamic>> filteredProds = [];
 
       await db
@@ -126,9 +126,9 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
       try {
         await Future.delayed(const Duration(milliseconds: 500));
         DocumentSnapshot tableSnapshot =
-        await liveCollection.doc(event.tableId).get();
+            await liveCollection.doc(event.tableId).get();
         List<Map<String, dynamic>> productsData =
-        List<Map<String, dynamic>>.from(tableSnapshot['products']);
+            List<Map<String, dynamic>>.from(tableSnapshot['products']);
 
         products = productsData.map((data) {
           return Product(
@@ -143,48 +143,45 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         emit(ErrorState('Error loading live table data'));
       }
 
-      if(event.category == "All") {
-        emit(FilterProductsState(allProds, event.allCats, event.category, products));
+      if (event.category == "All") {
+        emit(FilterProductsState(
+            allProds, event.allCats, event.category, products));
         return;
       }
       filteredProds = allProds.where((element) {
         return (element["product_category"].toString() == category);
       }).toList();
 
-      emit(FilterProductsState(filteredProds,event.allCats, event.category, products));
+      emit(FilterProductsState(
+          filteredProds, event.allCats, event.category, products));
     });
 
     on<CheckoutOrderFBEvent>((event, emit) async {
       try {
         int allOrders = 0;
-        var allProducts= [];
-        var emptyProducts=[];
+        var allProducts = [];
+        var emptyProducts = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-        await db.collection("live_table").doc(event.docId).get();
+            await db.collection("live_table").doc(event.docId).get();
         Map<String, dynamic>? data = documentSnapshot.data();
         dynamic tableName = data?['table_name'];
         await db.collection('order_history').count().get().then((value) {
-          allOrders=value.count;
-        }
-        );
+          allOrders = value.count;
+        });
         if (data != null && data.containsKey('products')) {
           allProducts = data['products'];
         }
         //Now you have the list of maps
 
         String orderId = (allOrders + 1).toString();
-        db
-            .collection('order_history')
-            .doc(orderId)
-            .set({
+        db.collection('order_history').doc(orderId).set({
           'products': allProducts,
           'amount': event.totalPrice,
           'customer_mobile_no': event.customerMbNo,
           'customer_name': event.customerName,
           'payment_mode': event.paymentMode,
-          'order_date':DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now())
-
+          'order_date': DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now())
         });
 
         db
@@ -194,9 +191,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
       } catch (err) {
         throw Exception("Error creating product $err");
       }
-    }
-    );
-
+    });
   }
 
   Future<void> _mapDecreaseQuantityEventToState(

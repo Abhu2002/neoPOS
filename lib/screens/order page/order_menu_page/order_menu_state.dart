@@ -7,6 +7,8 @@ abstract class OrderContentState extends Equatable {
 
   get category => null;
 
+  bool get showORhide => true;
+
   List<Product> get products => [];
 }
 
@@ -23,7 +25,10 @@ class ProductLoadingState extends OrderContentState {
   @override
   final List<Product> products;
 
-  ProductLoadingState(this.allProds, this.allCats, this.products);
+  @override
+  bool showORhide;
+  ProductLoadingState(
+      this.allProds, this.allCats, this.products, this.showORhide);
 
   @override
   List<Object> get props => [allProds!, allCats, products];
@@ -31,15 +36,18 @@ class ProductLoadingState extends OrderContentState {
 
 class FilterProductsState extends OrderContentState {
   @override
-  final List<Map<String,dynamic>> allProds;
+  final List<Map<String, dynamic>> allProds;
   @override
   final List<String> allCats;
   @override
   final String category;
   @override
   final List<Product> products;
+  @override
+  bool get showORhide => false;
 
-  FilterProductsState(this.allProds, this.allCats, this.category, this.products);
+  FilterProductsState(
+      this.allProds, this.allCats, this.category, this.products);
 
   @override
   List<Object> get props => [allProds, allCats, category];
