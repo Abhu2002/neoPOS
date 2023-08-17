@@ -214,61 +214,62 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                     ],
                   ),
                 ),
-                Container(
-                  height: 300,
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text("Daily Sales",
-                                style: TextStyle(
-                                    fontSize: 18, fontWeight: FontWeight.bold)),
-                            DropdownMenu<MonthLabel>(
-                              initialSelection: selectedMonth,
-                              controller: monthController,
-                              label: const Text('Month'),
-                              dropdownMenuEntries: monthEntries,
-                              onSelected: (MonthLabel? Month) {
-                                setState(() {
-                                  selectedMonth = Month;
-                                });
-                                int monthIndex = isMonth(Month);
-                                BlocProvider.of<SalesDashboardBloc>(context)
-                                    .add(DashboardPageinitevent(monthIndex));
-                              },
-                            ),
-                          ],
+                Card(elevation: 3,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                  child: Container(
+                    height: 300,
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(top: 8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text("Daily Sales",
+                                  style: TextStyle(
+                                      fontSize: 18, fontWeight: FontWeight.bold)),
+                              DropdownMenu<MonthLabel>(
+                                initialSelection: selectedMonth,
+                                controller: monthController,
+                                label: const Text('Month'),
+                                dropdownMenuEntries: monthEntries,
+                                onSelected: (MonthLabel? Month) {
+                                  setState(() {
+                                    selectedMonth = Month;
+                                  });
+                                  int monthIndex = isMonth(Month);
+                                  BlocProvider.of<SalesDashboardBloc>(context)
+                                      .add(DashboardPageinitevent(monthIndex));
+                                },
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 220,
-                          child: SfCartesianChart(
-                              primaryXAxis: NumericAxis(
-                                  minimum: 0,
-                                  maximum: 31,
-                                  interval: 1,
-                                  majorGridLines: const MajorGridLines(width: 0)),
-                              series: <ChartSeries<ChartData, int>>[
-                                ColumnSeries<ChartData, int>(
-                                    isTrackVisible: false,
-                                    xAxisName: "Day of Month",
-                                    yAxisName: "Sales in Amount",
-                                    dataLabelSettings:
-                                        DataLabelSettings(isVisible: true),
-                                    dataSource: chartData,
-                                    xValueMapper: (ChartData data, _) => data.x,
-                                    yValueMapper: (ChartData data, _) => data.y,
-                                    // Sets the corner radius
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(5)))
-                              ]),
+                        Expanded(
+                          child: Container(
+                            height: 220,
+                            child: SfCartesianChart(
+                                primaryXAxis: NumericAxis(
+                                    minimum: 0,
+                                    maximum: 31,
+                                    interval: 1,
+                                    majorGridLines: const MajorGridLines(width: 0)),
+                                series: <ChartSeries<ChartData, int>>[
+                                  ColumnSeries<ChartData, int>(
+                                      xAxisName: "Day of Month",
+                                      yAxisName: "Sales in Amount",
+                                      dataLabelSettings:
+                                          DataLabelSettings(isVisible: true),
+                                      dataSource: chartData,
+                                      xValueMapper: (ChartData data, _) => data.x,
+                                      yValueMapper: (ChartData data, _) => data.y,
+                                      // Sets the corner radius
+                                      borderRadius:
+                                          BorderRadius.all(Radius.circular(5)))
+                                ]),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
