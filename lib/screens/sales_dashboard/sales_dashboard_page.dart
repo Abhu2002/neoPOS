@@ -1,3 +1,4 @@
+import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/sales_dashboard/sales_dashboard_bloc.dart';
@@ -8,9 +9,9 @@ import '../../utils/app_colors.dart';
 import '../../utils/common_card.dart';
 
 class SalesDashboardPage extends StatefulWidget {
-  final controller;
-  final sidemenu;
-  const SalesDashboardPage({super.key, this.controller, this.sidemenu});
+  final PageController controller;
+  final SideMenuController sidemenu;
+  const SalesDashboardPage({super.key, required this.controller, required this.sidemenu});
 
   @override
   State<SalesDashboardPage> createState() => _SalesDashboardPageState();
@@ -65,9 +66,8 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
             color: Colors.grey.shade100,
             child: Column(
               children: [
-                Container(
+                SizedBox(
                   height: 380,
-                  decoration: BoxDecoration(),
                   width: MediaQuery.sizeOf(context).width,
                   child: Row(
                     children: [
@@ -78,7 +78,7 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                               SalesDashboardState>(
                             builder: (context, state) {
                               if (state is SalesDashBoardLoadedState) {
-                                var send_data = state.allOrder
+                                var sendData = state.allOrder
                                     .sublist(state.allOrder.length - 5,
                                         state.allOrder.length)
                                     .toList();
@@ -115,7 +115,7 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                                         shrinkWrap: true,
                                         itemCount: 5,
                                         itemBuilder: (context, index) {
-                                          var data = send_data[index];
+                                          var data = sendData[index];
                                           return ListTile(
                                             tileColor: Colors.white,
                                             title: Text(
@@ -215,7 +215,7 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                   ),
                 ),
                 Card(elevation: 3,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-                  child: Container(
+                  child: SizedBox(
                     height: 300,
                     child: Column(
                       children: [
@@ -245,7 +245,7 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                           ),
                         ),
                         Expanded(
-                          child: Container(
+                          child: SizedBox(
                             height: 220,
                             child: SfCartesianChart(
                                 primaryXAxis: NumericAxis(
@@ -258,13 +258,13 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                                       xAxisName: "Day of Month",
                                       yAxisName: "Sales in Amount",
                                       dataLabelSettings:
-                                          DataLabelSettings(isVisible: true),
+                                          const DataLabelSettings(isVisible: true),
                                       dataSource: chartData,
                                       xValueMapper: (ChartData data, _) => data.x,
                                       yValueMapper: (ChartData data, _) => data.y,
                                       // Sets the corner radius
                                       borderRadius:
-                                          BorderRadius.all(Radius.circular(5)))
+                                          const BorderRadius.all(Radius.circular(5)))
                                 ]),
                           ),
                         ),

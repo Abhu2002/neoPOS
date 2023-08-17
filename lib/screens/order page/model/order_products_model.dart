@@ -3,7 +3,8 @@ class Product {
   final String productName;
   final String productPrice;
   final String productType;
-  final String quantity;
+  late String quantity;
+  final int? productId;
 
   Product({
     required this.productCategory,
@@ -11,5 +12,6 @@ class Product {
     required this.productPrice,
     required this.productType,
     required this.quantity,
+    this.productId
   });
 }
