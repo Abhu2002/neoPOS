@@ -30,7 +30,7 @@ class ProductDeletionBloc
       if (userData != null && userData is Map<String, dynamic>) {
         String role = userData['user_role'];
 
-        if (userData['password'] == password && role == 'admin') {
+        if (userData['password'] == password && role == 'Admin') {
           productCollection.doc(docID).delete();
           emit(ProductDeleteState());
         } else {

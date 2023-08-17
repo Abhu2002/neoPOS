@@ -35,7 +35,7 @@ class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
       if (userData != null && userData is Map<String, dynamic>) {
         String role = userData['user_role'];
 
-        if (userData['password'] == password && role == 'admin') {
+        if (userData['password'] == password && role == 'Admin') {
           try {
             var doc = await tableCollection.doc(docId).get();
             var data = doc.data() as Map<String, dynamic>;
