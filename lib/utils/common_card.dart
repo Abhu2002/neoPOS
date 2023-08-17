@@ -26,7 +26,7 @@ class _CommonCardState extends State<CommonCard> {
               children: [
                 Text(
                   widget.title,
-                  style: const TextStyle(fontSize: 30),
+                  style: const TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -36,7 +36,7 @@ class _CommonCardState extends State<CommonCard> {
                         onPressed: null),
                     Text(
                       "Rs ${widget.amount}",
-                      style: const TextStyle(fontSize: 20),
+                      style: const TextStyle(fontSize: 18),
                     )
                   ],
                 ),

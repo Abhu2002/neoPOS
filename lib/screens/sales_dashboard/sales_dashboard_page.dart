@@ -65,34 +65,6 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
             color: Colors.grey.shade100,
             child: Column(
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: SizedBox(
-                    width: MediaQuery.sizeOf(context).width,
-                    height: 200,
-                    child: Row(
-                      children: [
-                        Expanded(
-                            child: CommonCard(
-                          title: "Today's Revenue",
-                          amount: state.dailyValue.toString(),
-                        )),
-                        Expanded(
-                            child: CommonCard(
-                          title: "Weekly Revenue",
-                          amount: state.weeklyValue.toString(),
-                        )),
-                        Expanded(
-                            child: CommonCard(
-                          title: "Monthly Revenue",
-                          amount: state.monthlyValue.toString(),
-                        )),
-                      ],
-                    ),
-                  ),
-                ),
-
-                ///TODO: Add specific Widgets
                 Container(
                   height: 380,
                   decoration: BoxDecoration(),
@@ -100,10 +72,8 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                   child: Row(
                     children: [
                       Expanded(
-                        flex: 2,
+                        flex: 1,
                         child: Container(
-                          // decoration: BoxDecoration(
-                          //     border: Border.all(width: 1, color: Colors.black)),
                           child: BlocBuilder<SalesDashboardBloc,
                               SalesDashboardState>(
                             builder: (context, state) {
@@ -183,23 +153,46 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                               SalesDashboardState>(
                             builder: (context, state) {
                               if (state is SalesDashBoardLoadedState) {
-                                return Card(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(10)),
-                                  child: SizedBox(
-                                    height: 380,
-                                    child: PieChart(
-                                      dataMap: state.piemap,
-                                      // chartType: ChartType.ring,
-                                      baseChartColor:
-                                          Colors.grey[50]!.withOpacity(0.15),
-                                      chartValuesOptions:
-                                          const ChartValuesOptions(
-                                        showChartValuesInPercentage: true,
-                                      ),
-                                      // totalValue: 20,
+                                return Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Expanded(
+                                            child: CommonCard(
+                                              title: "Today's Revenue",
+                                              amount: state.dailyValue.toString(),
+                                            )),
+                                        Expanded(
+                                            child: CommonCard(
+                                              title: "Weekly Revenue",
+                                              amount: state.weeklyValue.toString(),
+                                            )),
+                                        Expanded(
+                                            child: CommonCard(
+                                              title: "Monthly Revenue",
+                                              amount: state.monthlyValue.toString(),
+                                            )),
+                                      ],
                                     ),
-                                  ),
+                                    Card(
+                                      shape: RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(10)),
+                                      child: SizedBox(
+                                        height: 268,
+                                        child: PieChart(
+                                          dataMap: state.piemap,
+                                          // chartType: ChartType.ring,
+                                          baseChartColor:
+                                              Colors.grey[50]!.withOpacity(0.15),
+                                          chartValuesOptions:
+                                              const ChartValuesOptions(
+                                            showChartValuesInPercentage: true,
+                                          ),
+                                          // totalValue: 20,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 );
                               } else {
                                 return Container();
@@ -222,7 +215,7 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                   ),
                 ),
                 Container(
-                  height: 500,
+                  height: 300,
                   child: Column(
                     children: [
                       Padding(
@@ -232,7 +225,7 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                           children: [
                             Text("Daily Sales",
                                 style: TextStyle(
-                                    fontSize: 25, fontWeight: FontWeight.bold)),
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
                             DropdownMenu<MonthLabel>(
                               initialSelection: selectedMonth,
                               controller: monthController,
@@ -250,26 +243,31 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                           ],
                         ),
                       ),
-                      SfCartesianChart(
-                          primaryXAxis: NumericAxis(
-                              minimum: 0,
-                              maximum: 31,
-                              interval: 1,
-                              majorGridLines: const MajorGridLines(width: 0)),
-                          series: <ChartSeries<ChartData, int>>[
-                            ColumnSeries<ChartData, int>(
-                                isTrackVisible: false,
-                                xAxisName: "Day of Month",
-                                yAxisName: "Sales in Amount",
-                                dataLabelSettings:
-                                    DataLabelSettings(isVisible: true),
-                                dataSource: chartData,
-                                xValueMapper: (ChartData data, _) => data.x,
-                                yValueMapper: (ChartData data, _) => data.y,
-                                // Sets the corner radius
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(5)))
-                          ]),
+                      Expanded(
+                        child: Container(
+                          height: 220,
+                          child: SfCartesianChart(
+                              primaryXAxis: NumericAxis(
+                                  minimum: 0,
+                                  maximum: 31,
+                                  interval: 1,
+                                  majorGridLines: const MajorGridLines(width: 0)),
+                              series: <ChartSeries<ChartData, int>>[
+                                ColumnSeries<ChartData, int>(
+                                    isTrackVisible: false,
+                                    xAxisName: "Day of Month",
+                                    yAxisName: "Sales in Amount",
+                                    dataLabelSettings:
+                                        DataLabelSettings(isVisible: true),
+                                    dataSource: chartData,
+                                    xValueMapper: (ChartData data, _) => data.x,
+                                    yValueMapper: (ChartData data, _) => data.y,
+                                    // Sets the corner radius
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(5)))
+                              ]),
+                        ),
+                      ),
                     ],
                   ),
                 ),
