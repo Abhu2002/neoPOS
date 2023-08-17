@@ -106,16 +106,19 @@ class _MenuCardWidgetState extends State<MenuCardWidget> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(
-                              bottom: 8.0),
+                              bottom: 8.0, left: 8.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
+                            //mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text(
-                                prods[index]
-                                ['product_category'],
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  color: Colors.blueGrey,
+                              Flexible(
+                                child: Text(
+                                  prods[index]
+                                  ['product_category'],
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: Colors.blueGrey,
+                                  ),
                                 ),
                               ),
                               Padding(

@@ -28,7 +28,6 @@ class _OrderPageReadState extends State<OrderPageRead> {
         List data = state.all;
         // var pressAttention = true;
         List tableBusy = state.tableBusylist;
-         print(tableBusy);
         return LayoutBuilder(builder: (ctx, constraints) {
           return Column(
             children: [

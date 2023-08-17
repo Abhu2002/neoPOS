@@ -104,7 +104,6 @@ class CreateProductBloc extends Bloc<CreateProductEvent, CreateProductState> {
                   });
         }
       } catch (err) {
-        // print(err);
         throw Exception("Error creating product $err");
       }
     });
