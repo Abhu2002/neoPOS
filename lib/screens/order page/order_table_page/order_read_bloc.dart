@@ -23,7 +23,8 @@ class OrderReadBloc extends Bloc<OrderReadEvent, OrderReadState> {
           await Future.delayed(const Duration(seconds: 1));
         }
         List allCat = [];
-        bool tableBusy = false;
+        List tableBusylist = [];
+       // bool tableBusy = false;
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         var tableData = await db.collection('table').get();
         await db.collection("live_table").get().then((value) => {
@@ -32,9 +33,9 @@ class OrderReadBloc extends Bloc<OrderReadEvent, OrderReadState> {
                 int? cap;
 
                 if (element['products'].isEmpty) {
-                  tableBusy = false;
+                  tableBusylist.add(false);
                 } else {
-                  tableBusy = true;
+                  tableBusylist.add(true);
                 }
                 a.forEach(
                   (e) {
@@ -52,7 +53,7 @@ class OrderReadBloc extends Bloc<OrderReadEvent, OrderReadState> {
             });
         OrderReadLoadDataEvent();
         emit(OrderReadLoadedState(
-            allCat, tableBusy)); //gives all document of tables to State
+            allCat, tableBusylist)); //gives all document of tables to State
       } catch (err) {
         throw Exception(
             "Error creating product $err"); //calls state and stores message through parameter

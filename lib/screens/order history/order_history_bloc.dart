@@ -10,7 +10,7 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
   OrderHistoryBloc() : super(OrderHistoryInitial()) {
     on<OrderHistoryPageInitEvent>((event, emit) async {
       try {
-        if (event.isFirst) {
+        if (event.isfirst) {
           emit(OrderHistoryLoading());
         } else {
           emit(OrderHistoryLoading());
@@ -63,9 +63,5 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
           event.allOrders, productList, amount, orderId, event.showORhide));
     });
 
-    /*on<ChangeVisibilityEvent>((event, emit) => {
-          emit(ChangeVisibilityState(
-              event.showORhide, event.allOrder, event.productList))
-        });*/
   }
 }

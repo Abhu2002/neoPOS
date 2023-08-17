@@ -27,8 +27,8 @@ class _OrderPageReadState extends State<OrderPageRead> {
       if (state is OrderReadLoadedState) {
         List data = state.all;
         // var pressAttention = true;
-        bool tableBusy = state.tableBusy;
-        // print(tableBusy);
+        List tableBusy = state.tableBusylist;
+         print(tableBusy);
         return LayoutBuilder(builder: (ctx, constraints) {
           return Column(
             children: [
@@ -59,7 +59,7 @@ class _OrderPageReadState extends State<OrderPageRead> {
                               child: Card(
                                 shape: RoundedRectangleBorder(
                                   side: BorderSide(
-                                    color: tableBusy
+                                    color: tableBusy[i]
                                         ? AppColors.tableNotAvailableColor
                                         : AppColors.tableAvailableColor,
                                     width: 10,

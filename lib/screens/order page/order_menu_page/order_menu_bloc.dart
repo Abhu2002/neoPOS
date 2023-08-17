@@ -204,7 +204,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         await liveCollection.doc(event.tableId).get();
         List<Map<String, dynamic>> productsData =
         List<Map<String, dynamic>>.from(tableSnapshot['products']);
-
+        bool showORhide = state.showORhide;
         productsData[event.id]['quantity'] = (event.quantity).toString();
 
         await FirebaseFirestore.instance
@@ -223,7 +223,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
           );
         }).toList();
 
-        emit(ProductLoadingState(allProds, allCats, products));
+        emit(ProductLoadingState(allProds, allCats, products,showORhide));
       } catch (error) {
         emit(ErrorState('Error loading live table data'));
       }
@@ -241,7 +241,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         await liveCollection.doc(event.tableId).get();
         List<Map<String, dynamic>> productsData =
         List<Map<String, dynamic>>.from(tableSnapshot['products']);
-
+        bool showORhide = state.showORhide;
         productsData[event.id]['quantity'] = (event.quantity).toString();
 
         await FirebaseFirestore.instance
@@ -260,7 +260,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
           );
         }).toList();
 
-        emit(ProductLoadingState(allProds, allCats, products));
+        emit(ProductLoadingState(allProds, allCats, products,showORhide));
       } catch (error) {
         emit(ErrorState('Error loading live table data'));
       }
@@ -279,7 +279,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         await liveCollection.doc(event.tableId).get();
         List<Map<String, dynamic>> productsData =
         List<Map<String, dynamic>>.from(tableSnapshot['products']);
-
+        bool showORhide = state.showORhide;
         productsData.removeAt(event.id);
 
         await FirebaseFirestore.instance
@@ -298,7 +298,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
           );
         }).toList();
 
-        emit(ProductLoadingState(allProds, allCats, products));
+        emit(ProductLoadingState(allProds, allCats, products,showORhide));
       } catch (error) {
         emit(ErrorState('Error loading live table data'));
       }
