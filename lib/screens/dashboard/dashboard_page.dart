@@ -127,7 +127,8 @@ class _DashboardPage extends State<DashboardPage> {
                       SingleChildScrollView(child: ProductsRead()),
                       SingleChildScrollView(child: TableRead()),
                       SingleChildScrollView(child: OrderPageRead()),
-                      SingleChildScrollView(
+
+          SingleChildScrollView(
                           child: SalesDashboardPage(
                         controller: pageController,
                         sidemenu: sideMenu,
