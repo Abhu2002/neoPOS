@@ -14,14 +14,15 @@ class SalesDashBoardLoadingState extends SalesDashboardState {}
 class SalesDashBoardLoadedState extends SalesDashboardState {
   final List allOrder;
   final List productList;
+  List<SalesData> processedData;
   final num dailyValue;
   final num weeklyValue;
   final num monthlyValue;
   final Map<String, double> piemap;
-  const SalesDashBoardLoadedState(this.allOrder, this.productList,
+  SalesDashBoardLoadedState(this.allOrder, this.productList, this.processedData,
       this.dailyValue, this.weeklyValue, this.monthlyValue, this.piemap);
   @override
-  List<Object> get props => [allOrder, productList];
+  List<Object> get props => [allOrder, productList, processedData];
 }
 
 class SalesDashboardErrorState extends SalesDashboardState {

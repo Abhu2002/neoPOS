@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-
 part 'sales_dashboard_event.dart';
 
 part 'sales_dashboard_state.dart';
@@ -14,14 +13,12 @@ class SalesDashboardBloc
     on<DashboardPageinitevent>((event, emit) async {
       try {
         emit(SalesDashBoardLoadingState());
-
         var allOrderHistory = [];
         var graphData = [];
         List<dynamic> allData = [];
         String currentDateD;
         String currentDateM;
         int currentDateW;
-
         num dailyValue = 0;
         num weeklyValue = 0;
         num monthlyValue = 0;
@@ -52,7 +49,40 @@ class SalesDashboardBloc
             });
           },
         );
+        List<SalesData>? filteredList = [];
+        int targetMonth = event.monthIndex ?? DateTime.now().month; // March
+
+        filteredList = graphData
+            .where((sales) {
+              return sales.x.month == targetMonth;
+            })
+            .cast<SalesData>()
+            .toList();
+
+        List<SalesData> processedGraphData = [];
         List<SalesData> processedData = [];
+        for (var dailySales in filteredList) {
+          num sales = 0;
+
+          final dailyFormat = DateFormat("dd-MM-yyyy").format(dailySales.x);
+
+          for (int i = 0; i < graphData.length; i++) {
+            final dateFromData =
+                DateFormat("dd-MM-yyyy").format(graphData[i].x);
+
+            if (dateFromData == dailyFormat) {
+              sales += graphData[i].y;
+            }
+          }
+          processedGraphData.add(SalesData(
+              DateFormat("dd-MM-yyyy").parse(dailyFormat), sales as double));
+        }
+
+        final Map<DateTime, SalesData> map = {
+          for (var dailySales in processedGraphData) dailySales.x: dailySales,
+        };
+
+        processedGraphData = map.values.toList();
         for (var dailySales in graphData) {
           num sales = 0;
           final dailyFormat = DateFormat("dd-MM-yyyy").format(dailySales.x);
@@ -66,13 +96,13 @@ class SalesDashboardBloc
           processedData.add(SalesData(
               DateFormat("dd-MM-yyyy").parse(dailyFormat), sales as double));
         }
-        final Map<DateTime, SalesData> map = {
+        final Map<DateTime, SalesData> map2 = {
           for (var dailySales in processedData) dailySales.x: dailySales,
         };
         currentDateD = DateFormat("dd-MM-yyyy").format(DateTime.now());
         currentDateM = DateFormat("MM-yyyy").format(DateTime.now());
         currentDateW = weekNumber(DateTime.now());
-        processedData = map.values.toList();
+        processedData = map2.values.toList();
         for (var a in processedData) {
           dailyValue += ((currentDateD == DateFormat("dd-MM-yyyy").format(a.x))
               ? a.y
@@ -81,9 +111,9 @@ class SalesDashboardBloc
           monthlyValue +=
               ((currentDateM == DateFormat("MM-yyyy").format(a.x)) ? a.y : 0);
         }
-        emit(SalesDashBoardLoadedState(allOrderHistory, allData, dailyValue,
-            weeklyValue, monthlyValue, pie));
-        //gives all document of tables to State
+
+        emit(SalesDashBoardLoadedState(allOrderHistory, allData,
+            processedGraphData, dailyValue, weeklyValue, monthlyValue, pie));
       } catch (err) {
         emit(SalesDashboardErrorState(
             "Some Error Occur $err")); //calls state and stores message through parameter
