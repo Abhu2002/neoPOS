@@ -29,7 +29,7 @@ class UserDeletionBloc extends Bloc<UserDeletionEvent, UserDeletionState> {
       if (userData != null && userData is Map<String, dynamic>) {
         String role = userData['user_role'];
 
-        if (userData['password'] == password && role == 'admin') {
+        if (userData['password'] == password && role == 'Admin') {
           usersCollection.doc(docID).delete();
           emit(UserDeleteState());
         } else {

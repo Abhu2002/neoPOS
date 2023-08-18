@@ -13,8 +13,9 @@ class OrderReadLoadingState extends OrderReadState {}
 
 class OrderReadLoadedState extends OrderReadState {
   final List all;
-  const OrderReadLoadedState(
-      this.all); //it receives from bloc and store it in properties
+  List tableBusylist;
+  OrderReadLoadedState(this.all,
+      this.tableBusylist); //it receives from bloc and store it in properties
   @override
   List<Object> get props => [all];
 }

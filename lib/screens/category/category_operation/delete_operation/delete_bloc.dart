@@ -31,7 +31,7 @@ class CategoryDeletionBloc
       if (userData != null && userData is Map<String, dynamic>) {
         String role = userData['user_role'];
 
-        if (userData['password'] == password && role == 'admin') {
+        if (userData['password'] == password && role == 'Admin') {
           categoryCollection.doc(docId).delete();
           emit(CategoryDeleteState());
         } else {

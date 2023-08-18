@@ -3,7 +3,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
-
 part 'sales_dashboard_event.dart';
 
 part 'sales_dashboard_state.dart';
@@ -11,23 +10,22 @@ part 'sales_dashboard_state.dart';
 class SalesDashboardBloc
     extends Bloc<SalesDashboardEvent, SalesDashboardState> {
   SalesDashboardBloc() : super(SalesDashboardInitial()) {
+    var graphData = [];
     on<DashboardPageinitevent>((event, emit) async {
       try {
         emit(SalesDashBoardLoadingState());
-
         var allOrderHistory = [];
-        var graphData = [];
+
         List<dynamic> allData = [];
         String currentDateD;
         String currentDateM;
         int currentDateW;
-
         num dailyValue = 0;
         num weeklyValue = 0;
         num monthlyValue = 0;
         Map<String, double> pie = {};
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
-        await db.collection("order_history").get().then(
+        await db.collection("order_history").orderBy("order_date").get().then(
           (value) {
             value.docs.forEach((element) {
               allOrderHistory.add({
@@ -66,13 +64,13 @@ class SalesDashboardBloc
           processedData.add(SalesData(
               DateFormat("dd-MM-yyyy").parse(dailyFormat), sales as double));
         }
-        final Map<DateTime, SalesData> map = {
+        final Map<DateTime, SalesData> map2 = {
           for (var dailySales in processedData) dailySales.x: dailySales,
         };
         currentDateD = DateFormat("dd-MM-yyyy").format(DateTime.now());
         currentDateM = DateFormat("MM-yyyy").format(DateTime.now());
         currentDateW = weekNumber(DateTime.now());
-        processedData = map.values.toList();
+        processedData = map2.values.toList();
         for (var a in processedData) {
           dailyValue += ((currentDateD == DateFormat("dd-MM-yyyy").format(a.x))
               ? a.y
@@ -81,14 +79,17 @@ class SalesDashboardBloc
           monthlyValue +=
               ((currentDateM == DateFormat("MM-yyyy").format(a.x)) ? a.y : 0);
         }
-        emit(SalesDashBoardLoadedState(allOrderHistory, allData, dailyValue,
-            weeklyValue, monthlyValue, pie));
-        //gives all document of tables to State
+
+        emit(SalesDashBoardLoadedState(allOrderHistory, allData,
+            dailyValue, weeklyValue, monthlyValue, pie));
       } catch (err) {
         emit(SalesDashboardErrorState(
             "Some Error Occur $err")); //calls state and stores message through parameter
       }
-    });
+    }
+    );
+
+
   }
   int numOfWeeks(int year) {
     DateTime dec28 = DateTime(year, 12, 28);

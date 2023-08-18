@@ -14,16 +14,18 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(30)),
         ),
         width: (MediaQuery.sizeOf(context).width / 2) - 80,
-        height: (MediaQuery.sizeOf(context).height) * 0.87,
+        height: (MediaQuery.sizeOf(context).height) * 0.83,
         child: BlocBuilder<OrderHistoryBloc, OrderHistoryState>(
           builder: (context, state) {
             if (state is OrderHistoryLoaded || state is ShowProductsState) {
               var productList = state.productList;
+              var data = state.allOrder;
+              var showORhide = false;
               return Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Column(
@@ -37,15 +39,25 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
                             fit: FlexFit.tight,
                             child: Column(
                               children: [
-                                const Padding(
-                                    padding: EdgeInsets.fromLTRB(5, 20, 10, 8),
-                                    child: Text(
-                                      "",
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w200,
-                                          color: Colors.grey),
-                                    )),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            8, 8, 10, 8),
+                                        child: IconButton(
+                                            onPressed: () {
+                                              BlocProvider.of<OrderHistoryBloc>(
+                                                      context)
+                                                  .add(ShowOrderProductsEvent(
+                                                      '0', data, showORhide));
+                                            },
+                                            icon: const Icon(
+                                              Icons.close_sharp,
+                                              color: Colors.black87,
+                                            ))),
+                                  ],
+                                ),
                                 Padding(
                                   padding: const EdgeInsets.only(left: 14),
                                   child: Text("Order ID : #${state.orderId}",

@@ -14,8 +14,8 @@ import '../users/user_page/read_user_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({Key? key}) : super(key: key);
-
+  var userRole;
+   DashboardPage({Key? key,this.userRole}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _DashboardPage();
 }
@@ -86,6 +86,40 @@ class _DashboardPage extends State<DashboardPage> {
         },
       ),
     ];
+    List<SideMenuItem> waiterItems = [
+      SideMenuItem(
+        icon: const Icon(Icons.dashboard),
+        title: AppLocalizations.of(context)!.order_page,
+        onTap: (index, sideMenuController) {
+          sideMenuController.changePage(index);
+        },
+      ),
+      SideMenuItem(
+        icon: const Icon(Icons.shopping_cart),
+        title: AppLocalizations.of(context)!.order_history_title,
+        onTap: (index, sideMenuController) {
+          sideMenuController.changePage(index);
+        },
+      ),
+    ];
+
+    List<Widget> adminPage=[
+      const SingleChildScrollView(child: CategoryRead()),
+      const SingleChildScrollView(child: ProductsRead()),
+      const SingleChildScrollView(child: TableRead()),
+      const SingleChildScrollView(child: OrderPageRead()),
+      SingleChildScrollView(
+          child: SalesDashboardPage(
+            controller: pageController,
+            sidemenu: sideMenu,
+          )),
+      const SingleChildScrollView(child: OrderHistoryPage()),
+      const SingleChildScrollView(child: UserRead()),
+    ];
+    List<Widget> waiterPage=[
+      const SingleChildScrollView(child: OrderPageRead()),
+      const SingleChildScrollView(child: OrderHistoryPage()),
+    ];
 
     return Scaffold(
         appBar: AppBar(
@@ -110,7 +144,7 @@ class _DashboardPage extends State<DashboardPage> {
                 Expanded(
                   flex: 1,
                   child: SideMenu(
-                      items: items,
+                      items: widget.userRole=='Admin' ? items : waiterItems,
                       controller: sideMenu,
                       style: SideMenuStyle(
                           openSideMenuWidth: 180,
@@ -126,19 +160,7 @@ class _DashboardPage extends State<DashboardPage> {
                   child: PageView(
                     physics: const NeverScrollableScrollPhysics(),
                     controller: pageController,
-                    children: [
-                      SingleChildScrollView(child: CategoryRead()),
-                      SingleChildScrollView(child: ProductsRead()),
-                      SingleChildScrollView(child: TableRead()),
-                      SingleChildScrollView(child: OrderPageRead()),
-                      SingleChildScrollView(
-                          child: SalesDashboardPage(
-                        controller: pageController,
-                        sidemenu: sideMenu,
-                      )),
-                      SingleChildScrollView(child: OrderHistoryPage()),
-                      SingleChildScrollView(child: UserRead()),
-                    ],
+                    children: widget.userRole=='Admin' ? adminPage : waiterPage
                   ),
                 )
               ],

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../navigation/route_paths.dart';
+import '../../login/login_bloc.dart';
 import '../order_menu_page/order_menu_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -30,11 +32,17 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
       flex: 2,
       child: Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Text(AppLocalizations.of(context)!.menu,
-                style:
-                    const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          Row(
+            children: [IconButton(onPressed: () {
+              Navigator.popAndPushNamed(context, RoutePaths.dashboard,arguments: LoginBloc.userRole);
+            }, icon: Icon(Icons.arrow_back)),
+              Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Text(AppLocalizations.of(context)!.menu,
+                    style:
+                        const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ),
+            ],
           ),
           BlocBuilder<OrderContentBloc, OrderContentState>(
             builder: (context, state) {
@@ -110,10 +118,14 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                     ),
                   );
                 }
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: catBtns,
+                return SizedBox(
+                  height: 95,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      children: catBtns,
+                    ),
                   ),
                 );
               }
