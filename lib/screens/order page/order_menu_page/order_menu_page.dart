@@ -40,7 +40,7 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
                 children: [
                   MenuBtnsWidget(data: widget.data),
                   Expanded(
-                    flex: 8,
+                    flex: 5,
                     child: MenuCardWidget(
                       data: widget.data,
                     ),
