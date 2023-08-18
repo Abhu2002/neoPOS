@@ -213,15 +213,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                   ),
                   Visibility(
                     visible: state.showORhide,
-                    // replacement: Expanded(
-                    //     flex: 3,
-                    //     child: SizedBox(
-                    //         height: (MediaQuery.sizeOf(context).height) * 0.82,
-                    //         child: Image.asset(
-                    //           "assets/login_page_image.jpg",
-                    //           fit: BoxFit.fill,
-                    //         ))),
-                    child: Expanded(
+                    child: const Expanded(
                       flex: 3,
                       child: ProductOrderPerTable(),
                     ),
