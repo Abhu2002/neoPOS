@@ -94,7 +94,7 @@ class _ProductsReadState extends State<ProductsRead> {
                                   ))),
                               const SizedBox(width: 20),
                               SizedBox(
-                                  width: 100,
+                                  width: 60,
                                   child: Center(
                                       child: Text(
                                     AppLocalizations.of(context)!.image_title,
@@ -103,22 +103,21 @@ class _ProductsReadState extends State<ProductsRead> {
                                         color: AppColors.primaryColor),
                                   ))),
                               const SizedBox(
-                                width: 80,
+                                width: 20,
                               ),
                               Expanded(
                                   flex: 2,
-                                  child: Text(
-                                    AppLocalizations.of(context)!
-                                        .product_name_title,
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        color: AppColors.primaryColor),
+                                  child: Center(
+                                    child: Text(
+                                      AppLocalizations.of(context)!
+                                          .product_name,
+                                      style: const TextStyle(
+                                          fontSize: 20,
+                                          color: AppColors.primaryColor),
+                                    ),
                                   )),
-                              const SizedBox(
-                                width: 40,
-                              ),
                               SizedBox(
-                                  width: 60,
+                                  width: 80,
                                   child: Center(
                                       child: Text(
                                     AppLocalizations.of(context)!.type_title,
@@ -127,7 +126,7 @@ class _ProductsReadState extends State<ProductsRead> {
                                         color: AppColors.primaryColor),
                                   ))),
                               const SizedBox(
-                                width: 60,
+                                width: 30,
                               ),
                               Expanded(
                                   child: Center(
@@ -154,8 +153,8 @@ class _ProductsReadState extends State<ProductsRead> {
 
                       return InkWell(
                         child: SizedBox(
-                          width: 100,
-                          height: 100,
+
+                          height: 60,
                           child: Row(children: [
                             SizedBox(
                               width: 80,
@@ -170,19 +169,19 @@ class _ProductsReadState extends State<ProductsRead> {
                               width: 20,
                             ),
                             SizedBox(
-                              width: 100,
+                              width: 60,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(20),
                                 child: CachedNetworkImage(
                                   imageUrl: data.productImage,
                                   width: 50,
-                                  height: 100,
+                                  height: 50,
                                   fit: BoxFit.cover,
                                 ),
                               ),
                             ),
                             const SizedBox(
-                              width: 80,
+                              width: 20,
                             ),
                             Expanded(
                               flex: 2,
@@ -190,49 +189,57 @@ class _ProductsReadState extends State<ProductsRead> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    data.productName,
-                                    style: const TextStyle(
-                                        fontSize: 15,
-                                        color: AppColors.primaryColor,
-                                        fontWeight: FontWeight.bold),
+                                  Padding(
+                                    padding: const EdgeInsets.only(left:20.0),
+                                    child: Text(
+                                      data.productName,
+                                      style: const TextStyle(
+                                          fontSize: 15,
+                                          color: AppColors.primaryColor,
+                                          fontWeight: FontWeight.bold),
+                                    ),
                                   ),
-                                  Text(
-                                    data.productDescription.length > 50
-                                        ? data.productDescription
-                                                .substring(0, 50) +
-                                            '...'
-                                        : data.productDescription,
-                                    style: const TextStyle(
-                                      fontSize: 10,
+                                  Padding(
+                                    padding: const EdgeInsets.only(left:20.0),
+                                    child: Text(
+                                      data.productDescription.length > 75
+                                          ? data.productDescription
+                                                  .substring(0, 75) +
+                                              '...'
+                                          : data.productDescription,
+                                      style: const TextStyle(
+                                        fontSize: 10,
+                                      ),
                                     ),
                                   )
                                 ],
                               ),
                             ),
-                            const SizedBox(
-                              width: 40,
-                            ),
-                            Container(
-                              height: 20,
-                              width: (data.productType == "nonVeg") ? 60 : 30,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  color: (data.productType) == "nonVeg"
-                                      ? Colors.red
-                                      : Colors.green),
+                            SizedBox(
+                              width: 80,
                               child: Center(
-                                child: Text(
-                                  (data.productType == "nonVeg")
-                                      ? AppLocalizations.of(context)!
-                                          .non_veg_text
-                                      : AppLocalizations.of(context)!.veg_text,
-                                  style: const TextStyle(color: Colors.white),
+                                child: Container(
+                                  height: 20,
+                                  width: (data.productType == "nonVeg") ? 60 : 30,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5),
+                                      color: (data.productType) == "nonVeg"
+                                          ? Colors.red
+                                          : Colors.green),
+                                  child: Center(
+                                    child: Text(
+                                      (data.productType == "nonVeg")
+                                          ? AppLocalizations.of(context)!
+                                              .non_veg_text
+                                          : AppLocalizations.of(context)!.veg_text,
+                                      style: const TextStyle(color: Colors.white),
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                            SizedBox(
-                              width: (data.productType == "nonVeg") ? 30 : 60,
+                            const SizedBox(
+                              width: 30,
                             ),
                             Expanded(
                                 child:
