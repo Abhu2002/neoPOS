@@ -14,12 +14,12 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
   @override
   Widget build(BuildContext context) {
     return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.all(Radius.circular(30)),
         ),
         width: (MediaQuery.sizeOf(context).width / 2) - 80,
-        height: (MediaQuery.sizeOf(context).height) * 0.87,
+        height: (MediaQuery.sizeOf(context).height) * 0.83,
         child: BlocBuilder<OrderHistoryBloc, OrderHistoryState>(
           builder: (context, state) {
             if (state is OrderHistoryLoaded || state is ShowProductsState) {

@@ -18,6 +18,5 @@ class ShowOrderProductsEvent extends OrderHistoryEvent {
   bool showORhide = false;
   ShowOrderProductsEvent(this.id, this.allOrders, this.showORhide);
   @override
-  List<Object> get props => [id, allOrders];
+  List<Object> get props => [id, allOrders, showORhide];
 }
-
