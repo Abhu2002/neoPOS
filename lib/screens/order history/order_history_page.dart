@@ -142,7 +142,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                 itemBuilder: (context, index) {
                                   var data = allOrders[index];
                                   var showORhide = true;
-                                  bool selected = false;
+
                                   return InkWell(
                                     onTap: () {
                                       BlocProvider.of<OrderHistoryBloc>(context)
@@ -150,7 +150,6 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                               data["Id"],
                                               allOrders,
                                               showORhide));
-                                      selected = true;
                                     },
                                     child: Container(
                                       height: 50,
