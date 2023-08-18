@@ -38,7 +38,7 @@ class _MenuCardWidgetState extends State<MenuCardWidget> {
                 crossAxisCount: state.showORhide ? 3 : 5,
                 crossAxisSpacing: 4.0,
                 mainAxisSpacing: 4.0,
-                childAspectRatio: 200 / 250,
+                childAspectRatio: 200 / 280,
               ),
               itemCount: state.allProds.length,
               itemBuilder: (context, index) {
