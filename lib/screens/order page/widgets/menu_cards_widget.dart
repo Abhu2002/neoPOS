@@ -6,8 +6,8 @@ import 'add_order.dart';
 
 
 class MenuCardWidget extends StatefulWidget {
-  final dynamic data;
-  const MenuCardWidget({Key? key, this.data}) : super(key: key);
+  dynamic data;
+  MenuCardWidget({Key? key, this.data}) : super(key: key);
 
   @override
   State<MenuCardWidget> createState() => _MenuCardWidgetState();

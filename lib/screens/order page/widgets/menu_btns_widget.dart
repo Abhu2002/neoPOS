@@ -6,8 +6,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MenuBtnsWidget extends StatefulWidget {
   // immutable class but given data can vary
-  final dynamic data;
-  const MenuBtnsWidget({Key? key, this.data}) : super(key: key);
+  dynamic data;
+  MenuBtnsWidget({Key? key, this.data}) : super(key: key);
 
   @override
   State<MenuBtnsWidget> createState() => _MenuBtnsWidgetState();
