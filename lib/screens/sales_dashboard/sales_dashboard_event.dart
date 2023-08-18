@@ -8,9 +8,10 @@ abstract class SalesDashboardEvent extends Equatable {
 }
 
 class DashboardPageinitevent extends SalesDashboardEvent {
-  DashboardPageinitevent([this.monthIndex]);
-  int? monthIndex;
+  DashboardPageinitevent();
+
 
   @override
   List<Object> get props => [];
 }
+
