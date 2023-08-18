@@ -18,15 +18,16 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
         }
         var AllOrderHistory = [];
         List<dynamic> alldata = [];
+
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
-        await db.collection("order_history").get().then(
+        await db.collection("order_history").orderBy("order_date").get().then(
           (value) {
             value.docs.forEach((element) {
               AllOrderHistory.add({
                 "Id": element.id,
                 "amount": element['amount'],
                 "order_date": element['order_date'],
-                "customer_moblie_no": element['customer_mobile_no'],
+                "customer_mobile_no": element['customer_mobile_no'],
                 "customer_name": element['customer_name'],
                 "payment_mode": element['payment_mode'],
                 "products": element["products"]
@@ -62,6 +63,5 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
       emit(ShowProductsState(
           event.allOrders, productList, amount, orderId, event.showORhide));
     });
-
   }
 }

@@ -24,7 +24,7 @@ class SalesDashboardBloc
         num monthlyValue = 0;
         Map<String, double> pie = {};
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
-        await db.collection("order_history").get().then(
+        await db.collection("order_history").orderBy("order_date").get().then(
           (value) {
             value.docs.forEach((element) {
               allOrderHistory.add({
