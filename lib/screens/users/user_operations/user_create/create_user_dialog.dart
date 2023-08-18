@@ -18,23 +18,23 @@ class _CreateUserFormState extends State<CreateUserForm> {
   TextEditingController lastName = TextEditingController();
   TextEditingController userName = TextEditingController();
   TextEditingController password = TextEditingController();
-
+  String dropdownValue = "";
   final formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     userName.text = "";
+    dropdownValue = list.first;
     super.initState();
   }
 
+  List<String> list = <String>[
+    "Admin","Waiter"
+  ];
   @override
   Widget build(BuildContext context) {
+
     context.read<CreateUserBloc>().showMessage = createSnackBar;
-    List<String> list = <String>[
-      AppLocalizations.of(context)!.admin,
-      AppLocalizations.of(context)!.waiter
-    ];
-    String dropdownValue = list.first;
     return AlertDialog(
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),

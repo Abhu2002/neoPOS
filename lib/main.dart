@@ -15,6 +15,7 @@ import 'package:neopos/screens/products/products_operation/create_operation/crea
 import 'package:neopos/screens/products/products_operation/delete_operation/delete_bloc.dart';
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_bloc.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
+import 'package:neopos/screens/sales_dashboard/graph_widget/graph_dashboard_bloc.dart';
 import 'package:neopos/screens/sales_dashboard/sales_dashboard_bloc.dart';
 import 'package:neopos/screens/splashScreen/splashscreen_page.dart';
 import 'package:neopos/screens/users/user_operations/user_create/create_user_bloc.dart';
@@ -88,6 +89,7 @@ class MyApp extends StatelessWidget {
 
         //Bloc for SalesDashboard page
         BlocProvider(create: (_) => SalesDashboardBloc()),
+        BlocProvider(create: (_) => GraphDashboardBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -119,7 +121,7 @@ Widget? isLoggedIn() {
   if (user == null) {
     widget = const SplashScreen();
   } else {
-    widget = const DashboardPage();
+    widget =  DashboardPage();
   }
   return widget;
 }
