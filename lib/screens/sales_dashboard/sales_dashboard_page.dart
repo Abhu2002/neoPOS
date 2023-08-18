@@ -59,11 +59,7 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
         DropdownMenuEntry<MonthLabel>(value: month, label: month.name),
       );
     }
-    final List<ChartData> chartData = [];
     return Column(children: [
-      // for (var a in state.processedData) {
-      //   chartData.add(ChartData(a.x.day, a.y));
-      // }
       SizedBox(
           child: Column(children: [
         Container(
