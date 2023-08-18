@@ -8,6 +8,7 @@ import 'package:neopos/screens/category/category_operation/update_operation/cate
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
+import 'package:neopos/screens/login/login_page.dart';
 import 'package:neopos/screens/order%20page/order_menu_page/order_menu_bloc.dart';
 import 'package:neopos/screens/order%20page/order_table_page/order_read_bloc.dart';
 import 'package:neopos/screens/order%20history/order_history_bloc.dart';
@@ -26,6 +27,7 @@ import 'package:neopos/screens/table/table_operation/delete_operation/delete_blo
 import 'package:neopos/screens/table/table_operation/update_operation/update_bloc.dart';
 import 'package:neopos/screens/table/table_page/table_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'di/firebase_di.dart';
 import 'firebase_options.dart';
 import 'l10n/l10n.dart';
@@ -35,14 +37,19 @@ import 'navigation/app_router.dart';
 Future<void> main() async {
   setupSingletons();
   WidgetsFlutterBinding.ensureInitialized();
+
+  final prefs = await SharedPreferences.getInstance();
+  final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(const MyApp());
+  runApp(MyApp(isLoggedIn: isLoggedIn));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool isLoggedIn;
+  const MyApp({Key? key, required this.isLoggedIn}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -94,7 +101,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primarySwatch: AppColors.primarySwatch,
             scaffoldBackgroundColor: AppColors.backgroundColor),
-        home: isLoggedIn(),
+        home: isLoggedIn ? const DashboardPage() : const SplashScreen(),
 
         onGenerateRoute: AppRouter.generateRoute,
         // setting up localization
@@ -111,15 +118,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Widget? isLoggedIn() {
-  Widget? widget;
-
-  /// TODO: Initialize user to check whether already logged in or not
-  const user = null;
-  if (user == null) {
-    widget = const SplashScreen();
-  } else {
-    widget = const DashboardPage();
-  }
-  return widget;
-}

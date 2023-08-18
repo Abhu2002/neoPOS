@@ -2,6 +2,7 @@ import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 
 import 'package:neopos/screens/products/products_page/read_products_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../navigation/route_paths.dart';
 import 'package:neopos/utils/app_colors.dart';
 import '../order history/order_history_page.dart';
@@ -88,10 +89,13 @@ class _DashboardPage extends State<DashboardPage> {
 
     return Scaffold(
         appBar: AppBar(
+          automaticallyImplyLeading: false,
           title: Text(AppLocalizations.of(context)!.dashboard_title),
           actions: [
             IconButton(
                 onPressed: () async {
+                  final prefs = await SharedPreferences.getInstance();
+                  await prefs.clear();
                   Navigator.pushReplacementNamed(context, RoutePaths.login);
                 },
                 icon: const Icon(Icons.logout))

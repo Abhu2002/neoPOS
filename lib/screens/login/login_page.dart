@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:neopos/navigation/route_paths.dart';
 import 'package:neopos/utils/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../utils/action_button.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/common_text.dart';
@@ -32,9 +33,9 @@ class _LoginPage extends State<LoginPage> {
             children: [
               Expanded(
                   child: Image(
-                image: AssetImage("assets/login_page_image.jpg"),
-                fit: BoxFit.cover,
-              )),
+                    image: AssetImage("assets/login_page_image.jpg"),
+                    fit: BoxFit.cover,
+                  )),
               Expanded(
                 child: SizedBox(
                   height: MediaQuery.sizeOf(context).height,
@@ -63,7 +64,7 @@ class _LoginPage extends State<LoginPage> {
                                       style: TextStyle(
                                           color: AppColors.primaryColor,
                                           fontSize:
-                                              (screenWidth < 1000) ? 32 : 50,
+                                          (screenWidth < 1000) ? 32 : 50,
                                           fontWeight: FontWeight.w500),
                                       textAlign: TextAlign.start,
                                     ),
@@ -75,22 +76,22 @@ class _LoginPage extends State<LoginPage> {
                                     builder: (context, state) {
                                       return SizedBox(
                                         width:
-                                            MediaQuery.sizeOf(context).width /
-                                                4,
+                                        MediaQuery.sizeOf(context).width /
+                                            4,
                                         child: AuthCustomTextfield(
                                           obscureText: false,
                                           suffixIcon:
-                                              state.userId.isNotEmptyValidator
-                                                  ? const Icon(Icons.done)
-                                                  : null,
+                                          state.userId.isNotEmptyValidator
+                                              ? const Icon(Icons.done)
+                                              : null,
                                           prefixIcon: Icons.person,
                                           hint: AppLocalizations.of(context)!
                                               .username,
                                           errorText: (!state.userId
-                                                      .isNotEmptyValidator &&
-                                                  state.verifyData)
+                                              .isNotEmptyValidator &&
+                                              state.verifyData)
                                               ? AppLocalizations.of(context)!
-                                                  .username_error
+                                              .username_error
                                               : null,
                                           onChange: (v) {
                                             context
@@ -108,22 +109,22 @@ class _LoginPage extends State<LoginPage> {
                                     builder: (context, state) {
                                       return SizedBox(
                                         width:
-                                            MediaQuery.sizeOf(context).width /
-                                                4,
+                                        MediaQuery.sizeOf(context).width /
+                                            4,
                                         child: AuthCustomTextfield(
                                           obscureText: true,
                                           suffixIcon:
-                                              state.password.isValidPassword
-                                                  ? const Icon(Icons.done)
-                                                  : null,
+                                          state.password.isValidPassword
+                                              ? const Icon(Icons.done)
+                                              : null,
                                           prefixIcon: Icons.lock,
                                           hint: AppLocalizations.of(context)!
                                               .password,
                                           errorText: !state.password
-                                                      .isValidPassword &&
-                                                  state.verifyData
+                                              .isValidPassword &&
+                                              state.verifyData
                                               ? AppLocalizations.of(context)!
-                                                  .password_error
+                                              .password_error
                                               : null,
                                           onChange: (v) {
                                             context
@@ -141,8 +142,8 @@ class _LoginPage extends State<LoginPage> {
                                     builder: (context, state) {
                                       return SizedBox(
                                         width:
-                                            MediaQuery.sizeOf(context).width /
-                                                8,
+                                        MediaQuery.sizeOf(context).width /
+                                            8,
                                         child: ActionButton(
                                           text: AppLocalizations.of(context)!
                                               .login,
@@ -173,7 +174,13 @@ class _LoginPage extends State<LoginPage> {
     );
   }
 
-  void onSuccess() => Navigator.popAndPushNamed(context, RoutePaths.dashboard);
+  void onSuccess() async {
+    // Save login state in shared preferences
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('isLoggedIn', true);
+
+    Navigator.popAndPushNamed(context, RoutePaths.dashboard);
+  }
 
   void createSnackBar(String message) {
     final snackBar = SnackBar(content: Text(message));
