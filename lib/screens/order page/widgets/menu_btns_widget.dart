@@ -6,8 +6,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MenuBtnsWidget extends StatefulWidget {
   // immutable class but given data can vary
-  dynamic data;
-  MenuBtnsWidget({Key? key, this.data}) : super(key: key);
+  final dynamic data;
+  const MenuBtnsWidget({Key? key, this.data}) : super(key: key);
 
   @override
   State<MenuBtnsWidget> createState() => _MenuBtnsWidgetState();
@@ -111,7 +111,7 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                   );
                 }
                 return SizedBox(
-                  height: 140,
+                  height: 95,
                   child: SingleChildScrollView(
                     scrollDirection: Axis.vertical,
                     child: Wrap(

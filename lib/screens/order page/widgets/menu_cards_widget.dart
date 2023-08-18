@@ -6,8 +6,8 @@ import 'add_order.dart';
 
 
 class MenuCardWidget extends StatefulWidget {
-  dynamic data;
-  MenuCardWidget({Key? key, this.data}) : super(key: key);
+  final dynamic data;
+  const MenuCardWidget({Key? key, this.data}) : super(key: key);
 
   @override
   State<MenuCardWidget> createState() => _MenuCardWidgetState();
@@ -38,7 +38,7 @@ class _MenuCardWidgetState extends State<MenuCardWidget> {
                 crossAxisCount: state.showORhide ? 3 : 5,
                 crossAxisSpacing: 4.0,
                 mainAxisSpacing: 4.0,
-                childAspectRatio: 200 / 250,
+                childAspectRatio: 200 / 280,
               ),
               itemCount: state.allProds.length,
               itemBuilder: (context, index) {
