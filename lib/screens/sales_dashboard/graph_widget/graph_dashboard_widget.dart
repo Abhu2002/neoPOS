@@ -126,7 +126,10 @@ class _GraphPageState extends State<GraphPage> {
           ),
         );
       }
-      return Container();
+      return const SizedBox(
+          height: 200,
+          width: 200,
+          child: Center(child: CircularProgressIndicator()));
     });
   }
 
