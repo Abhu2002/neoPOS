@@ -8,7 +8,6 @@ import 'package:neopos/screens/category/category_operation/update_operation/cate
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
-import 'package:neopos/screens/login/login_page.dart';
 import 'package:neopos/screens/order%20page/order_menu_page/order_menu_bloc.dart';
 import 'package:neopos/screens/order%20page/order_table_page/order_read_bloc.dart';
 import 'package:neopos/screens/order%20history/order_history_bloc.dart';
