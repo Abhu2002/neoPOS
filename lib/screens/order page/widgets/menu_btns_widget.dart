@@ -110,10 +110,14 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                     ),
                   );
                 }
-                return SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: catBtns,
+                return SizedBox(
+                  height: 95,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Wrap(
+                      direction: Axis.horizontal,
+                      children: catBtns,
+                    ),
                   ),
                 );
               }
