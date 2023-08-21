@@ -130,7 +130,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                               color: Colors.grey,
                             ),
                             SizedBox(
-                              height: MediaQuery.sizeOf(context).height * 0.74,
+                              height: MediaQuery.sizeOf(context).height * 0.70,
                               child: ListView.separated(
                                 itemCount: allOrders.length,
                                 separatorBuilder: (context, index) {
