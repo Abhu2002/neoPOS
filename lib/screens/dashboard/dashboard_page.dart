@@ -13,8 +13,6 @@ import '../users/user_page/read_user_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardPage extends StatefulWidget {
-  static SideMenuController sideMenu = SideMenuController();
-  static PageController pageController = PageController();
   var userRole;
    DashboardPage({Key? key,this.userRole}) : super(key: key);
   @override
@@ -28,8 +26,8 @@ class _DashboardPage extends State<DashboardPage> {
   @override
   void initState() {
     // Connect SideMenuController and PageController together
-    DashboardPage.sideMenu.addListener((index) {
-      DashboardPage.pageController.jumpToPage(index);
+    sideMenu.addListener((index) {
+      pageController.jumpToPage(index);
     });
     super.initState();
   }
@@ -109,7 +107,11 @@ class _DashboardPage extends State<DashboardPage> {
       const SingleChildScrollView(child: ProductsRead()),
       const SingleChildScrollView(child: TableRead()),
       const SingleChildScrollView(child: OrderPageRead()),
-      const SingleChildScrollView(child: SalesDashboardPage()),
+      SingleChildScrollView(
+          child: SalesDashboardPage(
+            controller: pageController,
+            sidemenu: sideMenu,
+          )),
       const SingleChildScrollView(child: OrderHistoryPage()),
       const SingleChildScrollView(child: UserRead()),
     ];
@@ -139,7 +141,7 @@ class _DashboardPage extends State<DashboardPage> {
                   flex: 1,
                   child: SideMenu(
                       items: widget.userRole=='Admin' ? items : waiterItems,
-                      controller: DashboardPage.sideMenu,
+                      controller: sideMenu,
                       style: SideMenuStyle(
                           openSideMenuWidth: 180,
                           displayMode: SideMenuDisplayMode.auto,
@@ -153,7 +155,7 @@ class _DashboardPage extends State<DashboardPage> {
                   flex: 7,
                   child: PageView(
                     physics: const NeverScrollableScrollPhysics(),
-                    controller: DashboardPage.pageController,
+                    controller: pageController,
                     children: widget.userRole=='Admin' ? adminPage : waiterPage
                   ),
                 )
