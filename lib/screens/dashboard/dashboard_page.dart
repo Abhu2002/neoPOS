@@ -37,7 +37,7 @@ class _DashboardPage extends State<DashboardPage> {
   Widget build(BuildContext context) {
     List<SideMenuItem> items = [
       SideMenuItem(
-        icon: const Icon(Icons.category),
+        icon: const Icon(Icons.person),
         title: AppLocalizations.of(context)!.category_title,
         onTap: (index, sideMenuController) {
           sideMenuController.changePage(index);
