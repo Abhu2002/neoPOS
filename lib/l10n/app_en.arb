@@ -131,8 +131,9 @@
    "product_delete_msg":"Product deleted successfully.",
    "product_delete_title":"Delete Product",
    "product_delete_confirm_msg":"Are you sure you want to delete this Product?",
-  "menu" : "Menu",
-  "order" : "Order",
+   "menu" : "Menu",
+   "order" : "Order",
    "userpage_title":"User Page",
-  "order_history_page_title": "Order History"
+   "order_history_page_title": "Order History",
+   "project_title": "Neopos"
 }

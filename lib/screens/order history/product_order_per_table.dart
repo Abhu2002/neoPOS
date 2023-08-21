@@ -73,7 +73,7 @@ class _ProductOrderPerTableState extends State<ProductOrderPerTable> {
                       ),
                     ),
                     Flexible(
-                        flex: 4,
+                        flex: 3,
                         fit: FlexFit.tight,
                         //height:300,
                         child: Container(
