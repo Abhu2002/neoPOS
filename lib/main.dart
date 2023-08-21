@@ -27,7 +27,7 @@ import 'package:neopos/screens/table/table_operation/delete_operation/delete_blo
 import 'package:neopos/screens/table/table_operation/update_operation/update_bloc.dart';
 import 'package:neopos/screens/table/table_page/table_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:neopos/utils/sharedpref/sharedpreference.dart';
 import 'di/firebase_di.dart';
 import 'firebase_options.dart';
 import 'l10n/l10n.dart';
@@ -37,19 +37,16 @@ import 'navigation/app_router.dart';
 Future<void> main() async {
   setupSingletons();
   WidgetsFlutterBinding.ensureInitialized();
-
-  final prefs = await SharedPreferences.getInstance();
-  final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+  LocalPreference.init();
 
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp(isLoggedIn: isLoggedIn));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final bool isLoggedIn;
-  const MyApp({Key? key, required this.isLoggedIn}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   // This widget is the root of your application.
   @override
@@ -102,7 +99,7 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primarySwatch: AppColors.primarySwatch,
             scaffoldBackgroundColor: AppColors.backgroundColor),
-        home: isLoggedIn ?  DashboardPage() : const SplashScreen(),
+        home: LocalPreference.getSignWith() != null ? DashboardPage() : const SplashScreen(),
 
         onGenerateRoute: AppRouter.generateRoute,
         // setting up localization
