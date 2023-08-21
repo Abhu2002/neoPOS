@@ -63,7 +63,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             if(role == 'Admin'){
               userRole=role;
             }
-            else{userRole='waiter';}
+            else{userRole='Waiter';}
             result = data.data();
             onLoginSuccess!();
           }
