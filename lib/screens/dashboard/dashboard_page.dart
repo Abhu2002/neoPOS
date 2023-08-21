@@ -13,6 +13,8 @@ import '../users/user_page/read_user_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardPage extends StatefulWidget {
+  static SideMenuController sideMenu = SideMenuController();
+  static PageController pageController = PageController();
   var userRole;
    DashboardPage({Key? key,this.userRole}) : super(key: key);
   @override
@@ -20,14 +22,13 @@ class DashboardPage extends StatefulWidget {
 }
 
 class _DashboardPage extends State<DashboardPage> {
-  final SideMenuController sideMenu = SideMenuController();
-  PageController pageController = PageController();
+
 
   @override
   void initState() {
     // Connect SideMenuController and PageController together
-    sideMenu.addListener((index) {
-      pageController.jumpToPage(index);
+    DashboardPage.sideMenu.addListener((index) {
+      DashboardPage.pageController.jumpToPage(index);
     });
     super.initState();
   }
@@ -107,11 +108,8 @@ class _DashboardPage extends State<DashboardPage> {
       const SingleChildScrollView(child: ProductsRead()),
       const SingleChildScrollView(child: TableRead()),
       const SingleChildScrollView(child: OrderPageRead()),
-      SingleChildScrollView(
-          child: SalesDashboardPage(
-            controller: pageController,
-            sidemenu: sideMenu,
-          )),
+      const SingleChildScrollView(
+          child: SalesDashboardPage()),
       const SingleChildScrollView(child: OrderHistoryPage()),
       const SingleChildScrollView(child: UserRead()),
     ];
@@ -141,7 +139,7 @@ class _DashboardPage extends State<DashboardPage> {
                   flex: 1,
                   child: SideMenu(
                       items: widget.userRole=='Admin' ? items : waiterItems,
-                      controller: sideMenu,
+                      controller: DashboardPage.sideMenu,
                       style: SideMenuStyle(
                           openSideMenuWidth: 180,
                           displayMode: SideMenuDisplayMode.auto,
@@ -155,7 +153,7 @@ class _DashboardPage extends State<DashboardPage> {
                   flex: 7,
                   child: PageView(
                     physics: const NeverScrollableScrollPhysics(),
-                    controller: pageController,
+                    controller: DashboardPage.pageController,
                     children: widget.userRole=='Admin' ? adminPage : waiterPage
                   ),
                 )
