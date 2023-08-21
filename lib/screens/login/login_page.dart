@@ -64,7 +64,8 @@ class _LoginPage extends State<LoginPage> {
                                     Padding(
                                       padding: const EdgeInsets.all(20),
                                       child: Text(
-                                        AppLocalizations.of(context)!.welcomeBack,
+                                        AppLocalizations.of(context)!
+                                            .welcomeBack,
                                         style: TextStyle(
                                             color: AppColors.primaryColor,
                                             fontSize:

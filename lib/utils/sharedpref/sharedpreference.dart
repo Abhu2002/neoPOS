@@ -6,6 +6,7 @@ class LocalPreference {
   static const _keySingWith = 'SingWithKey';
   static const _keyUserRole = 'userRoles';
   static const _keyOrderId = 'orderId';
+  static const _keyLanguage = 'Lan';
   //----------------------------------
   static Future clearAllPreference() => _preferences!.clear();
   //----------------------------------
@@ -30,6 +31,10 @@ class LocalPreference {
   static String? getOrderId() => _preferences!.getString(_keyOrderId);
   static Future<bool>? deleteOrderId() => _preferences?.remove(_keyOrderId);
 //--------------------------------------------------------------
+
+  static Future setLang(String? val) async =>
+      await _preferences!.setString(_keyLanguage, val!);
+  static String? getLang() => _preferences!.getString(_keyLanguage);
 //--------------------------------------------------------------
 //--------------------------------------------------------------
 //--------------------------------------------------------------

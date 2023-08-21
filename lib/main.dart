@@ -99,12 +99,14 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
             primarySwatch: AppColors.primarySwatch,
             scaffoldBackgroundColor: AppColors.backgroundColor),
-        home: LocalPreference.getSignWith() != null ? DashboardPage() : const SplashScreen(),
+        home: LocalPreference.getSignWith() != null
+            ? DashboardPage()
+            : const SplashScreen(),
 
         onGenerateRoute: AppRouter.generateRoute,
         // setting up localization
         supportedLocales: L10n.all,
-        locale: const Locale('en'),
+        locale: Locale(LocalPreference.getLang() ?? "hi"),
         localizationsDelegates: [
           AppLocalizations.delegate,
           AppLocalizations.localizationsDelegates[1],
@@ -115,4 +117,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

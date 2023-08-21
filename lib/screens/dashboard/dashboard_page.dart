@@ -35,6 +35,7 @@ class _DashboardPage extends State<DashboardPage> {
     super.initState();
   }
 
+  bool isSwitched = (LocalPreference.getLang() == "en") ? false : true;
   @override
   Widget build(BuildContext context) {
     List<SideMenuItem> items = [
@@ -130,8 +131,45 @@ class _DashboardPage extends State<DashboardPage> {
       child: Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            title: Text(AppLocalizations.of(context)!.dashboard_title),
+            title: Text(AppLocalizations.of(context)!.project_title),
             actions: [
+              Row(
+                children: [
+                  const Text("Eng"),
+                  Switch(
+                    onChanged: (value) {
+                      if (LocalPreference.getLang() == 'en') {
+                        LocalPreference.setLang("hi");
+                        isSwitched = true;
+                      } else {
+                        LocalPreference.setLang("en");
+                        isSwitched = false;
+                      }
+                      print(LocalPreference.getLang());
+                      // if (value == true) {
+                      //   setState(() {
+                      //     LocalPreference.setLang("en");
+                      //     isSwitched = false;
+                      //   });
+                      // } else {
+                      //   setState(() {
+                      //     LocalPreference.setLang("hi");
+                      //     isSwitched = true;
+                      //   });
+                      // }
+                    },
+                    value: isSwitched,
+                    activeColor: Colors.orange.shade400,
+                    activeTrackColor: Colors.orange,
+                    inactiveThumbColor: Colors.white,
+                    inactiveTrackColor: Colors.white,
+                  ),
+                  const Text("Hin"),
+                ],
+              ),
+              SizedBox(
+                width: 10,
+              ),
               IconButton(
                   onPressed: () {
                     LocalPreference.clearAllPreference();
