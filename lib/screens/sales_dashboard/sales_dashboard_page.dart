@@ -89,7 +89,7 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                                               onPressed: () {
                                                 if (DashboardPage.pageController
                                                     .hasClients) {
-                                                  widget.controller
+                                                  DashboardPage.pageController
                                                       .animateToPage(
                                                     5,
                                                     duration: const Duration(
