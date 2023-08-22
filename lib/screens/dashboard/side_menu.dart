@@ -4,12 +4,15 @@ import 'package:neopos/screens/dashboard/side_menu_bloc.dart';
 
 import 'package:neopos/utils/app_colors.dart';
 
+import '../../utils/sharedpref/sharedpreference.dart';
+import '../login/login_bloc.dart';
 import 'dashboard_page.dart';
 
 class SideMenuWidget extends StatefulWidget {
   var userRole;
+  PageController pageController;
 
-  SideMenuWidget(this.userRole, {Key? key,}) : super(key: key);
+  SideMenuWidget(this.userRole, this.pageController,{Key? key,}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _SideMenuPage();
 
@@ -31,7 +34,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
             color: (index == 0) ? AppColors.primarySwatch : Colors.black,
           ),
           press: () {
-            DashboardPage.pageController.jumpToPage(0);
+            widget.pageController.jumpToPage(0);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(0));
           },
           isSelected: index == 0,
@@ -44,7 +47,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           ),
           press: () {
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(1));
-            DashboardPage.pageController.jumpToPage(1);
+            widget.pageController.jumpToPage(1);
           },
           isSelected: index == 1,
         ),
@@ -55,7 +58,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
             color: (index == 2) ? AppColors.primarySwatch : Colors.black,
           ),
           press: () {
-            DashboardPage.pageController.jumpToPage(2);
+           widget.pageController.jumpToPage(2);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(2));
           },
           isSelected: index == 2,
@@ -67,7 +70,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
             color: (index == 3) ? AppColors.primarySwatch : Colors.black,
           ),
           press: () {
-            DashboardPage.pageController.jumpToPage(3);
+            widget.pageController.jumpToPage(3);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(3));
           },
           isSelected: index == 3,
@@ -79,7 +82,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
             color: (index == 4) ? AppColors.primarySwatch : Colors.black,
           ),
           press: () {
-            DashboardPage.pageController.jumpToPage(4);
+            widget.pageController.jumpToPage(4);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(4));
           },
           isSelected: index == 4,
@@ -91,7 +94,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
             color: (index == 5) ? AppColors.primarySwatch : Colors.black,
           ),
           press: () {
-            DashboardPage.pageController.jumpToPage(5);
+            widget.pageController.jumpToPage(5);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(5));
           },
           isSelected: index == 5,
@@ -103,7 +106,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
             color: (index == 6) ? AppColors.primarySwatch : Colors.black,
           ),
           press: () {
-            DashboardPage.pageController.jumpToPage(6);
+            widget.pageController.jumpToPage(6);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(6));
           },
           isSelected: index == 6,
@@ -117,7 +120,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
             color: (index == 0) ? AppColors.primarySwatch : Colors.black,
           ),
           press: () {
-            DashboardPage.pageController.jumpToPage(0);
+            widget.pageController.jumpToPage(0);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(0));
           },
           isSelected: index == 0,
@@ -129,7 +132,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
             color: (index == 1) ? AppColors.primarySwatch : Colors.black,
           ),
           press: () {
-            DashboardPage.pageController.jumpToPage(1);
+            widget.pageController.jumpToPage(1);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(1));
           },
           isSelected: index == 1,
@@ -137,7 +140,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
       ];
       return Drawer(
         child: ListView(
-          children: widget.userRole == 'Admin' ? admin : waiter,
+          children: LocalPreference.getUserRole() == 'Admin' ? admin : waiter,
         ),
       );
     });

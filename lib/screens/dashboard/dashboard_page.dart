@@ -5,7 +5,6 @@ import 'package:neopos/screens/login/login_bloc.dart';
 
 import 'package:neopos/screens/products/products_page/read_products_page.dart';
 import '../../navigation/route_paths.dart';
-import 'package:neopos/utils/app_colors.dart';
 import '../../utils/sharedpref/sharedpreference.dart';
 import '../order history/order_history_page.dart';
 import '../order page/order_table_page/order_read_page.dart';
@@ -16,7 +15,7 @@ import '../users/user_page/read_user_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardPage extends StatefulWidget {
-  static PageController pageController = PageController();
+   PageController pageController = PageController();
   var userRole;
    DashboardPage({Key? key, this.userRole}) : super(key: key);
   @override
@@ -28,41 +27,19 @@ class _DashboardPage extends State<DashboardPage> {
 
   @override
   void initState() {
-    // Connect SideMenuController and PageController together
-
     LocalPreference.getUserRole() ?? LocalPreference.setUserRole(LoginBloc.userRole);
-
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    List<SideMenuItem> waiterItems = [
-      SideMenuItem(
-        icon: const Icon(Icons.dashboard),
-        title: AppLocalizations.of(context)!.order_page,
-        onTap: (index, sideMenuController) {
-          sideMenuController.changePage(index);
-        },
-      ),
-      SideMenuItem(
-        icon: const Icon(Icons.shopping_cart),
-        title: AppLocalizations.of(context)!.order_history_title,
-        onTap: (index, sideMenuController) {
-          sideMenuController.changePage(index);
-        },
-      ),
-    ];
-
     List<Widget> adminPage=[
       const SingleChildScrollView(child: CategoryRead()),
       const SingleChildScrollView(child: ProductsRead()),
       const SingleChildScrollView(child: TableRead()),
       const SingleChildScrollView(child: OrderPageRead()),
-      const SingleChildScrollView(
-          child: SalesDashboardPage()),
+      SingleChildScrollView(
+          child: SalesDashboardPage(widget.pageController)),
       const SingleChildScrollView(child: OrderHistoryPage()),
       const SingleChildScrollView(child: UserRead()),
     ];
@@ -71,44 +48,45 @@ class _DashboardPage extends State<DashboardPage> {
       const SingleChildScrollView(child: OrderHistoryPage()),
     ];
 
-    return WillPopScope(
-        onWillPop: () async {
+    return WillPopScope( onWillPop: () async {
       return false;
     },
-     child: Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.dashboard_title),
-          actions: [
-            IconButton(
-                onPressed: () async {
-                  Navigator.pushReplacementNamed(context, RoutePaths.login);
-                },
-                icon: const Icon(Icons.logout))
-          ],
-        ),
-        body: SafeArea(
-            child: CustomScrollView(slivers: [
-          SliverFillRemaining(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child:
-                  SideMenuWidget(widget.userRole)
-                ),
-                Expanded(
-                  flex: 7,
-                  child: PageView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    controller: DashboardPage.pageController,
-    children: LocalPreference.getUserRole() =='Admin' ? adminPage : waiterPage
-                  ),
-                )
-              ],
-            ),
-          )
-        ]))),
-    )
+      child: Scaffold(
+         appBar: AppBar(
+           automaticallyImplyLeading: false,
+           title: Text(AppLocalizations.of(context)!.dashboard_title),
+           actions: [
+             IconButton(
+                 onPressed: () async {
+                   LocalPreference.clearAllPreference();
+                   Navigator.pushReplacementNamed(context, RoutePaths.login);
+                 },
+                 icon: const Icon(Icons.logout))
+           ],
+         ),
+         body: SafeArea(
+             child: CustomScrollView(slivers: [
+           SliverFillRemaining(
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.start,
+               children: [
+                 Expanded(
+                   flex: 1,
+                   child:
+                   SideMenuWidget(LocalPreference.getUserRole(),widget.pageController)
+                 ),
+                 Expanded(
+                   flex: 7,
+                   child: PageView(
+                     physics: const NeverScrollableScrollPhysics(),
+                     controller: widget.pageController,
+      children: LocalPreference.getUserRole() =='Admin' ? adminPage : waiterPage
+                   ),
+                 )
+               ],
+             ),
+           )
+         ]))),
+    );
   }
 }

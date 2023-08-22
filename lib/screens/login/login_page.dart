@@ -181,7 +181,7 @@ class _LoginPage extends State<LoginPage> {
 
   void onSuccess() {
     LocalPreference.setSignWith("set");
-    Navigator.popAndPushNamed(context, RoutePaths.dashboard);
+    Navigator.popAndPushNamed(context, RoutePaths.dashboard,arguments: LoginBloc.userRole);
   }
 
   void createSnackBar(String message) {

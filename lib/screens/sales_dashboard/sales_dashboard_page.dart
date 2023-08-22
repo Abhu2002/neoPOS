@@ -1,7 +1,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/sales_dashboard/graph_widget/graph_dashboard_widget.dart';
 import 'package:neopos/screens/sales_dashboard/sales_dashboard_bloc.dart';
 import 'package:pie_chart/pie_chart.dart';
@@ -11,8 +10,8 @@ import '../../utils/common_card.dart';
 
 class SalesDashboardPage extends StatefulWidget {
 
-
-  const SalesDashboardPage(
+  PageController pageController;
+   SalesDashboardPage(this.pageController,
       {super.key, });
 
   @override
@@ -87,16 +86,16 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                                             trailing: TextButton(
                                               child: const Text("All Order"),
                                               onPressed: () {
-                                                if (DashboardPage.pageController
+                                                if (widget.pageController
                                                     .hasClients) {
-                                                  DashboardPage.pageController
+                                                  widget.pageController
                                                       .animateToPage(
                                                     5,
                                                     duration: const Duration(
                                                         milliseconds: 400),
                                                     curve: Curves.easeInOut,
                                                   );
-                                                  DashboardPage.pageController.jumpToPage(5);
+                                                  widget.pageController.jumpToPage(5);
                                                 }
                                               },
                                             )),
