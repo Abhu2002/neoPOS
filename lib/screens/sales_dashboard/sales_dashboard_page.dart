@@ -1,4 +1,4 @@
-import 'package:easy_sidemenu/easy_sidemenu.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/sales_dashboard/graph_widget/graph_dashboard_widget.dart';
@@ -9,11 +9,10 @@ import '../../utils/app_colors.dart';
 import '../../utils/common_card.dart';
 
 class SalesDashboardPage extends StatefulWidget {
-  final PageController controller;
-  final SideMenuController sidemenu;
 
-  const SalesDashboardPage(
-      {super.key, required this.controller, required this.sidemenu});
+  PageController pageController;
+   SalesDashboardPage(this.pageController,
+      {super.key, });
 
   @override
   State<SalesDashboardPage> createState() => _SalesDashboardPageState();
@@ -87,16 +86,16 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                                             trailing: TextButton(
                                               child: const Text("All Order"),
                                               onPressed: () {
-                                                if (widget.controller
+                                                if (widget.pageController
                                                     .hasClients) {
-                                                  widget.controller
+                                                  widget.pageController
                                                       .animateToPage(
                                                     5,
                                                     duration: const Duration(
                                                         milliseconds: 400),
                                                     curve: Curves.easeInOut,
                                                   );
-                                                  widget.sidemenu.changePage(5);
+                                                  widget.pageController.jumpToPage(5);
                                                 }
                                               },
                                             )),

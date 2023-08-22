@@ -3,7 +3,7 @@ part of 'order_history_bloc.dart';
 sealed class OrderHistoryState extends Equatable {
   const OrderHistoryState();
 
-  num get amount => 0;
+  double get amount => 0;
   String get orderId => "";
   List get allOrder => [];
   List get productList => [];
@@ -34,13 +34,13 @@ class OrderHistoryErrorState extends OrderHistoryState {
 class ShowProductsState extends OrderHistoryState {
   final List productList;
   final List allOrder;
-  final num amount;
+  final double amount;
   final String orderId;
   final bool showORhide;
   ShowProductsState(this.allOrder, this.productList, this.amount, this.orderId,
       this.showORhide);
 
   @override
-  List<Object> get props => [allOrder, productList, amount];
+  List<Object> get props =>
+      [allOrder, productList, amount, orderId, showORhide];
 }
-
