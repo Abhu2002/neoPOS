@@ -1,9 +1,11 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
+import 'package:neopos/screens/dashboard/side_menu.dart';
+import 'package:neopos/screens/login/login_bloc.dart';
 
 import 'package:neopos/screens/products/products_page/read_products_page.dart';
 import '../../navigation/route_paths.dart';
-import 'package:neopos/utils/app_colors.dart';
+import '../../utils/sharedpref/sharedpreference.dart';
 import '../order history/order_history_page.dart';
 import '../order page/order_table_page/order_read_page.dart';
 import '../sales_dashboard/sales_dashboard_page.dart';
@@ -13,133 +15,78 @@ import '../users/user_page/read_user_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DashboardPage extends StatefulWidget {
-  const DashboardPage({Key? key}) : super(key: key);
-
+   PageController pageController = PageController();
+  var userRole;
+   DashboardPage({Key? key, this.userRole}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _DashboardPage();
 }
 
 class _DashboardPage extends State<DashboardPage> {
-  final SideMenuController sideMenu = SideMenuController();
-  PageController pageController = PageController();
+
 
   @override
   void initState() {
-    // Connect SideMenuController and PageController together
-    sideMenu.addListener((index) {
-      pageController.jumpToPage(index);
-    });
+    LocalPreference.getUserRole() ?? LocalPreference.setUserRole(LoginBloc.userRole);
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<SideMenuItem> items = [
-      SideMenuItem(
-        icon: const Icon(Icons.category),
-        title: AppLocalizations.of(context)!.category_title,
-        onTap: (index, sideMenuController) {
-          sideMenuController.changePage(index);
-        },
-      ),
-      SideMenuItem(
-        icon: const Icon(Icons.restaurant_menu),
-        title: AppLocalizations.of(context)!.products_title,
-        onTap: (index, sideMenuController) {
-          sideMenuController.changePage(index);
-        },
-      ),
-      SideMenuItem(
-        icon: const Icon(Icons.table_chart),
-        title: AppLocalizations.of(context)!.tables_title,
-        onTap: (index, sideMenuController) {
-          sideMenuController.changePage(index);
-        },
-      ),
-      SideMenuItem(
-        icon: const Icon(Icons.dashboard),
-        title: AppLocalizations.of(context)!.order_page,
-        onTap: (index, sideMenuController) {
-          sideMenuController.changePage(index);
-        },
-      ),
-      SideMenuItem(
-        icon: const Icon(Icons.dashboard),
-        title: AppLocalizations.of(context)!.dashboard_title,
-        onTap: (index, sideMenuController) {
-          sideMenuController.changePage(index);
-        },
-      ),
-      SideMenuItem(
-        icon: const Icon(Icons.shopping_cart),
-        title: AppLocalizations.of(context)!.order_history_title,
-        onTap: (index, sideMenuController) {
-          sideMenuController.changePage(index);
-        },
-      ),
-      SideMenuItem(
-        icon: const Icon(Icons.person),
-        title: AppLocalizations.of(context)!.users_title,
-        onTap: (index, sideMenuController) {
-          sideMenuController.changePage(index);
-        },
-      ),
+    List<Widget> adminPage=[
+      const SingleChildScrollView(child: CategoryRead()),
+      const SingleChildScrollView(child: ProductsRead()),
+      const SingleChildScrollView(child: TableRead()),
+      const SingleChildScrollView(child: OrderPageRead()),
+      SingleChildScrollView(
+          child: SalesDashboardPage(widget.pageController)),
+      const SingleChildScrollView(child: OrderHistoryPage()),
+      const SingleChildScrollView(child: UserRead()),
+    ];
+    List<Widget> waiterPage=[
+      const SingleChildScrollView(child: OrderPageRead()),
+      const SingleChildScrollView(child: OrderHistoryPage()),
     ];
 
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(AppLocalizations.of(context)!.dashboard_title),
-          actions: [
-            IconButton(
-                onPressed: () async {
-                  Navigator.pushReplacementNamed(context, RoutePaths.login);
-                },
-                icon: const Icon(Icons.logout))
-          ],
-        ),
-        body: SafeArea(
-            child: CustomScrollView(slivers: [
-          SliverFillRemaining(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Expanded(
-                  flex: 1,
-                  child: SideMenu(
-                      items: items,
-                      controller: sideMenu,
-                      style: SideMenuStyle(
-                          openSideMenuWidth: 180,
-                          displayMode: SideMenuDisplayMode.auto,
-                          backgroundColor: Colors.grey.shade50,
-                          selectedColor: AppColors.primarySwatch.shade50,
-                          selectedIconColor: AppColors.primarySwatch.shade400,
-                          selectedTitleTextStyle: TextStyle(
-                              color: AppColors.primarySwatch.shade400))),
-                ),
-                Expanded(
-                  flex: 7,
-                  child: PageView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    controller: pageController,
-                    children: [
-                      const SingleChildScrollView(child: CategoryRead()),
-                      const SingleChildScrollView(child: ProductsRead()),
-                      const SingleChildScrollView(child: TableRead()),
-                      const SingleChildScrollView(child: OrderPageRead()),
-                      SingleChildScrollView(
-                          child: SalesDashboardPage(
-                        controller: pageController,
-                        sidemenu: sideMenu,
-                      )),
-                      const SingleChildScrollView(child: OrderHistoryPage()),
-                      const SingleChildScrollView(child: UserRead()),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          )
-        ])));
+    return WillPopScope( onWillPop: () async {
+      return false;
+    },
+      child: Scaffold(
+         appBar: AppBar(
+           automaticallyImplyLeading: false,
+           title: Text(AppLocalizations.of(context)!.dashboard_title),
+           actions: [
+             IconButton(
+                 onPressed: () async {
+                   LocalPreference.clearAllPreference();
+                   Navigator.pushReplacementNamed(context, RoutePaths.login);
+                 },
+                 icon: const Icon(Icons.logout))
+           ],
+         ),
+         body: SafeArea(
+             child: CustomScrollView(slivers: [
+           SliverFillRemaining(
+             child: Row(
+               mainAxisAlignment: MainAxisAlignment.start,
+               children: [
+                 Expanded(
+                   flex: 1,
+                   child:
+                   SideMenuWidget(LocalPreference.getUserRole(),widget.pageController)
+                 ),
+                 Expanded(
+                   flex: 7,
+                   child: PageView(
+                     physics: const NeverScrollableScrollPhysics(),
+                     controller: widget.pageController,
+      children: LocalPreference.getUserRole() =='Admin' ? adminPage : waiterPage
+                   ),
+                 )
+               ],
+             ),
+           )
+         ]))),
+    );
   }
 }

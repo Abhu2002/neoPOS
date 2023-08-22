@@ -10,6 +10,7 @@ part 'login_event.dart';
 part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  static var userRole;
   LoginBloc() : super(const LoginState()) {
     on<UserIdChanged>(_onUserIdChanged);
     on<PasswordChanged>(_onPasswordChanged);
@@ -58,6 +59,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           .then((value) {
         if (value.size != 0) {
           for (var data in value.docs) {
+            String role = data['user_role'];
+            if(role == 'Admin'){
+              userRole=role;
+            }
+            else{userRole='Waiter';}
             result = data.data();
             onLoginSuccess!();
           }

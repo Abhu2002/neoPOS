@@ -7,6 +7,7 @@ import 'package:neopos/screens/category/category_operation/delete_operation/dele
 import 'package:neopos/screens/category/category_operation/update_operation/category_update_bloc.dart';
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
+import 'package:neopos/screens/dashboard/side_menu_bloc.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/order%20page/order_menu_page/order_menu_bloc.dart';
 import 'package:neopos/screens/order%20page/order_table_page/order_read_bloc.dart';
@@ -15,6 +16,7 @@ import 'package:neopos/screens/products/products_operation/create_operation/crea
 import 'package:neopos/screens/products/products_operation/delete_operation/delete_bloc.dart';
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_bloc.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
+import 'package:neopos/screens/sales_dashboard/graph_widget/graph_dashboard_bloc.dart';
 import 'package:neopos/screens/sales_dashboard/sales_dashboard_bloc.dart';
 import 'package:neopos/screens/splashScreen/splashscreen_page.dart';
 import 'package:neopos/screens/users/user_operations/user_create/create_user_bloc.dart';
@@ -26,6 +28,7 @@ import 'package:neopos/screens/table/table_operation/delete_operation/delete_blo
 import 'package:neopos/screens/table/table_operation/update_operation/update_bloc.dart';
 import 'package:neopos/screens/table/table_page/table_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
+import 'package:neopos/utils/sharedpref/sharedpreference.dart';
 import 'di/firebase_di.dart';
 import 'firebase_options.dart';
 import 'l10n/l10n.dart';
@@ -35,6 +38,8 @@ import 'navigation/app_router.dart';
 Future<void> main() async {
   setupSingletons();
   WidgetsFlutterBinding.ensureInitialized();
+  LocalPreference.init();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -88,13 +93,17 @@ class MyApp extends StatelessWidget {
 
         //Bloc for SalesDashboard page
         BlocProvider(create: (_) => SalesDashboardBloc()),
+        BlocProvider(create: (_) => GraphDashboardBloc()),
+
+        // Bloc for Side Menu
+        BlocProvider(create: (_) => SideMenuBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
             primarySwatch: AppColors.primarySwatch,
             scaffoldBackgroundColor: AppColors.backgroundColor),
-        home: isLoggedIn(),
+        home: LocalPreference.getSignWith() != null ? DashboardPage() : const SplashScreen(),
 
         onGenerateRoute: AppRouter.generateRoute,
         // setting up localization
@@ -111,15 +120,3 @@ class MyApp extends StatelessWidget {
   }
 }
 
-Widget? isLoggedIn() {
-  Widget? widget;
-
-  /// TODO: Initialize user to check whether already logged in or not
-  const user = null;
-  if (user == null) {
-    widget = const SplashScreen();
-  } else {
-    widget = const DashboardPage();
-  }
-  return widget;
-}

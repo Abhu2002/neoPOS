@@ -44,89 +44,168 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                 children: [
                   Expanded(
                     flex: 5,
-                    child: Container(
-                      height: MediaQuery.sizeOf(context).height - 119,
-                      child: ListView.builder(
-                        itemCount: state.allOrder.length,
-                        itemBuilder: (context, index) {
-                          var data = state.allOrder[index];
-                          var showORhide = true;
-                          return InkWell(
-                            onTap: () {
-                              BlocProvider.of<OrderHistoryBloc>(context).add(
-                                  ShowOrderProductsEvent(
-                                      data["Id"], allOrders, showORhide));
-                            },
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(20)),
-                              borderOnForeground: true,
-                              child: Padding(
-                                padding: const EdgeInsets.all(10.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20)),
-                                  height: 80,
-                                  child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: Row(
-                                            children: [
-                                              Expanded(
-                                                  flex: 5,
-                                                  child: Text(
-                                                    "Order Id: ${data["Id"]}",
-                                                    style: const TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  )),
-                                              Expanded(
-                                                  flex: 1,
-                                                  child: Text(
-                                                    DateFormat('MMM dd hh:mm')
-                                                        .format(DateTime.parse(
-                                                            data[
-                                                                'order_date'])),
-                                                    style: const TextStyle(
-                                                        fontSize: 14,
-                                                        color: AppColors
-                                                            .subTextColor),
-                                                  )),
-                                            ],
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: Row(children: [
-                                            Expanded(
-                                                flex: 5,
-                                                child: Text(
-                                                  "Mode: ${data["payment_mode"]}",
-                                                  style: const TextStyle(
-                                                      fontSize: 12,
-                                                      color: Colors.grey),
-                                                )),
-                                            Expanded(
-                                                flex: 1,
-                                                child: Text(
-                                                  "₹${f.format(data["amount"])}",
-                                                  style: const TextStyle(
-                                                      fontSize: 15,
-                                                      fontWeight:
-                                                          FontWeight.bold),
-                                                )),
-                                          ]),
-                                        ),
-                                      ]),
-                                ),
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20)),
+                      child: SizedBox(
+                        height: (MediaQuery.sizeOf(context).height) * 0.82,
+                        child: Column(
+                          children: [
+                            Container(
+                              color: Colors.orange.shade600,
+                              height: 50,
+                              child: const Row(
+                                children: [
+                                  Expanded(
+                                    flex: 1,
+                                    child: SizedBox(
+                                        width: 20,
+                                        child: Center(
+                                            child: Text(
+                                          "Id",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ))),
+                                  ),
+                                  Expanded(
+                                    flex: 4,
+                                    child: SizedBox(
+                                        width: 80,
+                                        child: Center(
+                                            child: Text(
+                                          "Customer Name",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ))),
+                                  ),
+                                  Expanded(
+                                    flex: 4,
+                                    child: SizedBox(
+                                        width: 80,
+                                        child: Center(
+                                            child: Text(
+                                          "Moblie no",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ))),
+                                  ),
+                                  Expanded(
+                                    flex: 3,
+                                    child: SizedBox(
+                                        width: 80,
+                                        child: Center(
+                                            child: Text(
+                                          "Amount",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ))),
+                                  ),
+                                  Expanded(
+                                    flex: 3,
+                                    child: SizedBox(
+                                        width: 50,
+                                        child: Center(
+                                            child: Text(
+                                          "Date",
+                                          style: TextStyle(
+                                              fontSize: 15,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white),
+                                        ))),
+                                  ),
+                                ],
                               ),
                             ),
-                          );
-                        },
+                            Container(
+                              height: 1,
+                              color: Colors.grey,
+                            ),
+                            SizedBox(
+                              height: MediaQuery.sizeOf(context).height * 0.70,
+                              child: ListView.separated(
+                                itemCount: allOrders.length,
+                                separatorBuilder: (context, index) {
+                                  return Container(
+                                    height: 1,
+                                    color: Colors.grey,
+                                  );
+                                },
+                                itemBuilder: (context, index) {
+                                  var data = allOrders[index];
+                                  var showORhide = true;
+
+                                  return InkWell(
+                                    onTap: () {
+                                      BlocProvider.of<OrderHistoryBloc>(context)
+                                          .add(ShowOrderProductsEvent(
+                                              data["Id"],
+                                              allOrders,
+                                              showORhide));
+                                    },
+                                    child: Container(
+                                      height: 50,
+                                      color: (state.orderId ==
+                                              (index + 1).toString())
+                                          ? AppColors.primarySwatch.shade50
+                                          : Colors.white,
+                                      child: Row(
+                                        children: [
+                                          Expanded(
+                                              flex: 1,
+                                              child: SizedBox(
+                                                width: 20,
+                                                child: Center(
+                                                    child:
+                                                        Text("${data["Id"]}")),
+                                              )),
+                                          Expanded(
+                                              flex: 4,
+                                              child: SizedBox(
+                                                child: Center(
+                                                    child: Text(
+                                                        "${data["customer_name"]}")),
+                                              )),
+                                          Expanded(
+                                              flex: 4,
+                                              child: SizedBox(
+                                                child: Center(
+                                                    child: Text(
+                                                        "${data["customer_mobile_no"]}")),
+                                              )),
+                                          Expanded(
+                                              flex: 3,
+                                              child: SizedBox(
+                                                child: Center(
+                                                    child: Text(
+                                                        "₹${data["amount"]}")),
+                                              )),
+                                          Expanded(
+                                              flex: 3,
+                                              child: SizedBox(
+                                                child: Center(
+                                                    child: Text(DateFormat
+                                                            .MMMd()
+                                                        .format(DateTime.parse(
+                                                            data[
+                                                                "order_date"])))),
+                                              )),
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/order%20page/order_menu_page/total_order_checkout.dart';
 import 'package:neopos/screens/order%20page/widgets/order_checkout_popup.dart';
+import '../../../navigation/route_paths.dart';
 import '../widgets/menu_btns_widget.dart';
 import '../widgets/menu_cards_widget.dart';
 import 'order_menu_bloc.dart';
@@ -23,6 +24,10 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
     if (widget.data != null && widget.data.containsKey('Id')) {
       BlocProvider.of<OrderContentBloc>(context)
           .add(ProductLoadingEvent(widget.data['Id'].toString(), false));
+    } else {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          Navigator.pushReplacementNamed(context, RoutePaths.dashboard);
+        });
     }
   }
 
