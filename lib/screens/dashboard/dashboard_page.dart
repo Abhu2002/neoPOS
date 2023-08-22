@@ -1,9 +1,11 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/dashboard/side_menu.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 
 import 'package:neopos/screens/products/products_page/read_products_page.dart';
+import '../../main.dart';
 import '../../navigation/route_paths.dart';
 import '../../utils/sharedpref/sharedpreference.dart';
 import '../order history/order_history_page.dart';
@@ -13,6 +15,8 @@ import '../table/table_page/table_page.dart';
 import '../category/category_page/read_category_page.dart';
 import '../users/user_page/read_user_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import 'Localization bloc/localization_bloc.dart';
 
 class DashboardPage extends StatefulWidget {
   PageController pageController = PageController();
@@ -54,8 +58,38 @@ class _DashboardPage extends State<DashboardPage> {
       child: Scaffold(
           appBar: AppBar(
             automaticallyImplyLeading: false,
-            title: Text(AppLocalizations.of(context)!.dashboard_title),
+            title: Text(AppLocalizations.of(context)!.project_title),
             actions: [
+              Row(
+                children: [
+                  const Text("English"),
+                  Switch(
+                    onChanged: (value) {
+                      if ((LocalPreference.getLang() == "en")) {
+                        setState(() {
+                          LocalPreference.setLang("hi");
+                          isSwitched = true;
+                        });
+                        BlocProvider.of<LocalizationBloc>(context)
+                            .add(const changelanevent("hi"));
+                      } else if (LocalPreference.getLang() == "hi") {
+                        setState(() {
+                          //   LocalPreference.setLang("en");
+                          isSwitched = false;
+                        });
+                        BlocProvider.of<LocalizationBloc>(context)
+                            .add(const changelanevent("en"));
+                      }
+                    },
+                    value: isSwitched,
+                    activeColor: Colors.orange,
+                    activeTrackColor: Colors.orange.shade600,
+                    inactiveThumbColor: Colors.white,
+                    inactiveTrackColor: Colors.white,
+                  ),
+                  const Text("Hindi")
+                ],
+              ),
               IconButton(
                   onPressed: () async {
                     LocalPreference.clearAllPreference();
