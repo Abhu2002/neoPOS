@@ -7,6 +7,7 @@ import 'package:neopos/screens/category/category_operation/delete_operation/dele
 import 'package:neopos/screens/category/category_operation/update_operation/category_update_bloc.dart';
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
+import 'package:neopos/screens/dashboard/side_menu_bloc.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/order%20page/order_menu_page/order_menu_bloc.dart';
 import 'package:neopos/screens/order%20page/order_table_page/order_read_bloc.dart';
@@ -93,6 +94,9 @@ class MyApp extends StatelessWidget {
         //Bloc for SalesDashboard page
         BlocProvider(create: (_) => SalesDashboardBloc()),
         BlocProvider(create: (_) => GraphDashboardBloc()),
+
+        // Bloc for Side Menu
+        BlocProvider(create: (_) => SideMenuBloc()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
