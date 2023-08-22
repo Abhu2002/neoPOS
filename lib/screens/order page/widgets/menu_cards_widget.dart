@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../navigation/route_paths.dart';
 import '../order_menu_page/order_menu_bloc.dart';
 import 'add_order.dart';
 
@@ -14,6 +15,18 @@ class MenuCardWidget extends StatefulWidget {
 }
 
 class _MenuCardWidgetState extends State<MenuCardWidget> {
+
+  @override
+  void initState() {
+
+    super.initState();
+    if(widget.data == null) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacementNamed(context, RoutePaths.dashboard);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<OrderContentBloc, OrderContentState>(

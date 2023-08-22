@@ -1,9 +1,12 @@
 import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:neopos/screens/dashboard/side_menu.dart';
+import 'package:neopos/screens/login/login_bloc.dart';
 
 import 'package:neopos/screens/products/products_page/read_products_page.dart';
 import '../../navigation/route_paths.dart';
+import 'package:neopos/utils/app_colors.dart';
+import '../../utils/sharedpref/sharedpreference.dart';
 import '../order history/order_history_page.dart';
 import '../order page/order_table_page/order_read_page.dart';
 import '../sales_dashboard/sales_dashboard_page.dart';
@@ -15,7 +18,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class DashboardPage extends StatefulWidget {
   static PageController pageController = PageController();
   var userRole;
-   DashboardPage({Key? key,this.userRole}) : super(key: key);
+   DashboardPage({Key? key, this.userRole}) : super(key: key);
   @override
   State<StatefulWidget> createState() => _DashboardPage();
 }
@@ -26,6 +29,9 @@ class _DashboardPage extends State<DashboardPage> {
   @override
   void initState() {
     // Connect SideMenuController and PageController together
+
+    LocalPreference.getUserRole() ?? LocalPreference.setUserRole(LoginBloc.userRole);
+
 
     super.initState();
   }
@@ -65,7 +71,11 @@ class _DashboardPage extends State<DashboardPage> {
       const SingleChildScrollView(child: OrderHistoryPage()),
     ];
 
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      return false;
+    },
+     child: Scaffold(
         appBar: AppBar(
           title: Text(AppLocalizations.of(context)!.dashboard_title),
           actions: [
@@ -92,12 +102,13 @@ class _DashboardPage extends State<DashboardPage> {
                   child: PageView(
                     physics: const NeverScrollableScrollPhysics(),
                     controller: DashboardPage.pageController,
-                    children: widget.userRole=='Admin' ? adminPage : waiterPage
+    children: LocalPreference.getUserRole() =='Admin' ? adminPage : waiterPage
                   ),
                 )
               ],
             ),
           )
-        ])));
+        ]))),
+    )
   }
 }
