@@ -1,4 +1,4 @@
-import 'package:easy_sidemenu/easy_sidemenu.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
@@ -96,7 +96,7 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                                                         milliseconds: 400),
                                                     curve: Curves.easeInOut,
                                                   );
-                                                  DashboardPage.sideMenu.changePage(5);
+                                                  DashboardPage.pageController.jumpToPage(5);
                                                 }
                                               },
                                             )),
