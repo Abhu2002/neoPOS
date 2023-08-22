@@ -45,24 +45,13 @@ class CheckoutOrderFBEvent extends OrderContentEvent {
   final int totalPrice;
   final String docId;
 
-
-  CheckoutOrderFBEvent(
-      this.customerName,
-      this.customerMbNo,
-      this.paymentMode,
-      this.totalPrice,
-      this.docId
-      );
-
+  CheckoutOrderFBEvent(this.customerName, this.customerMbNo, this.paymentMode,
+      this.totalPrice, this.docId);
 
   @override
-  List<Object> get props => [
-    customerName,
-    customerMbNo,
-    paymentMode,
-    totalPrice,
-    docId
-  ];}
+  List<Object> get props =>
+      [customerName, customerMbNo, paymentMode, totalPrice, docId];
+}
 
 class FilterProductsEvent extends OrderContentEvent {
   final String category;

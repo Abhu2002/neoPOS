@@ -45,7 +45,7 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
 
     on<ShowOrderProductsEvent>((event, emit) {
       var productList = [];
-      num amount = 0;
+      double amount = 0;
       String orderId = "";
       var allOrders = event.allOrders;
       for (var i = 0; i < allOrders.length; i++) {
@@ -62,6 +62,5 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
       emit(ShowProductsState(
           event.allOrders, productList, amount, orderId, event.showORhide));
     });
-
   }
 }

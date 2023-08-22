@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:neopos/screens/order%20history/product_order_per_table.dart';
+import 'package:neopos/screens/order%20page/order_menu_page/total_order_checkout.dart';
 import 'package:neopos/utils/app_colors.dart';
 import 'package:intl/intl.dart';
 import 'order_history_bloc.dart';
@@ -56,7 +56,6 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                               BlocProvider.of<OrderHistoryBloc>(context).add(
                                   ShowOrderProductsEvent(
                                       data["Id"], allOrders, showORhide));
-
                             },
                             child: Card(
                               shape: RoundedRectangleBorder(
@@ -131,13 +130,39 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                       ),
                     ),
                   ),
-                  Visibility(
-                    visible: state.showORhide,
-                    child: Expanded(
-                      flex: 3,
-                      child: ProductOrderPerTable(),
-                    ),
-                  ), //--->widget end
+
+                  BlocBuilder<OrderHistoryBloc, OrderHistoryState>(
+                      builder: ((context, state) {
+                    if (state is OrderHistoryLoaded ||
+                        state is ShowProductsState) {
+                      var products = state.productList;
+                      var data = state.allOrder;
+                      bool showORhide = false;
+                      double amount = state.amount;
+                      String orderID = state.orderId;
+                      bool showORhideMinus = false;
+                      bool showORhideAdd = false;
+                      bool showORhideBin = false;
+                      bool showORhideCheckoutbtn = false;
+                      return Visibility(
+                        visible: state.showORhide,
+                        child: Expanded(
+                            flex: 3,
+                            child: TotalOrderCheckout(
+                                showORhide: showORhide,
+                                data: data,
+                                products: products,
+                                totalPrice: amount,
+                                orderID: orderID,
+                                showORhideAdd: showORhideAdd,
+                                showORhideBin: showORhideBin,
+                                showORhideMinus: showORhideMinus,
+                                showORhideCheckoutbtn: showORhideCheckoutbtn)),
+                      );
+                    } else {
+                      return Container();
+                    }
+                  })) //--->widget end
                 ],
               );
             } else {
