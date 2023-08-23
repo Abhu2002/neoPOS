@@ -171,9 +171,7 @@ class DrawerListTile extends StatelessWidget {
       onTap: press,
       horizontalTitleGap: 0.0,
       leading: icon,
-      title: (MediaQuery.of(context).size.width < 900)
-          ? null
-          : Text(
+      title: Text(
               title,
               style: TextStyle(
                   color: (isSelected)
