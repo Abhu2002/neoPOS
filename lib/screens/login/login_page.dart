@@ -35,11 +35,12 @@ class _LoginPage extends State<LoginPage> {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Expanded(
-                    child: Image(
+                (screenWidth>850)?const Expanded(
+                    child:
+                    Image(
                   image: AssetImage("assets/login_page_image.jpg"),
                   fit: BoxFit.cover,
-                )),
+                )):Container(),
                 Expanded(
                   child: SizedBox(
                     height: MediaQuery.sizeOf(context).height,
@@ -80,9 +81,7 @@ class _LoginPage extends State<LoginPage> {
                                     BlocBuilder<LoginBloc, LoginState>(
                                       builder: (context, state) {
                                         return SizedBox(
-                                          width:
-                                              MediaQuery.sizeOf(context).width /
-                                                  4,
+                                          width: (screenWidth>850)?MediaQuery.sizeOf(context).width / 4:MediaQuery.sizeOf(context).width-100,
                                           child: AuthCustomTextfield(
                                             obscureText: false,
                                             suffixIcon:
@@ -113,9 +112,7 @@ class _LoginPage extends State<LoginPage> {
                                     BlocBuilder<LoginBloc, LoginState>(
                                       builder: (context, state) {
                                         return SizedBox(
-                                          width:
-                                              MediaQuery.sizeOf(context).width /
-                                                  4,
+                                          width:(screenWidth>850)?MediaQuery.sizeOf(context).width / 4:MediaQuery.sizeOf(context).width-100,
                                           child: AuthCustomTextfield(
                                             obscureText: true,
                                             suffixIcon:
@@ -146,9 +143,7 @@ class _LoginPage extends State<LoginPage> {
                                     BlocBuilder<LoginBloc, LoginState>(
                                       builder: (context, state) {
                                         return SizedBox(
-                                          width:
-                                              MediaQuery.sizeOf(context).width /
-                                                  8,
+                                          width:(screenWidth>850)?MediaQuery.sizeOf(context).width / 8:MediaQuery.sizeOf(context).width-200,
                                           child: ActionButton(
                                             text: AppLocalizations.of(context)!
                                                 .login,
