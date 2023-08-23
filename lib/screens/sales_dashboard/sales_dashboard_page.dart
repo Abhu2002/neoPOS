@@ -7,6 +7,7 @@ import 'package:intl/intl.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/common_card.dart';
 import '../dashboard/side_menu_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SalesDashboardPage extends StatefulWidget {
   PageController pageController;
@@ -72,15 +73,15 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                                 child: Column(
                                   children: [
                                     ListTile(
-                                        title: const Text(
-                                          "Last 5 Orders Transaction",
-                                          style: TextStyle(
+                                        title:  Text(
+                                          AppLocalizations.of(context)!.sales_dash_order,
+                                          style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                               color: AppColors.primaryColor),
                                         ),
                                         trailing: TextButton(
-                                          child: const Text("All Order"),
+                                          child:  Text(AppLocalizations.of(context)!.sales_dash_more),
                                           onPressed: () {
                                             if (widget
                                                 .pageController.hasClients) {
@@ -152,17 +153,17 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                                     children: [
                                       Expanded(
                                           child: CommonCard(
-                                        title: "Today's Revenue",
+                                        title: AppLocalizations.of(context)!.today_revenue,
                                         amount: state.dailyValue.toString(),
                                       )),
                                       Expanded(
                                           child: CommonCard(
-                                        title: "Weekly Revenue",
+                                        title: AppLocalizations.of(context)!.monthly_revenue,
                                         amount: state.weeklyValue.toString(),
                                       )),
                                       Expanded(
                                           child: CommonCard(
-                                        title: "Monthly Revenue",
+                                        title: AppLocalizations.of(context)!.yearly_revenue,
                                         amount: state.monthlyValue.toString(),
                                       )),
                                     ],

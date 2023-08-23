@@ -54,7 +54,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                             Container(
                               color: Colors.orange.shade600,
                               height: 50,
-                              child: const Row(
+                              child:  Row(
                                 children: [
                                   Expanded(
                                     flex: 1,
@@ -62,8 +62,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                         width: 20,
                                         child: Center(
                                             child: Text(
-                                          "Id",
-                                          style: TextStyle(
+                                              AppLocalizations.of(context)!.order_history_id,
+                                          style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white),
@@ -75,8 +75,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                         width: 80,
                                         child: Center(
                                             child: Text(
-                                          "Customer Name",
-                                          style: TextStyle(
+                                              AppLocalizations.of(context)!.order_history_name,
+                                          style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white),
@@ -88,8 +88,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                         width: 80,
                                         child: Center(
                                             child: Text(
-                                          "Moblie no",
-                                          style: TextStyle(
+                                              AppLocalizations.of(context)!.order_history_mob,
+                                          style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white),
@@ -101,8 +101,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                         width: 80,
                                         child: Center(
                                             child: Text(
-                                          "Amount",
-                                          style: TextStyle(
+                                              AppLocalizations.of(context)!.order_history_amt,
+                                          style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white),
@@ -114,8 +114,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                         width: 50,
                                         child: Center(
                                             child: Text(
-                                          "Date",
-                                          style: TextStyle(
+                                              AppLocalizations.of(context)!.date_title,
+                                          style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                               color: Colors.white),

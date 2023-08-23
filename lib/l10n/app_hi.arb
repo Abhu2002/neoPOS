@@ -125,5 +125,14 @@
      "menu" : "मेन्यू",
      "order": "आदेश",
      "order_history_page_title": "आदेश इतिहास",
-     "project_title":"नियोपोस"
+     "project_title":"नियोपोस",
+     "order_history_name": "ग्राहक का नाम",
+     "order_history_mob": "मोबाइल नंबर",
+     "order_history_amt": "रकम",
+     "order_history_id":"पहचान",
+     "sales_dash_order": "पिछले 5 ऑर्डर का लेनदेन",
+     "sales_dash_more": "सभी ऑर्डर",
+     "today_revenue": "आज का आमदनी",
+     "monthly_revenue": "महीने के आमदनी",
+     "yearly_revenue": "सालाना आमदनी"
 }
