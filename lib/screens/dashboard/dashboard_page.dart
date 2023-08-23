@@ -6,6 +6,7 @@ import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/products/products_page/read_products_page.dart';
 import '../../navigation/route_paths.dart';
 import '../../utils/sharedpref/sharedpreference.dart';
+import '../category/mob_category_page/read_mob_category_page.dart';
 import '../order history/order_history_page.dart';
 import '../order page/order_table_page/order_read_page.dart';
 import '../sales_dashboard/sales_dashboard_page.dart';
@@ -36,7 +37,7 @@ class _DashboardPage extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> adminPage = [
-      const SingleChildScrollView(child: CategoryRead()),
+      SingleChildScrollView(child: (MediaQuery.sizeOf(context).width > 850)? const CategoryRead(): const CategoryMobileRead()),
       const SingleChildScrollView(child: ProductsRead()),
       const SingleChildScrollView(child: TableRead()),
       const SingleChildScrollView(child: OrderPageRead()),
@@ -92,7 +93,9 @@ class _DashboardPage extends State<DashboardPage> {
               ),
               IconButton(
                   onPressed: () async {
+                    String? oldLan = LocalPreference.getLang();
                     LocalPreference.clearAllPreference();
+                    LocalPreference.setLang(oldLan);
                     Navigator.pushReplacementNamed(context, RoutePaths.login);
                   },
                   icon: const Icon(Icons.logout))
