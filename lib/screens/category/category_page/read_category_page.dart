@@ -57,31 +57,63 @@ class _CategoryReadState extends State<CategoryRead> {
         BlocBuilder<ReadCategoryBloc, ReadCategoryState>(
           builder: (context, state) {
             if (state is DataLoadedState) {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: DataTable(
-                  showBottomBorder: true,
-                  headingTextStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.mainTextColor),
-                  columns: [
-                    DataColumn(label: Text(AppLocalizations.of(context)!.sr)),
-                    DataColumn(
-                        label: Flexible(
-                            child: Text(AppLocalizations.of(context)!
-                                .category_name_title))),
-                    const DataColumn(label: Center(child: Text(''))),
-                  ],
-                  rows: state
-                      .all // Loops through dataColumnText, each iteration assigning the value to element
-                      .map(
-                        ((element) => DataRow(
-                              cells: <DataCell>[
-                                //Extracting from Map element the value
-                                DataCell(Text("${element.sr}")),
-                                DataCell(Text(element.categoryName!)),
-                                DataCell(Row(
+              return Column(
+                children: [
+                  Container(
+                    height: 50,
+                    color: Colors.orange.shade600,
+                    width: MediaQuery.sizeOf(context).width,
+                    child: Row(
+                      children: [
+                        const SizedBox(
+                          width: 30,
+                        ),
+                        Expanded(
+                            flex: 2,
+                            child: Text(
+                              AppLocalizations.of(context)!.sr,
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            )),
+                        Expanded(
+                            flex: 3,
+                            child: Text(
+                              AppLocalizations.of(context)!.category_name_title,
+                              style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            )),
+                        // const SizedBox(width: 30),
+                        Expanded(flex: 2, child: Text("")),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.sizeOf(context).height - 174,
+                      child: ListView.separated(
+                        itemCount: state.all.length,
+                        separatorBuilder: (context, index) => Container(
+                          width: MediaQuery.sizeOf(context).width,
+                          height: 1,
+                          color: Colors.grey.shade300,
+                        ),
+                        itemBuilder: (context, index) {
+                          var data = state.all[index];
+                          return Container(
+                            width: MediaQuery.sizeOf(context).width,
+                            child: Row(children: [
+                              const SizedBox(
+                                width: 30,
+                              ),
+                              Expanded(flex: 2, child: Text("${data.sr}")),
+                              Expanded(flex: 3, child: Text(data.categoryName)),
+                              Expanded(
+                                flex: 2,
+                                child: Row(
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
@@ -95,9 +127,9 @@ class _CategoryReadState extends State<CategoryRead> {
                                               context: context,
                                               builder: (context) =>
                                                   UpdateCategoryForm(
-                                                      id: element.id,
+                                                      id: data.id,
                                                       oldName:
-                                                          element.categoryName),
+                                                          data.categoryName),
                                             ).then((value) => BlocProvider.of<
                                                     ReadCategoryBloc>(context)
                                                 .add(InitialEvent(false)));
@@ -119,7 +151,7 @@ class _CategoryReadState extends State<CategoryRead> {
                                               context: context,
                                               builder: (context) =>
                                                   DeleteCategoryPopup(
-                                                categoryID: element.id!,
+                                                categoryID: data.id!,
                                               ),
                                             ).then((value) => BlocProvider.of<
                                                     ReadCategoryBloc>(context)
@@ -129,12 +161,13 @@ class _CategoryReadState extends State<CategoryRead> {
                                               color: AppColors.mainTextColor)),
                                     )
                                   ],
-                                )),
-                              ],
-                            )),
-                      )
-                      .toList(),
-                ),
+                                ),
+                              )
+                            ]),
+                          );
+                        },
+                      )),
+                ],
               );
             } else {
               return const SizedBox(

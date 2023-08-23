@@ -5,17 +5,19 @@ import 'package:neopos/screens/dashboard/side_menu_bloc.dart';
 import 'package:neopos/utils/app_colors.dart';
 
 import '../../utils/sharedpref/sharedpreference.dart';
-import '../login/login_bloc.dart';
-import 'dashboard_page.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SideMenuWidget extends StatefulWidget {
   var userRole;
   PageController pageController;
 
-  SideMenuWidget(this.userRole, this.pageController,{Key? key,}) : super(key: key);
+  SideMenuWidget(
+    this.userRole,
+    this.pageController, {
+    Key? key,
+  }) : super(key: key);
   @override
   State<StatefulWidget> createState() => _SideMenuPage();
-
 }
 
 class _SideMenuPage extends State<SideMenuWidget> {
@@ -28,7 +30,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
       }
       List<Widget> admin = [
         DrawerListTile(
-          title: "Category",
+          title: AppLocalizations.of(context)!.category_title,
           icon: Icon(
             Icons.category,
             color: (index == 0) ? AppColors.primarySwatch : Colors.black,
@@ -40,7 +42,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           isSelected: index == 0,
         ),
         DrawerListTile(
-          title: "Product",
+          title: AppLocalizations.of(context)!.products_title,
           icon: Icon(
             Icons.restaurant_menu,
             color: (index == 1) ? AppColors.primarySwatch : Colors.black,
@@ -52,19 +54,19 @@ class _SideMenuPage extends State<SideMenuWidget> {
           isSelected: index == 1,
         ),
         DrawerListTile(
-          title: "Tables",
+          title: AppLocalizations.of(context)!.tables_title,
           icon: Icon(
             Icons.table_chart,
             color: (index == 2) ? AppColors.primarySwatch : Colors.black,
           ),
           press: () {
-           widget.pageController.jumpToPage(2);
+            widget.pageController.jumpToPage(2);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(2));
           },
           isSelected: index == 2,
         ),
         DrawerListTile(
-          title: "Order page",
+          title: AppLocalizations.of(context)!.order_page,
           icon: Icon(
             Icons.dashboard,
             color: (index == 3) ? AppColors.primarySwatch : Colors.black,
@@ -76,7 +78,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           isSelected: index == 3,
         ),
         DrawerListTile(
-          title: "Dashboard",
+          title: AppLocalizations.of(context)!.dashboard_title,
           icon: Icon(
             Icons.dashboard,
             color: (index == 4) ? AppColors.primarySwatch : Colors.black,
@@ -88,7 +90,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           isSelected: index == 4,
         ),
         DrawerListTile(
-          title: "Order History",
+          title: AppLocalizations.of(context)!.order_history_title,
           icon: Icon(
             Icons.shopping_cart,
             color: (index == 5) ? AppColors.primarySwatch : Colors.black,
@@ -100,7 +102,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           isSelected: index == 5,
         ),
         DrawerListTile(
-          title: "Users",
+          title: AppLocalizations.of(context)!.users_title,
           icon: Icon(
             Icons.category,
             color: (index == 6) ? AppColors.primarySwatch : Colors.black,
@@ -114,7 +116,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
       ];
       List<Widget> waiter = [
         DrawerListTile(
-          title: "Order page",
+          title: AppLocalizations.of(context)!.order_page,
           icon: Icon(
             Icons.dashboard,
             color: (index == 0) ? AppColors.primarySwatch : Colors.black,
@@ -126,7 +128,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           isSelected: index == 0,
         ),
         DrawerListTile(
-          title: "Order History",
+          title: AppLocalizations.of(context)!.order_history_title,
           icon: Icon(
             Icons.shopping_cart,
             color: (index == 1) ? AppColors.primarySwatch : Colors.black,
@@ -145,8 +147,6 @@ class _SideMenuPage extends State<SideMenuWidget> {
       );
     });
   }
-
-
 }
 
 class DrawerListTile extends StatelessWidget {

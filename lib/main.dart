@@ -6,6 +6,7 @@ import 'package:neopos/screens/category/category_operation/create_operation/crea
 import 'package:neopos/screens/category/category_operation/delete_operation/delete_bloc.dart';
 import 'package:neopos/screens/category/category_operation/update_operation/category_update_bloc.dart';
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
+import 'package:neopos/screens/dashboard/Localization%20bloc/localization_bloc.dart';
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/dashboard/side_menu_bloc.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
@@ -46,9 +47,14 @@ Future<void> main() async {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -95,28 +101,36 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (_) => SalesDashboardBloc()),
         BlocProvider(create: (_) => GraphDashboardBloc()),
 
-        // Bloc for Side Menu
+        // Bloc for Sidebar
         BlocProvider(create: (_) => SideMenuBloc()),
-      ],
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-            primarySwatch: AppColors.primarySwatch,
-            scaffoldBackgroundColor: AppColors.backgroundColor),
-        home: LocalPreference.getSignWith() != null ? DashboardPage() : const SplashScreen(),
 
-        onGenerateRoute: AppRouter.generateRoute,
-        // setting up localization
-        supportedLocales: L10n.all,
-        locale: const Locale('en'),
-        localizationsDelegates: [
-          AppLocalizations.delegate,
-          AppLocalizations.localizationsDelegates[1],
-          AppLocalizations.localizationsDelegates[2],
-          AppLocalizations.localizationsDelegates[3],
-        ],
+        // Bloc for Localization
+        BlocProvider(create: (_) => LocalizationBloc()),
+      ],
+      child: BlocBuilder<LocalizationBloc, LocalizationState>(
+        builder: (context, state) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+                primarySwatch: AppColors.primarySwatch,
+                scaffoldBackgroundColor: AppColors.backgroundColor),
+            home: LocalPreference.getSignWith() != null
+                ? DashboardPage()
+                : const SplashScreen(),
+
+            onGenerateRoute: AppRouter.generateRoute,
+            // setting up localization
+            supportedLocales: L10n.all,
+            locale: Locale((state is localInitial) ? state.lann : "en"),
+            localizationsDelegates: [
+              AppLocalizations.delegate,
+              AppLocalizations.localizationsDelegates[1],
+              AppLocalizations.localizationsDelegates[2],
+              AppLocalizations.localizationsDelegates[3],
+            ],
+          );
+        },
       ),
     );
   }
 }
-

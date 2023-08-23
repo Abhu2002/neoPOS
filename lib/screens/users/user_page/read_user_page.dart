@@ -55,40 +55,81 @@ class _UserReadState extends State<UserRead> {
         BlocBuilder<ReadUserBloc, ReadUserState>(
           builder: (context, state) {
             if (state is DataLoadedState) {
-              return SizedBox(
-                width: MediaQuery.of(context).size.width,
-                child: DataTable(
-                  headingTextStyle: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: AppColors.mainTextColor),
-                  columns: [
-                    DataColumn(
-                        label: Flexible(
+              return Column(
+                children: [
+                  Container(
+                    width: MediaQuery.sizeOf(context).width,
+                    height: 50,
+                    color: Colors.orange.shade600,
+                    child: Row(
+                      children: [
+                        const SizedBox(width: 20),
+                        Expanded(
                             child: Text(
-                                AppLocalizations.of(context)!.user_name_text))),
-                    DataColumn(
-                        label: Flexible(
-                            child:
-                                Text(AppLocalizations.of(context)!.added_on))),
-                    DataColumn(
-                        label: Flexible(
-                            child: Text(AppLocalizations.of(context)!
-                                .updated_on_text))),
-                    DataColumn(
-                        label: Text(
-                            AppLocalizations.of(context)!.operations_text)),
-                  ],
-                  rows: state
-                      .all // Loops through dataColumnText, each iteration assigning the value to element
-                      .map(
-                        ((element) => DataRow(
-                              cells: <DataCell>[
-                                //Extracting from Map element the value
-                                DataCell(Text(element.userid!)),
-                                DataCell(Text(element.addedon!)),
-                                DataCell(Text(element.updatedon!)),
-                                DataCell(Row(
+                          AppLocalizations.of(context)!.sr,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )),
+                        Expanded(
+                            child: Text(
+                          AppLocalizations.of(context)!.user_name_text,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )),
+                        Expanded(
+                            child: Text(
+                          AppLocalizations.of(context)!.added_on,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )),
+                        Expanded(
+                            child: Text(
+                          AppLocalizations.of(context)!.updated_on_text,
+                          style: const TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        )),
+                        Expanded(
+                          child: Text(
+                            "",
+                            style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                      height: MediaQuery.sizeOf(context).height - 174,
+                      width: MediaQuery.of(context).size.width,
+                      child: ListView.separated(
+                        itemCount: state.all.length,
+                        separatorBuilder: (context, index) => Container(
+                          width: MediaQuery.sizeOf(context).width,
+                          height: 1,
+                          color: Colors.grey.shade300,
+                        ),
+                        itemBuilder: (context, index) {
+                          var data = state.all[index];
+                          return SizedBox(
+                            width: MediaQuery.sizeOf(context).width,
+                            child: Row(children: [
+                              const SizedBox(width: 20),
+                              Expanded(child: Text("${index + 1}")),
+                              Expanded(child: Text(data.userid!)),
+                              Expanded(child: Text(data.addedon!)),
+                              Expanded(child: Text(data.updatedon!)),
+                              Expanded(
+                                child: Row(
                                   children: [
                                     Padding(
                                       padding: const EdgeInsets.all(10.0),
@@ -102,11 +143,11 @@ class _UserReadState extends State<UserRead> {
                                               context: context,
                                               builder: (context) =>
                                                   UpdateUserForm(
-                                                docId: element.id,
-                                                oldFirstName: element.firstname,
-                                                oldLastName: element.lastname,
-                                                oldPassword: element.password,
-                                                oldUserId: element.userid,
+                                                docId: data.id,
+                                                oldFirstName: data.firstname,
+                                                oldLastName: data.lastname,
+                                                oldPassword: data.password,
+                                                oldUserId: data.userid,
                                               ),
                                             ).then((value) =>
                                                 BlocProvider.of<ReadUserBloc>(
@@ -130,7 +171,7 @@ class _UserReadState extends State<UserRead> {
                                               context: context,
                                               builder: (context) =>
                                                   DeleteUserPopup(
-                                                docID: element.id!,
+                                                docID: data.id!,
                                               ),
                                             ).then((value) =>
                                                 BlocProvider.of<ReadUserBloc>(
@@ -143,12 +184,13 @@ class _UserReadState extends State<UserRead> {
                                           )),
                                     )
                                   ],
-                                )),
-                              ],
-                            )),
-                      )
-                      .toList(),
-                ),
+                                ),
+                              )
+                            ]),
+                          );
+                        },
+                      )),
+                ],
               );
             } else {
               return const SizedBox(

@@ -126,7 +126,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                             ),
                             Container(
                               height: 1,
-                              color: Colors.grey,
+                              color: Colors.grey.shade300,
                             ),
                             SizedBox(
                               height: MediaQuery.sizeOf(context).height * 0.70,
@@ -135,7 +135,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                 separatorBuilder: (context, index) {
                                   return Container(
                                     height: 1,
-                                    color: Colors.grey,
+                                    color: Colors.grey.shade300,
                                   );
                                 },
                                 itemBuilder: (context, index) {

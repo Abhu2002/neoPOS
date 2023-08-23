@@ -122,7 +122,8 @@
      "product_delete_msg":"उत्पाद सफलतापूर्वक हटा दिया गया.",
      "product_delete_title":"उत्पाद हटाएँ",
      "product_delete_confirm_msg":"क्या आप वाकई इस उत्पाद को हटाना चाहते हैं?",
-  "menu" : "मेन्यू",
-  "order": "आदेश",
-  "order_history_page_title": "आदेश इतिहास"
+     "menu" : "मेन्यू",
+     "order": "आदेश",
+     "order_history_page_title": "आदेश इतिहास",
+     "project_title":"नियोपोस"
 }

@@ -97,7 +97,7 @@ class _TotalOrderCheckoutState extends State<TotalOrderCheckout> {
             mainAxisSize: MainAxisSize.max,
             children: [
               SizedBox(
-                height: MediaQuery.of(context).size.height * 0.5,
+                height: MediaQuery.of(context).size.height * 0.55,
                 child: ListView.builder(
                   itemCount: widget.products.length,
                   itemBuilder: (context, index) {
@@ -136,7 +136,7 @@ class _TotalOrderCheckoutState extends State<TotalOrderCheckout> {
                                         DecreaseQuantityEvent(
                                             index,
                                             widget.data['Id'].toString(),
-                                            int.parse(productquantity) - 1),
+                                            int.parse(product.quantity) - 1),
                                       );
                                     }
                                   },
@@ -182,7 +182,7 @@ class _TotalOrderCheckoutState extends State<TotalOrderCheckout> {
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.32,
+                height: MediaQuery.of(context).size.height * 0.27,
                 decoration: BoxDecoration(
                     color: Colors.blue.shade50,
                     borderRadius: const BorderRadius.all(Radius.circular(20))),
