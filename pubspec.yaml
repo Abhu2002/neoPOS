@@ -54,7 +54,7 @@ dependencies:
   dio: any
 
   # internet checker
-  connectivity_plus: any
+  connectivity_plus: ^4.0.2
 
 
   #firebase_auth
