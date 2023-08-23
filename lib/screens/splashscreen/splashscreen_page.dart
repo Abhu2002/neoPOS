@@ -27,10 +27,15 @@ class _SplashScreenState extends State<SplashScreen> {
       backgroundColor: Colors.white,
       body: Container(
         alignment: Alignment.center,
-        child: Image.asset("assets/splash_screen_image.jpg",
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            fit: BoxFit.fill),
+        child: (MediaQuery.of(context).size.width > 850)
+            ? Image.asset("assets/splash_screen_image.jpg",
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                fit: BoxFit.fill)
+            : Image.asset("assets/login_page_image.jpg",
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                fit: BoxFit.fitHeight),
       ),
     );
   }
