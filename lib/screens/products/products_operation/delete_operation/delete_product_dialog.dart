@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:neopos/utils/user_credentials_form.dart';
 import 'delete_bloc.dart';
 import 'package:neopos/utils/utils.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -25,6 +26,7 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
   }
 
   final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ProductDeletionBloc, ProductDeletionState>(
@@ -65,29 +67,6 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
     );
   }
 
-  void showErrorDialog(BuildContext context, String error) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(15))),
-          title: Text(AppLocalizations.of(context)!.error_text),
-          content: Text(error),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              },
-              child: Text(AppLocalizations.of(context)!.ok_button),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   void showConfirmationDialog(BuildContext context, String id) {
     showDialog(
       context: context,
@@ -96,42 +75,10 @@ class _DeleteProductPopupState extends State<DeleteProductPopup> {
           shape: const RoundedRectangleBorder(
               borderRadius: BorderRadius.all(Radius.circular(15))),
           title: Text(AppLocalizations.of(context)!.enter_credentials),
-          content: Form(
-            key: formKey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                  validator: (val) {
-                    if (!val.isValidUsername) {
-                      return AppLocalizations.of(context)!.valid_username;
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: _usernameController,
-                  decoration: InputDecoration(
-                      hintText:
-                          AppLocalizations.of(context)!.username_hinttext),
-                ),
-                const SizedBox(height: 16),
-                TextFormField(
-                  validator: (val) {
-                    if (!val.isValidPassword) {
-                      return AppLocalizations.of(context)!.valid_password;
-                    } else {
-                      return null;
-                    }
-                  },
-                  controller: _passwordController,
-                  obscureText: true,
-                  decoration: InputDecoration(
-                      hintText:
-                          AppLocalizations.of(context)!.password_hinttext),
-                ),
-              ],
-            ),
-          ),
+          content: UserCredentialsForm(
+              formKey: formKey,
+              usernameController: _usernameController,
+              passwordController: _passwordController),
           actions: [
             ElevatedButton(
               onPressed: () {

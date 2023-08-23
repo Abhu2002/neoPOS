@@ -182,7 +182,7 @@ class _TotalOrderCheckoutState extends State<TotalOrderCheckout> {
                 ),
               ),
               Container(
-                height: MediaQuery.of(context).size.height * 0.27,
+                height: MediaQuery.of(context).size.height * 0.25,
                 decoration: BoxDecoration(
                     color: Colors.blue.shade50,
                     borderRadius: const BorderRadius.all(Radius.circular(20))),
