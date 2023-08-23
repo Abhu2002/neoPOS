@@ -3,12 +3,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:neopos/screens/products/products_operation/update_operation/product_update_bloc.dart';
+import 'package:neopos/screens/products/products_operation/widgets/product_availability_check.dart';
+import 'package:neopos/screens/products/products_operation/widgets/product_description.dart';
+import 'package:neopos/screens/products/products_operation/widgets/product_name.dart';
+import 'package:neopos/screens/products/products_operation/widgets/product_price.dart';
+import 'package:neopos/screens/products/products_operation/widgets/product_type.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import '../../../../utils/app_colors.dart';
 import '../../../../utils/update_build_image.dart';
-import '../create_operation/create_product_dialog.dart';
-import 'package:neopos/utils/utils.dart';
+
+import '../widgets/category_dropdown.dart';
+import '../widgets/product_create_form.dart';
 
 var categoryVal = "Select Category";
 
@@ -46,6 +51,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
   XFile? imageFile;
   late ProductType? type;
   late bool isCheck;
+
   @override
   void initState() {
     BlocProvider.of<UpdateProductBloc>(context).add(InitialCategoryEvent());
@@ -62,6 +68,7 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
   }
 
   final formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     context.read<UpdateProductBloc>().showMessage = createSnackBar;
@@ -82,71 +89,26 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                TextFormField(
-                  controller: _productNameController,
-                  decoration: InputDecoration(
-                      labelText:
-                          AppLocalizations.of(context)!.product_name_title,
-                      prefixIcon: const Icon(
-                        Icons.restaurant_menu,
-                        color: AppColors.primaryColor,
-                      )),
-                  onChanged: (value) {
+                ProductName(
+                  productName: _productNameController,
+                  onProductNameChanged: (value) {
                     _productNameController.value = TextEditingValue(
                       text: value.toUpperCase(),
                       selection: _productNameController.selection,
                     );
                   },
-                  validator: (val) {
-                    if (!val.isValidProductName) {
-                      return AppLocalizations.of(context)!.valid_product_name;
-                    } else {
-                      return null;
-                    }
-                  },
                 ),
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormField(
-                  controller: _productPriceController,
-                  decoration: InputDecoration(
-                      labelText:
-                          AppLocalizations.of(context)!.product_price_text,
-                      prefixIcon: const Icon(
-                        Icons.price_change,
-                        color: AppColors.primaryColor,
-                      )),
-                  validator: (val) {
-                    if (!val.isValidProductName) {
-                      return AppLocalizations.of(context)!.valid_price;
-                    } else {
-                      return null;
-                    }
-                  },
-                ),
+                // product price
+                ProductPrice(controller: _productPriceController),
                 const SizedBox(
                   height: 20,
                 ),
-                TextFormField(
-                    controller: _productDescriptionController,
-                    keyboardType: TextInputType.multiline,
-                    minLines: 1,
-                    maxLines: 2,
-                    decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!
-                            .product_description_title,
-                        prefixIcon: const Icon(
-                          Icons.description,
-                          color: AppColors.primaryColor,
-                        )),
-                    validator: (val) {
-                      if (!val.isValidDesc) {
-                        return AppLocalizations.of(context)!.valid_description;
-                      } else {
-                        return null;
-                      }
-                    }),
+                ProductDescription(
+                  controller: _productDescriptionController,
+                ),
                 const SizedBox(
                   height: 20,
                 ),
@@ -158,39 +120,13 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                     return current is ProductTypeUpdateState;
                   },
                   builder: (context, state) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          AppLocalizations.of(context)!.product_type_title,
-                          style: const TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 17),
-                        ),
-                        const SizedBox(
-                          width: 30,
-                        ),
-                        Radio<ProductType>(
-                          value: ProductType.veg,
-                          groupValue: state.type ?? type,
-                          onChanged: (ProductType? value) {
-                            BlocProvider.of<UpdateProductBloc>(context)
-                                .add(ProductTypeUpdateEvent(value!));
-                          },
-                        ),
-                        Text(AppLocalizations.of(context)!.veg_text),
-                        const SizedBox(
-                          width: 5,
-                        ),
-                        Radio<ProductType>(
-                          value: ProductType.nonVeg,
-                          groupValue: state.type ?? type,
-                          onChanged: (ProductType? value) {
-                            BlocProvider.of<UpdateProductBloc>(context)
-                                .add(ProductTypeUpdateEvent(value!));
-                          },
-                        ),
-                        Text(AppLocalizations.of(context)!.non_veg_text),
-                      ],
+                    return ProductTypeSelect(
+                      defaultType: type,
+                      stateType: state.type,
+                      onProductTypeChanged: (ProductType? value) {
+                        BlocProvider.of<UpdateProductBloc>(context)
+                            .add(ProductTypeUpdateEvent(value!));
+                      },
                     );
                   },
                 ),
@@ -213,36 +149,26 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
                           _productCategories = state.categories;
                           categoryVal = widget.productCategory;
                         }
-                        return CustomDropDown(
+                        return CategoryDropDown(
                           categories: _productCategories,
                           dropdownvalue: categoryVal,
+                          onCategoryChanged: (newCategory) {
+                            categoryVal = newCategory.toString();
+                          },
                         );
                       },
                     ),
                   ],
                 ),
                 const SizedBox(height: 20),
-                Row(
-                  children: [
-                    Text(
-                      AppLocalizations.of(context)!.product_available,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 20,
-                    ),
-                    Checkbox(
-                      value: isCheck,
-                      onChanged: (bool? val) {
-                        setState(() {
-                          isCheck = val!;
-                        });
-                      },
-                    ),
-                  ],
+                // Product availability
+                ProductAvailabilityCheck(
+                  isChecked: isCheck,
+                  onAvailabilityChanged: (bool? val) {
+                    setState(() {
+                      isCheck = val!;
+                    });
+                  },
                 ),
                 const SizedBox(height: 20),
                 BlocBuilder<UpdateProductBloc, ProductState>(
@@ -325,79 +251,12 @@ class _UpdateProductDialogState extends State<UpdateProductDialog> {
             );
           },
         ),
-        /*  SizedBox(
-          height: 40,
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {
-              _updateProduct(context);
-            },
-            child: Text(AppLocalizations.of(context)!.update_button),
-          ),
-        ),*/
       ],
     );
   }
 
-  /* void _updateProduct(BuildContext context) {
-    final productBloc = BlocProvider.of<UpdateProductBloc>(context);
-    String productName = _productNameController.text.trim();
-    double productPrice = double.tryParse(_productPriceController.text) ?? 0.0;
-
-    if (productName.isNotEmpty && productPrice > 0.0) {
-      productBloc.add(UpdateProductEvent(
-          productId: widget.id,
-          productName: productName,
-          productDescription: _productDescriptionController.text.trim(),
-          productPrice: productPrice,
-          productType: type!.name,
-          productUpdatedTime:
-              DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now()),
-          imageFile: imageFile,
-          oldImage: widget.image));
-
-      Navigator.of(context).pop();
-    }
-  } */
-
   void createSnackBar(String message) {
     final snackBar = SnackBar(content: Text(message));
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-  }
-}
-
-class CustomDropDown extends StatefulWidget {
-  final List categories;
-  final String? dropdownvalue;
-
-  const CustomDropDown(
-      {required this.categories, super.key, this.dropdownvalue});
-
-  @override
-  State<CustomDropDown> createState() => _CustomDropDownState();
-}
-
-class _CustomDropDownState extends State<CustomDropDown> {
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<UpdateProductBloc, ProductState>(
-      builder: (BuildContext context, state) {
-        return DropdownButton(
-          alignment: Alignment.centerLeft,
-          value: state.category ?? widget.dropdownvalue,
-          items: widget.categories.map((category) {
-            return DropdownMenuItem(
-              value: category,
-              child: Text(category),
-            );
-          }).toList(),
-          onChanged: (newValue) {
-            BlocProvider.of<UpdateProductBloc>(context)
-                .add(CategoryChangedEvent(newValue.toString()));
-            categoryVal = newValue.toString();
-          },
-        );
-      },
-    );
   }
 }

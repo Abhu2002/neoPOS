@@ -5,8 +5,8 @@ import 'package:equatable/equatable.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:neopos/screens/products/products_operation/create_operation/create_product_dialog.dart';
 import '../../model/product.dart';
+import '../widgets/product_create_form.dart';
 
 part 'create_product_event.dart';
 part 'create_product_state.dart';
