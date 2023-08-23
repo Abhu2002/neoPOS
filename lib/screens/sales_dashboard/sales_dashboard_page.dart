@@ -173,7 +173,7 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                                         borderRadius:
                                             BorderRadius.circular(10)),
                                     child: SizedBox(
-                                      height: 268,
+                                      height: 265,
                                       child: PieChart(
                                         dataMap: state.piemap,
                                         // chartType: ChartType.ring,
