@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:syncfusion_flutter_charts/charts.dart';
 
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'graph_dashboard_bloc.dart';
 
 class GraphPage extends StatefulWidget {
@@ -71,9 +71,9 @@ class _GraphPageState extends State<GraphPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Padding(
+                       Padding(
                         padding: EdgeInsets.only(left: 10),
-                        child: Text("Daily Sales",
+                        child: Text(AppLocalizations.of(context)!.daily_sales,
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
                       ),
