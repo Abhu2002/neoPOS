@@ -266,6 +266,9 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                   ),
                 ],
               )),
+              const SizedBox(
+                height: 40,
+              )
             ]),
           )),
     );

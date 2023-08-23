@@ -1,9 +1,5 @@
 part of 'side_menu_bloc.dart';
 
-
-
-
-
 sealed class SideMenuEvent extends Equatable {
   const SideMenuEvent();
 
@@ -15,5 +11,3 @@ class SideMenuInitEvent extends SideMenuEvent {
   int index;
   SideMenuInitEvent(this.index);
 }
-
-

@@ -131,8 +131,19 @@
    "product_delete_msg":"Product deleted successfully.",
    "product_delete_title":"Delete Product",
    "product_delete_confirm_msg":"Are you sure you want to delete this Product?",
-  "menu" : "Menu",
-  "order" : "Order",
+   "menu" : "Menu",
+   "order" : "Order",
    "userpage_title":"User Page",
-  "order_history_page_title": "Order History"
+   "order_history_page_title": "Order History",
+   "project_title": "Neopos",
+   "order_history_name": "Customer Name",
+   "order_history_mob": "Mobile Number",
+   "order_history_amt": "Amount",
+   "order_history_id":"Id",
+   "sales_dash_order": "Last 5 Orders Transaction",
+  "sales_dash_more": "All Order",
+  "today_revenue": "Today's Revenue",
+  "monthly_revenue": "Monthly Revenue",
+  "yearly_revenue": "Yearly Revenue",
+  "daily_sales": "Daily Sales"
 }

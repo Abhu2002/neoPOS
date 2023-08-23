@@ -60,6 +60,82 @@ class _ProductsReadState extends State<ProductsRead> {
           if (state is ReadDataLoadedState) {
             return Column(
               children: [
+                Container(
+                  width: MediaQuery.sizeOf(context).width,
+                  height: 50,
+                  decoration: BoxDecoration(color: Colors.orange.shade600),
+                  child: Row(
+                    children: [
+                      SizedBox(
+                          width: 80,
+                          child: Center(
+                              child: Text(
+                            AppLocalizations.of(context)!.date_title,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.white),
+                          ))),
+                      const SizedBox(width: 20),
+                      SizedBox(
+                          width: 60,
+                          child: Center(
+                              child: Text(
+                            AppLocalizations.of(context)!.image_title,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.white),
+                          ))),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Expanded(
+                          flex: 2,
+                          child: Center(
+                            child: Text(
+                              AppLocalizations.of(context)!.product_name,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                  color: Colors.white),
+                            ),
+                          )),
+                      SizedBox(
+                          width: 80,
+                          child: Center(
+                              child: Text(
+                            AppLocalizations.of(context)!.type_title,
+                            style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.white),
+                          ))),
+                      const SizedBox(
+                        width: 30,
+                      ),
+                      Expanded(
+                          child: Center(
+                              child: Text(
+                        AppLocalizations.of(context)!.category_name_title,
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 16,
+                            color: Colors.white),
+                      ))),
+                      Expanded(
+                          child: Center(
+                        child: Text(
+                          AppLocalizations.of(context)!.price_title,
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                              color: Colors.white),
+                        ),
+                      )),
+                    ],
+                  ),
+                ),
                 SizedBox(
                   width: MediaQuery.sizeOf(context).width,
                   height: MediaQuery.sizeOf(context).height - 144,
@@ -74,86 +150,9 @@ class _ProductsReadState extends State<ProductsRead> {
                     itemCount: state.allProducts.length,
                     itemBuilder: (context, index) {
                       var data = state.allProducts[index];
-                      if (index == 0) {
-                        // return the header
-                        return Container(
-                          width: MediaQuery.sizeOf(context).width,
-                          height: 50,
-                          decoration:
-                              BoxDecoration(color: Colors.grey.shade300),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                  width: 80,
-                                  child: Center(
-                                      child: Text(
-                                    AppLocalizations.of(context)!.date_title,
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        color: AppColors.primaryColor),
-                                  ))),
-                              const SizedBox(width: 20),
-                              SizedBox(
-                                  width: 60,
-                                  child: Center(
-                                      child: Text(
-                                    AppLocalizations.of(context)!.image_title,
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        color: AppColors.primaryColor),
-                                  ))),
-                              const SizedBox(
-                                width: 20,
-                              ),
-                              Expanded(
-                                  flex: 2,
-                                  child: Center(
-                                    child: Text(
-                                      AppLocalizations.of(context)!
-                                          .product_name,
-                                      style: const TextStyle(
-                                          fontSize: 20,
-                                          color: AppColors.primaryColor),
-                                    ),
-                                  )),
-                              SizedBox(
-                                  width: 80,
-                                  child: Center(
-                                      child: Text(
-                                    AppLocalizations.of(context)!.type_title,
-                                    style: const TextStyle(
-                                        fontSize: 20,
-                                        color: AppColors.primaryColor),
-                                  ))),
-                              const SizedBox(
-                                width: 30,
-                              ),
-                              Expanded(
-                                  child: Center(
-                                      child: Text(
-                                AppLocalizations.of(context)!
-                                    .category_name_title,
-                                style: const TextStyle(
-                                    fontSize: 20,
-                                    color: AppColors.primaryColor),
-                              ))),
-                              Expanded(
-                                  child: Center(
-                                child: Text(
-                                  AppLocalizations.of(context)!.price_title,
-                                  style: const TextStyle(
-                                      fontSize: 20,
-                                      color: AppColors.primaryColor),
-                                ),
-                              )),
-                            ],
-                          ),
-                        );
-                      }
 
                       return InkWell(
                         child: SizedBox(
-
                           height: 60,
                           child: Row(children: [
                             SizedBox(
@@ -190,7 +189,7 @@ class _ProductsReadState extends State<ProductsRead> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(left:20.0),
+                                    padding: const EdgeInsets.only(left: 20.0),
                                     child: Text(
                                       data.productName,
                                       style: const TextStyle(
@@ -200,7 +199,7 @@ class _ProductsReadState extends State<ProductsRead> {
                                     ),
                                   ),
                                   Padding(
-                                    padding: const EdgeInsets.only(left:20.0),
+                                    padding: const EdgeInsets.only(left: 20.0),
                                     child: Text(
                                       data.productDescription.length > 75
                                           ? data.productDescription
@@ -220,7 +219,8 @@ class _ProductsReadState extends State<ProductsRead> {
                               child: Center(
                                 child: Container(
                                   height: 20,
-                                  width: (data.productType == "nonVeg") ? 60 : 30,
+                                  width:
+                                      (data.productType == "nonVeg") ? 60 : 30,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(5),
                                       color: (data.productType) == "nonVeg"
@@ -231,8 +231,10 @@ class _ProductsReadState extends State<ProductsRead> {
                                       (data.productType == "nonVeg")
                                           ? AppLocalizations.of(context)!
                                               .non_veg_text
-                                          : AppLocalizations.of(context)!.veg_text,
-                                      style: const TextStyle(color: Colors.white),
+                                          : AppLocalizations.of(context)!
+                                              .veg_text,
+                                      style:
+                                          const TextStyle(color: Colors.white),
                                     ),
                                   ),
                                 ),
