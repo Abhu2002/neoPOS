@@ -49,6 +49,13 @@ dependencies:
   flutter_bloc: ^8.0.0
   equatable: ^2.0.5
 
+  # http
+  http: any
+  dio: any
+
+  # internet checker
+  connectivity_plus: any
+
 
   #firebase_auth
   firebase_auth: any
