@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neopos/screens/sales_dashboard/graph_widget/graph_dashboard_widget.dart';
+
 import 'package:neopos/screens/sales_dashboard/sales_dashboard_bloc.dart';
+import 'package:neopos/screens/sales_dashboard/widget/graph_widget/graph_dashboard_widget.dart';
+import 'package:neopos/screens/sales_dashboard/widget/top5_product_page/top5product_widget.dart';
+
 import 'package:pie_chart/pie_chart.dart';
 import 'package:intl/intl.dart';
 import '../../utils/app_colors.dart';
@@ -57,6 +60,78 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                 child: Row(
                   children: [
                     Expanded(
+                        flex: 3,
+                        child: BlocBuilder<SalesDashboardBloc,
+                            SalesDashboardState>(
+                          builder: (context, state) {
+                            if (state is SalesDashBoardLoadedState) {
+                              return Column(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          child: CommonCard(
+                                        title: AppLocalizations.of(context)!
+                                            .today_revenue,
+                                        amount: state.dailyValue.toString(),
+                                      )),
+                                      Expanded(
+                                          child: CommonCard(
+                                        title: AppLocalizations.of(context)!
+                                            .weekly_revenue,
+                                        amount: state.weeklyValue.toString(),
+                                      )),
+                                      Expanded(
+                                          child: CommonCard(
+                                        title: AppLocalizations.of(context)!
+                                            .monthly_revenue,
+                                        amount: state.monthlyValue.toString(),
+                                      )),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Expanded(
+                                          flex: 2,
+                                          child: TopFiveProduct(
+                                              data: state.topproduct)),
+                                      Expanded(
+                                        flex: 4,
+                                        child: Card(
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(10)),
+                                          child: SizedBox(
+                                            height: 265,
+                                            child: PieChart(
+                                              dataMap: state.piemap,
+                                              // chartType: ChartType.ring,
+                                              baseChartColor: Colors.grey[50]!
+                                                  .withOpacity(0.15),
+                                              chartValuesOptions:
+                                                  const ChartValuesOptions(
+                                                showChartValuesInPercentage:
+                                                    true,
+                                              ),
+                                              // totalValue: 20,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              );
+                            } else {
+                              return const SizedBox(
+                                  height: 200,
+                                  width: 200,
+                                  child: Center(
+                                      child: CircularProgressIndicator()));
+                            }
+                          },
+                        )),
+                    Expanded(
                       flex: 1,
                       child: Container(
                         child: BlocBuilder<SalesDashboardBloc,
@@ -73,15 +148,18 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                                 child: Column(
                                   children: [
                                     ListTile(
-                                        title:  Text(
-                                          AppLocalizations.of(context)!.sales_dash_order,
+                                        title: Text(
+                                          AppLocalizations.of(context)!
+                                              .sales_dash_order,
                                           style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
                                               color: AppColors.primaryColor),
                                         ),
                                         trailing: TextButton(
-                                          child:  Text(AppLocalizations.of(context)!.sales_dash_more),
+                                          child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .sales_dash_more),
                                           onPressed: () {
                                             if (widget
                                                 .pageController.hasClients) {
@@ -141,63 +219,6 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                         ),
                       ),
                     ),
-                    Expanded(
-                        flex: 3,
-                        child: BlocBuilder<SalesDashboardBloc,
-                            SalesDashboardState>(
-                          builder: (context, state) {
-                            if (state is SalesDashBoardLoadedState) {
-                              return Column(
-                                children: [
-                                  Row(
-                                    children: [
-                                      Expanded(
-                                          child: CommonCard(
-                                        title: AppLocalizations.of(context)!.today_revenue,
-                                        amount: state.dailyValue.toString(),
-                                      )),
-                                      Expanded(
-                                          child: CommonCard(
-                                        title: AppLocalizations.of(context)!.monthly_revenue,
-                                        amount: state.weeklyValue.toString(),
-                                      )),
-                                      Expanded(
-                                          child: CommonCard(
-                                        title: AppLocalizations.of(context)!.yearly_revenue,
-                                        amount: state.monthlyValue.toString(),
-                                      )),
-                                    ],
-                                  ),
-                                  Card(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(10)),
-                                    child: SizedBox(
-                                      height: 265,
-                                      child: PieChart(
-                                        dataMap: state.piemap,
-                                        // chartType: ChartType.ring,
-                                        baseChartColor:
-                                            Colors.grey[50]!.withOpacity(0.15),
-                                        chartValuesOptions:
-                                            const ChartValuesOptions(
-                                          showChartValuesInPercentage: true,
-                                        ),
-                                        // totalValue: 20,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            } else {
-                              return const SizedBox(
-                                  height: 200,
-                                  width: 200,
-                                  child: Center(
-                                      child: CircularProgressIndicator()));
-                            }
-                          },
-                        )),
 
                     /// TODO Need Top sales to be Added Later
                     // Expanded(

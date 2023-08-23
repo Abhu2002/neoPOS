@@ -24,6 +24,7 @@ class SalesDashboardBloc
         num weeklyValue = 0;
         num monthlyValue = 0;
         Map<String, double> pie = {};
+        Map<String, double> topproduct = {};
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("order_history").orderBy("order_date").get().then(
           (value) {
@@ -39,17 +40,27 @@ class SalesDashboardBloc
               });
               graphData.add(SalesData(
                   DateTime.parse(element['order_date']), element['amount']));
-              for (var element in element['products']) {
-                if (pie.keys.contains(element['productCategory'])) {
-                  pie[element['productCategory']] =
-                      pie[element['productCategory']]! + 1;
+              for (var top in element['products']) {
+                if (topproduct.keys.contains(top['productName'])) {
+                  topproduct[top['productName']] =
+                      topproduct[top['productName']]! +
+                          double.parse(top['quantity']);
                 } else {
-                  pie[element['productCategory']] = 1;
+                  topproduct[top['productName']] = 1;
+                }
+                if (pie.keys.contains(top['productCategory'])) {
+                  pie[top['productCategory']] =
+                      pie[top['productCategory']]! + 1;
+                } else {
+                  pie[top['productCategory']] = 1;
                 }
               }
+              // for (var element in element['products']) {}
             });
           },
         );
+
+        // print(pie);
         List<SalesData> processedData = [];
         for (var dailySales in graphData) {
           num sales = 0;
@@ -80,16 +91,13 @@ class SalesDashboardBloc
               ((currentDateM == DateFormat("MM-yyyy").format(a.x)) ? a.y : 0);
         }
 
-        emit(SalesDashBoardLoadedState(allOrderHistory, allData,
-            dailyValue, weeklyValue, monthlyValue, pie));
+        emit(SalesDashBoardLoadedState(allOrderHistory, allData, dailyValue,
+            weeklyValue, monthlyValue, pie, topproduct));
       } catch (err) {
         emit(SalesDashboardErrorState(
             "Some Error Occur $err")); //calls state and stores message through parameter
       }
-    }
-    );
-
-
+    });
   }
   int numOfWeeks(int year) {
     DateTime dec28 = DateTime(year, 12, 28);
