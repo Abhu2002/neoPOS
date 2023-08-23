@@ -1,11 +1,9 @@
-import 'package:easy_sidemenu/easy_sidemenu.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/dashboard/side_menu.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 
 import 'package:neopos/screens/products/products_page/read_products_page.dart';
-import '../../main.dart';
 import '../../navigation/route_paths.dart';
 import '../../utils/sharedpref/sharedpreference.dart';
 import '../order history/order_history_page.dart';
@@ -56,8 +54,10 @@ class _DashboardPage extends State<DashboardPage> {
         return false;
       },
       child: Scaffold(
+        drawer: (MediaQuery.of(context).size.width<850)? SideMenuWidget(LocalPreference.getUserRole(),
+            widget.pageController):null,
           appBar: AppBar(
-            automaticallyImplyLeading: false,
+           // automaticallyImplyLeading: false,
             title: Text(AppLocalizations.of(context)!.project_title),
             actions: [
               Row(
@@ -104,10 +104,10 @@ class _DashboardPage extends State<DashboardPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Expanded(
+                 (MediaQuery.of(context).size.width>850)?Expanded(
                       flex: 1,
                       child: SideMenuWidget(LocalPreference.getUserRole(),
-                          widget.pageController)),
+                          widget.pageController)):SizedBox(),
                   Expanded(
                     flex: 7,
                     child: PageView(
