@@ -7,7 +7,6 @@ import 'package:neopos/screens/category/category_operation/delete_operation/dele
 import 'package:neopos/screens/category/category_operation/update_operation/category_update_bloc.dart';
 import 'package:neopos/screens/category/category_page/read_category_bloc.dart';
 import 'package:neopos/screens/dashboard/Localization%20bloc/localization_bloc.dart';
-
 import 'package:neopos/screens/dashboard/dashboard_page.dart';
 import 'package:neopos/screens/dashboard/side_menu_bloc.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
@@ -56,13 +55,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String lan = LocalPreference.getLang() ?? "en";
-  void setLan(val) {
-    setState(() {
-      lan = val;
-    });
-  }
-
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
