@@ -134,6 +134,7 @@
      "sales_dash_more": "सभी ऑर्डर",
      "today_revenue": "आज का आमदनी",
      "monthly_revenue": "महीने के आमदनी",
-     "yearly_revenue": "सालाना आमदनी",
-     "daily_sales": "दैनिक विक्रय"
+     "weekly_revenue": "साप्ताहिक आमदनी",
+     "daily_sales": "दैनिक विक्रय",
+     "top_5_products":"शीर्ष 5 उत्पाद"
 }
