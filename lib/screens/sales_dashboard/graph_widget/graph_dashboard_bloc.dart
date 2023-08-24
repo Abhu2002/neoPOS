@@ -10,13 +10,11 @@ part 'graph_dashboard_state.dart';
 class GraphDashboardBloc
     extends Bloc<GraphDashboardEvent, GraphDashboardState> {
   GraphDashboardBloc() : super(GraphFilterLoadingState()) {
-    var graphData = [];
     on<Graphinitevent>((event, emit) async {
       try {
         emit(GraphFilterLoadingState());
+        var graphData = [];
         var allOrderHistory = [];
-
-
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("order_history").get().then(
               (value) {
@@ -30,8 +28,9 @@ class GraphDashboardBloc
                 "payment_mode": element['payment_mode'],
                 "products": element["products"]
               });
+             // print( double.parse(element['amount']));
               graphData.add(SalesData(
-                  DateTime.parse(element['order_date']), element['amount']));
+                  DateTime.parse(element['order_date']), element['amount'].toDouble()));
             });
           },
         );

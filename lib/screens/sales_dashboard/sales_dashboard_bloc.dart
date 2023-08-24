@@ -38,7 +38,7 @@ class SalesDashboardBloc
                 "products": element["products"]
               });
               graphData.add(SalesData(
-                  DateTime.parse(element['order_date']), element['amount']));
+                  DateTime.parse(element['order_date']), element['amount'].toDouble()));
               for (var element in element['products']) {
                 if (pie.keys.contains(element['productCategory'])) {
                   pie[element['productCategory']] =

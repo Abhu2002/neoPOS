@@ -4,6 +4,7 @@ import 'package:neopos/screens/dashboard/side_menu.dart';
 import 'package:neopos/screens/login/login_bloc.dart';
 
 import 'package:neopos/screens/products/products_page/read_products_page.dart';
+import 'package:neopos/screens/sales_dashboard/mob_sales_dashboard/mob_sales_dashboard.dart';
 import '../../navigation/route_paths.dart';
 import '../../utils/sharedpref/sharedpreference.dart';
 import '../category/mob_category_page/read_mob_category_page.dart';
@@ -42,7 +43,7 @@ class _DashboardPage extends State<DashboardPage> {
       const SingleChildScrollView(child: ProductsRead()),
       const SingleChildScrollView(child: TableRead()),
       const SingleChildScrollView(child: OrderPageRead()),
-      SingleChildScrollView(child: SalesDashboardPage(widget.pageController)),
+      SingleChildScrollView(child:(MediaQuery.sizeOf(context).width > 850)? SalesDashboardPage(widget.pageController): MobileSalesDashboardPage(widget.pageController)),
       const SingleChildScrollView(child: OrderHistoryPage()),
       SingleChildScrollView(child:(MediaQuery.sizeOf(context).width > 850)? const UserRead(): const UserMobileRead()),
     ];

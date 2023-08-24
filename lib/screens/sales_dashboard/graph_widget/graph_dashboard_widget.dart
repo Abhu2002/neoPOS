@@ -107,7 +107,7 @@ class _GraphPageState extends State<GraphPage> {
                             interval: 1,
                             majorGridLines: const MajorGridLines(width: 0)),
                         series: <ChartSeries<ChartData, int>>[
-                          ColumnSeries<ChartData, int>(
+                          ColumnSeries<ChartData, int>(color: Colors.orangeAccent,
                               xAxisName: "Day of Month",
                               yAxisName: "Sales in Amount",
                               dataLabelSettings:
