@@ -8,6 +8,7 @@ part 'order_history_state.dart';
 
 class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
   OrderHistoryBloc() : super(OrderHistoryInitial()) {
+    List<dynamic> allPrevOrders = [];
     on<OrderHistoryPageInitEvent>((event, emit) async {
       try {
         if (event.isfirst) {
@@ -35,7 +36,7 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
             });
           },
         );
-
+        allPrevOrders = AllOrderHistory;
         emit(OrderHistoryLoaded(AllOrderHistory, alldata));
         //gives all document of tables to State
       } catch (err) {
@@ -62,6 +63,59 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
       }
       emit(ShowProductsState(
           event.allOrders, productList, amount, orderId, event.showORhide));
+    });
+
+    on<OrderHistroyFilterEvent>((event, emit) {
+      DateTime today = DateTime.now();
+      String currentDate = "${today.year}-${today.month}-${today.day}";
+      List<dynamic> productLists = [];
+
+      if(event.filter == "All") {
+        emit(OrderHistoryLoaded(allPrevOrders, []));
+        return;
+      }
+      else if(event.filter == "Weekly") {
+        DateTime firstDateOfTheWeek = today.subtract(Duration(days: today.weekday - 1));
+        DateTime newFirstDate = DateTime(firstDateOfTheWeek.year, firstDateOfTheWeek.month, firstDateOfTheWeek.day, 0,0,0,0);
+        DateTime lastDateOfTheWeek = today.add(Duration(days: DateTime.daysPerWeek - today.weekday));
+        DateTime newLastDate = DateTime(lastDateOfTheWeek.year, lastDateOfTheWeek.month, lastDateOfTheWeek.day, 0,0,0,0);
+
+        productLists = allPrevOrders.where((order) {
+          DateTime currentDateTime = DateTime.parse(order['order_date']);
+          if(newFirstDate.isBefore(currentDateTime)) {
+            if(newLastDate.isAfter(currentDateTime)) {
+              return true;
+            }
+          }
+          return false;
+        }).toList();
+
+        emit(OrderHistoryLoaded(productLists, productLists));
+        return;
+      }
+      else if(event.filter == "Monthly") {
+        DateTime firstDateOfMonth = DateTime(today.year, today.month, 1);
+        DateTime lastDateOfMonth = DateTime(today.year, today.month + 1, 0);
+
+        productLists = allPrevOrders.where((order) {
+          DateTime currentDateTime = DateTime.parse(order['order_date']);
+          if(firstDateOfMonth.isBefore(currentDateTime)) {
+            if(lastDateOfMonth.isAfter(currentDateTime)) {
+              return true;
+            }
+          }
+          return false;
+        }).toList();
+
+        emit(OrderHistoryLoaded(productLists, productLists));
+        return;
+      }
+      productLists = allPrevOrders.where((order) {
+        DateTime givenDateTime = DateTime.parse(order['order_date']);
+        String givenDate = "${givenDateTime.year}-${givenDateTime.month}-${givenDateTime.day}";
+        return currentDate == givenDate;
+      }).toList();
+      emit(OrderHistoryLoaded(productLists, []));
     });
   }
 }
