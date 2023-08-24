@@ -80,7 +80,9 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
         Form(
           key: formKey,
           child: SizedBox(
-            width: MediaQuery.of(context).size.width / 3,
+            width: (MediaQuery.of(context).size.width > 850)
+                ? MediaQuery.of(context).size.width / 2
+                : MediaQuery.of(context).size.width,
             child: Column(
               children: [
                 TextFormField(
@@ -105,7 +107,7 @@ class _CreateCategoryFormState extends State<CreateCategoryForm> {
                   },
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 10,
                 ),
                 BlocBuilder<CreateCategoryBloc, CreateCategoryState>(
                   builder: (context, state) {

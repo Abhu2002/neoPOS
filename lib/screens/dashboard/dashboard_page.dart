@@ -6,11 +6,14 @@ import 'package:neopos/screens/login/login_bloc.dart';
 import 'package:neopos/screens/products/products_page/read_products_page.dart';
 import '../../navigation/route_paths.dart';
 import '../../utils/sharedpref/sharedpreference.dart';
+import '../category/mob_category_page/read_mob_category_page.dart';
 import '../order history/order_history_page.dart';
 import '../order page/order_table_page/order_read_page.dart';
+import '../products/products_page/products_mobile_page/read_products_mobile_page.dart';
 import '../sales_dashboard/sales_dashboard_page.dart';
 import '../table/table_page/table_page.dart';
 import '../category/category_page/read_category_page.dart';
+import '../users/mob_user_page/read_mob_user_page.dart';
 import '../users/user_page/read_user_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -36,13 +39,13 @@ class _DashboardPage extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> adminPage = [
-      const SingleChildScrollView(child: CategoryRead()),
-      const SingleChildScrollView(child: ProductsRead()),
+      SingleChildScrollView(child: (MediaQuery.sizeOf(context).width > 850)? const CategoryRead(): const CategoryMobileRead()),
+      SingleChildScrollView(child: (MediaQuery.sizeOf(context).width > 850)? const ProductsRead(): const ProductMobileRead()),
       const SingleChildScrollView(child: TableRead()),
       const SingleChildScrollView(child: OrderPageRead()),
       SingleChildScrollView(child: SalesDashboardPage(widget.pageController)),
       const SingleChildScrollView(child: OrderHistoryPage()),
-      const SingleChildScrollView(child: UserRead()),
+      SingleChildScrollView(child:(MediaQuery.sizeOf(context).width > 850)? const UserRead(): const UserMobileRead()),
     ];
     List<Widget> waiterPage = [
       const SingleChildScrollView(child: OrderPageRead()),
@@ -92,7 +95,9 @@ class _DashboardPage extends State<DashboardPage> {
               ),
               IconButton(
                   onPressed: () async {
+                    String? oldLan = LocalPreference.getLang();
                     LocalPreference.clearAllPreference();
+                    LocalPreference.setLang(oldLan);
                     Navigator.pushReplacementNamed(context, RoutePaths.login);
                   },
                   icon: const Icon(Icons.logout))

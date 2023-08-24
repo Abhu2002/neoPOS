@@ -20,3 +20,10 @@ class ShowOrderProductsEvent extends OrderHistoryEvent {
   @override
   List<Object> get props => [id, allOrders, showORhide];
 }
+
+class OrderHistroyFilterEvent extends OrderHistoryEvent {
+  final String filter;
+  const OrderHistroyFilterEvent(this.filter);
+  @override
+  List<Object> get props => [filter];
+}

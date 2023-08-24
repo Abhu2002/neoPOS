@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 extension StringCheck on String? {
   bool get isNotEmptyValidator {
     if (this == null || this!.isEmpty) return false;
@@ -55,4 +58,27 @@ extension StringCheck on String? {
     return nameRegExp.hasMatch(this!);
     //return true;
   }
+}
+
+void showErrorDialog(BuildContext context, String error) {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(15))),
+        title: Text(AppLocalizations.of(context)!.error_text),
+        content: Text(error),
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
+            },
+            child: Text(AppLocalizations.of(context)!.ok_button),
+          ),
+        ],
+      );
+    },
+  );
 }
