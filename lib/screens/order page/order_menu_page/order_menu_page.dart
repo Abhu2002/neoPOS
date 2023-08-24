@@ -71,7 +71,14 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
               bool showORhideAdd = true;
               bool showORhideBin = true;
               bool showORhideCheckoutbtn = true;
-              return Visibility(
+              return /*MediaQuery.of(context).size.width<850 ? Container(
+                  child:AlertDialog(
+                title:Text(""),
+                content:SingleChildScrollView(
+                  child:Text("HEllo")
+                )
+              )
+              ):*/Visibility(
                 visible: state.showORhide,
                 child: Expanded(
                   flex: 1,

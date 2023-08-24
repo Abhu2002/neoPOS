@@ -34,13 +34,9 @@ class TotalOrderCheckout extends StatefulWidget {
 
 class _TotalOrderCheckoutState extends State<TotalOrderCheckout> {
   var productname;
-
   var productquantity;
-
   var productcategory;
-
   var productprice;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -60,15 +56,30 @@ class _TotalOrderCheckoutState extends State<TotalOrderCheckout> {
                   padding: const EdgeInsets.fromLTRB(8, 8, 10, 8),
                   child: IconButton(
                       onPressed: () {
-                        if (widget.showORhideAdd == true) {
-                          widget.showORhide = false;
-                          BlocProvider.of<OrderContentBloc>(context).add(
-                              ProductLoadingEvent(widget.data['Id'].toString(),
-                                  widget.showORhide));
-                        } else {
-                          BlocProvider.of<OrderHistoryBloc>(context).add(
-                              ShowOrderProductsEvent(
-                                  '0', widget.data, widget.showORhide));
+                        if(MediaQuery.of(context).size.width>850){
+                          if (widget.showORhideAdd == true) {
+                            widget.showORhide = false;
+                            BlocProvider.of<OrderContentBloc>(context).add(
+                                ProductLoadingEvent(widget.data['Id'].toString(),
+                                    widget.showORhide));
+                          } else {
+                            BlocProvider.of<OrderHistoryBloc>(context).add(
+                                ShowOrderProductsEvent(
+                                    '0', widget.data, widget.showORhide));
+                          }
+                        }else{
+                          if (widget.showORhideAdd == true) {
+
+                            BlocProvider.of<OrderContentBloc>(context).add(
+                                ProductLoadingEvent(widget.data['Id'].toString(),
+                                    widget.showORhide));
+                            Navigator.pop(context);
+                          } else {
+                            BlocProvider.of<OrderHistoryBloc>(context).add(
+                                ShowOrderProductsEvent(
+                                    '0', widget.data, widget.showORhide));
+                            Navigator.pop(context);
+                          }
                         }
                       },
                       icon: const Icon(

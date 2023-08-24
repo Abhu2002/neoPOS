@@ -64,21 +64,26 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                       bool showORhideAdd = false;
                       bool showORhideBin = false;
                       bool showORhideCheckoutBTN = false;
-                      return Visibility(
-                        visible: state.showORhide,
-                        child: Expanded(
-                            flex: 3,
-                            child: TotalOrderCheckout(
-                                showORhide: showORhide,
-                                data: data,
-                                products: products,
-                                totalPrice: amount,
-                                orderID: orderID,
-                                showORhideAdd: showORhideAdd,
-                                showORhideBin: showORhideBin,
-                                showORhideMinus: showORhideMinus,
-                                showORhideCheckoutbtn: showORhideCheckoutBTN)),
-                      );
+                       if (MediaQuery.of(context).size.width<850){
+                          return Container();
+                      } else{
+                        return Visibility(
+                          visible: state.showORhide,
+                          child: Expanded(
+                              flex: 3,
+                              child: TotalOrderCheckout(
+                                  showORhide: showORhide,
+                                  data: data,
+                                  products: products,
+                                  totalPrice: amount,
+                                  orderID: orderID,
+                                  showORhideAdd: showORhideAdd,
+                                  showORhideBin: showORhideBin,
+                                  showORhideMinus: showORhideMinus,
+                                  showORhideCheckoutbtn: showORhideCheckoutBTN)),
+                        );
+                      }
+
                     } else {
                       return Container();
                     }
