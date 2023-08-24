@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/utils/popup_cancel_button.dart';
+import 'package:neopos/utils/user_credentials_form.dart';
 import 'package:neopos/utils/utils.dart';
 import 'delete_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -17,7 +18,8 @@ class DeleteTablePopup extends StatefulWidget {
 class _DeleteTablePopupState extends State<DeleteTablePopup> {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final formkey = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
+
   @override
   void initState() {
     _usernameController.text = "";
@@ -30,7 +32,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
     return BlocConsumer<TableDeletionBloc, TableDeletionState>(
       listener: (context, state) {
         if (state is ErrorState) {
-          showErrorDialog(context);
+          showErrorDialog(context, "Invalid Credentials");
         } else if (state is ConfirmationState) {
           showConfirmationDialog(context, state.id);
         } else if (state is TableDeleteState) {
@@ -65,29 +67,6 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
     );
   }
 
-  void showErrorDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-          title: PopUpRow(title: AppLocalizations.of(context)!.error_text),
-          content: Text(AppLocalizations.of(context)!.invalid_credentials),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              },
-              child: Text(AppLocalizations.of(context)!.submit_button),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   void showConfirmationDialog(BuildContext context, String id) {
     showDialog(
       context: context,
@@ -98,40 +77,10 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
           actionsPadding: const EdgeInsets.all(20),
-          content: Form(
-            key: formkey,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextFormField(
-                    validator: (val) {
-                      if (!val.isValidUsername) {
-                        return AppLocalizations.of(context)!.valid_username;
-                      } else {
-                        return null;
-                      }
-                    },
-                    controller: _usernameController,
-                    decoration: InputDecoration(
-                        hintText:
-                            AppLocalizations.of(context)!.username_hinttext)),
-                const SizedBox(height: 16),
-                TextFormField(
-                    validator: (val) {
-                      if (!val.isValidPassword) {
-                        return AppLocalizations.of(context)!.valid_password;
-                      } else {
-                        return null;
-                      }
-                    },
-                    controller: _passwordController,
-                    obscureText: true,
-                    decoration: InputDecoration(
-                        hintText:
-                            AppLocalizations.of(context)!.password_hinttext)),
-              ],
-            ),
-          ),
+          content: UserCredentialsForm(
+              formKey: formKey,
+              usernameController: _usernameController,
+              passwordController: _passwordController),
           actions: [
             ElevatedButton(
               onPressed: () {
@@ -142,7 +91,7 @@ class _DeleteTablePopupState extends State<DeleteTablePopup> {
             ElevatedButton(
               onPressed: () {
                 // Navigator.of(context).pop();
-                if (formkey.currentState!.validate()) {
+                if (formKey.currentState!.validate()) {
                   BlocProvider.of<TableDeletionBloc>(context).add(
                     CredentialsEnteredEvent(
                         _usernameController.text, _passwordController.text, id),

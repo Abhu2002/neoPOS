@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neopos/screens/products/products_page/moreinfo_dialog.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
+import 'package:neopos/screens/products/products_page/widgets/product_read_head.dart';
 import 'package:neopos/utils/app_colors.dart';
-import 'package:neopos/screens/products/products_operation/create_operation/create_product_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:intl/intl.dart'; // for date format
+import 'package:intl/intl.dart';
+import 'moreinfo_dialog.dart';
 
 class ProductsRead extends StatefulWidget {
   const ProductsRead({super.key});
@@ -27,34 +27,7 @@ class _ProductsReadState extends State<ProductsRead> {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
-      Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Text(AppLocalizations.of(context)!.product_page_title,
-              style:
-                  const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-        ),
-        Flexible(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                    elevation: 10,
-                    minimumSize: const Size(88, 36),
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(10)))),
-                onPressed: () {
-                  showDialog(
-                          context: context,
-                          builder: (context) => const CreateProductForm())
-                      .then((value) =>
-                          BlocProvider.of<ReadProductsBloc>(context)
-                              .add(ReadInitialEvent(false)));
-                },
-                child: Text(AppLocalizations.of(context)!.create_button)),
-          ),
-        ),
-      ]),
+      const ProductReadHead(),
       BlocBuilder<ReadProductsBloc, ReadProductsState>(
         builder: ((context, state) {
           if (state is ReadDataLoadedState) {
