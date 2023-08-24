@@ -1,28 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../category_operation/create_operation/create_category_dialog.dart';
-import '../category_operation/delete_operation/delete_category_dialog.dart';
-import '../category_operation/update_operation/category_update_dialog.dart';
-import '../category_page/read_category_bloc.dart';
+
+import '../user_operations/user_create/create_user_dialog.dart';
+import '../user_operations/user_delete/delete_user_dialog.dart';
+import '../user_operations/user_update/update_user_dialog.dart';
+import '../user_page/read_user_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-class CategoryMobileRead extends StatefulWidget {
-  const CategoryMobileRead({super.key});
+
+class UserMobileRead extends StatefulWidget {
+  const UserMobileRead({super.key});
 
   @override
-  State<CategoryMobileRead> createState() => _CategoryMobileReadState();
+  State<UserMobileRead> createState() => _UserMobileReadState();
 }
 
-class _CategoryMobileReadState extends State<CategoryMobileRead> {
+class _UserMobileReadState extends State<UserMobileRead> {
   @override
   void initState() {
-    BlocProvider.of<ReadCategoryBloc>(context).add(InitialEvent(true));
+    BlocProvider.of<ReadUserBloc>(context).add(InitialEvent(true));
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    context.read<ReadCategoryBloc>().showMessage = createSnackBar;
-    return BlocBuilder<ReadCategoryBloc, ReadCategoryState>(
+    return BlocBuilder<ReadUserBloc, ReadUserState>(
       builder: (context, state) {
         if (state is DataLoadedState) {
           return Column(
@@ -34,23 +35,23 @@ class _CategoryMobileReadState extends State<CategoryMobileRead> {
                 child: Row(
                   children: [
                     const SizedBox(width: 20),
-                    Expanded(flex: 1,
+                    Expanded(
                         child: Text(
-                          AppLocalizations.of(context)!.sr,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        )),
-                    Expanded(flex: 2,
+                      AppLocalizations.of(context)!.sr,
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    )),
+                    Expanded(
                         child: Text(
-                          AppLocalizations.of(context)!.category_name,
-                          style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white),
-                        )),
-                    Expanded(flex: 1,
+                      AppLocalizations.of(context)!.user_name_text,
+                      style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white),
+                    )),
+                    Expanded(
                       child: SizedBox()
                     )
                   ],
@@ -63,12 +64,12 @@ class _CategoryMobileReadState extends State<CategoryMobileRead> {
                   ListView.builder(
                     itemCount: state.all.length,
                     itemBuilder: (context, index) {
-                      final category = state.all[index];
+                      final data = state.all[index];
                       return Card(
                         elevation: 2,
                         child: ListTile(
-                          leading: Text('${category.sr}'),
-                          title: Center(child: Text(category.categoryName ?? '')),
+                          leading: Text('${data.sr}'),
+                          title: Center(child: Text('     ${data.userid}')),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -77,11 +78,15 @@ class _CategoryMobileReadState extends State<CategoryMobileRead> {
                                 onPressed: () {
                                   showDialog(
                                     context: context,
-                                    builder: (context) => UpdateCategoryForm(
-                                        id: category.id,
-                                        oldName: category.categoryName),
+                                    builder: (context) => UpdateUserForm(
+                                      docId: data.id,
+                                      oldFirstName: data.firstname,
+                                      oldLastName: data.lastname,
+                                      oldPassword: data.password,
+                                      oldUserId: data.userid,
+                                    ),
                                   ).then((value) =>
-                                      BlocProvider.of<ReadCategoryBloc>(context)
+                                      BlocProvider.of<ReadUserBloc>(context)
                                           .add(InitialEvent(false)));
                                 },
                               ),
@@ -90,11 +95,11 @@ class _CategoryMobileReadState extends State<CategoryMobileRead> {
                                 onPressed: () {
                                   showDialog(
                                     context: context,
-                                    builder: (context) => DeleteCategoryPopup(
-                                      categoryID: category.id!,
+                                    builder: (context) => DeleteUserPopup(
+                                      docID: data.id!,
                                     ),
                                   ).then((value) =>
-                                      BlocProvider.of<ReadCategoryBloc>(context)
+                                      BlocProvider.of<ReadUserBloc>(context)
                                           .add(InitialEvent(false)));
                                 },
                               ),
@@ -110,9 +115,9 @@ class _CategoryMobileReadState extends State<CategoryMobileRead> {
                       onPressed: () {
                         showDialog(
                                 context: context,
-                                builder: (context) => const CreateCategoryForm())
+                                builder: (context) => const CreateUserForm())
                             .then((value) =>
-                                BlocProvider.of<ReadCategoryBloc>(context)
+                                BlocProvider.of<ReadUserBloc>(context)
                                     .add(InitialEvent(false)));
                       },
                       child: const Icon(Icons.add),
@@ -127,10 +132,5 @@ class _CategoryMobileReadState extends State<CategoryMobileRead> {
         }
       },
     );
-  }
-
-  void createSnackBar(String message) {
-    final snackBar = SnackBar(content: Text(message));
-    ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

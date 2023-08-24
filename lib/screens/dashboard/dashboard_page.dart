@@ -12,6 +12,7 @@ import '../order page/order_table_page/order_read_page.dart';
 import '../sales_dashboard/sales_dashboard_page.dart';
 import '../table/table_page/table_page.dart';
 import '../category/category_page/read_category_page.dart';
+import '../users/mob_user_page/read_mob_user_page.dart';
 import '../users/user_page/read_user_page.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -43,7 +44,7 @@ class _DashboardPage extends State<DashboardPage> {
       const SingleChildScrollView(child: OrderPageRead()),
       SingleChildScrollView(child: SalesDashboardPage(widget.pageController)),
       const SingleChildScrollView(child: OrderHistoryPage()),
-      const SingleChildScrollView(child: UserRead()),
+      SingleChildScrollView(child:(MediaQuery.sizeOf(context).width > 850)? const UserRead(): const UserMobileRead()),
     ];
     List<Widget> waiterPage = [
       const SingleChildScrollView(child: OrderPageRead()),
