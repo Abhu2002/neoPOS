@@ -145,5 +145,6 @@
   "today_revenue": "Today's Revenue",
   "monthly_revenue": "Monthly Revenue",
   "weekly_revenue": "Weekly Revenue",
-  "daily_sales": "Daily Sales"
+  "daily_sales": "Daily Sales",
+  "top_5_products":"Top 5 Products"
 }

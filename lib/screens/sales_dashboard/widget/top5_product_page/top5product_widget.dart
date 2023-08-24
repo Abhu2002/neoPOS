@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/sales_dashboard/widget/top5_product_page/top5_bloc.dart';
 import '../../../../utils/app_colors.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TopFiveProduct extends StatefulWidget {
   final data;
@@ -40,11 +41,11 @@ class _TopFiveProductState extends State<TopFiveProduct> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          "Top 5 Products",
-                          style: TextStyle(
+                          AppLocalizations.of(context)!.top_5_products,
+                          style: const TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.bold,
                               color: AppColors.primaryColor),

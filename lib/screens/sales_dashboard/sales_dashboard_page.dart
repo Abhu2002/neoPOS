@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:neopos/screens/sales_dashboard/sales_dashboard_bloc.dart';
 import 'package:neopos/screens/sales_dashboard/widget/graph_widget/graph_dashboard_widget.dart';
+import 'package:neopos/screens/sales_dashboard/widget/piechart_widget/piechart.dart';
 import 'package:neopos/screens/sales_dashboard/widget/top5_product_page/top5product_widget.dart';
 
 import 'package:pie_chart/pie_chart.dart';
@@ -96,28 +97,9 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                                           child: TopFiveProduct(
                                               data: state.topproduct)),
                                       Expanded(
-                                        flex: 4,
-                                        child: Card(
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: SizedBox(
-                                            height: 265,
-                                            child: PieChart(
-                                              dataMap: state.piemap,
-                                              // chartType: ChartType.ring,
-                                              baseChartColor: Colors.grey[50]!
-                                                  .withOpacity(0.15),
-                                              chartValuesOptions:
-                                                  const ChartValuesOptions(
-                                                showChartValuesInPercentage:
-                                                    true,
-                                              ),
-                                              // totalValue: 20,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
+                                          flex: 4,
+                                          child: PieChartWidget(
+                                              data: state.piemap)),
                                     ],
                                   ),
                                 ],
@@ -219,18 +201,6 @@ class _SalesDashboardPageState extends State<SalesDashboardPage> {
                         ),
                       ),
                     ),
-
-                    /// TODO Need Top sales to be Added Later
-                    // Expanded(
-                    //     flex: 2,
-                    //     child: Card(
-                    //       shape: RoundedRectangleBorder(
-                    //           borderRadius: BorderRadius.circular(10)),
-                    //       child: Container(
-                    //         height: 380,
-                    //         child: const Center(child: Text("Top Sales")),
-                    //       ),
-                    //     ))
                   ],
                 ),
               ),

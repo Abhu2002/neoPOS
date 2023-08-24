@@ -135,5 +135,6 @@
      "today_revenue": "आज का आमदनी",
      "monthly_revenue": "महीने के आमदनी",
      "weekly_revenue": "साप्ताहिक आमदनी",
-     "daily_sales": "दैनिक विक्रय"
+     "daily_sales": "दैनिक विक्रय",
+     "top_5_products":"शीर्ष 5 उत्पाद"
 }
