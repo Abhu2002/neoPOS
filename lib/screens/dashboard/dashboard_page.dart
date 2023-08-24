@@ -9,6 +9,7 @@ import '../../utils/sharedpref/sharedpreference.dart';
 import '../category/mob_category_page/read_mob_category_page.dart';
 import '../order history/order_history_page.dart';
 import '../order page/order_table_page/order_read_page.dart';
+import '../products/products_page/products_mobile_page/read_products_mobile_page.dart';
 import '../sales_dashboard/sales_dashboard_page.dart';
 import '../table/table_page/table_page.dart';
 import '../category/category_page/read_category_page.dart';
@@ -39,7 +40,7 @@ class _DashboardPage extends State<DashboardPage> {
   Widget build(BuildContext context) {
     List<Widget> adminPage = [
       SingleChildScrollView(child: (MediaQuery.sizeOf(context).width > 850)? const CategoryRead(): const CategoryMobileRead()),
-      const SingleChildScrollView(child: ProductsRead()),
+      SingleChildScrollView(child: (MediaQuery.sizeOf(context).width > 850)? const ProductsRead(): const ProductMobileRead()),
       const SingleChildScrollView(child: TableRead()),
       const SingleChildScrollView(child: OrderPageRead()),
       SingleChildScrollView(child: SalesDashboardPage(widget.pageController)),
