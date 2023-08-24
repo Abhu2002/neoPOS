@@ -100,7 +100,7 @@ class _MobileSalesDashboardPageState extends State<MobileSalesDashboardPage> {
                               child: SizedBox(
                                 height: 400,
                                 child: PieChart(
-                                  legendOptions: LegendOptions(
+                                  legendOptions: const LegendOptions(
                                       showLegendsInRow: true,
                                       legendPosition: LegendPosition.bottom),
                                   dataMap: state.piemap,
@@ -125,7 +125,7 @@ class _MobileSalesDashboardPageState extends State<MobileSalesDashboardPage> {
                     },
                   ),
                   Expanded(
-                    child: Container(
+                    child: SizedBox(
                       height: 300,
                       child: SingleChildScrollView(
                         child: BlocBuilder<SalesDashboardBloc,
@@ -173,7 +173,7 @@ class _MobileSalesDashboardPageState extends State<MobileSalesDashboardPage> {
                                           },
                                         )),
                                     ListView.builder(
-                                      physics: NeverScrollableScrollPhysics(),
+                                      physics: const NeverScrollableScrollPhysics(),
                                       reverse: true,
                                       shrinkWrap: true,
                                       itemCount: 5,

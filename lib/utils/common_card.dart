@@ -75,10 +75,10 @@ class _CommonCardMobileState extends State<CommonCardMobile> {
             padding: const EdgeInsets.only(top: 5, left: 15),
             child: Row(
               children: [
-                Icon(Icons.trending_up),
+                const Icon(Icons.trending_up),
                 Text(
                   widget.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 18,
                   ),
                 ),
@@ -87,7 +87,7 @@ class _CommonCardMobileState extends State<CommonCardMobile> {
           ),
           Text(
             "Rs.${widget.amount}",
-            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+            style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
           ),
         ],
       ),
