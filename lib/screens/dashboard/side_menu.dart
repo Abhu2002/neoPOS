@@ -38,7 +38,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           press: () {
             widget.pageController.jumpToPage(0);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(0));
-            Navigator.pop(context);
+            (MediaQuery.sizeOf(context).width<850)?Navigator.pop(context):null;
           },
           isSelected: index == 0,
         ),
@@ -51,7 +51,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           press: () {
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(1));
             widget.pageController.jumpToPage(1);
-            Navigator.pop(context);
+            (MediaQuery.sizeOf(context).width<850)?Navigator.pop(context):null;;
           },
           isSelected: index == 1,
         ),
@@ -64,7 +64,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           press: () {
             widget.pageController.jumpToPage(2);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(2));
-            Navigator.pop(context);
+            (MediaQuery.sizeOf(context).width<850)?Navigator.pop(context):null;;
           },
           isSelected: index == 2,
         ),
@@ -77,7 +77,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           press: () {
             widget.pageController.jumpToPage(3);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(3));
-            Navigator.pop(context);
+            (MediaQuery.sizeOf(context).width<850)?Navigator.pop(context):null;;
           },
           isSelected: index == 3,
         ),
@@ -90,7 +90,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           press: () {
             widget.pageController.jumpToPage(4);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(4));
-            Navigator.pop(context);
+            (MediaQuery.sizeOf(context).width<850)?Navigator.pop(context):null;;
           },
           isSelected: index == 4,
         ),
@@ -103,7 +103,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           press: () {
             widget.pageController.jumpToPage(5);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(5));
-            Navigator.pop(context);
+            (MediaQuery.sizeOf(context).width<850)?Navigator.pop(context):null;;
           },
           isSelected: index == 5,
         ),
@@ -116,7 +116,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           press: () {
             widget.pageController.jumpToPage(6);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(6));
-            Navigator.pop(context);
+            (MediaQuery.sizeOf(context).width<850)?Navigator.pop(context):null;;
           },
           isSelected: index == 6,
         ),
@@ -131,7 +131,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           press: () {
             widget.pageController.jumpToPage(0);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(0));
-            Navigator.pop(context);
+            (MediaQuery.sizeOf(context).width<850)?Navigator.pop(context):null;;
           },
           isSelected: index == 0,
         ),
@@ -144,7 +144,7 @@ class _SideMenuPage extends State<SideMenuWidget> {
           press: () {
             widget.pageController.jumpToPage(1);
             BlocProvider.of<SideMenuBloc>(context).add(SideMenuInitEvent(1));
-            Navigator.pop(context);
+            (MediaQuery.sizeOf(context).width<850)?Navigator.pop(context):null;;
           },
           isSelected: index == 1,
         ),
