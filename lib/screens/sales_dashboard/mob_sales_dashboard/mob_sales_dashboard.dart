@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:neopos/screens/sales_dashboard/graph_widget/graph_dashboard_widget.dart';
 import 'package:neopos/screens/sales_dashboard/sales_dashboard_bloc.dart';
 import 'package:pie_chart/pie_chart.dart';
 import 'package:intl/intl.dart';
@@ -10,6 +9,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../utils/app_colors.dart';
 import '../../../utils/common_card.dart';
 import '../../dashboard/side_menu_bloc.dart';
+import '../widget/graph_widget/graph_dashboard_widget.dart';
+import '../widget/top5_product_page/top5product_widget.dart';
 
 class MobileSalesDashboardPage extends StatefulWidget {
   PageController pageController;
@@ -70,11 +71,11 @@ class _MobileSalesDashboardPageState extends State<MobileSalesDashboardPage> {
                               amount: state.dailyValue.toString()),
                           CommonCardMobile(
                               title:
-                                  AppLocalizations.of(context)!.monthly_revenue,
+                                  AppLocalizations.of(context)!.weekly_revenue,
                               amount: state.weeklyValue.toString()),
                           CommonCardMobile(
                               title:
-                                  AppLocalizations.of(context)!.yearly_revenue,
+                                  AppLocalizations.of(context)!.monthly_revenue,
                               amount: state.monthlyValue.toString())
                         ];
                         return Column(
@@ -173,7 +174,8 @@ class _MobileSalesDashboardPageState extends State<MobileSalesDashboardPage> {
                                           },
                                         )),
                                     ListView.builder(
-                                      physics: const NeverScrollableScrollPhysics(),
+                                      physics:
+                                          const NeverScrollableScrollPhysics(),
                                       reverse: true,
                                       shrinkWrap: true,
                                       itemCount: 5,
@@ -218,7 +220,17 @@ class _MobileSalesDashboardPageState extends State<MobileSalesDashboardPage> {
                 ],
               ),
             ),
-            const GraphPage()
+            const GraphPage(),
+            SizedBox(height: 280,
+              child: BlocBuilder<SalesDashboardBloc, SalesDashboardState>(
+                  builder: (context, state) {
+                    if (state is SalesDashBoardLoadedState) {
+                      return TopFiveProduct(data: state.topproduct);
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  }),
+            ),
           ],
         ),
       ),
