@@ -3,7 +3,6 @@ part of 'sales_dashboard_bloc.dart';
 abstract class SalesDashboardState extends Equatable {
   const SalesDashboardState();
 
-
   @override
   List<Object> get props => [];
 }
@@ -19,10 +18,11 @@ class SalesDashBoardLoadedState extends SalesDashboardState {
   final num weeklyValue;
   final num monthlyValue;
   final Map<String, double> piemap;
-  SalesDashBoardLoadedState(this.allOrder, this.productList,
-      this.dailyValue, this.weeklyValue, this.monthlyValue, this.piemap);
+  final List<Map> topproduct;
+  SalesDashBoardLoadedState(this.allOrder, this.productList, this.dailyValue,
+      this.weeklyValue, this.monthlyValue, this.piemap, this.topproduct);
   @override
-  List<Object> get props => [allOrder, productList];
+  List<Object> get props => [allOrder, productList, topproduct];
 }
 
 class SalesDashboardErrorState extends SalesDashboardState {

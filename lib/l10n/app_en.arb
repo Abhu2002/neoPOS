@@ -144,6 +144,7 @@
   "sales_dash_more": "All Order",
   "today_revenue": "Today's Revenue",
   "monthly_revenue": "Monthly Revenue",
-  "yearly_revenue": "Yearly Revenue",
-  "daily_sales": "Daily Sales"
+  "weekly_revenue": "Weekly Revenue",
+  "daily_sales": "Daily Sales",
+  "top_5_products":"Top 5 Products"
 }

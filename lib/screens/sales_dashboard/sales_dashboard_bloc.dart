@@ -4,7 +4,6 @@ import 'package:equatable/equatable.dart';
 import 'package:get_it/get_it.dart';
 import 'package:intl/intl.dart';
 part 'sales_dashboard_event.dart';
-
 part 'sales_dashboard_state.dart';
 
 class SalesDashboardBloc
@@ -15,7 +14,6 @@ class SalesDashboardBloc
       try {
         emit(SalesDashBoardLoadingState());
         var allOrderHistory = [];
-
         List<dynamic> allData = [];
         String currentDateD;
         String currentDateM;
@@ -24,6 +22,11 @@ class SalesDashboardBloc
         num weeklyValue = 0;
         num monthlyValue = 0;
         Map<String, double> pie = {};
+        Map<String, double> topproductdaily = {};
+        Map<String, double> topproductweekly = {};
+        Map<String, double> topproductmonthly = {};
+        List<Map> topproduct = [];
+        Map<DateTime, dynamic> topproductsall = {};
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("order_history").orderBy("order_date").get().then(
           (value) {
@@ -37,14 +40,16 @@ class SalesDashboardBloc
                 "payment_mode": element['payment_mode'],
                 "products": element["products"]
               });
-              graphData.add(SalesData(
-                  DateTime.parse(element['order_date']), element['amount']));
-              for (var element in element['products']) {
-                if (pie.keys.contains(element['productCategory'])) {
-                  pie[element['productCategory']] =
-                      pie[element['productCategory']]! + 1;
+              topproductsall[DateTime.parse(element['order_date'])] =
+                  element["products"];
+              graphData.add(SalesData(DateTime.parse(element['order_date']),
+                  element['amount'].toDouble()));
+              for (var top in element['products']) {
+                if (pie.keys.contains(top['productCategory'])) {
+                  pie[top['productCategory']] =
+                      pie[top['productCategory']]! + 1;
                 } else {
-                  pie[element['productCategory']] = 1;
+                  pie[top['productCategory']] = 1;
                 }
               }
             });
@@ -79,17 +84,51 @@ class SalesDashboardBloc
           monthlyValue +=
               ((currentDateM == DateFormat("MM-yyyy").format(a.x)) ? a.y : 0);
         }
+        for (var ele in topproductsall.keys) {
+          if (currentDateD == DateFormat("dd-MM-yyyy").format(ele)) {
+            for (var d in topproductsall[ele]) {
+              if (topproductdaily.keys.contains(d['productName'])) {
+                topproductdaily[d['productName']] =
+                    topproductdaily[d['productName']]! +
+                        double.parse(d['quantity']);
+              } else {
+                topproductdaily[d['productName']] = 1;
+              }
+            }
+          }
+          if (currentDateW == weekNumber(ele)) {
+            for (var d in topproductsall[ele]) {
+              if (topproductweekly.keys.contains(d['productName'])) {
+                topproductweekly[d['productName']] =
+                    topproductweekly[d['productName']]! +
+                        double.parse(d['quantity']);
+              } else {
+                topproductweekly[d['productName']] = 1;
+              }
+            }
+          }
+          if (currentDateM == DateFormat("MM-yyyy").format(ele)) {
+            for (var d in topproductsall[ele]) {
+              if (topproductmonthly.keys.contains(d['productName'])) {
+                topproductmonthly[d['productName']] =
+                    topproductmonthly[d['productName']]! +
+                        double.parse(d['quantity']);
+              } else {
+                topproductmonthly[d['productName']] = 1;
+              }
+            }
+          }
+        }
+        topproduct
+            .addAll([topproductdaily, topproductweekly, topproductmonthly]);
 
-        emit(SalesDashBoardLoadedState(allOrderHistory, allData,
-            dailyValue, weeklyValue, monthlyValue, pie));
+        emit(SalesDashBoardLoadedState(allOrderHistory, allData, dailyValue,
+            weeklyValue, monthlyValue, pie, topproduct));
       } catch (err) {
         emit(SalesDashboardErrorState(
             "Some Error Occur $err")); //calls state and stores message through parameter
       }
-    }
-    );
-
-
+    });
   }
   int numOfWeeks(int year) {
     DateTime dec28 = DateTime(year, 12, 28);
