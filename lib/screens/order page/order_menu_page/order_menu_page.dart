@@ -25,9 +25,9 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
       BlocProvider.of<OrderContentBloc>(context)
           .add(ProductLoadingEvent(widget.data['Id'].toString(), false));
     } else {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.pushReplacementNamed(context, RoutePaths.dashboard);
-        });
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacementNamed(context, RoutePaths.dashboard);
+      });
     }
   }
 
@@ -71,14 +71,7 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
               bool showORhideAdd = true;
               bool showORhideBin = true;
               bool showORhideCheckoutbtn = true;
-              return /*MediaQuery.of(context).size.width<850 ? Container(
-                  child:AlertDialog(
-                title:Text(""),
-                content:SingleChildScrollView(
-                  child:Text("HEllo")
-                )
-              )
-              ):*/Visibility(
+              return Visibility(
                 visible: state.showORhide,
                 child: Expanded(
                   flex: 1,
