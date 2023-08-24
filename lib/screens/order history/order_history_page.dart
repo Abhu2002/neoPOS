@@ -54,7 +54,7 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                             Container(
                               color: Colors.orange.shade600,
                               height: 50,
-                              child:  Row(
+                              child: Row(
                                 children: [
                                   Expanded(
                                     flex: 1,
@@ -62,7 +62,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                         width: 20,
                                         child: Center(
                                             child: Text(
-                                              AppLocalizations.of(context)!.order_history_id,
+                                          AppLocalizations.of(context)!
+                                              .order_history_id,
                                           style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
@@ -75,7 +76,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                         width: 80,
                                         child: Center(
                                             child: Text(
-                                              AppLocalizations.of(context)!.order_history_name,
+                                          AppLocalizations.of(context)!
+                                              .order_history_name,
                                           style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
@@ -88,7 +90,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                         width: 80,
                                         child: Center(
                                             child: Text(
-                                              AppLocalizations.of(context)!.order_history_mob,
+                                          AppLocalizations.of(context)!
+                                              .order_history_mob,
                                           style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
@@ -101,7 +104,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                         width: 80,
                                         child: Center(
                                             child: Text(
-                                              AppLocalizations.of(context)!.order_history_amt,
+                                          AppLocalizations.of(context)!
+                                              .order_history_amt,
                                           style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
@@ -114,7 +118,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                         width: 50,
                                         child: Center(
                                             child: Text(
-                                              AppLocalizations.of(context)!.date_title,
+                                          AppLocalizations.of(context)!
+                                              .date_title,
                                           style: const TextStyle(
                                               fontSize: 15,
                                               fontWeight: FontWeight.bold,
@@ -223,21 +228,26 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                       bool showORhideAdd = false;
                       bool showORhideBin = false;
                       bool showORhideCheckoutbtn = false;
-                      return Visibility(
-                        visible: state.showORhide,
-                        child: Expanded(
-                            flex: 3,
-                            child: TotalOrderCheckout(
-                                showORhide: showORhide,
-                                data: data,
-                                products: products,
-                                totalPrice: amount,
-                                orderID: orderID,
-                                showORhideAdd: showORhideAdd,
-                                showORhideBin: showORhideBin,
-                                showORhideMinus: showORhideMinus,
-                                showORhideCheckoutbtn: showORhideCheckoutbtn)),
-                      );
+                      if (MediaQuery.of(context).size.width > 850) {
+                        return Visibility(
+                          visible: state.showORhide,
+                          child: Expanded(
+                              flex: 3,
+                              child: TotalOrderCheckout(
+                                  showORhide: showORhide,
+                                  data: data,
+                                  products: products,
+                                  totalPrice: amount,
+                                  orderID: orderID,
+                                  showORhideAdd: showORhideAdd,
+                                  showORhideBin: showORhideBin,
+                                  showORhideMinus: showORhideMinus,
+                                  showORhideCheckoutbtn:
+                                      showORhideCheckoutbtn)),
+                        );
+                      } else {
+                        return Container();
+                      }
                     } else {
                       return Container();
                     }
@@ -248,7 +258,39 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
               return const CircularProgressIndicator();
             }
           },
-        )
+        ),
+
+        // BlocBuilder<OrderHistoryBloc, OrderHistoryState>(
+        //     builder: ((context, state) {
+        //   if (state is OrderHistoryLoaded || state is ShowProductsState) {
+        //     var products = state.productList;
+        //     var data = state.allOrder;
+        //     bool showORhide = false;
+        //     double amount = state.amount;
+        //     String orderID = state.orderId;
+        //     bool showORhideMinus = false;
+        //     bool showORhideAdd = false;
+        //     bool showORhideBin = false;
+        //     bool showORhideCheckoutbtn = false;
+        //     if (MediaQuery.of(context).size.width < 850) {
+        //       AlertDialog(
+        //           content: SingleChildScrollView(
+        //         child: TotalOrderCheckout(
+        //             showORhide: showORhide,
+        //             data: data,
+        //             products: products,
+        //             totalPrice: amount,
+        //             orderID: orderID,
+        //             showORhideAdd: showORhideAdd,
+        //             showORhideBin: showORhideBin,
+        //             showORhideMinus: showORhideMinus,
+        //             showORhideCheckoutbtn: showORhideCheckoutbtn),
+        //       ));
+        //     }
+        //   } else {
+        //     return Container();
+        //   }
+        // }))
       ]),
     );
   }
