@@ -51,7 +51,7 @@ class _UserMobileReadState extends State<UserMobileRead> {
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     )),
-                    Expanded(
+                    const Expanded(
                       child: SizedBox()
                     )
                   ],
@@ -59,7 +59,7 @@ class _UserMobileReadState extends State<UserMobileRead> {
               ),
               Container(
                 color: Colors.grey.shade100,
-                height: MediaQuery.sizeOf(context).height * 0.85,
+                height: MediaQuery.sizeOf(context).height * 0.8,
                 child: Stack(alignment: Alignment.bottomRight, children: [
                   ListView.builder(
                     itemCount: state.all.length,
