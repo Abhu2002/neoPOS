@@ -72,9 +72,9 @@ class _GraphPageState extends State<GraphPage> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                        Padding(
-                        padding: EdgeInsets.only(left: 10),
+                        padding: const EdgeInsets.only(left: 10),
                         child: Text(AppLocalizations.of(context)!.daily_sales,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
                       ),
                       Padding(
@@ -107,7 +107,7 @@ class _GraphPageState extends State<GraphPage> {
                             interval: 1,
                             majorGridLines: const MajorGridLines(width: 0)),
                         series: <ChartSeries<ChartData, int>>[
-                          ColumnSeries<ChartData, int>(
+                          ColumnSeries<ChartData, int>(color: Colors.orangeAccent,
                               xAxisName: "Day of Month",
                               yAxisName: "Sales in Amount",
                               dataLabelSettings:
