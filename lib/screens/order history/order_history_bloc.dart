@@ -107,7 +107,7 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
           return false;
         }).toList();
 
-        emit(OrderHistoryLoaded(productLists, productLists));
+        emit(OrderHistoryLoaded(productLists, []));
         return;
       }
       productLists = allPrevOrders.where((order) {
