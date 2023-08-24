@@ -11,6 +11,7 @@ class ReadUserBloc extends Bloc<ReadUserEvent, ReadUserState> {
   ReadUserBloc() : super(ReadUserInitial()) {
     on<InitialEvent>((event, emit) async {
       try {
+        int counter = 1;
         if (event.isfirst) {
           emit(DataLoadingState());
         } else {
@@ -21,7 +22,8 @@ class ReadUserBloc extends Bloc<ReadUserEvent, ReadUserState> {
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("users").get().then((value) => {
               value.docs.forEach((element) {
-                allCat.add(UserModel.fromFirestore(element));
+                allCat.add(UserModel.fromFirestore(element,counter));
+                counter += 1;
               })
             });
         LoadDataEvent();

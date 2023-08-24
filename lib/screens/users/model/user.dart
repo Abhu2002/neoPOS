@@ -9,6 +9,7 @@ class UserModel {
   final String? userrole;
   final String? addedon;
   final String? updatedon;
+  final int? sr;
 
   UserModel({
     this.id,
@@ -19,10 +20,11 @@ class UserModel {
     this.userrole,
     this.addedon,
     this.updatedon,
+    this.sr,
   });
 
   factory UserModel.fromFirestore(
-    QueryDocumentSnapshot<Map<String, dynamic>> snapshot,
+    QueryDocumentSnapshot<Map<String, dynamic>> snapshot, int sr
   ) {
     final data = snapshot;
     return UserModel(
@@ -34,6 +36,7 @@ class UserModel {
       userrole: data['user_role'],
       addedon: data['added_on'],
       updatedon: data['updated_on'],
+        sr: sr
     );
   }
 
