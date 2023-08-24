@@ -54,7 +54,7 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
         // print(allOrders[i]["Id"] == id);
         if (id == 0) break;
         if (int.parse(allOrders[i]["Id"]) == id) {
-          amount = event.allOrders[i]["amount"];
+          amount = event.allOrders[i]["amount"].toDouble();
           orderId = allOrders[i]["Id"];
           productList = (event.allOrders[i]["products"]);
           break;

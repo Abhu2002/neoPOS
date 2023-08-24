@@ -15,12 +15,13 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
       GetIt.I.get<FirebaseFirestore>().collection('live_table');
 
   OrderContentBloc() : super(InitialState()) {
+    List<Map<String, dynamic>> allProds = [];
     on<DecreaseQuantityEvent>(_mapDecreaseQuantityEventToState);
     on<IncreaseQuantityEvent>(_mapIncreaseQuantityEventToState);
     on<DeleteOrderEvent>(_mapDeleteOrderEventToState);
     on<ProductLoadingEvent>((event, emit) async {
+      allProds = [];
       FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
-      List<Map<String, dynamic>> allProds = [];
       List<String> allCats = [];
 
       await db.collection("category").get().then((value) {
@@ -125,10 +126,10 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
 
       if (event.category == "All") {
         emit(FilterProductsState(
-            event.allProds, event.allCats, event.category, products));
+            allProds, event.allCats, event.category, products));
         return;
       }
-      filteredProds = event.allProds.where((element) {
+      filteredProds = allProds.where((element) {
         return (element["product_category"].toString() == category);
       }).toList();
 

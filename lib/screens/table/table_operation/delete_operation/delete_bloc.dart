@@ -51,9 +51,9 @@ class TableDeletionBloc extends Bloc<TableDeletionEvent, TableDeletionState> {
             liveDocID = docSnapshot.id;
           }
 
-          await tableCollection.doc(docId).delete();
+          tableCollection.doc(docId).delete();
           emit(TableDeleteState());
-          await liveTableCollection.doc(liveDocID).delete();
+          liveTableCollection.doc(liveDocID).delete();
         } else {
           emit(ErrorState());
         }

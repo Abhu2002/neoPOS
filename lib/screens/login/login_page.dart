@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:neopos/navigation/route_paths.dart';
@@ -25,6 +26,7 @@ class _LoginPage extends State<LoginPage> {
     context.read<LoginBloc>().showMessage = createSnackBar;
     return WillPopScope(
       onWillPop: () async {
+        SystemNavigator.pop();
         return false;
       },
       child: Scaffold(
