@@ -97,6 +97,7 @@ class _CardOrderHistoryState extends State<CardOrderHistory> {
                       );
                     },
                     itemBuilder: (context, index) {
+                      var newindex = index + int.parse(widget.allOrders[0]["Id"]!);
                       var data = widget.allOrders[index];
                       var showORhide = true;
                       return InkWell(
@@ -173,7 +174,7 @@ class _CardOrderHistoryState extends State<CardOrderHistory> {
                         },
                         child: Container(
                           height: 50,
-                          color: (state.orderId == (index + 1).toString())
+                          color: (state.orderId == (newindex).toString())
                               ? AppColors.primarySwatch.shade50
                               : Colors.white,
                           child: Row(

@@ -14,15 +14,19 @@ class OrderHistoryPage extends StatefulWidget {
 }
 
 class _OrderHistoryPageState extends State<OrderHistoryPage> {
+  List<String> filters = ['All','Daily', 'Weekly', 'Monthly'];
+  var dropdownvalue = "";
+  var f = NumberFormat("###,###", "en_US");
+  var allOrders = [];
+
   @override
   void initState() {
     BlocProvider.of<OrderHistoryBloc>(context)
         .add(OrderHistoryPageInitEvent(true));
     super.initState();
+    dropdownvalue = filters[0];
   }
 
-  var f = NumberFormat("###,###", "en_US");
-  var allOrders = [];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -33,6 +37,22 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
             padding: const EdgeInsets.all(20.0),
             child: CommonText20(
                 text: AppLocalizations.of(context)!.order_history_page_title),
+          ),
+          DropdownButton(
+            value: dropdownvalue,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            items: filters.map((String items) {
+              return DropdownMenuItem(
+                value: items,
+                child: Text(items),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(() {
+                dropdownvalue = newValue!;
+              });
+              BlocProvider.of<OrderHistoryBloc>(context).add(OrderHistroyFilterEvent(dropdownvalue));
+            },
           ),
         ]),
         BlocBuilder<OrderHistoryBloc, OrderHistoryState>(
