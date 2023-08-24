@@ -25,9 +25,9 @@ class _OrderMenuPageState extends State<OrderMenuPage> {
       BlocProvider.of<OrderContentBloc>(context)
           .add(ProductLoadingEvent(widget.data['Id'].toString(), false));
     } else {
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          Navigator.pushReplacementNamed(context, RoutePaths.dashboard);
-        });
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        Navigator.pushReplacementNamed(context, RoutePaths.dashboard);
+      });
     }
   }
 
