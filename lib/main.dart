@@ -19,6 +19,7 @@ import 'package:neopos/screens/products/products_operation/update_operation/prod
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 import 'package:neopos/screens/sales_dashboard/sales_dashboard_bloc.dart';
 import 'package:neopos/screens/sales_dashboard/widget/graph_widget/graph_dashboard_bloc.dart';
+import 'package:neopos/screens/sales_dashboard/widget/top5_product_page/top5_bloc.dart';
 import 'package:neopos/screens/splashScreen/splashscreen_page.dart';
 import 'package:neopos/screens/users/user_operations/user_create/create_user_bloc.dart';
 import 'package:neopos/screens/users/user_operations/user_delete/delete_user_bloc.dart';
@@ -106,6 +107,9 @@ class _MyAppState extends State<MyApp> {
 
         // Bloc for Localization
         BlocProvider(create: (_) => LocalizationBloc()),
+
+        // Bloc for Top 5 Products
+        BlocProvider(create: (_) => Top5Bloc()),
       ],
       child: BlocBuilder<LocalizationBloc, LocalizationState>(
         builder: (context, state) {

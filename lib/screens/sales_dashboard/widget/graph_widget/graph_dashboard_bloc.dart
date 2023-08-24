@@ -16,10 +16,9 @@ class GraphDashboardBloc
         emit(GraphFilterLoadingState());
         var allOrderHistory = [];
 
-
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("order_history").get().then(
-              (value) {
+          (value) {
             value.docs.forEach((element) {
               allOrderHistory.add({
                 "Id": element.id,
@@ -30,20 +29,18 @@ class GraphDashboardBloc
                 "payment_mode": element['payment_mode'],
                 "products": element["products"]
               });
-              graphData.add(SalesData(
-                  DateTime.parse(element['order_date']), element['amount']));
+              graphData.add(SalesData(DateTime.parse(element['order_date']),
+                  element['amount'].toDouble()));
             });
           },
         );
         List<SalesData>? filteredList = [];
-        int targetMonth = event.monthIndex ?? DateTime
-            .now()
-            .month; // March
+        int targetMonth = event.monthIndex ?? DateTime.now().month; // March
 
         filteredList = graphData
             .where((sales) {
-          return sales.x.month == targetMonth;
-        })
+              return sales.x.month == targetMonth;
+            })
             .cast<SalesData>()
             .toList();
 
@@ -56,7 +53,7 @@ class GraphDashboardBloc
 
           for (int i = 0; i < graphData.length; i++) {
             final dateFromData =
-            DateFormat("dd-MM-yyyy").format(graphData[i].x);
+                DateFormat("dd-MM-yyyy").format(graphData[i].x);
 
             if (dateFromData == dailyFormat) {
               sales += graphData[i].y;
@@ -76,7 +73,7 @@ class GraphDashboardBloc
           final dailyFormat = DateFormat("dd-MM-yyyy").format(dailySales.x);
           for (int i = 0; i < graphData.length; i++) {
             final dateFromData =
-            DateFormat("dd-MM-yyyy").format(graphData[i].x);
+                DateFormat("dd-MM-yyyy").format(graphData[i].x);
             if (dateFromData == dailyFormat) {
               sales += graphData[i].y;
             }
@@ -90,15 +87,12 @@ class GraphDashboardBloc
 
         processedData = map2.values.toList();
 
-
-        emit(GraphFilterState(
-            processedGraphData));
+        emit(GraphFilterState(processedGraphData));
       } catch (err) {
         emit(GraphFilterErrorState(
             "Some Error Occur $err")); //calls state and stores message through parameter
       }
-    }
-    );
+    });
   }
 }
 

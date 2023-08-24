@@ -18,7 +18,7 @@ class SalesDashBoardLoadedState extends SalesDashboardState {
   final num weeklyValue;
   final num monthlyValue;
   final Map<String, double> piemap;
-  final Map<String, double> topproduct;
+  final List<Map> topproduct;
   SalesDashBoardLoadedState(this.allOrder, this.productList, this.dailyValue,
       this.weeklyValue, this.monthlyValue, this.piemap, this.topproduct);
   @override
