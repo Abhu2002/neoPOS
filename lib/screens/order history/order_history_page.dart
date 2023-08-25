@@ -14,7 +14,7 @@ class OrderHistoryPage extends StatefulWidget {
 }
 
 class _OrderHistoryPageState extends State<OrderHistoryPage> {
-  List<String> filters = ['All','Daily', 'Weekly', 'Monthly'];
+  List<String> filters = ['All', 'Daily', 'Weekly', 'Monthly'];
   var dropdownvalue = "";
   var f = NumberFormat("###,###", "en_US");
   var allOrders = [];
@@ -53,7 +53,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                 setState(() {
                   dropdownvalue = newValue!;
                 });
-                BlocProvider.of<OrderHistoryBloc>(context).add(OrderHistroyFilterEvent(dropdownvalue));
+                BlocProvider.of<OrderHistoryBloc>(context)
+                    .add(OrderHistroyFilterEvent(dropdownvalue));
               },
             ),
           ),
@@ -68,7 +69,8 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                       flex: 5,
                       child: CardOrderHistory(
                           id: AppLocalizations.of(context)!.order_history_id,
-                          name: AppLocalizations.of(context)!.order_history_name,
+                          name:
+                              AppLocalizations.of(context)!.order_history_name,
                           mob: AppLocalizations.of(context)!.order_history_mob,
                           amt: AppLocalizations.of(context)!.order_history_amt,
                           date: AppLocalizations.of(context)!.date_title,
@@ -87,9 +89,9 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                       bool showORhideAdd = false;
                       bool showORhideBin = false;
                       bool showORhideCheckoutBTN = false;
-                       if (MediaQuery.of(context).size.width<850){
-                          return Container();
-                      } else{
+                      if (MediaQuery.of(context).size.width < 850) {
+                        return Container();
+                      } else {
                         return Visibility(
                           visible: state.showORhide,
                           child: Expanded(
@@ -103,10 +105,10 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
                                   showORhideAdd: showORhideAdd,
                                   showORhideBin: showORhideBin,
                                   showORhideMinus: showORhideMinus,
-                                  showORhideCheckoutbtn: showORhideCheckoutBTN)),
+                                  showORhideCheckoutbtn:
+                                      showORhideCheckoutBTN)),
                         );
                       }
-
                     } else {
                       return Container();
                     }

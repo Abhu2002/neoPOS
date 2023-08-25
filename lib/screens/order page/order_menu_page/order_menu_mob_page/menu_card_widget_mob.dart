@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../../../navigation/route_paths.dart';
 import '../../../products/products_page/moreinfo_dialog.dart';
 import '../order_menu_bloc.dart';
+
 class MenuCardMobWidget extends StatefulWidget {
   dynamic data;
   MenuCardMobWidget({Key? key, this.data}) : super(key: key);
@@ -94,46 +95,44 @@ class _MenuCardMobWidgetState extends State<MenuCardMobWidget> {
                       ),
                       onTap: () {
                         showGeneralDialog(
-                                context: context,
-                                transitionBuilder: (BuildContext context,
-                                    Animation<double> animation,
-                                    Animation<double> secondaryAnimation,
-                                    Widget child) {
-                                  return SlideTransition(
-                                    position: Tween(
-                                            begin: const Offset(1, 0),
-                                            end: const Offset(0, 0))
-                                        .animate(animation),
-                                    child: FadeTransition(
-                                      opacity: CurvedAnimation(
-                                        parent: animation,
-                                        curve: Curves.easeOut,
-                                      ),
-                                      child: child,
-                                    ),
-                                  );
-                                },
-                                pageBuilder:
-                                    (context, animation, secondaryAnimation) {
-                                  return Align(
-                                      alignment: Alignment.centerRight,
-                                      child: MoreInfoPopup(
-                                        image: prods[index]['product_image'],
-                                        id: widget.data['Id'].toString(),
-                                        productName: prods[index]
-                                            ['product_name'],
-                                        productDescription: "",
-                                        productType: prods[index]
-                                            ['product_type'],
-                                        productAvailability: true,
-                                        productPrice: prods[index]
-                                            ['product_price'],
-                                        productCategory: prods[index]
-                                            ['product_category'],
-                                      ));
-                                }).then((value) => BlocProvider.of<OrderContentBloc>(context)
-                            .add(ProductLoadingEvent(widget.data['Id'], false)));
-
+                            context: context,
+                            transitionBuilder: (BuildContext context,
+                                Animation<double> animation,
+                                Animation<double> secondaryAnimation,
+                                Widget child) {
+                              return SlideTransition(
+                                position: Tween(
+                                        begin: const Offset(1, 0),
+                                        end: const Offset(0, 0))
+                                    .animate(animation),
+                                child: FadeTransition(
+                                  opacity: CurvedAnimation(
+                                    parent: animation,
+                                    curve: Curves.easeOut,
+                                  ),
+                                  child: child,
+                                ),
+                              );
+                            },
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return Align(
+                                  alignment: Alignment.centerRight,
+                                  child: MoreInfoPopup(
+                                    image: prods[index]['product_image'],
+                                    id: widget.data['Id'].toString(),
+                                    productName: prods[index]['product_name'],
+                                    productDescription: "",
+                                    productType: prods[index]['product_type'],
+                                    productAvailability: true,
+                                    productPrice: prods[index]['product_price'],
+                                    productCategory: prods[index]
+                                        ['product_category'],
+                                  ));
+                            }).then((value) => BlocProvider.of<
+                                OrderContentBloc>(context)
+                            .add(
+                                ProductLoadingEvent(widget.data['Id'], false)));
                       },
                     );
                   },

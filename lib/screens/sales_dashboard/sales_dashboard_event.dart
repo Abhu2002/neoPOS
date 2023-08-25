@@ -10,8 +10,6 @@ abstract class SalesDashboardEvent extends Equatable {
 class DashboardPageinitevent extends SalesDashboardEvent {
   DashboardPageinitevent();
 
-
   @override
   List<Object> get props => [];
 }
-

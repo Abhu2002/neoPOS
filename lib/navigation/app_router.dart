@@ -33,8 +33,9 @@ class AppRouter {
       // -------------- Dasboard Route ------------
       case RoutePaths.dashboard:
         return CupertinoPageRoute(
-          builder: (context) =>  DashboardPage(userRole: settings.arguments),
-          settings:  RouteSettings(name: RoutePaths.dashboard,arguments: settings.arguments),
+          builder: (context) => DashboardPage(userRole: settings.arguments),
+          settings: RouteSettings(
+              name: RoutePaths.dashboard, arguments: settings.arguments),
         );
       // -------------- Login Route ---------------
       case RoutePaths.login:

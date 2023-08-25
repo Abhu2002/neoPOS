@@ -16,7 +16,6 @@ class TableBloc extends Bloc<TableEvent, TableState> {
         if (event.isfirst) {
           emit(TableReadLoadingState());
         } else {
-
           emit(TableReadLoadingState());
           Future.delayed(const Duration(seconds: 1));
         }

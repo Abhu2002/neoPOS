@@ -56,22 +56,23 @@ class _TotalOrderCheckoutState extends State<TotalOrderCheckout> {
                   padding: const EdgeInsets.fromLTRB(8, 8, 10, 8),
                   child: IconButton(
                       onPressed: () {
-                        if(MediaQuery.of(context).size.width>850){
+                        if (MediaQuery.of(context).size.width > 850) {
                           if (widget.showORhideAdd == true) {
                             widget.showORhide = false;
                             BlocProvider.of<OrderContentBloc>(context).add(
-                                ProductLoadingEvent(widget.data['Id'].toString(),
+                                ProductLoadingEvent(
+                                    widget.data['Id'].toString(),
                                     widget.showORhide));
                           } else {
                             BlocProvider.of<OrderHistoryBloc>(context).add(
                                 ShowOrderProductsEvent(
                                     '0', widget.data, widget.showORhide));
                           }
-                        }else{
+                        } else {
                           if (widget.showORhideAdd == true) {
-
                             BlocProvider.of<OrderContentBloc>(context).add(
-                                ProductLoadingEvent(widget.data['Id'].toString(),
+                                ProductLoadingEvent(
+                                    widget.data['Id'].toString(),
                                     widget.showORhide));
                             Navigator.pop(context);
                           } else {

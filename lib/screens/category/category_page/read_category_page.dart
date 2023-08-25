@@ -152,7 +152,7 @@ class _CategoryReadState extends State<CategoryRead> {
                                               builder: (context) =>
                                                   DeleteCategoryPopup(
                                                 categoryID: data.id!,
-                                                    categoryName: data.categoryName,
+                                                categoryName: data.categoryName,
                                               ),
                                             ).then((value) => BlocProvider.of<
                                                     ReadCategoryBloc>(context)

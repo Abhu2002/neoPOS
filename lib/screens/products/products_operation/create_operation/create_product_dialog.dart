@@ -15,7 +15,6 @@ class CreateProductForm extends StatefulWidget {
 }
 
 class _CreateProductFormState extends State<CreateProductForm> {
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

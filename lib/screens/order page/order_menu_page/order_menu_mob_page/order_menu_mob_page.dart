@@ -15,7 +15,6 @@ class OrderMenuMobPage extends StatefulWidget {
 }
 
 class _OrderMenuMobPageState extends State<OrderMenuMobPage> {
-
   @override
   void initState() {
     super.initState();

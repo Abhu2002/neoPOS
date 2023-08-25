@@ -6,7 +6,10 @@ import '../../../../utils/app_colors.dart';
 class ProductName extends StatefulWidget {
   TextEditingController? productName;
   final ValueChanged<String> onProductNameChanged;
-  ProductName({super.key, required this.productName, required this.onProductNameChanged});
+  ProductName(
+      {super.key,
+      required this.productName,
+      required this.onProductNameChanged});
 
   @override
   State<ProductName> createState() => _ProductNameState();
@@ -19,15 +22,13 @@ class _ProductNameState extends State<ProductName> {
       controller: widget.productName,
       validator: (val) {
         if (!val.isValidProductName) {
-          return AppLocalizations.of(context)!
-              .valid_product_name;
+          return AppLocalizations.of(context)!.valid_product_name;
         } else {
           return null;
         }
       },
       decoration: InputDecoration(
-          hintText:
-          AppLocalizations.of(context)!.product_name,
+          hintText: AppLocalizations.of(context)!.product_name,
           prefixIcon: const Icon(
             Icons.restaurant_menu,
             color: AppColors.primaryColor,

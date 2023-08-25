@@ -1,10 +1,7 @@
-import 'dart:convert';
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get_it/get_it.dart';
 import 'package:equatable/equatable.dart';
-import 'package:neopos/screens/category/model/category.dart';
 
 part 'delete_event.dart';
 
@@ -39,7 +36,7 @@ class CategoryDeletionBloc
       QuerySnapshot productSnapShot = await productsCollection
           .where("product_category", isEqualTo: catData["category_name"])
           .get();
-      if(productSnapShot.size != 0) {
+      if (productSnapShot.size != 0) {
         emit(ErrorState("First delete this categories products"));
         return;
       }

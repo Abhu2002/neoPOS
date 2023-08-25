@@ -9,14 +9,16 @@ class CategoryDropDown extends StatefulWidget {
   final ValueChanged<String> onCategoryChanged;
 
   const CategoryDropDown(
-      {required this.categories, super.key, this.dropdownvalue, required this.onCategoryChanged});
+      {required this.categories,
+      super.key,
+      this.dropdownvalue,
+      required this.onCategoryChanged});
 
   @override
   State<CategoryDropDown> createState() => _CategoryDropDownState();
 }
 
 class _CategoryDropDownState extends State<CategoryDropDown> {
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CreateProductBloc, CreateProductState>(

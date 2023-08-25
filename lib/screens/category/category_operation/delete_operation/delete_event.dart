@@ -7,7 +7,8 @@ class CredentialsEnteredEvent extends CategoryDeletionEvent {
   final String password;
   final String id;
   final String categoryName;
-  CredentialsEnteredEvent(this.username, this.password, this.id, this.categoryName);
+  CredentialsEnteredEvent(
+      this.username, this.password, this.id, this.categoryName);
 
   @override
   List<Object?> get props => [username, password, id];

@@ -9,7 +9,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 class DeleteCategoryPopup extends StatefulWidget {
   final String categoryID;
   final String categoryName;
-  const DeleteCategoryPopup({super.key, required this.categoryID, required this.categoryName});
+  const DeleteCategoryPopup(
+      {super.key, required this.categoryID, required this.categoryName});
 
   @override
   State<DeleteCategoryPopup> createState() => _DeleteCategoryPopupState();
@@ -57,8 +58,9 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
             ),
             ElevatedButton(
               onPressed: () async {
-                BlocProvider.of<CategoryDeletionBloc>(context)
-                    .add(ConfirmTableDeletionEvent(widget.categoryID, widget.categoryName));
+                BlocProvider.of<CategoryDeletionBloc>(context).add(
+                    ConfirmTableDeletionEvent(
+                        widget.categoryID, widget.categoryName));
               },
               child: Text(AppLocalizations.of(context)!.yes_title),
             ),
@@ -92,7 +94,8 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
     );
   }
 
-  void showConfirmationDialog(BuildContext context, String id, String categoryName) {
+  void showConfirmationDialog(
+      BuildContext context, String id, String categoryName) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -155,8 +158,8 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
               onPressed: () {
                 if (formKey.currentState!.validate()) {
                   BlocProvider.of<CategoryDeletionBloc>(context).add(
-                    CredentialsEnteredEvent(
-                        _usernameController.text, _passwordController.text, id, categoryName),
+                    CredentialsEnteredEvent(_usernameController.text,
+                        _passwordController.text, id, categoryName),
                   );
                   Navigator.of(context).pop();
                 }

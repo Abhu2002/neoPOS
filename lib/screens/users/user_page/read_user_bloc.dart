@@ -22,7 +22,7 @@ class ReadUserBloc extends Bloc<ReadUserEvent, ReadUserState> {
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         await db.collection("users").get().then((value) => {
               value.docs.forEach((element) {
-                allCat.add(UserModel.fromFirestore(element,counter));
+                allCat.add(UserModel.fromFirestore(element, counter));
                 counter += 1;
               })
             });

@@ -80,7 +80,9 @@ class _CreateTableFormState extends State<CreateTableForm> {
           child: const Text(""),
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width / 2,
+          width: (MediaQuery.of(context).size.width > 850)
+              ? MediaQuery.of(context).size.width / 2
+              : MediaQuery.of(context).size.width,
           child: Form(
             key: formKey,
             child: Column(

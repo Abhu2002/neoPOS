@@ -60,10 +60,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         if (value.size != 0) {
           for (var data in value.docs) {
             String role = data['user_role'];
-            if(role == 'Admin'){
-              userRole=role;
+            if (role == 'Admin') {
+              userRole = role;
+            } else {
+              userRole = 'Waiter';
             }
-            else{userRole='Waiter';}
             result = data.data();
             onLoginSuccess!();
           }

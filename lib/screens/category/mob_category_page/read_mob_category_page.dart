@@ -5,6 +5,7 @@ import '../category_operation/delete_operation/delete_category_dialog.dart';
 import '../category_operation/update_operation/category_update_dialog.dart';
 import '../category_page/read_category_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class CategoryMobileRead extends StatefulWidget {
   const CategoryMobileRead({super.key});
 
@@ -34,7 +35,8 @@ class _CategoryMobileReadState extends State<CategoryMobileRead> {
                 child: Row(
                   children: [
                     const SizedBox(width: 20),
-                    Expanded(flex: 1,
+                    Expanded(
+                        flex: 1,
                         child: Text(
                           AppLocalizations.of(context)!.sr,
                           style: const TextStyle(
@@ -42,7 +44,8 @@ class _CategoryMobileReadState extends State<CategoryMobileRead> {
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         )),
-                    Expanded(flex: 2,
+                    Expanded(
+                        flex: 2,
                         child: Text(
                           AppLocalizations.of(context)!.category_name,
                           style: const TextStyle(
@@ -50,9 +53,7 @@ class _CategoryMobileReadState extends State<CategoryMobileRead> {
                               fontWeight: FontWeight.bold,
                               color: Colors.white),
                         )),
-                    Expanded(flex: 1,
-                      child: SizedBox()
-                    )
+                    Expanded(flex: 1, child: SizedBox())
                   ],
                 ),
               ),
@@ -68,7 +69,8 @@ class _CategoryMobileReadState extends State<CategoryMobileRead> {
                         elevation: 2,
                         child: ListTile(
                           leading: Text('${category.sr}'),
-                          title: Center(child: Text(category.categoryName ?? '')),
+                          title:
+                              Center(child: Text(category.categoryName ?? '')),
                           trailing: Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
@@ -110,11 +112,11 @@ class _CategoryMobileReadState extends State<CategoryMobileRead> {
                     child: FloatingActionButton(
                       onPressed: () {
                         showDialog(
-                                context: context,
-                                builder: (context) => const CreateCategoryForm())
-                            .then((value) =>
-                                BlocProvider.of<ReadCategoryBloc>(context)
-                                    .add(InitialEvent(false)));
+                            context: context,
+                            builder: (context) =>
+                                const CreateCategoryForm()).then((value) =>
+                            BlocProvider.of<ReadCategoryBloc>(context)
+                                .add(InitialEvent(false)));
                       },
                       child: const Icon(Icons.add),
                     ),

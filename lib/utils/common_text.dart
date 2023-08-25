@@ -62,7 +62,8 @@ class CommonText20 extends StatefulWidget {
 class _CommonText20State extends State<CommonText20> {
   @override
   Widget build(BuildContext context) {
-    return Text(widget.text, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
+    return Text(widget.text,
+        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold));
   }
 }
 
@@ -76,10 +77,8 @@ class CommonText15 extends StatefulWidget {
 class _CommonText15State extends State<CommonText15> {
   @override
   Widget build(BuildContext context) {
-    return Text(widget.text, style: const TextStyle(
-        fontSize: 15,
-        fontWeight: FontWeight.bold,
-        color: Colors.white));
+    return Text(widget.text,
+        style: const TextStyle(
+            fontSize: 15, fontWeight: FontWeight.bold, color: Colors.white));
   }
 }
-

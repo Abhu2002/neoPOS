@@ -76,190 +76,211 @@ class _UpdateProductMobileState extends State<UpdateProductMobile> {
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: SizedBox(
-          height: MediaQuery.sizeOf(context).height,
+            height: MediaQuery.sizeOf(context).height,
             child: Padding(
-              padding: const EdgeInsets.only(top:20.0,bottom:20,right:8,left:8),
+              padding: const EdgeInsets.only(
+                  top: 20.0, bottom: 20, right: 8, left: 8),
               child: Column(
-          children: [
-              PopUpRow(title: AppLocalizations.of(context)!.update_product_title),
-              SizedBox(
-                width: (MediaQuery.of(context).size.width>850)?MediaQuery.of(context).size.width * 0.5:MediaQuery.of(context).size.width,
-                child: Form(
-                  key: formKey,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      ProductName(
-                        productName: _productNameController,
-                        onProductNameChanged: (value) {
-                          _productNameController.value = TextEditingValue(
-                            text: value.toUpperCase(),
-                            selection: _productNameController.selection,
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      // product price
-                      ProductPrice(controller: _productPriceController),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      ProductDescription(
-                        controller: _productDescriptionController,
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      BlocBuilder<UpdateProductBloc, ProductState>(
-                        buildWhen: (previous, current) {
-                          if (current is ProductTypeUpdateState) {
-                            type = current.type;
-                          }
-                          return current is ProductTypeUpdateState;
-                        },
-                        builder: (context, state) {
-                          return ProductTypeSelect(
-                            defaultType: type,
-                            stateType: state.type,
-                            onProductTypeChanged: (ProductType? value) {
-                              BlocProvider.of<UpdateProductBloc>(context)
-                                  .add(ProductTypeUpdateEvent(value!));
-                            },
-                          );
-                        },
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
+                children: [
+                  PopUpRow(
+                      title:
+                          AppLocalizations.of(context)!.update_product_title),
+                  SizedBox(
+                    width: (MediaQuery.of(context).size.width > 850)
+                        ? MediaQuery.of(context).size.width * 0.5
+                        : MediaQuery.of(context).size.width,
+                    child: Form(
+                      key: formKey,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text(
-                            AppLocalizations.of(context)!.product_category_title,
-                            softWrap: true,
-                            style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 17),
+                          ProductName(
+                            productName: _productNameController,
+                            onProductNameChanged: (value) {
+                              _productNameController.value = TextEditingValue(
+                                text: value.toUpperCase(),
+                                selection: _productNameController.selection,
+                              );
+                            },
                           ),
                           const SizedBox(
-                            width: 18,
+                            height: 20,
+                          ),
+                          // product price
+                          ProductPrice(controller: _productPriceController),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          ProductDescription(
+                            controller: _productDescriptionController,
+                          ),
+                          const SizedBox(
+                            height: 20,
                           ),
                           BlocBuilder<UpdateProductBloc, ProductState>(
-                            builder: (context, state) {
-                              if (state is LoadedCategoryState) {
-                                _productCategories = state.categories;
-                                categoryVal = widget.productCategory;
+                            buildWhen: (previous, current) {
+                              if (current is ProductTypeUpdateState) {
+                                type = current.type;
                               }
-                              return CategoryDropDown(
-                                categories: _productCategories,
-                                dropdownvalue: categoryVal,
-                                onCategoryChanged: (newCategory) {
-                                  categoryVal = newCategory.toString();
+                              return current is ProductTypeUpdateState;
+                            },
+                            builder: (context, state) {
+                              return ProductTypeSelect(
+                                defaultType: type,
+                                stateType: state.type,
+                                onProductTypeChanged: (ProductType? value) {
+                                  BlocProvider.of<UpdateProductBloc>(context)
+                                      .add(ProductTypeUpdateEvent(value!));
                                 },
+                              );
+                            },
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                AppLocalizations.of(context)!
+                                    .product_category_title,
+                                softWrap: true,
+                                style: const TextStyle(
+                                    fontWeight: FontWeight.bold, fontSize: 17),
+                              ),
+                              const SizedBox(
+                                width: 18,
+                              ),
+                              BlocBuilder<UpdateProductBloc, ProductState>(
+                                builder: (context, state) {
+                                  if (state is LoadedCategoryState) {
+                                    _productCategories = state.categories;
+                                    categoryVal = widget.productCategory;
+                                  }
+                                  return CategoryDropDown(
+                                    categories: _productCategories,
+                                    dropdownvalue: categoryVal,
+                                    onCategoryChanged: (newCategory) {
+                                      categoryVal = newCategory.toString();
+                                    },
+                                  );
+                                },
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          // Product availability
+                          ProductAvailabilityCheck(
+                            isChecked: isCheck,
+                            onAvailabilityChanged: (bool? val) {
+                              setState(() {
+                                isCheck = val!;
+                              });
+                            },
+                          ),
+                          const SizedBox(height: 20),
+                          BlocBuilder<UpdateProductBloc, ProductState>(
+                            builder: (BuildContext context, state) {
+                              return Column(
+                                children: [
+                                  const BuildUpdateImage(),
+                                  const SizedBox(height: 10),
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      final picker = ImagePicker();
+                                      final pickedFile = await picker.pickImage(
+                                          source: ImageSource.gallery);
+                                      if (pickedFile != null) {
+                                        if (!context.mounted) return;
+                                        BlocProvider.of<UpdateProductBloc>(
+                                                context)
+                                            .add(
+                                          ImageChangedUpdateEvent(pickedFile),
+                                        );
+                                        imageFile = state.imageFile;
+                                      }
+                                    },
+                                    child: Text(AppLocalizations.of(context)!
+                                        .select_image),
+                                  ),
+                                  BlocBuilder<UpdateProductBloc, ProductState>(
+                                    builder: (BuildContext context, state) {
+                                      if (state is ProductImageUpdating) {
+                                        return const Center(
+                                            child: CircularProgressIndicator());
+                                      }
+                                      if (state is ProductImageUpdated) {
+                                        if (state.created == true) {
+                                          state.created = false;
+                                          Navigator.pop(context);
+                                          BlocProvider.of<UpdateProductBloc>(
+                                                  context)
+                                              .add(InitialCategoryEvent());
+                                        }
+                                      }
+                                      return SizedBox(
+                                        height: 40,
+                                        width: double.infinity,
+                                        child: ElevatedButton(
+                                          onPressed: () {
+                                            String productName =
+                                                _productNameController.text
+                                                    .trim();
+                                            double productPrice =
+                                                double.tryParse(
+                                                        _productPriceController
+                                                            .text) ??
+                                                    0.0;
+
+                                            BlocProvider.of<UpdateProductBloc>(
+                                                    context)
+                                                .add(UpdatingImageEvent());
+
+                                            if (productName.isNotEmpty &&
+                                                productPrice > 0.0) {
+                                              BlocProvider.of<
+                                                          UpdateProductBloc>(
+                                                      context)
+                                                  .add(UpdateProductEvent(
+                                                      productId: widget.id,
+                                                      productName: productName,
+                                                      productDescription:
+                                                          _productDescriptionController
+                                                              .text
+                                                              .trim(),
+                                                      productPrice:
+                                                          productPrice,
+                                                      productType: type!.name,
+                                                      productUpdatedTime:
+                                                          DateFormat(
+                                                                  "yyyy-MM-dd hh:mm:ss")
+                                                              .format(DateTime
+                                                                  .now()),
+                                                      imageFile:
+                                                          state.imageFile,
+                                                      oldImage: widget.image,
+                                                      productCategory:
+                                                          categoryVal,
+                                                      productAvailability:
+                                                          isCheck));
+                                            }
+                                          },
+                                          child: Text(
+                                              AppLocalizations.of(context)!
+                                                  .update_button),
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                ],
                               );
                             },
                           ),
                         ],
                       ),
-                      const SizedBox(height: 20),
-                      // Product availability
-                      ProductAvailabilityCheck(
-                        isChecked: isCheck,
-                        onAvailabilityChanged: (bool? val) {
-                          setState(() {
-                            isCheck = val!;
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 20),
-                      BlocBuilder<UpdateProductBloc, ProductState>(
-                        builder: (BuildContext context, state) {
-                          return Column(
-                            children: [
-                              const BuildUpdateImage(),
-                              const SizedBox(height: 10),
-                              ElevatedButton(
-                                onPressed: () async {
-                                  final picker = ImagePicker();
-                                  final pickedFile = await picker.pickImage(
-                                      source: ImageSource.gallery);
-                                  if (pickedFile != null) {
-                                    if (!context.mounted) return;
-                                    BlocProvider.of<UpdateProductBloc>(context).add(
-                                      ImageChangedUpdateEvent(pickedFile),
-                                    );
-                                    imageFile = state.imageFile;
-                                  }
-                                },
-                                child: Text(
-                                    AppLocalizations.of(context)!.select_image),
-                              ),
-                              BlocBuilder<UpdateProductBloc, ProductState>(
-                                builder: (BuildContext context, state) {
-                                  if (state is ProductImageUpdating) {
-                                    return const Center(
-                                        child: CircularProgressIndicator());
-                                  }
-                                  if (state is ProductImageUpdated) {
-                                    if (state.created == true) {
-                                      state.created = false;
-                                      Navigator.pop(context);
-                                      BlocProvider.of<UpdateProductBloc>(context)
-                                          .add(InitialCategoryEvent());
-                                    }
-                                  }
-                                  return SizedBox(
-                                    height: 40,
-                                    width: double.infinity,
-                                    child: ElevatedButton(
-                                      onPressed: () {
-                                        String productName =
-                                            _productNameController.text.trim();
-                                        double productPrice = double.tryParse(
-                                                _productPriceController.text) ??
-                                            0.0;
-
-                                        BlocProvider.of<UpdateProductBloc>(context)
-                                            .add(UpdatingImageEvent());
-
-                                        if (productName.isNotEmpty &&
-                                            productPrice > 0.0) {
-                                          BlocProvider.of<UpdateProductBloc>(
-                                                  context)
-                                              .add(UpdateProductEvent(
-                                                  productId: widget.id,
-                                                  productName: productName,
-                                                  productDescription:
-                                                      _productDescriptionController
-                                                          .text
-                                                          .trim(),
-                                                  productPrice: productPrice,
-                                                  productType: type!.name,
-                                                  productUpdatedTime: DateFormat(
-                                                          "yyyy-MM-dd hh:mm:ss")
-                                                      .format(DateTime.now()),
-                                                  imageFile: state.imageFile,
-                                                  oldImage: widget.image,
-                                                  productCategory: categoryVal,
-                                                  productAvailability: isCheck));
-                                        }
-                                      },
-                                      child: Text(AppLocalizations.of(context)!
-                                          .update_button),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          );
-                        },
-                      ),
-                    ],
+                    ),
                   ),
-                ),
+                ],
               ),
-          ],
-        ),
             )),
       ),
     );

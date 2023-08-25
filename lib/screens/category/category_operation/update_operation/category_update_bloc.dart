@@ -18,15 +18,20 @@ class CategoryUpdateBloc extends Bloc<CategoryEvent, CategoryState> {
     emit(CategoryUpdatingState());
     try {
       String oldCat;
-      var doc = await _fireStore.collection("category").doc(event.categoryId).get();
+      var doc =
+          await _fireStore.collection("category").doc(event.categoryId).get();
       var data = doc.data() as Map<String, dynamic>;
       oldCat = data['category_name'];
       var allDocIds = [];
 
       // get all doc ids of products containing the category
-      await _fireStore.collection("products").where("product_category", isEqualTo: oldCat).get().then((value) {
+      await _fireStore
+          .collection("products")
+          .where("product_category", isEqualTo: oldCat)
+          .get()
+          .then((value) {
         final docSnapshots = value.docs;
-        for(var doc in docSnapshots) {
+        for (var doc in docSnapshots) {
           allDocIds.add(doc.id);
         }
       });

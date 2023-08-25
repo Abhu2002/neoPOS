@@ -27,7 +27,8 @@ class _BuildImageState extends State<BuildUpdateImage> {
         } else {
           // For mobile platforms, use Image.file
 
-          return Image.file(File(state.imageFile!.path), height: 100, width: 100);
+          return Image.file(File(state.imageFile!.path),
+              height: 100, width: 100);
         }
       } else {
         return const Text('No image selected');
