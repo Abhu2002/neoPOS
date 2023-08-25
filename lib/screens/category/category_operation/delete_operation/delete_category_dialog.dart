@@ -8,8 +8,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DeleteCategoryPopup extends StatefulWidget {
   final String categoryID;
-
-  const DeleteCategoryPopup({super.key, required this.categoryID});
+  final String categoryName;
+  const DeleteCategoryPopup({super.key, required this.categoryID, required this.categoryName});
 
   @override
   State<DeleteCategoryPopup> createState() => _DeleteCategoryPopupState();
@@ -31,9 +31,9 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
     return BlocConsumer<CategoryDeletionBloc, CategoryDeletionState>(
       listener: (context, state) {
         if (state is ErrorState) {
-          showErrorDialog(context);
+          showErrorDialog(context, state.errorMessage);
         } else if (state is ConfirmationState) {
-          showConfirmationDialog(context, state.id);
+          showConfirmationDialog(context, state.id, state.categoyName);
         } else if (state is CategoryDeleteState) {
           showSnackBar(
               context, AppLocalizations.of(context)!.category_delete_msg);
@@ -58,7 +58,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
             ElevatedButton(
               onPressed: () async {
                 BlocProvider.of<CategoryDeletionBloc>(context)
-                    .add(ConfirmTableDeletionEvent(widget.categoryID));
+                    .add(ConfirmTableDeletionEvent(widget.categoryID, widget.categoryName));
               },
               child: Text(AppLocalizations.of(context)!.yes_title),
             ),
@@ -68,7 +68,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
     );
   }
 
-  void showErrorDialog(BuildContext context) {
+  void showErrorDialog(BuildContext context, String message) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -77,7 +77,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
               borderRadius: BorderRadius.all(Radius.circular(20))),
           actionsPadding: const EdgeInsets.all(20),
           title: PopUpRow(title: AppLocalizations.of(context)!.error_text),
-          content: Text(AppLocalizations.of(context)!.invalid_credentials),
+          content: Text(message),
           actions: [
             TextButton(
               onPressed: () {
@@ -92,7 +92,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
     );
   }
 
-  void showConfirmationDialog(BuildContext context, String id) {
+  void showConfirmationDialog(BuildContext context, String id, String categoryName) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -156,7 +156,7 @@ class _DeleteCategoryPopupState extends State<DeleteCategoryPopup> {
                 if (formKey.currentState!.validate()) {
                   BlocProvider.of<CategoryDeletionBloc>(context).add(
                     CredentialsEnteredEvent(
-                        _usernameController.text, _passwordController.text, id),
+                        _usernameController.text, _passwordController.text, id, categoryName),
                   );
                   Navigator.of(context).pop();
                 }

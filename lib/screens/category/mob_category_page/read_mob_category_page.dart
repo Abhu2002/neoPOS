@@ -92,6 +92,7 @@ class _CategoryMobileReadState extends State<CategoryMobileRead> {
                                     context: context,
                                     builder: (context) => DeleteCategoryPopup(
                                       categoryID: category.id!,
+                                      categoryName: category.categoryName,
                                     ),
                                   ).then((value) =>
                                       BlocProvider.of<ReadCategoryBloc>(context)
