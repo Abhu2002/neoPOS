@@ -50,7 +50,7 @@ class _ProductCreateFormState extends State<ProductCreateForm> {
       child: Form(
         key: formKey,
         child: SizedBox(
-          width: MediaQuery.of(context).size.width / 2,
+          width: (MediaQuery.of(context).size.width>850)?MediaQuery.of(context).size.width / 2:MediaQuery.of(context).size.width,
           child: Column(
             children: [
               // product name

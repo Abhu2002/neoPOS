@@ -40,7 +40,7 @@ class _TotalOrderCheckoutState extends State<TotalOrderCheckout> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.95,
+      height: MediaQuery.of(context).size.height * 0.96,
       decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.all(

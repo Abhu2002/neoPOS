@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../order_menu_page/order_menu_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+import '../order_menu_page/total_order_checkout.dart';
+
 class MenuBtnsWidget extends StatefulWidget {
   // immutable class but given data can vary
   dynamic data;
@@ -14,7 +16,7 @@ class MenuBtnsWidget extends StatefulWidget {
 
 class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
   num count = 0;
-  late final List<Map<String,dynamic>> allInitialProds;
+  late final List<Map<String, dynamic>> allInitialProds;
   @override
   void initState() {
     // TODO: implement initState
@@ -24,21 +26,92 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
 
   @override
   Widget build(BuildContext context) {
-
+    double totalPrice = 0.0;
     return Expanded(
       flex: 2,
       child: Column(
         children: [
           Row(
-            children: [IconButton(onPressed: () {
-              Navigator.pop(context);
-            }, icon: Icon(Icons.arrow_back)),
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              IconButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: Icon(Icons.arrow_back)),
               Padding(
                 padding: const EdgeInsets.all(20.0),
                 child: Text(AppLocalizations.of(context)!.menu,
-                    style:
-                        const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.bold)),
               ),
+              (MediaQuery.sizeOf(context).width < 850)
+                  ? ElevatedButton(
+                      onPressed: () {
+                        showGeneralDialog(
+                            context: context,
+                            transitionBuilder: (BuildContext context,
+                                Animation<double> animation,
+                                Animation<double> secondaryAnimation,
+                                Widget child) {
+                              return SlideTransition(
+                                position: Tween(
+                                        begin: const Offset(1, 0),
+                                        end: const Offset(0, 0))
+                                    .animate(animation),
+                                child: FadeTransition(
+                                  opacity: CurvedAnimation(
+                                    parent: animation,
+                                    curve: Curves.easeOut,
+                                  ),
+                                  child: child,
+                                ),
+                              );
+                            },
+                            pageBuilder:
+                                (context, animation, secondaryAnimation) {
+                              return BlocBuilder<OrderContentBloc,
+                                  OrderContentState>(
+                                builder: (context, state) {
+                                  if (state is ProductLoadingState ||
+                                      state is FilterProductsState) {
+                                    final products = state.products;
+                                    totalPrice = 0.0;
+                                    var showORhide = state.showORhide;
+                                    for (final product in products) {
+                                      double productPrice = double.parse(product.productPrice);
+                                      int productQuantity = int.parse(product.quantity);
+
+                                      totalPrice += productPrice * productQuantity;
+                                    } // Reset the total price
+                                    bool showORhideMinus = true;
+                                    bool showORhideAdd = true;
+                                    bool showORhideBin = true;
+                                    bool showORhideCheckoutbtn = true;
+
+                                    return Align(
+                                        alignment: Alignment.centerRight,
+                                        child: Material(
+                                          child: TotalOrderCheckout(
+                                            showORhide: showORhide,
+                                            data: widget.data,
+                                            products: state.products,
+                                            totalPrice: totalPrice,
+                                            showORhideAdd: showORhideAdd,
+                                            showORhideBin: showORhideBin,
+                                            showORhideMinus: showORhideMinus,
+                                            showORhideCheckoutbtn: showORhideCheckoutbtn,
+                                          ),
+                                        ));
+                                  } else {
+                                    return Container();
+                                  }
+                                },
+                              );
+                            });
+                      },
+                      child: Text("Show all orders"))
+                  : Container()
             ],
           ),
           BlocBuilder<OrderContentBloc, OrderContentState>(
@@ -47,8 +120,9 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                   state is FilterProductsState) {
                 List<String> allCats = state.allCats;
                 List<Widget> catBtns = [];
-                if(count == 1) {
-                  allInitialProds = context.read<OrderContentBloc>().state.allProds;
+                if (count == 1) {
+                  allInitialProds =
+                      context.read<OrderContentBloc>().state.allProds;
                   count = 2;
                 }
                 catBtns.add(
@@ -66,14 +140,14 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                       ),
                       label: const Text("All"),
                       onPressed: () {
-                        BlocProvider.of<OrderContentBloc>(context)
-                            .add(FilterProductsEvent("All",
-                            allInitialProds, state.allCats,widget.data['Id'].toString()));
+                        BlocProvider.of<OrderContentBloc>(context).add(
+                            FilterProductsEvent("All", allInitialProds,
+                                state.allCats, widget.data['Id'].toString()));
                       },
-                      backgroundColor: (state.category == "All" ||
-                          state.category == null)
-                          ? Colors.orangeAccent
-                          : Colors.white,
+                      backgroundColor:
+                          (state.category == "All" || state.category == null)
+                              ? Colors.orangeAccent
+                              : Colors.white,
                       shape: const StadiumBorder(
                           side: BorderSide(
                         width: 1,
@@ -98,10 +172,9 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                         ),
                         label: Text(element),
                         onPressed: () {
-                          BlocProvider.of<OrderContentBloc>(
-                              context)
-                              .add(FilterProductsEvent(element,
-                              allInitialProds, state.allCats, widget.data['Id'].toString()));
+                          BlocProvider.of<OrderContentBloc>(context).add(
+                              FilterProductsEvent(element, allInitialProds,
+                                  state.allCats, widget.data['Id'].toString()));
                         },
                         backgroundColor: (state.category == element)
                             ? Colors.orangeAccent

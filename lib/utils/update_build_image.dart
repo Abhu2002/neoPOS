@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,7 +27,7 @@ class _BuildImageState extends State<BuildUpdateImage> {
         } else {
           // For mobile platforms, use Image.file
 
-          return const Text('No image selected');
+          return Image.file(File(state.imageFile!.path), height: 100, width: 100);
         }
       } else {
         return const Text('No image selected');
