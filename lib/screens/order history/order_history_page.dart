@@ -38,21 +38,24 @@ class _OrderHistoryPageState extends State<OrderHistoryPage> {
             child: CommonText20(
                 text: AppLocalizations.of(context)!.order_history_page_title),
           ),
-          DropdownButton(
-            value: dropdownvalue,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: filters.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(() {
-                dropdownvalue = newValue!;
-              });
-              BlocProvider.of<OrderHistoryBloc>(context).add(OrderHistroyFilterEvent(dropdownvalue));
-            },
+          Padding(
+            padding: const EdgeInsets.only(right: 20.0),
+            child: DropdownButton(
+              value: dropdownvalue,
+              icon: const Icon(Icons.keyboard_arrow_down),
+              items: filters.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownvalue = newValue!;
+                });
+                BlocProvider.of<OrderHistoryBloc>(context).add(OrderHistroyFilterEvent(dropdownvalue));
+              },
+            ),
           ),
         ]),
         BlocBuilder<OrderHistoryBloc, OrderHistoryState>(
