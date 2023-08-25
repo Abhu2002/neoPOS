@@ -14,8 +14,8 @@ class SalesDashboardBloc
       try {
         emit(SalesDashBoardLoadingState());
         var allOrderHistory = [];
-        List<dynamic> allData = [];
         var graphData = [];
+        List<dynamic> allData = [];
         String currentDateD;
         String currentDateM;
         int currentDateW;

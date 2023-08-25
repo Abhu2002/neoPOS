@@ -8,7 +8,7 @@ class ProductModel {
   final String? productDescription;
   final String? productCategory;
   final String? productImage;
-  final int? productPrice;
+  final num? productPrice;
   final bool? productAvailability;
   final String? dateAdded;
   final String? dateUpdated;

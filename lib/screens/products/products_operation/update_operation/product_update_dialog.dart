@@ -25,7 +25,7 @@ class UpdateProductDialog extends StatefulWidget {
   final String productCategory;
   final String productType;
   final bool productAvailability;
-  final int productPrice;
+  final num productPrice;
 
   const UpdateProductDialog(
       {super.key,

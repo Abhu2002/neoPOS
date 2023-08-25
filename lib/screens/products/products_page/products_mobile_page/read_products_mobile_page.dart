@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../products_operation/create_operation/create_product_dialog.dart';
+import '../../products_operation/create_operation/create_product_mobile.dart';
 import '../moreinfo_dialog.dart';
 import '../read_products_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -83,7 +83,8 @@ class _ProductMobileReadState extends State<ProductMobileRead> {
                                       width: 20,
                                       height: 20,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(15),
+                                          borderRadius:
+                                              BorderRadius.circular(15),
                                           color: (data.productType) == "nonVeg"
                                               ? Colors.red
                                               : Colors.green),
@@ -102,8 +103,8 @@ class _ProductMobileReadState extends State<ProductMobileRead> {
                                   Widget child) {
                                 return SlideTransition(
                                   position: Tween(
-                                      begin: const Offset(1, 0),
-                                      end: const Offset(0, 0))
+                                          begin: const Offset(1, 0),
+                                          end: const Offset(0, 0))
                                       .animate(animation),
                                   child: FadeTransition(
                                     opacity: CurvedAnimation(
@@ -123,10 +124,10 @@ class _ProductMobileReadState extends State<ProductMobileRead> {
                                       id: data.id,
                                       productName: data.productName!,
                                       productDescription:
-                                      data.productDescription!,
+                                          data.productDescription!,
                                       productType: data.productType,
                                       productAvailability:
-                                      data.productAvailability,
+                                          data.productAvailability,
                                       productPrice: data.productPrice,
                                       productCategory: data.productCategory,
                                     ));
@@ -139,10 +140,12 @@ class _ProductMobileReadState extends State<ProductMobileRead> {
                     padding: const EdgeInsets.all(16.0),
                     child: FloatingActionButton(
                       onPressed: () {
-                        showDialog(
-                                context: context,
-                                builder: (context) => const CreateProductForm())
-                            .then((value) =>
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const CreateProductMobileForm())).then(
+                            (value) =>
                                 BlocProvider.of<ReadProductsBloc>(context)
                                     .add(ReadInitialEvent(false)));
                       },
