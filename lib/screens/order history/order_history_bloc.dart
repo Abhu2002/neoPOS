@@ -70,20 +70,23 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
       String currentDate = "${today.year}-${today.month}-${today.day}";
       List<dynamic> productLists = [];
 
-      if(event.filter == "All") {
+      if (event.filter == "All") {
         emit(OrderHistoryLoaded(allPrevOrders, []));
         return;
-      }
-      else if(event.filter == "Weekly") {
-        DateTime firstDateOfTheWeek = today.subtract(Duration(days: today.weekday - 1));
-        DateTime newFirstDate = DateTime(firstDateOfTheWeek.year, firstDateOfTheWeek.month, firstDateOfTheWeek.day, 0,0,0,0);
-        DateTime lastDateOfTheWeek = today.add(Duration(days: DateTime.daysPerWeek - today.weekday));
-        DateTime newLastDate = DateTime(lastDateOfTheWeek.year, lastDateOfTheWeek.month, lastDateOfTheWeek.day, 0,0,0,0);
+      } else if (event.filter == "Weekly") {
+        DateTime firstDateOfTheWeek =
+            today.subtract(Duration(days: today.weekday - 1));
+        DateTime newFirstDate = DateTime(firstDateOfTheWeek.year,
+            firstDateOfTheWeek.month, firstDateOfTheWeek.day, 0, 0, 0, 0);
+        DateTime lastDateOfTheWeek =
+            today.add(Duration(days: DateTime.daysPerWeek - today.weekday));
+        DateTime newLastDate = DateTime(lastDateOfTheWeek.year,
+            lastDateOfTheWeek.month, lastDateOfTheWeek.day, 0, 0, 0, 0);
 
         productLists = allPrevOrders.where((order) {
           DateTime currentDateTime = DateTime.parse(order['order_date']);
-          if(newFirstDate.isBefore(currentDateTime)) {
-            if(newLastDate.isAfter(currentDateTime)) {
+          if (newFirstDate.isBefore(currentDateTime)) {
+            if (newLastDate.isAfter(currentDateTime)) {
               return true;
             }
           }
@@ -92,15 +95,14 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
 
         emit(OrderHistoryLoaded(productLists, []));
         return;
-      }
-      else if(event.filter == "Monthly") {
+      } else if (event.filter == "Monthly") {
         DateTime firstDateOfMonth = DateTime(today.year, today.month, 1);
         DateTime lastDateOfMonth = DateTime(today.year, today.month + 1, 0);
 
         productLists = allPrevOrders.where((order) {
           DateTime currentDateTime = DateTime.parse(order['order_date']);
-          if(firstDateOfMonth.isBefore(currentDateTime)) {
-            if(lastDateOfMonth.isAfter(currentDateTime)) {
+          if (firstDateOfMonth.isBefore(currentDateTime)) {
+            if (lastDateOfMonth.isAfter(currentDateTime)) {
               return true;
             }
           }
@@ -112,7 +114,8 @@ class OrderHistoryBloc extends Bloc<OrderHistoryEvent, OrderHistoryState> {
       }
       productLists = allPrevOrders.where((order) {
         DateTime givenDateTime = DateTime.parse(order['order_date']);
-        String givenDate = "${givenDateTime.year}-${givenDateTime.month}-${givenDateTime.day}";
+        String givenDate =
+            "${givenDateTime.year}-${givenDateTime.month}-${givenDateTime.day}";
         return currentDate == givenDate;
       }).toList();
       emit(OrderHistoryLoaded(productLists, []));

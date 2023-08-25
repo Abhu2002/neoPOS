@@ -72,7 +72,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
         List<dynamic> allOrders = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         DocumentSnapshot<Map<String, dynamic>> documentSnapshot =
-        await db.collection("live_table").doc(event.docId).get();
+            await db.collection("live_table").doc(event.docId).get();
         Map<String, dynamic>? data = documentSnapshot.data();
 
         dynamic tableName = data?['table_name'];
@@ -102,7 +102,6 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
     on<FilterProductsEvent>((event, emit) async {
       String category = event.category;
       List<Map<String, dynamic>> filteredProds = [];
-
 
       List<Product> products = [];
       try {
@@ -182,9 +181,9 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
       final List<String> allCats = List.from(state.allCats);
       try {
         DocumentSnapshot tableSnapshot =
-        await liveCollection.doc(event.tableId).get();
+            await liveCollection.doc(event.tableId).get();
         List<Map<String, dynamic>> productsData =
-        List<Map<String, dynamic>>.from(tableSnapshot['products']);
+            List<Map<String, dynamic>>.from(tableSnapshot['products']);
         bool showORhide = state.showORhide;
         productsData[event.id]['quantity'] = (event.quantity).toString();
 
@@ -192,7 +191,6 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
             .collection('live_table')
             .doc(event.tableId)
             .update({'products': productsData});
-
 
         List<Product> products = productsData.map((data) {
           return Product(
@@ -204,7 +202,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
           );
         }).toList();
 
-        emit(ProductLoadingState(allProds, allCats, products,showORhide));
+        emit(ProductLoadingState(allProds, allCats, products, showORhide));
       } catch (error) {
         emit(ErrorState('Error loading live table data'));
       }
@@ -213,15 +211,14 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
 
   Future<void> _mapIncreaseQuantityEventToState(
       IncreaseQuantityEvent event, Emitter<OrderContentState> emit) async {
-
     if (state is ProductLoadingState || state is FilterProductsState) {
       final List<Map<String, dynamic>> allProds = List.from(state.allProds);
       final List<String> allCats = List.from(state.allCats);
       try {
         DocumentSnapshot tableSnapshot =
-        await liveCollection.doc(event.tableId).get();
+            await liveCollection.doc(event.tableId).get();
         List<Map<String, dynamic>> productsData =
-        List<Map<String, dynamic>>.from(tableSnapshot['products']);
+            List<Map<String, dynamic>>.from(tableSnapshot['products']);
         bool showORhide = state.showORhide;
         productsData[event.id]['quantity'] = (event.quantity).toString();
 
@@ -230,7 +227,6 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
             .doc(event.tableId)
             .update({'products': productsData});
 
-
         List<Product> products = productsData.map((data) {
           return Product(
             productCategory: data['productCategory'],
@@ -241,25 +237,23 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
           );
         }).toList();
 
-        emit(ProductLoadingState(allProds, allCats, products,showORhide));
+        emit(ProductLoadingState(allProds, allCats, products, showORhide));
       } catch (error) {
         emit(ErrorState('Error loading live table data'));
       }
     }
-
   }
 
   Future<void> _mapDeleteOrderEventToState(
       DeleteOrderEvent event, Emitter<OrderContentState> emit) async {
-
     if (state is ProductLoadingState || state is FilterProductsState) {
       final List<Map<String, dynamic>> allProds = List.from(state.allProds);
       final List<String> allCats = List.from(state.allCats);
       try {
         DocumentSnapshot tableSnapshot =
-        await liveCollection.doc(event.tableId).get();
+            await liveCollection.doc(event.tableId).get();
         List<Map<String, dynamic>> productsData =
-        List<Map<String, dynamic>>.from(tableSnapshot['products']);
+            List<Map<String, dynamic>>.from(tableSnapshot['products']);
         bool showORhide = state.showORhide;
         productsData.removeAt(event.id);
 
@@ -268,7 +262,6 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
             .doc(event.tableId)
             .update({'products': productsData});
 
-
         List<Product> products = productsData.map((data) {
           return Product(
             productCategory: data['productCategory'],
@@ -279,7 +272,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
           );
         }).toList();
 
-        emit(ProductLoadingState(allProds, allCats, products,showORhide));
+        emit(ProductLoadingState(allProds, allCats, products, showORhide));
       } catch (error) {
         emit(ErrorState('Error loading live table data'));
       }

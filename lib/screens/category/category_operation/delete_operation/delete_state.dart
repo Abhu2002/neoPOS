@@ -8,17 +8,19 @@ class InitialCategoryDeletionState extends CategoryDeletionState {
 }
 
 class ErrorState extends CategoryDeletionState {
-  ErrorState();
+  String errorMessage;
+  ErrorState(this.errorMessage);
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [errorMessage];
 }
 
 class ConfirmationState extends CategoryDeletionState {
   final String id;
-  ConfirmationState(this.id);
+  final String categoyName;
+  ConfirmationState(this.id, this.categoyName);
 
   @override
-  List<Object?> get props => [id];
+  List<Object?> get props => [id, categoyName];
 }
 
 class CategoryDeleteState extends CategoryDeletionState {

@@ -24,20 +24,18 @@ class UserModel {
   });
 
   factory UserModel.fromFirestore(
-    QueryDocumentSnapshot<Map<String, dynamic>> snapshot, int sr
-  ) {
+      QueryDocumentSnapshot<Map<String, dynamic>> snapshot, int sr) {
     final data = snapshot;
     return UserModel(
-      id: data.id,
-      firstname: data['first_name'],
-      lastname: data['last_name'],
-      userid: data['user_id'],
-      password: data['password'],
-      userrole: data['user_role'],
-      addedon: data['added_on'],
-      updatedon: data['updated_on'],
-        sr: sr
-    );
+        id: data.id,
+        firstname: data['first_name'],
+        lastname: data['last_name'],
+        userid: data['user_id'],
+        password: data['password'],
+        userrole: data['user_role'],
+        addedon: data['added_on'],
+        updatedon: data['updated_on'],
+        sr: sr);
   }
 
   Map<String, dynamic> toFirestore() {

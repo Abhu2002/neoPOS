@@ -57,7 +57,7 @@ class _MobileSalesDashboardPageState extends State<MobileSalesDashboardPage> {
         child: Column(
           children: [
             SizedBox(
-             // height: MediaQuery.sizeOf(context).height,
+              // height: MediaQuery.sizeOf(context).height,
               width: MediaQuery.sizeOf(context).width,
               child: Column(
                 children: [

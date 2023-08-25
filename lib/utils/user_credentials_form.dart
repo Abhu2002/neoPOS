@@ -6,7 +6,11 @@ class UserCredentialsForm extends StatefulWidget {
   final GlobalKey formKey;
   final TextEditingController usernameController;
   final TextEditingController passwordController;
-  const UserCredentialsForm({super.key, required this.formKey, required this.usernameController, required this.passwordController});
+  const UserCredentialsForm(
+      {super.key,
+      required this.formKey,
+      required this.usernameController,
+      required this.passwordController});
 
   @override
   State<UserCredentialsForm> createState() => _UserCredentialsFormState();
@@ -33,8 +37,7 @@ class _UserCredentialsFormState extends State<UserCredentialsForm> {
             },
             controller: _usernameController,
             decoration: InputDecoration(
-                hintText:
-                AppLocalizations.of(context)!.username_hinttext),
+                hintText: AppLocalizations.of(context)!.username_hinttext),
           ),
           const SizedBox(height: 16),
           TextFormField(
@@ -48,8 +51,7 @@ class _UserCredentialsFormState extends State<UserCredentialsForm> {
             controller: _passwordController,
             obscureText: true,
             decoration: InputDecoration(
-                hintText:
-                AppLocalizations.of(context)!.password_hinttext),
+                hintText: AppLocalizations.of(context)!.password_hinttext),
           ),
         ],
       ),

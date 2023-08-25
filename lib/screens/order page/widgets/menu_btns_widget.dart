@@ -79,10 +79,13 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                                     totalPrice = 0.0;
                                     var showORhide = state.showORhide;
                                     for (final product in products) {
-                                      double productPrice = double.parse(product.productPrice);
-                                      int productQuantity = int.parse(product.quantity);
+                                      double productPrice =
+                                          double.parse(product.productPrice);
+                                      int productQuantity =
+                                          int.parse(product.quantity);
 
-                                      totalPrice += productPrice * productQuantity;
+                                      totalPrice +=
+                                          productPrice * productQuantity;
                                     } // Reset the total price
                                     bool showORhideMinus = true;
                                     bool showORhideAdd = true;
@@ -100,7 +103,8 @@ class _MenuBtnsWidgetState extends State<MenuBtnsWidget> {
                                             showORhideAdd: showORhideAdd,
                                             showORhideBin: showORhideBin,
                                             showORhideMinus: showORhideMinus,
-                                            showORhideCheckoutbtn: showORhideCheckoutbtn,
+                                            showORhideCheckoutbtn:
+                                                showORhideCheckoutbtn,
                                           ),
                                         ));
                                   } else {

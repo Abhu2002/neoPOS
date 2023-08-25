@@ -84,86 +84,87 @@ class _CheckOutPopUpState extends State<CheckOutPopUp> {
                           ),
                         ],
                       )),
-                  (size>850)?
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      const Text("Payment Mode"),
-                      const SizedBox(
-                        width: 30,
-                      ),
-                      Radio<SingingCharacter>(
-                        value: SingingCharacter.cash,
-                        groupValue: _character,
-                        onChanged: (SingingCharacter? value) {
-                          setState(() {
-                            _character = value;
-                          });
-                        },
-                      ),
-                      const Text("Cash"),
-                      Radio<SingingCharacter>(
-                        value: SingingCharacter.card,
-                        groupValue: _character,
-                        onChanged: (SingingCharacter? value) {
-                          setState(() {
-                            _character = value;
-                          });
-                        },
-                      ),
-                      const Text("Card"),
-                      Radio<SingingCharacter>(
-                        value: SingingCharacter.upi,
-                        groupValue: _character,
-                        onChanged: (SingingCharacter? value) {
-                          setState(() {
-                            _character = value;
-                          });
-                        },
-                      ),
-                      const Text("UPI"),
-                    ],
-                  ):Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const SizedBox(height: 30),
-                      const Text("Payment Mode"),
-                      Row(
-                        children: [
-                          Radio<SingingCharacter>(
-                            value: SingingCharacter.cash,
-                            groupValue: _character,
-                            onChanged: (SingingCharacter? value) {
-                              setState(() {
-                                _character = value;
-                              });
-                            },
-                          ),
-                          const Text("Cash"),
-                          Radio<SingingCharacter>(
-                            value: SingingCharacter.card,
-                            groupValue: _character,
-                            onChanged: (SingingCharacter? value) {
-                              setState(() {
-                                _character = value;
-                              });
-                            },
-                          ),
-                          const Text("Card"),
-                          Radio<SingingCharacter>(
-                            value: SingingCharacter.upi,
-                            groupValue: _character,
-                            onChanged: (SingingCharacter? value) {
-                              setState(() {
-                                _character = value;
-                              });
-                            },
-                          ),
-                          const Text("UPI"),
-                        ],
-                      ),
-                    ],
-                  )
+                  (size > 850)
+                      ? Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            const Text("Payment Mode"),
+                            const SizedBox(
+                              width: 30,
+                            ),
+                            Radio<SingingCharacter>(
+                              value: SingingCharacter.cash,
+                              groupValue: _character,
+                              onChanged: (SingingCharacter? value) {
+                                setState(() {
+                                  _character = value;
+                                });
+                              },
+                            ),
+                            const Text("Cash"),
+                            Radio<SingingCharacter>(
+                              value: SingingCharacter.card,
+                              groupValue: _character,
+                              onChanged: (SingingCharacter? value) {
+                                setState(() {
+                                  _character = value;
+                                });
+                              },
+                            ),
+                            const Text("Card"),
+                            Radio<SingingCharacter>(
+                              value: SingingCharacter.upi,
+                              groupValue: _character,
+                              onChanged: (SingingCharacter? value) {
+                                setState(() {
+                                  _character = value;
+                                });
+                              },
+                            ),
+                            const Text("UPI"),
+                          ],
+                        )
+                      : Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(height: 30),
+                            const Text("Payment Mode"),
+                            Row(
+                              children: [
+                                Radio<SingingCharacter>(
+                                  value: SingingCharacter.cash,
+                                  groupValue: _character,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      _character = value;
+                                    });
+                                  },
+                                ),
+                                const Text("Cash"),
+                                Radio<SingingCharacter>(
+                                  value: SingingCharacter.card,
+                                  groupValue: _character,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      _character = value;
+                                    });
+                                  },
+                                ),
+                                const Text("Card"),
+                                Radio<SingingCharacter>(
+                                  value: SingingCharacter.upi,
+                                  groupValue: _character,
+                                  onChanged: (SingingCharacter? value) {
+                                    setState(() {
+                                      _character = value;
+                                    });
+                                  },
+                                ),
+                                const Text("UPI"),
+                              ],
+                            ),
+                          ],
+                        )
                 ],
               ),
               const SizedBox(

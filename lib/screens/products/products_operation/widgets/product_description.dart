@@ -20,8 +20,7 @@ class _ProductDescriptionState extends State<ProductDescription> {
         minLines: 1,
         maxLines: 2,
         decoration: InputDecoration(
-            hintText: AppLocalizations.of(context)!
-                .product_description_title,
+            hintText: AppLocalizations.of(context)!.product_description_title,
             prefixIcon: const Icon(
               Icons.description,
               color: AppColors.primaryColor,

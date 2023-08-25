@@ -17,13 +17,39 @@ class CategoryUpdateBloc extends Bloc<CategoryEvent, CategoryState> {
       CategoryUpdateRequested event, Emitter<CategoryState> emit) async {
     emit(CategoryUpdatingState());
     try {
+      String oldCat;
+      var doc =
+          await _fireStore.collection("category").doc(event.categoryId).get();
+      var data = doc.data() as Map<String, dynamic>;
+      oldCat = data['category_name'];
+      var allDocIds = [];
+
+      // get all doc ids of products containing the category
+      await _fireStore
+          .collection("products")
+          .where("product_category", isEqualTo: oldCat)
+          .get()
+          .then((value) {
+        final docSnapshots = value.docs;
+        for (var doc in docSnapshots) {
+          allDocIds.add(doc.id);
+        }
+      });
+
       // Update the category in Firestore
       await _fireStore.collection("category").doc(event.categoryId).update({
         "category_name": event.newName,
       });
+
+      // update all products with new category name
+      allDocIds.forEach((docId) async {
+        await _fireStore.collection("products").doc(docId).update({
+          "product_category": event.newName,
+        });
+      });
       emit(CategoryUpdatedState());
     } catch (e) {
-      throw Exception("Error creating product $e");
+      throw Exception("Error updating category $e");
     }
   }
 }

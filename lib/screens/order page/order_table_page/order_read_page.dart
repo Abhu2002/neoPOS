@@ -90,7 +90,7 @@ class _OrderPageReadState extends State<OrderPageRead> {
                               ),
                               onTap: () {
                                 // Navigation to new Page
-                                if(MediaQuery.sizeOf(context).width > 850) {
+                                if (MediaQuery.sizeOf(context).width > 850) {
                                   Navigator.pushNamed(context, "/menu",
                                       arguments: {"Id": data[i]["docID"]});
                                 } else {

@@ -19,8 +19,7 @@ class _ProductReadHeadState extends State<ProductReadHead> {
       Padding(
         padding: const EdgeInsets.all(20.0),
         child: Text(AppLocalizations.of(context)!.product_page_title,
-            style:
-            const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
       ),
       Flexible(
         child: Padding(
@@ -33,10 +32,9 @@ class _ProductReadHeadState extends State<ProductReadHead> {
                       borderRadius: BorderRadius.all(Radius.circular(10)))),
               onPressed: () {
                 showDialog(
-                    context: context,
-                    builder: (context) => const CreateProductForm())
-                    .then((value) =>
-                    BlocProvider.of<ReadProductsBloc>(context)
+                        context: context,
+                        builder: (context) => const CreateProductForm())
+                    .then((value) => BlocProvider.of<ReadProductsBloc>(context)
                         .add(ReadInitialEvent(false)));
               },
               child: Text(AppLocalizations.of(context)!.create_button)),

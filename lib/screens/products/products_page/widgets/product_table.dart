@@ -20,7 +20,6 @@ class _ProductTableState extends State<ProductTable> {
     var data = widget.data;
     return InkWell(
       child: SizedBox(
-
         height: 60,
         child: Row(children: [
           SizedBox(
@@ -28,8 +27,8 @@ class _ProductTableState extends State<ProductTable> {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Center(
-                  child: Text(DateFormat.MMMd().format(
-                      DateTime.parse(data.dateAdded)))),
+                  child: Text(DateFormat.MMMd()
+                      .format(DateTime.parse(data.dateAdded)))),
             ),
           ),
           const SizedBox(
@@ -57,7 +56,7 @@ class _ProductTableState extends State<ProductTable> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.only(left:20.0),
+                  padding: const EdgeInsets.only(left: 20.0),
                   child: Text(
                     data.productName,
                     style: const TextStyle(
@@ -67,12 +66,10 @@ class _ProductTableState extends State<ProductTable> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left:20.0),
+                  padding: const EdgeInsets.only(left: 20.0),
                   child: Text(
                     data.productDescription.length > 75
-                        ? data.productDescription
-                        .substring(0, 75) +
-                        '...'
+                        ? data.productDescription.substring(0, 75) + '...'
                         : data.productDescription,
                     style: const TextStyle(
                       fontSize: 10,
@@ -96,8 +93,7 @@ class _ProductTableState extends State<ProductTable> {
                 child: Center(
                   child: Text(
                     (data.productType == "nonVeg")
-                        ? AppLocalizations.of(context)!
-                        .non_veg_text
+                        ? AppLocalizations.of(context)!.non_veg_text
                         : AppLocalizations.of(context)!.veg_text,
                     style: const TextStyle(color: Colors.white),
                   ),
@@ -108,12 +104,8 @@ class _ProductTableState extends State<ProductTable> {
           const SizedBox(
             width: 30,
           ),
-          Expanded(
-              child:
-              Center(child: Text(data.productCategory!))),
-          Expanded(
-              child: Center(
-                  child: Text("Rs ${data.productPrice!}"))),
+          Expanded(child: Center(child: Text(data.productCategory!))),
+          Expanded(child: Center(child: Text("Rs ${data.productPrice!}"))),
         ]),
       ),
       onTap: () {
@@ -124,10 +116,9 @@ class _ProductTableState extends State<ProductTable> {
                 Animation<double> secondaryAnimation,
                 Widget child) {
               return SlideTransition(
-                position: Tween(
-                    begin: const Offset(1, 0),
-                    end: const Offset(0, 0))
-                    .animate(animation),
+                position:
+                    Tween(begin: const Offset(1, 0), end: const Offset(0, 0))
+                        .animate(animation),
                 child: FadeTransition(
                   opacity: CurvedAnimation(
                     parent: animation,
@@ -137,19 +128,16 @@ class _ProductTableState extends State<ProductTable> {
                 ),
               );
             },
-            pageBuilder:
-                (context, animation, secondaryAnimation) {
+            pageBuilder: (context, animation, secondaryAnimation) {
               return Align(
                   alignment: Alignment.centerRight,
                   child: MoreInfoPopup(
                     image: data.productImage,
                     id: data.id,
                     productName: data.productName!,
-                    productDescription:
-                    data.productDescription!,
+                    productDescription: data.productDescription!,
                     productType: data.productType,
-                    productAvailability:
-                    data.productAvailability,
+                    productAvailability: data.productAvailability,
                     productPrice: data.productPrice,
                     productCategory: data.productCategory,
                   ));

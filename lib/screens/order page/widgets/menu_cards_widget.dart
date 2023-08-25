@@ -5,7 +5,6 @@ import '../../../navigation/route_paths.dart';
 import '../order_menu_page/order_menu_bloc.dart';
 import 'add_order.dart';
 
-
 class MenuCardWidget extends StatefulWidget {
   dynamic data;
   MenuCardWidget({Key? key, this.data}) : super(key: key);
@@ -15,12 +14,10 @@ class MenuCardWidget extends StatefulWidget {
 }
 
 class _MenuCardWidgetState extends State<MenuCardWidget> {
-
   @override
   void initState() {
-
     super.initState();
-    if(widget.data == null) {
+    if (widget.data == null) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         Navigator.pushReplacementNamed(context, RoutePaths.dashboard);
       });
@@ -31,8 +28,7 @@ class _MenuCardWidgetState extends State<MenuCardWidget> {
   Widget build(BuildContext context) {
     return BlocBuilder<OrderContentBloc, OrderContentState>(
       builder: (context, state) {
-        if (state is ProductLoadingState ||
-            state is FilterProductsState) {
+        if (state is ProductLoadingState || state is FilterProductsState) {
           var prods = state.allProds;
 
           if (prods.isEmpty) {
@@ -63,29 +59,24 @@ class _MenuCardWidgetState extends State<MenuCardWidget> {
                     color: Colors.white,
                     elevation: 10.0,
                     child: Column(
-                      mainAxisAlignment:
-                      MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Padding(
-                          padding:
-                          const EdgeInsets.only(left: 10.0),
+                          padding: const EdgeInsets.only(left: 10.0),
                           child: Container(
                             width: 170,
                             child: CachedNetworkImage(
-                              imageUrl: prods[index]
-                              ['product_image'],
-                              imageBuilder:
-                                  (context, imageProvider) =>
+                              imageUrl: prods[index]['product_image'],
+                              imageBuilder: (context, imageProvider) =>
                                   Container(
-                                    width: 100.0,
-                                    height: 150.0,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.cover),
-                                    ),
-                                  ),
+                                width: 100.0,
+                                height: 150.0,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  image: DecorationImage(
+                                      image: imageProvider, fit: BoxFit.cover),
+                                ),
+                              ),
                             ),
                           ),
                         ),
@@ -118,16 +109,15 @@ class _MenuCardWidgetState extends State<MenuCardWidget> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(
-                              bottom: 8.0, left: 8.0),
+                          padding:
+                              const EdgeInsets.only(bottom: 8.0, left: 8.0),
                           child: Row(
                             mainAxisSize: MainAxisSize.min,
                             //mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Flexible(
                                 child: Text(
-                                  prods[index]
-                                  ['product_category'],
+                                  prods[index]['product_category'],
                                   style: const TextStyle(
                                     fontSize: 15,
                                     color: Colors.blueGrey,
@@ -135,28 +125,21 @@ class _MenuCardWidgetState extends State<MenuCardWidget> {
                                 ),
                               ),
                               Padding(
-                                padding:
-                                const EdgeInsets.all(10.0),
+                                padding: const EdgeInsets.all(10.0),
                                 child: Container(
-                                  color: prods[index][
-                                  'product_type'] ==
-                                      "nonVeg"
-                                      ? Colors.red
-                                      : Colors.green,
+                                  color:
+                                      prods[index]['product_type'] == "nonVeg"
+                                          ? Colors.red
+                                          : Colors.green,
                                   child: Padding(
-                                    padding:
-                                    const EdgeInsets.all(
-                                        8.0),
+                                    padding: const EdgeInsets.all(8.0),
                                     child: Text(
-                                      prods[index][
-                                      'product_type'] ==
-                                          "nonVeg"
+                                      prods[index]['product_type'] == "nonVeg"
                                           ? "Non-Veg"
                                           : "Veg",
                                       style: const TextStyle(
                                         fontSize: 12,
-                                        fontWeight:
-                                        FontWeight.bold,
+                                        fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
                                     ),
@@ -174,15 +157,11 @@ class _MenuCardWidgetState extends State<MenuCardWidget> {
                       context: context,
                       builder: (context) {
                         return AddOrder(
-                          productName: prods[index]
-                          ['product_name'],
-                          productCategory: prods[index]
-                          ['product_category'],
-                          productType: prods[index]
-                          ['product_type'],
-                          productPrice: prods[index]
-                          ['product_price']
-                              .toString(),
+                          productName: prods[index]['product_name'],
+                          productCategory: prods[index]['product_category'],
+                          productType: prods[index]['product_type'],
+                          productPrice:
+                              prods[index]['product_price'].toString(),
                           docId: widget.data['Id'].toString(),
                         );
                       },

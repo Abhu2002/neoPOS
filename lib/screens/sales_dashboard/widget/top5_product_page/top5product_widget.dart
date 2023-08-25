@@ -1,4 +1,3 @@
-import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:neopos/screens/sales_dashboard/widget/top5_product_page/top5_bloc.dart';
@@ -73,7 +72,8 @@ class _TopFiveProductState extends State<TopFiveProduct> {
                 ),
                 SizedBox(
                   height: 200,
-                  child: ListView.builder(physics: NeverScrollableScrollPhysics(),
+                  child: ListView.builder(
+                      physics: NeverScrollableScrollPhysics(),
                       itemCount: state.all.length,
                       itemBuilder: (context, index) {
                         String key = state.all.keys.elementAt(index);

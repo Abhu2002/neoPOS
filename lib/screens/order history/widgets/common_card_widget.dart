@@ -97,7 +97,8 @@ class _CardOrderHistoryState extends State<CardOrderHistory> {
                       );
                     },
                     itemBuilder: (context, index) {
-                      var newindex = index + int.parse(widget.allOrders[0]["Id"]!);
+                      var newindex =
+                          index + int.parse(widget.allOrders[0]["Id"]!);
                       var data = widget.allOrders[index];
                       var showORhide = true;
                       return InkWell(
@@ -159,8 +160,7 @@ class _CardOrderHistoryState extends State<CardOrderHistory> {
                                                   showORhideCheckoutbtn:
                                                       showORhideCheckoutBTN),
                                             ));
-                                      }
-                                      else{
+                                      } else {
                                         return Container();
                                       }
                                     },

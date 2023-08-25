@@ -51,9 +51,7 @@ class _UserMobileReadState extends State<UserMobileRead> {
                           fontWeight: FontWeight.bold,
                           color: Colors.white),
                     )),
-                    const Expanded(
-                      child: SizedBox()
-                    )
+                    const Expanded(child: SizedBox())
                   ],
                 ),
               ),

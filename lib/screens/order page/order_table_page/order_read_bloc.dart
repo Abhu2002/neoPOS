@@ -1,5 +1,3 @@
-
-
 import 'package:bloc/bloc.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
@@ -24,7 +22,7 @@ class OrderReadBloc extends Bloc<OrderReadEvent, OrderReadState> {
         }
         List allCat = [];
         List tableBusylist = [];
-       // bool tableBusy = false;
+        // bool tableBusy = false;
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
         var tableData = await db.collection('table').get();
         await db.collection("live_table").get().then((value) => {

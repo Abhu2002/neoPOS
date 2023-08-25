@@ -40,13 +40,25 @@ class _DashboardPage extends State<DashboardPage> {
   @override
   Widget build(BuildContext context) {
     List<Widget> adminPage = [
-      SingleChildScrollView(child: (MediaQuery.sizeOf(context).width > 850)? const CategoryRead(): const CategoryMobileRead()),
-      SingleChildScrollView(child: (MediaQuery.sizeOf(context).width > 850)? const ProductsRead(): const ProductMobileRead()),
+      SingleChildScrollView(
+          child: (MediaQuery.sizeOf(context).width > 850)
+              ? const CategoryRead()
+              : const CategoryMobileRead()),
+      SingleChildScrollView(
+          child: (MediaQuery.sizeOf(context).width > 850)
+              ? const ProductsRead()
+              : const ProductMobileRead()),
       const SingleChildScrollView(child: TableRead()),
       const SingleChildScrollView(child: OrderPageRead()),
-      SingleChildScrollView(child:(MediaQuery.sizeOf(context).width > 850)? SalesDashboardPage(widget.pageController): MobileSalesDashboardPage(widget.pageController)),
+      SingleChildScrollView(
+          child: (MediaQuery.sizeOf(context).width > 850)
+              ? SalesDashboardPage(widget.pageController)
+              : MobileSalesDashboardPage(widget.pageController)),
       const SingleChildScrollView(child: OrderHistoryPage()),
-      SingleChildScrollView(child:(MediaQuery.sizeOf(context).width > 850)? const UserRead(): const UserMobileRead()),
+      SingleChildScrollView(
+          child: (MediaQuery.sizeOf(context).width > 850)
+              ? const UserRead()
+              : const UserMobileRead()),
     ];
     List<Widget> waiterPage = [
       const SingleChildScrollView(child: OrderPageRead()),
@@ -58,10 +70,12 @@ class _DashboardPage extends State<DashboardPage> {
         return false;
       },
       child: Scaffold(
-        drawer: (MediaQuery.of(context).size.width<850)? SideMenuWidget(LocalPreference.getUserRole(),
-            widget.pageController):null,
+          drawer: (MediaQuery.of(context).size.width < 850)
+              ? SideMenuWidget(
+                  LocalPreference.getUserRole(), widget.pageController)
+              : null,
           appBar: AppBar(
-           // automaticallyImplyLeading: false,
+            // automaticallyImplyLeading: false,
             title: Text(AppLocalizations.of(context)!.project_title),
             actions: [
               Row(
@@ -110,10 +124,12 @@ class _DashboardPage extends State<DashboardPage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                 (MediaQuery.of(context).size.width>850)?Expanded(
-                      flex: 1,
-                      child: SideMenuWidget(LocalPreference.getUserRole(),
-                          widget.pageController)):SizedBox(),
+                  (MediaQuery.of(context).size.width > 850)
+                      ? Expanded(
+                          flex: 1,
+                          child: SideMenuWidget(LocalPreference.getUserRole(),
+                              widget.pageController))
+                      : SizedBox(),
                   Expanded(
                     flex: 7,
                     child: PageView(
