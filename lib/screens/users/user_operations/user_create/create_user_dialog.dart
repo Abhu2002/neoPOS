@@ -44,7 +44,7 @@ class _CreateUserFormState extends State<CreateUserForm> {
         Form(
           key: formKey,
           child: SizedBox(
-            width: MediaQuery.of(context).size.width / 2,
+            width:MediaQuery.of(context).size.width<850 ? MediaQuery.of(context).size.width :MediaQuery.of(context).size.width/2 ,
             child: Column(
               children: [
                 BlocListener<CreateUserBloc, CreateUserState>(

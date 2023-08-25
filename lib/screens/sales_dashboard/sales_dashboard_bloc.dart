@@ -10,7 +10,6 @@ class SalesDashboardBloc
     extends Bloc<SalesDashboardEvent, SalesDashboardState> {
   SalesDashboardBloc() : super(SalesDashboardInitial()) {
 
-
     on<DashboardPageinitevent>((event, emit) async {
       try {
         emit(SalesDashBoardLoadingState());
