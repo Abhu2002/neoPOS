@@ -9,11 +9,13 @@ part 'sales_dashboard_state.dart';
 class SalesDashboardBloc
     extends Bloc<SalesDashboardEvent, SalesDashboardState> {
   SalesDashboardBloc() : super(SalesDashboardInitial()) {
-    var graphData = [];
+
+
     on<DashboardPageinitevent>((event, emit) async {
       try {
         emit(SalesDashBoardLoadingState());
         var allOrderHistory = [];
+        var graphData = [];
         List<dynamic> allData = [];
         String currentDateD;
         String currentDateM;
