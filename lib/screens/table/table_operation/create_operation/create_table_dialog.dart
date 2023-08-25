@@ -29,7 +29,6 @@ class _CreateTableFormState extends State<CreateTableForm> {
   Widget build(BuildContext context) {
     context.read<CreateTableBloc>().showMessage = createSnackBar;
     return AlertDialog(
-      // contentPadding: EdgeInsets.all(20),
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(20))),
       actionsPadding: const EdgeInsets.all(20),
