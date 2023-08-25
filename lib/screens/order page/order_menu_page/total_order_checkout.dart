@@ -142,7 +142,7 @@ class _TotalOrderCheckoutState extends State<TotalOrderCheckout> {
                                   icon: const Icon(Icons.remove),
                                   onPressed: () {
                                     //Logic to decrease quantity
-                                    if (int.parse(productquantity) > 1) {
+                                    if (int.parse(product.quantity) > 1) {
                                       BlocProvider.of<OrderContentBloc>(context)
                                           .add(
                                         DecreaseQuantityEvent(
