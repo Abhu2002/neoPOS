@@ -24,10 +24,10 @@ class _CreateTableFormState extends State<CreateTableForm> {
     super.initState();
   }
 
+  final formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     context.read<CreateTableBloc>().showMessage = createSnackBar;
-    final formKey = GlobalKey<FormState>(); //
     return AlertDialog(
       // contentPadding: EdgeInsets.all(20),
       shape: const RoundedRectangleBorder(
@@ -54,9 +54,10 @@ class _CreateTableFormState extends State<CreateTableForm> {
                           Text(
                             AppLocalizations.of(context)!.tb_name_exist,
                             style: const TextStyle(
-                                fontSize: 15,
-                                color: AppColors.primaryColor,
-                                fontWeight: FontWeight.bold),
+                              fontSize: 15,
+                              color: AppColors.primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           const SizedBox(
                             height: 15,
@@ -89,6 +90,7 @@ class _CreateTableFormState extends State<CreateTableForm> {
               children: [
                 TextFormField(
                     controller: tableName,
+                    keyboardType: TextInputType.text,
                     decoration: InputDecoration(
                         hintText: AppLocalizations.of(context)!.table_name,
                         prefixIcon: const Icon(
