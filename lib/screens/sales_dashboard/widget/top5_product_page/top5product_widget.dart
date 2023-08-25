@@ -73,7 +73,7 @@ class _TopFiveProductState extends State<TopFiveProduct> {
                 ),
                 SizedBox(
                   height: 200,
-                  child: ListView.builder(
+                  child: ListView.builder(physics: NeverScrollableScrollPhysics(),
                       itemCount: state.all.length,
                       itemBuilder: (context, index) {
                         String key = state.all.keys.elementAt(index);
