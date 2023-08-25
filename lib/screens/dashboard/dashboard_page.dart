@@ -23,7 +23,9 @@ import 'Localization bloc/localization_bloc.dart';
 class DashboardPage extends StatefulWidget {
   PageController pageController = PageController();
   var userRole;
+
   DashboardPage({Key? key, this.userRole}) : super(key: key);
+
   @override
   State<StatefulWidget> createState() => _DashboardPage();
 }
@@ -37,6 +39,7 @@ class _DashboardPage extends State<DashboardPage> {
   }
 
   bool isSwitched = (LocalPreference.getLang() == "en") ? false : true;
+
   @override
   Widget build(BuildContext context) {
     List<Widget> adminPage = [
@@ -78,44 +81,42 @@ class _DashboardPage extends State<DashboardPage> {
             // automaticallyImplyLeading: false,
             title: Text(AppLocalizations.of(context)!.project_title),
             actions: [
-              Row(
-                children: [
-                  const Text("English"),
-                  Switch(
-                    onChanged: (value) {
-                      if ((LocalPreference.getLang() == "en")) {
-                        setState(() {
-                          LocalPreference.setLang("hi");
-                          isSwitched = true;
-                        });
-                        BlocProvider.of<LocalizationBloc>(context)
-                            .add(const changelanevent("hi"));
-                      } else if (LocalPreference.getLang() == "hi") {
-                        setState(() {
-                          //   LocalPreference.setLang("en");
-                          isSwitched = false;
-                        });
-                        BlocProvider.of<LocalizationBloc>(context)
-                            .add(const changelanevent("en"));
-                      }
-                    },
-                    value: isSwitched,
-                    activeColor: Colors.orange,
-                    activeTrackColor: Colors.orange.shade600,
-                    inactiveThumbColor: Colors.white,
-                    inactiveTrackColor: Colors.white,
-                  ),
-                  const Text("Hindi")
-                ],
+              PopupMenuButton<String>(
+                tooltip: "Language Settings",
+                icon: const Icon(Icons.language),
+                onSelected: (choice){
+                  if(choice == "Hindi") {
+                    setState(() {
+                      LocalPreference.setLang("hi");
+                    });
+                    BlocProvider.of<LocalizationBloc>(context)
+                        .add(const changelanevent("hi"));
+                  } else {
+                    setState(() {
+                      LocalPreference.setLang("en");
+                    });
+                    BlocProvider.of<LocalizationBloc>(context)
+                        .add(const changelanevent("en"));
+                  }
+                },
+                itemBuilder: (BuildContext context) {
+                  return Constants.choices.map((String choice) {
+                    return PopupMenuItem<String>(
+                      value: choice,
+                      child: Text(choice),
+                    );
+                  }).toList();
+                },
               ),
               IconButton(
-                  onPressed: () async {
-                    String? oldLan = LocalPreference.getLang();
-                    LocalPreference.clearAllPreference();
-                    LocalPreference.setLang(oldLan);
-                    Navigator.pushReplacementNamed(context, RoutePaths.login);
-                  },
-                  icon: const Icon(Icons.logout))
+                onPressed: () async {
+                  String? oldLan = LocalPreference.getLang();
+                  LocalPreference.clearAllPreference();
+                  LocalPreference.setLang(oldLan);
+                  Navigator.pushReplacementNamed(context, RoutePaths.login);
+                },
+                icon: const Icon(Icons.logout),
+              )
             ],
           ),
           body: SafeArea(
@@ -145,4 +146,14 @@ class _DashboardPage extends State<DashboardPage> {
           ]))),
     );
   }
+}
+
+class Constants {
+  static const String FirstLang = 'Hindi';
+  static const String SecondLang = 'English';
+
+  static const List<String> choices = <String>[
+    FirstLang,
+    SecondLang,
+  ];
 }
