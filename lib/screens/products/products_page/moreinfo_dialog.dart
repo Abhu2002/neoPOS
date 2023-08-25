@@ -110,7 +110,7 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                     ],
                   ),
                 ),
-                Padding(
+                (widget.productDescription.isNotEmpty) ? Padding(
                   padding: const EdgeInsets.all(10),
                   child: Row(
                     children: [
@@ -129,7 +129,7 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                               style: const TextStyle(fontSize: 18)))
                     ],
                   ),
-                ),
+                ): Container(height: 0,),
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Row(
@@ -221,7 +221,7 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                     ],
                   ),
                 ),
-                SizedBox(
+                (widget.productDescription.isNotEmpty) ? SizedBox(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
@@ -266,7 +266,7 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                               AppLocalizations.of(context)!.delete_product_button),
                         ),
                       ],
-                    )),
+                    )) : Container(height: 0,),
                 const SizedBox(
                   height: 40,
                 )
