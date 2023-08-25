@@ -16,8 +16,9 @@ class TableBloc extends Bloc<TableEvent, TableState> {
         if (event.isfirst) {
           emit(TableReadLoadingState());
         } else {
-          Future.delayed(const Duration(seconds: 1));
+
           emit(TableReadLoadingState());
+          Future.delayed(const Duration(seconds: 1));
         }
         List allCat = [];
         FirebaseFirestore db = GetIt.I.get<FirebaseFirestore>();
