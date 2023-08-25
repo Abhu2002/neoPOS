@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:input_quantity/input_quantity.dart';
 import 'package:neopos/screens/products/products_page/read_products_bloc.dart';
 
 import '../../../utils/app_colors.dart';
+import '../../order page/order_menu_page/order_menu_bloc.dart';
 import '../products_operation/delete_operation/delete_product_dialog.dart';
 import '../products_operation/update_operation/product_update_dialog.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -36,6 +38,7 @@ class MoreInfoPopup extends StatefulWidget {
 }
 
 class _MoreInfoPopupState extends State<MoreInfoPopup> {
+  int quantity = 1;
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -290,7 +293,53 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                               AppLocalizations.of(context)!.delete_product_button),
                         ),
                       ],
-                    )) : Container(height: 0,),
+                    )) : Column(children: [
+                  Row(
+                    children: [
+                      const Expanded(
+                          flex: 1,
+                          child: Text("QTY : ",
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: AppColors.mainTextColor,
+                              ))),
+                      Expanded(
+                        flex: 5,
+                        child: InputQty(
+                          maxVal: 10,
+                          initVal: 1,
+                          minVal: 1,
+                          isIntrinsicWidth: false,
+                          borderShape: BorderShapeBtn.circle,
+                          boxDecoration: const BoxDecoration(),
+                          steps: 1,
+                          showMessageLimit: false,
+                          onQtyChanged: (val) {
+                            quantity = val!.toInt();
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primaryColor),
+                    onPressed: () {
+                      BlocProvider.of<OrderContentBloc>(context).add(
+                          AddOrderFBEvent(
+                              widget.productName,
+                              widget.productType,
+                              widget.productCategory,
+                              widget.productPrice.toString(),
+                              quantity.toString(),
+                              widget.id));
+                      Navigator.pop(context);
+
+                    },
+                    child: Text(AppLocalizations.of(context)!.add_button),
+                  )
+                ],
+                ),
                 const SizedBox(
                   height: 40,
                 )

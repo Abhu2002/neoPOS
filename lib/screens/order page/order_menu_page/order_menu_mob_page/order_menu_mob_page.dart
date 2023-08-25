@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../../../navigation/route_paths.dart';
 import '../../widgets/menu_btns_widget.dart';
-import '../../widgets/menu_cards_widget.dart';
 import '../order_menu_bloc.dart';
-import '../total_order_checkout.dart';
 import 'menu_card_widget_mob.dart';
 
 class OrderMenuMobPage extends StatefulWidget {
@@ -34,17 +31,16 @@ class _OrderMenuMobPageState extends State<OrderMenuMobPage> {
 
   @override
   Widget build(BuildContext context) {
-    double totalPrice = 0.0;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: const Color.fromRGBO(250, 250, 250, 100),
+        backgroundColor: Colors.orange.shade50,
         body: SizedBox(
           height: MediaQuery.sizeOf(context).height,
           child: Column(
             children: [
               MenuBtnsWidget(data: widget.data),
               Expanded(
-                flex: 4,
+                flex: 6,
                 child: MenuCardMobWidget(
                   data: widget.data,
                 ),
