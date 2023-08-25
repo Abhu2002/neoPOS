@@ -111,10 +111,12 @@ class _MoreInfoPopupState extends State<MoreInfoPopup> {
                             style: const TextStyle(
                                 color: AppColors.mainTextColor, fontSize: 18)),
                       ),
-                      Text(
-                        widget.productName,
-                        style: const TextStyle(fontSize: 18),
-                        softWrap: true,
+                      Expanded(
+                        child: Text(
+                          widget.productName,
+                          style: const TextStyle(fontSize: 18),
+                          softWrap: true,
+                        ),
                       )
                     ],
                   ),
