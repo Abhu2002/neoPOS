@@ -21,7 +21,7 @@ class Top5Bloc extends Bloc<Top5Event, Top5State> {
     on<SelectKeyEvent>((event, emit) {
       emit(LoadingState());
       if (event.key == "Daily") {
-        var data = SplayTreeMap<int, List<dynamic>>();
+        var data = SplayTreeMap<num, List<dynamic>>();
         all[0].forEach((value, key) {
           data.add(key, value);
         });
@@ -34,7 +34,7 @@ class Top5Bloc extends Bloc<Top5Event, Top5State> {
         });
         emit(LoadedState(finalData.take(5).toList(), event.key));
       } else if (event.key == "Weekly") {
-        var data = SplayTreeMap<int, List<dynamic>>();
+        var data = SplayTreeMap<num, List<dynamic>>();
         all[1].forEach((value, key) {
           data.add(key, value);
         });
@@ -47,7 +47,7 @@ class Top5Bloc extends Bloc<Top5Event, Top5State> {
         });
         emit(LoadedState(finalData.take(5).toList(), event.key));
       } else {
-        var data = SplayTreeMap<int, List<dynamic>>();
+        var data = SplayTreeMap<num, List<dynamic>>();
         all[2].forEach((value, key) {
           data.add(key, value);
         });
