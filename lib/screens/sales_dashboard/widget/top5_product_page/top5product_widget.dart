@@ -73,10 +73,9 @@ class _TopFiveProductState extends State<TopFiveProduct> {
                 SizedBox(
                   height: 200,
                   child: ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
+                      physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.all.length,
                       itemBuilder: (context, index) {
-                        String key = state.all.keys.elementAt(index);
                         return SizedBox(
                           height: 40,
                           child: Padding(
@@ -91,7 +90,7 @@ class _TopFiveProductState extends State<TopFiveProduct> {
                                         fontWeight: FontWeight.bold,
                                         color: AppColors.primaryColor),
                                   )),
-                              Expanded(flex: 4, child: Text(key))
+                              Expanded(flex: 4, child: Text(state.all[index]))
                             ]),
                           ),
                         );

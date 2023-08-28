@@ -11,7 +11,7 @@ final class Top5Initial extends Top5State {}
 
 class LoadedState extends Top5State {
   final String state;
-  final Map all;
+  final List<String> all;
   const LoadedState(this.all, this.state);
   @override
   List<Object> get props => [all];
