@@ -161,7 +161,7 @@ class OrderContentBloc extends Bloc<OrderContentEvent, OrderContentState> {
           'customer_mobile_no': event.customerMbNo,
           'customer_name': event.customerName,
           'payment_mode': event.paymentMode,
-          'order_date': DateFormat("yyyy-MM-dd hh:mm:ss").format(DateTime.now())
+          'order_date': DateFormat("yyyy-MM-dd HH:mm:ss").format(DateTime.now())
         });
 
         db
