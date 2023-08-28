@@ -130,7 +130,7 @@ class _DashboardPage extends State<DashboardPage> {
                           flex: 1,
                           child: SideMenuWidget(LocalPreference.getUserRole(),
                               widget.pageController))
-                      : SizedBox(),
+                      : const SizedBox(),
                   Expanded(
                     flex: 7,
                     child: PageView(
@@ -149,11 +149,11 @@ class _DashboardPage extends State<DashboardPage> {
 }
 
 class Constants {
-  static const String FirstLang = 'Hindi';
-  static const String SecondLang = 'English';
+  static const String firstLang = 'Hindi';
+  static const String secondLang = 'English';
 
   static const List<String> choices = <String>[
-    FirstLang,
-    SecondLang,
+    firstLang,
+    secondLang,
   ];
 }

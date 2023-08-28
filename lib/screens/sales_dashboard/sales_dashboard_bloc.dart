@@ -121,7 +121,6 @@ class SalesDashboardBloc
         }
         topproduct
             .addAll([topproductdaily, topproductweekly, topproductmonthly]);
-
         emit(SalesDashBoardLoadedState(allOrderHistory, allData, dailyValue,
             weeklyValue, monthlyValue, pie, topproduct));
       } catch (err) {
