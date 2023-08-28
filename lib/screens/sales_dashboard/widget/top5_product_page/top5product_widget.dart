@@ -76,7 +76,6 @@ class _TopFiveProductState extends State<TopFiveProduct> {
                       physics: const NeverScrollableScrollPhysics(),
                       itemCount: state.all.length,
                       itemBuilder: (context, index) {
-                        //String key = state.all.keys.elementAt(index);
                         return SizedBox(
                           height: 40,
                           child: Padding(
