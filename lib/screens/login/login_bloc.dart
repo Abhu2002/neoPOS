@@ -49,7 +49,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         state: LoginButtonState.progress,
         canLogin: false));
     try {
-      var result;
       FirebaseFirestore database = GetIt.I.get<FirebaseFirestore>();
       database
           .collection("users")
@@ -65,7 +64,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
             } else {
               userRole = 'Waiter';
             }
-            result = data.data();
             onLoginSuccess!();
           }
         } else {
