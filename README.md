@@ -1,16 +1,14 @@
-# neopos
+# 🧾 NeoPOS – Flutter POS Management System
 
-A new Flutter project.
+NeoPOS is a cross-platform Point of Sale (POS) application built using Flutter with Firebase Firestore as the backend and BLoC state management.
+The system is designed for restaurants and retail environments, enabling efficient product, table, user, order, and sales management with real-time analytics.
 
-## Getting Started
+## 🚀 Features
 
-This project is a starting point for a Flutter application.
+### 🔐 Authentication & Roles
 
-A few resources to get you started if this is your first Flutter project:
+- Admin and Waiter role-based access
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Secure credential verification for sensitive operations (delete/update)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Role-based permissions enforced at UI & logic level
