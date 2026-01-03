@@ -221,7 +221,7 @@ lib/
  ## 👨‍💻 Author
 
 Abhay Kapadnis
-Flutter Developer | Firebase | BLoC
+- Flutter Developer | Firebase | BLoC
 ### 📧 Email: abhay.a.kapadnis@gmail.com
 
 
