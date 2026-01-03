@@ -140,21 +140,96 @@ lib/
  │    └── login/             # 🔐 Authentication
  ├── utils/                  # 🛠 Validators & helpers
  └── main.dart               # 🚀 App entry point
+```
 
 
  ## 🔥 Firebase Collections Used
 
-  users
+  - users
 
-  products
+  - products
 
-  categories
+  - categories
 
-  table
+  - table
 
-  live_table
+  - live_table
 
-  order_history
+  - order_history
+
+  ## 🧪 Validation & Security
+
+  - Form-level validation using Dart extensions
+
+  - Admin role verification for delete/update actions
+
+  - Firestore query-based credential validation
+
+  - Proper error & success state handling
+
+  ## 🌍 Localization Setup
+
+   ### Uses Flutter’s official localization system
+
+  - .arb files for each language
+
+  - Auto-generated app_localizations.dart
+
+  - Easily scalable for more languages
+
+ ##  🖥 Supported Platforms
+
+  - ✅ Android
+
+  - ✅ iOS
+
+  - ✅ Web
+
+  - ✅ Windows / macOS (Desktop)
+
+## ⚙️ Setup Instructions
+   ### 1️⃣ Clone Repository
+   ```text 
+   git clone https://github.com/your-username/neopos.git
+   cd neopos
+   ```
+   ### 2️⃣ Install Dependencies
+   flutter pub get
+
+   ### 3️⃣ Firebase Setup
+
+   Create a Firebase project
+
+   Enable Firestore, Authentication, and Storage
+
+   Add google-services.json / GoogleService-Info.plist
+
+   ### 4️⃣ Run the App
+   ``` text 
+   flutter run
+   ```
+## 📌 Future Enhancements
+
+  - Online payment gateway integration
+
+  - Role-based dashboard customization
+
+  - PDF invoice generation
+
+  - Cloud Functions for analytics optimization
+
+ ## 👨‍💻 Author
+
+Abhay Kapadnis
+Flutter Developer | Firebase | BLoC
+### 📧 Email: abhay.a.kapadnis@gmail.com
+
+
+Offline-first support
+
+   
+
+
  
 
 
