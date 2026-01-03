@@ -140,6 +140,21 @@ lib/
  │    └── login/             # 🔐 Authentication
  ├── utils/                  # 🛠 Validators & helpers
  └── main.dart               # 🚀 App entry point
+
+
+ ## 🔥 Firebase Collections Used
+
+  users
+
+  products
+
+  categories
+
+  table
+
+  live_table
+
+  order_history
  
 
 
